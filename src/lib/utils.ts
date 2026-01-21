@@ -18,11 +18,11 @@ export function formatFileSize(bytes: number): string {
 export function formatDate(date: Date | string | number, format: 'short' | 'long' | 'time' = 'short'): string {
   const d = new Date(date);
   
-  const options: Intl.DateTimeFormatOptions = {
+  const options = ({
     short: { month: 'short', day: 'numeric', year: 'numeric' },
     long: { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' },
     time: { hour: '2-digit', minute: '2-digit' }
-  }[format];
+  } as const)[format];
   
   return d.toLocaleDateString('en-US', options);
 }

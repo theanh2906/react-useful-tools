@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search, MapPin, Droplets, Wind, Thermometer, Sunrise, Sunset, Eye, Cloud } from 'lucide-react';
-import { Card, CardContent, Button, Badge } from '@/components/ui';
+import { Card, CardContent, Button } from '@/components/ui';
 import { cn } from '@/lib/utils';
 import { getWeatherIcon } from '@/lib/utils';
 import { POPULAR_DESTINATIONS, WEATHER_API_KEY, WEATHER_API_URL } from '@/config/constants';
-import type { WeatherInfo, DayWeatherInfo } from '@/types';
+import type { WeatherInfo } from '@/types';
 import { toast } from '@/components/ui/Toast';
 
 export function WeatherPage() {

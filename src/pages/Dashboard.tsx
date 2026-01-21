@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { 
   Calendar, FileText, Baby, Image, Apple, Clock, 
   TrendingUp, Heart, Activity, Sparkles, ArrowRight,
-  Sun, Moon as MoonIcon
+  Sun
 } from 'lucide-react';
 import { Card, CardContent, Progress, CircularProgress, Badge } from '@/components/ui';
 import { useAppStore } from '@/stores/appStore';
