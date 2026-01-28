@@ -58,7 +58,7 @@ export function Layout() {
 
         {/* Footer */}
         <footer className={cn(
-          'relative z-10 border-t border-white/5 py-6 px-4 lg:px-8',
+          'relative border-t border-white/5 py-6 px-4 lg:px-8',
           sidebarOpen && !isMobile ? '' : ''
         )}>
           <div className="container mx-auto max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-4">
