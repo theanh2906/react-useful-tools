@@ -46,7 +46,8 @@
     "changeCase": "Change Case",
     "zipTool": "Zip Tool",
     "liveShare": "Live Share",
-    "monitor": "System Monitor"
+    "monitor": "System Monitor",
+    "mealCheckIn": "Meal Check-In"
   },
   "categories": {
     "main": "Main",
@@ -332,5 +333,27 @@
     "copied": "Copied to clipboard!",
     "created": "Created successfully!",
     "updated": "Updated successfully!"
+  },
+  "mealCheckIn": {
+    "title": "Meal Check-In",
+    "description": "Track your daily meals with photo evidence",
+    "monthlyProgress": "Monthly Progress",
+    "complete": "Complete",
+    "addCheckIn": "Add Check-In",
+    "viewCheckIn": "View Check-In",
+    "selectedDate": "Selected Date",
+    "date": "Date",
+    "uploadImage": "Click to upload image",
+    "maxSize": "Max size: 5MB",
+    "imageTooLarge": "Image size exceeds 5MB. Please choose a smaller image.",
+    "notes": "Notes",
+    "optional": "optional",
+    "notesPlaceholder": "Add any notes about this meal...",
+    "submit": "Submit Check-In",
+    "confirmDelete": "Are you sure you want to delete this check-in?",
+    "checkedIn": "Checked In",
+    "notCheckedIn": "Not Checked In",
+    "stats": "Statistics",
+    "daysThisMonth": "Days This Month"
   }
 }

@@ -46,7 +46,8 @@
     "changeCase": "Đổi chữ",
     "zipTool": "Nén file",
     "liveShare": "Chia sẻ",
-    "monitor": "Giám sát"
+    "monitor": "Giám sát",
+    "mealCheckIn": "Check-in ăn uống"
   },
   "categories": {
     "main": "Chính",
@@ -332,5 +333,27 @@
     "copied": "Đã sao chép!",
     "created": "Đã tạo thành công!",
     "updated": "Đã cập nhật thành công!"
+  },
+  "mealCheckIn": {
+    "title": "Check-in Bữa Ăn",
+    "description": "Theo dõi các bữa ăn hàng ngày với hình ảnh bằng chứng",
+    "monthlyProgress": "Tiến độ tháng",
+    "complete": "Hoàn thành",
+    "addCheckIn": "Thêm Check-in",
+    "viewCheckIn": "Xem Check-in",
+    "selectedDate": "Ngày đã chọn",
+    "date": "Ngày",
+    "uploadImage": "Nhấn để tải ảnh lên",
+    "maxSize": "Kích thước tối đa: 5MB",
+    "imageTooLarge": "Kích thước ảnh vượt quá 5MB. Vui lòng chọn ảnh nhỏ hơn.",
+    "notes": "Ghi chú",
+    "optional": "tùy chọn",
+    "notesPlaceholder": "Thêm ghi chú về bữa ăn này...",
+    "submit": "Xác nhận Check-in",
+    "confirmDelete": "Bạn có chắc chắn muốn xóa check-in này?",
+    "checkedIn": "Đã Check-in",
+    "notCheckedIn": "Chưa Check-in",
+    "stats": "Thống kê",
+    "daysThisMonth": "Số ngày trong tháng"
   }
 }

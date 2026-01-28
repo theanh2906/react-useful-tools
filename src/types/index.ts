@@ -200,6 +200,24 @@ export interface FoodItem {
   alternatives?: string[];
 }
 
+// Meal Check-in types
+export interface MealCheckIn {
+  id: string;
+  userId: string;
+  date: string; // Format: YYYY-MM-DD
+  imageUrl: string;
+  imageStoragePath: string;
+  notes?: string;
+  createdAt: number;
+  updatedAt?: number;
+}
+
+export interface MealCheckInStats {
+  totalDaysInMonth: number;
+  checkedInDays: number;
+  percentage: number;
+}
+
 // Device monitoring types
 export interface DeviceData {
   used_memory?: number;

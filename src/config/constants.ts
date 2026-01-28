@@ -156,6 +156,15 @@ export const NAV_ITEMS = [
     category: 'family'
   },
   { 
+    id: 'meal-checkin', 
+    label: 'Meal Check-In', 
+    labelKey: 'navigation.mealCheckIn',
+    path: '/meal-checkin', 
+    icon: 'Utensils',
+    category: 'family',
+    protected: true
+  },
+  { 
     id: 'weather', 
     label: 'Weather', 
     labelKey: 'navigation.weather',

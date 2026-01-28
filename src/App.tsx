@@ -19,7 +19,8 @@ import {
   TimelinePage,
   SystemMonitorPage,
   ChangeCasePage,
-  ZipToolPage
+  ZipToolPage,
+  MealCheckInPage
 } from '@/pages';
 import { useAuthStore } from '@/stores/authStore';
 import { useAppStore } from '@/stores/appStore';
@@ -96,6 +97,12 @@ export default function App() {
           <Route path="/notes" element={
             <ProtectedRoute>
               <NotesPage />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/meal-checkin" element={
+            <ProtectedRoute>
+              <MealCheckInPage />
             </ProtectedRoute>
           } />
 

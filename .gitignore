@@ -1,3 +1,11 @@
 node_modules
 .agent
 .env.local
+# ClaudeKit
+.claude
+dist/
+build/
+.cache/
+.vscode/
+.idea/
+.DS_Store
