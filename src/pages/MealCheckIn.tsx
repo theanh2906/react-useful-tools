@@ -34,6 +34,7 @@ export const MealCheckIn: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [showImageModal, setShowImageModal] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [notes, setNotes] = useState('');
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -91,16 +92,19 @@ export const MealCheckIn: React.FC = () => {
     }
   };
 
-  const handleDeleteCheckIn = async () => {
+  const handleDeleteClick = () => {
+    setShowDeleteConfirm(true);
+  };
+
+  const handleConfirmDelete = async () => {
     if (!selectedCheckIn) return;
 
-    if (confirm(t('mealCheckIn.confirmDelete'))) {
-      try {
-        await deleteCheckIn(selectedCheckIn);
-        setShowImageModal(false);
-      } catch (error) {
-        console.error('Error deleting check-in:', error);
-      }
+    try {
+      await deleteCheckIn(selectedCheckIn);
+      setShowDeleteConfirm(false);
+      setShowImageModal(false);
+    } catch (error) {
+      console.error('Error deleting check-in:', error);
     }
   };
 
@@ -186,7 +190,7 @@ export const MealCheckIn: React.FC = () => {
 
       {/* Stats Card */}
       {currentMonthStats && (
-        <Card className="mb-6 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border-green-200 dark:border-green-800">
+        <Card className="p-6 mb-6 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border-green-200 dark:border-green-800">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
@@ -213,7 +217,7 @@ export const MealCheckIn: React.FC = () => {
       )}
 
       {/* Calendar */}
-      <Card>
+      <Card className='p-6'>
         {/* Calendar Header */}
         <div className="flex items-center justify-between mb-6">
           <Button
@@ -426,7 +430,7 @@ export const MealCheckIn: React.FC = () => {
                 {t('common.close')}
               </Button>
               <Button
-                onClick={handleDeleteCheckIn}
+                onClick={handleDeleteClick}
                 variant="danger"
                 className="flex-1"
               >
@@ -436,6 +440,36 @@ export const MealCheckIn: React.FC = () => {
             </div>
           </div>
         )}
+      </Modal>
+
+      {/* Delete Confirmation Modal */}
+      <Modal
+        isOpen={showDeleteConfirm}
+        onClose={() => setShowDeleteConfirm(false)}
+        title={t('mealCheckIn.confirmDelete')}
+        size="sm"
+      >
+        <div className="space-y-4">
+          <p className="text-gray-700 dark:text-gray-300">
+            {t('mealCheckIn.deleteWarning')}
+          </p>
+          <div className="flex gap-3">
+            <Button
+              onClick={() => setShowDeleteConfirm(false)}
+              variant="ghost"
+              className="flex-1"
+            >
+              {t('common.cancel')}
+            </Button>
+            <Button
+              onClick={handleConfirmDelete}
+              variant="danger"
+              className="flex-1"
+            >
+              {t('common.delete')}
+            </Button>
+          </div>
+        </div>
       </Modal>
 
       {isLoading && (

@@ -263,7 +263,7 @@ export default function ZipTool() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <Card className="sticky top-6">
+          <Card className="sticky top-6 p-6">
             <div className="flex items-center gap-3 mb-6">
               <div className="p-3 bg-amber-500/20 rounded-xl">
                 <FolderArchive className="w-6 h-6 text-amber-400" />
@@ -369,7 +369,7 @@ export default function ZipTool() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
       >
-        <Card>
+        <Card className="p-6">
           <h2 className="text-lg font-semibold text-white mb-4">Features</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[

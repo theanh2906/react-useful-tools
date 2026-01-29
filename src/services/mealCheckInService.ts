@@ -1,5 +1,5 @@
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
-import { ref as dbRef, set, get, query, orderByChild, equalTo, remove } from 'firebase/database';
+import { ref as dbRef, set, get, remove } from 'firebase/database';
 import { database, storage } from '../config/firebase';
 import type { MealCheckIn, MealCheckInStats } from '../types';
 
@@ -79,26 +79,32 @@ export const mealCheckInService = {
     month: number
   ): Promise<MealCheckIn[]> {
     try {
-      const startDate = `${year}-${String(month).padStart(2, '0')}-01`;
-      const endDate = `${year}-${String(month).padStart(2, '0')}-31`;
-
+      // Get all check-ins from database
       const checkInsRef = dbRef(database, COLLECTION_NAME);
-      const userQuery = query(checkInsRef, orderByChild('userId'), equalTo(userId));
-      const snapshot = await get(userQuery);
+      const snapshot = await get(checkInsRef);
 
       if (!snapshot.exists()) {
         return [];
       }
 
-      const allCheckIns: MealCheckIn[] = [];
+      const startDate = `${year}-${String(month).padStart(2, '0')}-01`;
+      const endDate = `${year}-${String(month).padStart(2, '0')}-31`;
+
+      // Filter check-ins for the specific user and month
+      const monthCheckIns: MealCheckIn[] = [];
       snapshot.forEach((childSnapshot) => {
         const checkIn = childSnapshot.val() as MealCheckIn;
-        if (checkIn.date >= startDate && checkIn.date <= endDate) {
-          allCheckIns.push(checkIn);
+        // Filter by userId and date range
+        if (
+          checkIn.userId === userId &&
+          checkIn.date >= startDate &&
+          checkIn.date <= endDate
+        ) {
+          monthCheckIns.push(checkIn);
         }
       });
 
-      return allCheckIns.sort((a, b) => a.date.localeCompare(b.date));
+      return monthCheckIns.sort((a, b) => a.date.localeCompare(b.date));
     } catch (error) {
       console.error('Error getting monthly check-ins:', error);
       throw error;
