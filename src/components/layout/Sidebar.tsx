@@ -149,18 +149,6 @@ export function Sidebar() {
           </div>
         </div>
       </motion.aside>
-
-      {/* Toggle Button (Desktop) */}
-      {!isMobile && !sidebarOpen && (
-        <motion.button
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          onClick={() => setSidebarOpen(true)}
-          className="fixed top-4 left-4 z-40 p-3 bg-slate-800/90 backdrop-blur-sm border border-white/10 rounded-xl text-slate-400 hover:text-white hover:bg-slate-700/90 transition-all"
-        >
-          <Icons.Menu className="w-5 h-5" />
-        </motion.button>
-      )}
     </>
   );
 }

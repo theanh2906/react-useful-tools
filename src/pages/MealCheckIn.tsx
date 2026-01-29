@@ -281,7 +281,7 @@ export const MealCheckIn: React.FC = () => {
               >
                 <span className="text-lg font-semibold">{day}</span>
                 {checked && (
-                  <CheckCircle className="w-4 h-4 absolute bottom-1 right-1" />
+                  <CheckCircle className="w-4 h-4 absolute bottom-1 right-1 hidden sm:block" />
                 )}
               </button>
             );

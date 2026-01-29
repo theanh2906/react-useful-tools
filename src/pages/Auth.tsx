@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Mail, Lock, User, Eye, EyeOff, Sparkles, ArrowRight } from 'lucide-react';
+import { Mail, Lock, User, Eye, EyeOff, Sparkles, ArrowRight, ArrowLeft } from 'lucide-react';
 import { Button, Input, Card } from '@/components/ui';
 import { useAuthStore } from '@/stores/authStore';
 import { signInWithEmail, signInWithGoogle, signUpWithEmail } from '@/services/authService';
@@ -48,17 +48,18 @@ export function AuthPage() {
     }
   };
 
-  const handleGoogleLogin = () => {
+  const handleGoogleLogin = async () => {
     setLoading(true);
-    signInWithGoogle()
-      .then(() => {
-        toast.success('Welcome!');
-        navigate(redirect);
-      })
-      .catch((error) => {
-        toast.error(error.message || 'Google sign-in failed');
-      })
-      .finally(() => setLoading(false));
+    try {
+      await signInWithGoogle();
+      toast.success('Welcome!');
+      navigate(redirect);
+    } catch (error) {
+      console.error('Google sign-in error:', error);
+      toast.error((error as Error).message || 'Google sign-in failed');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleAzureLogin = () => {
@@ -67,6 +68,16 @@ export function AuthPage() {
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center py-12 px-4">
+      {/* Back to Home Button */}
+      <Button
+        variant="ghost"
+        className="fixed top-4 left-4 z-20"
+        onClick={() => navigate('/')}
+      >
+        <ArrowLeft className="w-4 h-4 mr-2" />
+        Back to Home
+      </Button>
+
       {/* Background decorations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-500/20 rounded-full blur-3xl animate-pulse-slow" />
