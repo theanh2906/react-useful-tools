@@ -1,5 +1,5 @@
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
-import { ref as dbRef, set, get, remove } from 'firebase/database';
+import { ref as dbRef, set, get, remove, query, orderByChild, equalTo } from 'firebase/database';
 import { database, storage } from '../config/firebase';
 import type { MealCheckIn, MealCheckInStats } from '../types';
 
