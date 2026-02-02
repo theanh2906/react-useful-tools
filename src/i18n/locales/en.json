@@ -36,7 +36,6 @@
     "storage": "Storage",
     "babyTracker": "Baby Tracker",
     "ultrasounds": "Ultrasounds",
-    "foodGuide": "Food Guide",
     "timeline": "Timeline",
     "weather": "Weather",
     "qrScanner": "QR Scanner",
@@ -86,7 +85,6 @@
     "developmentRecords": "Development Records",
     "scheduledEvents": "Scheduled Events",
     "ultrasoundScans": "Ultrasound Scans",
-    "foodItems": "Food Items",
     "babyAge": "Baby Age",
     "days": "days",
     "weeks": "weeks",
@@ -169,19 +167,6 @@
       "overweight": "Overweight",
       "obese": "Obese"
     }
-  },
-  "food": {
-    "title": "Food Guide",
-    "searchFood": "Search food...",
-    "safeFood": "Safe Foods",
-    "forbiddenFood": "Forbidden Foods",
-    "limitedFood": "Limited Foods",
-    "addFood": "Add Food",
-    "foodName": "Food Name",
-    "category": "Category",
-    "description": "Description",
-    "reason": "Reason",
-    "alternatives": "Alternatives"
   },
   "weather": {
     "title": "Weather Forecast",

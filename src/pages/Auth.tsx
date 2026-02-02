@@ -51,7 +51,8 @@ export function AuthPage() {
   const handleGoogleLogin = async () => {
     setLoading(true);
     try {
-      await signInWithGoogle();
+      const res = await signInWithGoogle();
+      console.log('Google sign-in response:', res);
       toast.success('Welcome!');
       navigate(redirect);
     } catch (error) {

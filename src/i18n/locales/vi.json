@@ -36,7 +36,6 @@
     "storage": "Lưu trữ",
     "babyTracker": "Theo dõi bé",
     "ultrasounds": "Siêu âm",
-    "foodGuide": "Thực phẩm",
     "timeline": "Dòng thời gian",
     "weather": "Thời tiết",
     "qrScanner": "Quét QR",
@@ -86,7 +85,6 @@
     "developmentRecords": "Bản ghi phát triển",
     "scheduledEvents": "Sự kiện đã lên lịch",
     "ultrasoundScans": "Ảnh siêu âm",
-    "foodItems": "Thực phẩm",
     "babyAge": "Tuổi bé",
     "days": "ngày",
     "weeks": "tuần",
@@ -169,19 +167,6 @@
       "overweight": "Thừa cân",
       "obese": "Béo phì"
     }
-  },
-  "food": {
-    "title": "Hướng dẫn thực phẩm",
-    "searchFood": "Tìm thực phẩm...",
-    "safeFood": "Thực phẩm an toàn",
-    "forbiddenFood": "Thực phẩm cấm",
-    "limitedFood": "Thực phẩm hạn chế",
-    "addFood": "Thêm thực phẩm",
-    "foodName": "Tên thực phẩm",
-    "category": "Phân loại",
-    "description": "Mô tả",
-    "reason": "Lý do",
-    "alternatives": "Thay thế"
   },
   "weather": {
     "title": "Dự báo thời tiết",

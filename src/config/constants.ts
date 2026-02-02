@@ -140,14 +140,6 @@ export const NAV_ITEMS = [
     category: 'family'
   },
   { 
-    id: 'foods', 
-    label: 'Food Guide', 
-    labelKey: 'navigation.foodGuide',
-    path: '/foods', 
-    icon: 'Apple',
-    category: 'family'
-  },
-  { 
     id: 'timeline', 
     label: 'Timeline', 
     labelKey: 'navigation.timeline',

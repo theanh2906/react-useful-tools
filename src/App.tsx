@@ -7,7 +7,6 @@ import {
   NotesPage, 
   WeatherPage, 
   BabyTrackerPage,
-  FoodGuidePage,
   AuthPage,
   StoragePage,
   QrScannerPage,
@@ -80,7 +79,6 @@ export default function App() {
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/weather" element={<WeatherPage />} />
           <Route path="/baby" element={<BabyTrackerPage />} />
-          <Route path="/foods" element={<FoodGuidePage />} />
           <Route path="/storage" element={<StoragePage />} />
           <Route path="/qr-scanner" element={<QrScannerPage />} />
           <Route path="/qr-generator" element={<QrGeneratorPage />} />

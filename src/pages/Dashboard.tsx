@@ -12,7 +12,6 @@ import { useNotesStore } from '@/stores/notesStore';
 import { useAuthStore } from '@/stores/authStore';
 import { listenUltrasounds } from '@/services/ultrasoundService';
 import { listenPeanutRecords, listenSoyaRecords } from '@/services/babyService';
-import { listenFoods } from '@/services/foodService';
 import { useCountdown } from '@/hooks';
 import { cn } from '@/lib/utils';
 import { useEffect, useMemo, useState } from 'react';
@@ -73,15 +72,11 @@ export function Dashboard() {
     listenSoyaRecords((data) => setSoyaCount(data.length)).then((unsub) => {
       unsubSoya = unsub;
     });
-    listenFoods((data) => setFoodCount(data.length)).then((unsub) => {
-      unsubFoods = unsub;
-    });
 
     return () => {
       if (unsubUltrasounds) unsubUltrasounds();
       if (unsubPeanut) unsubPeanut();
       if (unsubSoya) unsubSoya();
-      if (unsubFoods) unsubFoods();
     };
   }, [userId]);
 

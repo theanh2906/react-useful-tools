@@ -188,18 +188,6 @@ export interface Room {
   files: RoomFile[];
 }
 
-// Food types
-export type FoodCategory = 'safe' | 'forbidden' | 'limited';
-
-export interface FoodItem {
-  id: string;
-  name: string;
-  category: FoodCategory;
-  description?: string;
-  reason?: string;
-  alternatives?: string[];
-}
-
 // Meal Check-in types
 export interface MealCheckIn {
   id: string;
@@ -241,7 +229,6 @@ export interface DashboardStats {
   developmentRecords: number;
   scheduledEvents: number;
   ultrasoundScans: number;
-  foodItems: number;
 }
 
 // Action types for state management

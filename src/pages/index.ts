@@ -3,7 +3,6 @@ export { default as CalendarPage } from './Calendar';
 export { default as NotesPage } from './Notes';
 export { default as WeatherPage } from './Weather';
 export { default as BabyTrackerPage } from './BabyTracker';
-export { default as FoodGuidePage } from './FoodGuide';
 export { default as AuthPage } from './Auth';
 export { default as StoragePage } from './Storage';
 export { default as QrScannerPage } from './QrScanner';
