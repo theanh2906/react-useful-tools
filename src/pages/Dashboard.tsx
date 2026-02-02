@@ -82,8 +82,7 @@ export function Dashboard() {
     developmentRecords: peanutCount + soyaCount,
     scheduledEvents: events.length,
     ultrasoundScans: ultrasoundCount,
-    foodItems: foodCount,
-  }), [peanutCount, soyaCount, events.length, ultrasoundCount, foodCount]);
+  }), [peanutCount, soyaCount, events.length, ultrasoundCount]);
 
   const quickActions = [
     { icon: Calendar, label: 'Calendar', path: '/calendar', color: 'from-pink-500 to-rose-500' },
@@ -272,7 +271,6 @@ export function Dashboard() {
             { icon: Activity, label: 'Development Records', value: stats.developmentRecords, color: 'text-emerald-400' },
             { icon: Calendar, label: 'Scheduled Events', value: stats.scheduledEvents, color: 'text-blue-400' },
             { icon: Image, label: 'Ultrasound Scans', value: stats.ultrasoundScans, color: 'text-purple-400' },
-            { icon: Apple, label: 'Food Items', value: stats.foodItems, color: 'text-amber-400' },
           ].map((stat, i) => (
             <motion.div
               key={stat.label}
