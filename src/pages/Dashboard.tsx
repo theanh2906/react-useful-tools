@@ -47,7 +47,6 @@ export function Dashboard() {
   const [ultrasoundCount, setUltrasoundCount] = useState(0);
   const [peanutCount, setPeanutCount] = useState(0);
   const [soyaCount, setSoyaCount] = useState(0);
-  const [foodCount, setFoodCount] = useState(0);
 
   const dueDate = pregnancyInfo?.dueDate || new Date();
   const countdown = useCountdown(dueDate);
@@ -61,7 +60,6 @@ export function Dashboard() {
     let unsubUltrasounds: (() => void) | null = null;
     let unsubPeanut: (() => void) | null = null;
     let unsubSoya: (() => void) | null = null;
-    let unsubFoods: (() => void) | null = null;
 
     listenUltrasounds((data) => setUltrasoundCount(data.length)).then((unsub) => {
       unsubUltrasounds = unsub;
