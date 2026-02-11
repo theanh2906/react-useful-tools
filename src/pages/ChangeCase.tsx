@@ -219,7 +219,7 @@ export default function ChangeCase() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <Card className="h-full">
+          <Card className="h-full p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-white flex items-center gap-2">
                 <Type className="w-5 h-5 text-violet-400" />
@@ -273,7 +273,7 @@ export default function ChangeCase() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <Card className="h-full">
+          <Card className="h-full p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-white flex items-center gap-2">
                 <ArrowRight className="w-5 h-5 text-emerald-400" />
@@ -322,7 +322,7 @@ export default function ChangeCase() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
       >
-        <Card>
+        <Card className="p-6">
           <h2 className="text-lg font-semibold text-white mb-4">
             Select Case Type
           </h2>
@@ -363,7 +363,7 @@ export default function ChangeCase() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
       >
-        <Card>
+        <Card className="p-6">
           <h2 className="text-lg font-semibold text-white mb-4">
             Quick Reference
           </h2>

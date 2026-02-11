@@ -8,10 +8,29 @@ import { POPULAR_DESTINATIONS, WEATHER_API_KEY, WEATHER_API_URL } from '@/config
 import type { WeatherInfo } from '@/types';
 import { toast } from '@/components/ui/Toast';
 
+const reverseGeocode = async (lat: number, lon: number): Promise<string | null> => {
+  try {
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=en`
+    );
+    if (!response.ok) return null;
+    const data = await response.json();
+    return data.display_name || null;
+  } catch {
+    return null;
+  }
+};
+
+const isCoordinateString = (address: string): boolean => {
+  const parts = address.split(',').map(s => s.trim());
+  return parts.length === 2 && parts.every(p => !isNaN(Number(p)));
+};
+
 export function WeatherPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [weather, setWeather] = useState<WeatherInfo | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [displayAddress, setDisplayAddress] = useState<string | null>(null);
 
   const fetchWeather = async (location: string) => {
     setIsLoading(true);
@@ -24,6 +43,15 @@ export function WeatherPage() {
       
       const data = await response.json();
       setWeather(data);
+
+      // Reverse geocode if resolvedAddress looks like coordinates
+      if (isCoordinateString(data.resolvedAddress)) {
+        const [lat, lon] = data.resolvedAddress.split(',').map(Number);
+        const address = await reverseGeocode(lat, lon);
+        setDisplayAddress(address);
+      } else {
+        setDisplayAddress(null);
+      }
     } catch {
       toast.error('Could not find weather for this location');
     } finally {
@@ -132,7 +160,7 @@ export function WeatherPage() {
                 <div>
                   <div className="flex items-center gap-2 mb-4">
                     <MapPin className="w-5 h-5 text-primary-400" />
-                    <span className="text-lg text-white font-medium">{weather.resolvedAddress}</span>
+                    <span className="text-lg text-white font-medium">{displayAddress || weather.resolvedAddress}</span>
                   </div>
                   
                   <div className="flex items-center gap-6 mb-6">
