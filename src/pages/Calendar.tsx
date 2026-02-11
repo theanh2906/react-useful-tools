@@ -5,7 +5,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { Plus, Filter } from 'lucide-react';
-import { Card, Button, Badge, Modal, ModalFooter, Input, TextArea } from '@/components/ui';
+import { Card, Button, Badge, Modal, ModalFooter, Input, TextArea, DatePicker } from '@/components/ui';
 import { useEventsStore } from '@/stores/eventsStore';
 import { useAuthStore } from '@/stores/authStore';
 import { EVENT_CATEGORIES } from '@/config/constants';
@@ -321,11 +321,11 @@ export function CalendarPage() {
           />
 
           <div className="grid grid-cols-2 gap-4">
-            <Input
+            <DatePicker
               label="Date"
-              type="date"
               value={formData.date}
-              onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+              onChange={(date) => setFormData({ ...formData, date })}
+              placeholder="Select date"
             />
             <Input
               label="Time (optional)"

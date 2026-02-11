@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Image as ImageIcon, Upload, Trash2, Calendar, Eye } from 'lucide-react';
-import { Card, Button, Badge, Modal, ModalFooter, Input } from '@/components/ui';
+import { Card, Button, Badge, Modal, ModalFooter, Input, DatePicker } from '@/components/ui';
 import { deleteUltrasound, listenUltrasounds, uploadUltrasound, type UltrasoundRecord } from '@/services/ultrasoundService';
 import { useAuthStore } from '@/stores/authStore';
 import { toast } from '@/components/ui/Toast';
@@ -60,7 +60,7 @@ export function UltrasoundGalleryPage() {
 
       <Card className="p-6 space-y-4">
         <div className="grid sm:grid-cols-2 gap-4">
-          <Input label="Scan Date" type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+          <DatePicker label="Scan Date" value={date} onChange={(date) => setDate(date)} placeholder="Select scan date" />
           <Input label="Notes" placeholder="Week 20 scan..." value={notes} onChange={(e) => setNotes(e.target.value)} />
         </div>
         <div className="text-sm text-slate-400">Upload an ultrasound image to add it to your gallery.</div>

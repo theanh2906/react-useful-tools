@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Plus, Calendar, Baby, Heart, Activity, Image as ImageIcon } from 'lucide-react';
-import { Card, Button, Badge, Modal, ModalFooter, Input } from '@/components/ui';
+import { Card, Button, Badge, Modal, ModalFooter, Input, DatePicker } from '@/components/ui';
 import { addTimelineEvent, listenTimeline, type TimelineEvent } from '@/services/timelineService';
 import { useAuthStore } from '@/stores/authStore';
 import { toast } from '@/components/ui/Toast';
@@ -93,7 +93,7 @@ export function TimelinePage() {
       <Modal isOpen={showModal} onClose={() => setShowModal(false)} title="Add Timeline Event">
         <div className="space-y-4">
           <Input label="Title" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
-          <Input label="Date" type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} />
+          <DatePicker label="Date" value={form.date} onChange={(date) => setForm({ ...form, date })} placeholder="Select date" />
           <Input
             label="Description"
             placeholder="What happened?"

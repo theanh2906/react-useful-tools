@@ -5,7 +5,7 @@ import {
   TrendingUp, Heart, Activity, Sparkles, ArrowRight,
   Sun
 } from 'lucide-react';
-import { Card, CardContent, Progress, CircularProgress, Badge } from '@/components/ui';
+import { Card, CardContent, Progress, CircularProgress, Badge, DatePicker } from '@/components/ui';
 import { useAppStore } from '@/stores/appStore';
 import { useEventsStore } from '@/stores/eventsStore';
 import { useNotesStore } from '@/stores/notesStore';
@@ -117,24 +117,20 @@ export function Dashboard() {
               <Badge variant="warning">Setup</Badge>
             </div>
             <div className="grid sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm text-slate-300 mb-2">Conception Date</label>
-                <input
-                  type="date"
-                  value={conceptionDate || ''}
-                  onChange={(e) => setConceptionDate(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white"
-                />
-              </div>
-              <div>
-                <label className="block text-sm text-slate-300 mb-2">Baby Birth Date (optional)</label>
-                <input
-                  type="date"
-                  value={babyBirthDate || ''}
-                  onChange={(e) => setBabyBirthDate(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white"
-                />
-              </div>
+              <DatePicker
+                label="Conception Date"
+                value={conceptionDate || ''}
+                onChange={(date) => setConceptionDate(date)}
+                placeholder="Select conception date"
+                maxDate={new Date().toISOString().split('T')[0]}
+              />
+              <DatePicker
+                label="Baby Birth Date (optional)"
+                value={babyBirthDate || ''}
+                onChange={(date) => setBabyBirthDate(date)}
+                placeholder="Select birth date"
+                maxDate={new Date().toISOString().split('T')[0]}
+              />
             </div>
             <div className="mt-4 flex justify-end">
               <button
