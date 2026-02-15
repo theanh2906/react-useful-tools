@@ -1,3 +1,7 @@
+/**
+ * @module pages
+ * @description Barrel export for all page-level components.
+ */
 export { default as Dashboard } from './Dashboard';
 export { default as CalendarPage } from './Calendar';
 export { default as NotesPage } from './Notes';

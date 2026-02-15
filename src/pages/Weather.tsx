@@ -1,14 +1,43 @@
+/**
+ * @module WeatherPage
+ * @description Weather forecast page with city search, geolocation support
+ * and popular destination shortcuts.
+ */
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Search, MapPin, Droplets, Wind, Thermometer, Sunrise, Sunset, Eye, Cloud } from 'lucide-react';
+import {
+  Search,
+  MapPin,
+  Droplets,
+  Wind,
+  Thermometer,
+  Sunrise,
+  Sunset,
+  Eye,
+  Cloud,
+} from 'lucide-react';
 import { Card, CardContent, Button } from '@/components/ui';
 import { cn } from '@/lib/utils';
 import { getWeatherIcon } from '@/lib/utils';
-import { POPULAR_DESTINATIONS, WEATHER_API_KEY, WEATHER_API_URL } from '@/config/constants';
+import {
+  POPULAR_DESTINATIONS,
+  WEATHER_API_KEY,
+  WEATHER_API_URL,
+} from '@/config/constants';
 import type { WeatherInfo } from '@/types';
 import { toast } from '@/components/ui/Toast';
 
-const reverseGeocode = async (lat: number, lon: number): Promise<string | null> => {
+/**
+ * Reverse-geocodes latitude/longitude to a human-readable address using Nominatim.
+ *
+ * @param lat - Latitude.
+ * @param lon - Longitude.
+ * @returns Display name string or `null` on failure.
+ */
+const reverseGeocode = async (
+  lat: number,
+  lon: number
+): Promise<string | null> => {
   try {
     const response = await fetch(
       `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&accept-language=en`
@@ -21,11 +50,22 @@ const reverseGeocode = async (lat: number, lon: number): Promise<string | null> 
   }
 };
 
+/**
+ * Checks whether the input string looks like a "lat,lon" coordinate pair.
+ *
+ * @param address - Input string to test.
+ * @returns `true` if the string can be parsed as two comma-separated numbers.
+ */
 const isCoordinateString = (address: string): boolean => {
-  const parts = address.split(',').map(s => s.trim());
-  return parts.length === 2 && parts.every(p => !isNaN(Number(p)));
+  const parts = address.split(',').map((s) => s.trim());
+  return parts.length === 2 && parts.every((p) => !isNaN(Number(p)));
 };
 
+/**
+ * Weather page.
+ * Searches for weather by city name, coordinates or browser geolocation.
+ * Displays current conditions, temperature, wind, humidity and visibility.
+ */
 export function WeatherPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [weather, setWeather] = useState<WeatherInfo | null>(null);
@@ -38,9 +78,9 @@ export function WeatherPage() {
       const response = await fetch(
         `${WEATHER_API_URL}/${encodeURIComponent(location)}?unitGroup=metric&key=${WEATHER_API_KEY}&contentType=json`
       );
-      
+
       if (!response.ok) throw new Error('Location not found');
-      
+
       const data = await response.json();
       setWeather(data);
 
@@ -71,7 +111,9 @@ export function WeatherPage() {
       setIsLoading(true);
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          fetchWeather(`${position.coords.latitude},${position.coords.longitude}`);
+          fetchWeather(
+            `${position.coords.latitude},${position.coords.longitude}`
+          );
         },
         () => {
           toast.error('Could not get your location');
@@ -93,13 +135,18 @@ export function WeatherPage() {
     >
       {/* Header */}
       <div>
-        <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">Weather</h1>
+        <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">
+          Weather
+        </h1>
         <p className="text-slate-400 mt-1">Check weather conditions anywhere</p>
       </div>
 
       {/* Search */}
       <Card className="p-6">
-        <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-4">
+        <form
+          onSubmit={handleSearch}
+          className="flex flex-col sm:flex-row gap-4"
+        >
           <div className="flex-1 relative">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
             <input
@@ -113,9 +160,9 @@ export function WeatherPage() {
           <Button type="submit" isLoading={isLoading}>
             Search
           </Button>
-          <Button 
-            type="button" 
-            variant="secondary" 
+          <Button
+            type="button"
+            variant="secondary"
             onClick={handleGetCurrentLocation}
             disabled={isLoading}
           >
@@ -160,9 +207,11 @@ export function WeatherPage() {
                 <div>
                   <div className="flex items-center gap-2 mb-4">
                     <MapPin className="w-5 h-5 text-primary-400" />
-                    <span className="text-lg text-white font-medium">{displayAddress || weather.resolvedAddress}</span>
+                    <span className="text-lg text-white font-medium">
+                      {displayAddress || weather.resolvedAddress}
+                    </span>
                   </div>
-                  
+
                   <div className="flex items-center gap-6 mb-6">
                     <span className="text-8xl">
                       {getWeatherIcon(currentConditions.icon)}
@@ -171,7 +220,9 @@ export function WeatherPage() {
                       <p className="text-6xl font-display font-bold text-white">
                         {Math.round(currentConditions.temp)}°
                       </p>
-                      <p className="text-xl text-slate-300">{currentConditions.conditions}</p>
+                      <p className="text-xl text-slate-300">
+                        {currentConditions.conditions}
+                      </p>
                     </div>
                   </div>
 
@@ -185,31 +236,39 @@ export function WeatherPage() {
                       <Thermometer className="w-4 h-4" />
                       <span className="text-sm">Feels Like</span>
                     </div>
-                    <p className="text-2xl font-bold text-white">{Math.round(currentConditions.feelslike)}°C</p>
+                    <p className="text-2xl font-bold text-white">
+                      {Math.round(currentConditions.feelslike)}°C
+                    </p>
                   </div>
-                  
+
                   <div className="p-4 rounded-xl bg-white/5">
                     <div className="flex items-center gap-2 text-slate-400 mb-2">
                       <Droplets className="w-4 h-4" />
                       <span className="text-sm">Humidity</span>
                     </div>
-                    <p className="text-2xl font-bold text-white">{currentConditions.humidity}%</p>
+                    <p className="text-2xl font-bold text-white">
+                      {currentConditions.humidity}%
+                    </p>
                   </div>
-                  
+
                   <div className="p-4 rounded-xl bg-white/5">
                     <div className="flex items-center gap-2 text-slate-400 mb-2">
                       <Wind className="w-4 h-4" />
                       <span className="text-sm">Wind Speed</span>
                     </div>
-                    <p className="text-2xl font-bold text-white">{currentConditions.windspeed} km/h</p>
+                    <p className="text-2xl font-bold text-white">
+                      {currentConditions.windspeed} km/h
+                    </p>
                   </div>
-                  
+
                   <div className="p-4 rounded-xl bg-white/5">
                     <div className="flex items-center gap-2 text-slate-400 mb-2">
                       <Eye className="w-4 h-4" />
                       <span className="text-sm">Conditions</span>
                     </div>
-                    <p className="text-lg font-bold text-white truncate">{currentConditions.conditions}</p>
+                    <p className="text-lg font-bold text-white truncate">
+                      {currentConditions.conditions}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -222,7 +281,9 @@ export function WeatherPage() {
                   </div>
                   <div>
                     <p className="text-xs text-slate-500">Sunrise</p>
-                    <p className="text-white font-medium">{currentConditions.sunrise}</p>
+                    <p className="text-white font-medium">
+                      {currentConditions.sunrise}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -231,7 +292,9 @@ export function WeatherPage() {
                   </div>
                   <div>
                     <p className="text-xs text-slate-500">Sunset</p>
-                    <p className="text-white font-medium">{currentConditions.sunset}</p>
+                    <p className="text-white font-medium">
+                      {currentConditions.sunset}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -240,7 +303,9 @@ export function WeatherPage() {
 
           {/* 7-Day Forecast */}
           <Card className="p-6">
-            <h3 className="text-lg font-display font-semibold text-white mb-4">7-Day Forecast</h3>
+            <h3 className="text-lg font-display font-semibold text-white mb-4">
+              7-Day Forecast
+            </h3>
             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
               {weather.days.slice(0, 7).map((day, i) => (
                 <motion.div
@@ -250,18 +315,32 @@ export function WeatherPage() {
                   transition={{ delay: i * 0.05 }}
                   className={cn(
                     'p-4 rounded-xl text-center',
-                    i === 0 ? 'bg-primary-500/20 border border-primary-500/30' : 'bg-white/5'
+                    i === 0
+                      ? 'bg-primary-500/20 border border-primary-500/30'
+                      : 'bg-white/5'
                   )}
                 >
                   <p className="text-sm text-slate-400 mb-2">
-                    {i === 0 ? 'Today' : new Date(day.datetime).toLocaleDateString('en-US', { weekday: 'short' })}
+                    {i === 0
+                      ? 'Today'
+                      : new Date(day.datetime).toLocaleDateString('en-US', {
+                          weekday: 'short',
+                        })}
                   </p>
-                  <span className="text-3xl block mb-2">{getWeatherIcon(day.icon)}</span>
+                  <span className="text-3xl block mb-2">
+                    {getWeatherIcon(day.icon)}
+                  </span>
                   <div className="flex items-center justify-center gap-2">
-                    <span className="text-white font-medium">{Math.round(day.tempmax)}°</span>
-                    <span className="text-slate-500">{Math.round(day.tempmin)}°</span>
+                    <span className="text-white font-medium">
+                      {Math.round(day.tempmax)}°
+                    </span>
+                    <span className="text-slate-500">
+                      {Math.round(day.tempmin)}°
+                    </span>
                   </div>
-                  <p className="text-xs text-slate-500 mt-1 line-clamp-1">{day.conditions}</p>
+                  <p className="text-xs text-slate-500 mt-1 line-clamp-1">
+                    {day.conditions}
+                  </p>
                 </motion.div>
               ))}
             </div>
@@ -275,9 +354,12 @@ export function WeatherPage() {
           <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center">
             <Cloud className="w-10 h-10 text-blue-400" />
           </div>
-          <h3 className="text-lg font-medium text-white mb-2">Check the Weather</h3>
+          <h3 className="text-lg font-medium text-white mb-2">
+            Check the Weather
+          </h3>
           <p className="text-slate-400 max-w-md mx-auto">
-            Search for a city or use your current location to see weather conditions
+            Search for a city or use your current location to see weather
+            conditions
           </p>
         </Card>
       )}

@@ -1,12 +1,42 @@
+/**
+ * @module BabyTrackerPage
+ * @description Pregnancy & baby tracking page with growth charts (Chart.js),
+ * BMI calculator and milestone records.
+ */
 import { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Plus, Baby as BabyIcon, Heart, TrendingUp, Scale, Ruler, Activity, Calendar, Settings, Sparkles } from 'lucide-react';
-import { Card, Button, Badge, Modal, ModalFooter, Input, Progress, DatePicker } from '@/components/ui';
+import {
+  Plus,
+  Baby as BabyIcon,
+  Heart,
+  TrendingUp,
+  Scale,
+  Ruler,
+  Activity,
+  Calendar,
+  Settings,
+  Sparkles,
+} from 'lucide-react';
+import {
+  Card,
+  Button,
+  Badge,
+  Modal,
+  ModalFooter,
+  Input,
+  Progress,
+  DatePicker,
+} from '@/components/ui';
 import { useAppStore } from '@/stores/appStore';
 import { useAuthStore } from '@/stores/authStore';
 import { cn } from '@/lib/utils';
 import { calculateBMI, getBMICategory } from '@/lib/utils';
-import { addPeanutRecord, addSoyaRecord, listenPeanutRecords, listenSoyaRecords } from '@/services/babyService';
+import {
+  addPeanutRecord,
+  addSoyaRecord,
+  listenPeanutRecords,
+  listenSoyaRecords,
+} from '@/services/babyService';
 import type { BabyData, SoyaData } from '@/types';
 import { Baby } from '@/types';
 import { toast } from '@/components/ui/Toast';
@@ -24,8 +54,22 @@ import {
 } from 'chart.js';
 
 // Register Chart.js components
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+);
 
+/**
+ * Baby tracker page.
+ * Displays pregnancy progress, baby growth charts (weight/height),
+ * BMI tracking and milestone logging backed by Firebase Realtime Database.
+ */
 export function BabyTrackerPage() {
   const getPregnancyInfo = useAppStore((state) => state.getPregnancyInfo);
   const getBabyAge = useAppStore((state) => state.getBabyAge);
@@ -35,22 +79,22 @@ export function BabyTrackerPage() {
   const setBabyBirthDate = useAppStore((state) => state.setBabyBirthDate);
   const saveProfile = useAppStore((state) => state.saveProfile);
   const userId = useAuthStore((state) => state.user?.id);
-  
+
   const pregnancyInfo = getPregnancyInfo();
   const babyAge = getBabyAge();
-  
+
   const [activeTab, setActiveTab] = useState<Baby>(Baby.Soya);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showSetupModal, setShowSetupModal] = useState(false);
   const [peanutRecords, setPeanutRecords] = useState<BabyData[]>([]);
   const [soyaRecords, setSoyaRecords] = useState<SoyaData[]>([]);
-  
+
   // Setup form
   const [setupData, setSetupData] = useState({
     conceptionDate: conceptionDate || '',
     babyBirthDate: babyBirthDate || '',
   });
-  
+
   // Form states
   const [formData, setFormData] = useState({
     date: new Date().toISOString().split('T')[0],
@@ -62,58 +106,68 @@ export function BabyTrackerPage() {
     bloodPressure: '',
     notes: '',
   });
-  
+
   // Growth chart data
   const growthChartData = useMemo(() => {
     const records = activeTab === Baby.Peanut ? peanutRecords : soyaRecords;
-    const sortedRecords = [...records].sort((a, b) => 
-      new Date(a.date).getTime() - new Date(b.date).getTime()
+    const sortedRecords = [...records].sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
     );
-    
+
     return {
-      labels: sortedRecords.map(r => 
-        new Date(r.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+      labels: sortedRecords.map((r) =>
+        new Date(r.date).toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+        })
       ),
-      datasets: activeTab === Baby.Peanut ? [
-        {
-          label: 'Weight (kg)',
-          data: (sortedRecords as BabyData[]).map(r => r.weight || 0),
-          borderColor: '#ec4899',
-          backgroundColor: 'rgba(236, 72, 153, 0.1)',
-          fill: true,
-          tension: 0.4,
-        },
-        {
-          label: 'Height (cm)',
-          data: (sortedRecords as BabyData[]).map(r => r.height || 0),
-          borderColor: '#8b5cf6',
-          backgroundColor: 'rgba(139, 92, 246, 0.1)',
-          fill: true,
-          tension: 0.4,
-          yAxisID: 'y1',
-        },
-      ] : [
-        {
-          label: 'Heart Rate (BPM)',
-          data: (sortedRecords as SoyaData[]).map(r => r.measurements?.heartRate || 0),
-          borderColor: '#f97316',
-          backgroundColor: 'rgba(249, 115, 22, 0.1)',
-          fill: true,
-          tension: 0.4,
-        },
-        {
-          label: 'Mom Weight (kg)',
-          data: (sortedRecords as SoyaData[]).map(r => r.pregnantMom?.weight || 0),
-          borderColor: '#22c55e',
-          backgroundColor: 'rgba(34, 197, 94, 0.1)',
-          fill: true,
-          tension: 0.4,
-          yAxisID: 'y1',
-        },
-      ],
+      datasets:
+        activeTab === Baby.Peanut
+          ? [
+              {
+                label: 'Weight (kg)',
+                data: (sortedRecords as BabyData[]).map((r) => r.weight || 0),
+                borderColor: '#ec4899',
+                backgroundColor: 'rgba(236, 72, 153, 0.1)',
+                fill: true,
+                tension: 0.4,
+              },
+              {
+                label: 'Height (cm)',
+                data: (sortedRecords as BabyData[]).map((r) => r.height || 0),
+                borderColor: '#8b5cf6',
+                backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                fill: true,
+                tension: 0.4,
+                yAxisID: 'y1',
+              },
+            ]
+          : [
+              {
+                label: 'Heart Rate (BPM)',
+                data: (sortedRecords as SoyaData[]).map(
+                  (r) => r.measurements?.heartRate || 0
+                ),
+                borderColor: '#f97316',
+                backgroundColor: 'rgba(249, 115, 22, 0.1)',
+                fill: true,
+                tension: 0.4,
+              },
+              {
+                label: 'Mom Weight (kg)',
+                data: (sortedRecords as SoyaData[]).map(
+                  (r) => r.pregnantMom?.weight || 0
+                ),
+                borderColor: '#22c55e',
+                backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                fill: true,
+                tension: 0.4,
+                yAxisID: 'y1',
+              },
+            ],
     };
   }, [activeTab, peanutRecords, soyaRecords]);
-  
+
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -145,7 +199,7 @@ export function BabyTrackerPage() {
       },
     },
   };
-  
+
   const handleSetupSave = async () => {
     if (setupData.conceptionDate) {
       setConceptionDate(setupData.conceptionDate);
@@ -179,7 +233,9 @@ export function BabyTrackerPage() {
         date: formData.date,
         gestationalAge: formData.gestationalAge,
         measurements: {
-          heartRate: formData.heartRate ? Number(formData.heartRate) : undefined,
+          heartRate: formData.heartRate
+            ? Number(formData.heartRate)
+            : undefined,
           bloodPressure: formData.bloodPressure || undefined,
         },
         pregnantMom: {
@@ -228,7 +284,10 @@ export function BabyTrackerPage() {
     { week: 40, size: 'Watermelon', weight: '3.4kg', length: '51cm' },
   ];
 
-  const currentDev = weeklyDevelopment.find(d => d.week >= (pregnancyInfo?.currentWeek || 0)) || weeklyDevelopment[0];
+  const currentDev =
+    weeklyDevelopment.find(
+      (d) => d.week >= (pregnancyInfo?.currentWeek || 0)
+    ) || weeklyDevelopment[0];
 
   // Check if setup is needed
   const needsSetup = !conceptionDate && !babyBirthDate;
@@ -242,7 +301,9 @@ export function BabyTrackerPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">Baby Tracker</h1>
+          <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">
+            Baby Tracker
+          </h1>
           <p className="text-slate-400 mt-1">Monitor growth and development</p>
         </div>
         <div className="flex gap-2">
@@ -263,9 +324,12 @@ export function BabyTrackerPage() {
           <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-pink-500/20 to-purple-500/20 flex items-center justify-center">
             <Sparkles className="w-10 h-10 text-pink-400" />
           </div>
-          <h2 className="text-2xl font-display font-bold text-white mb-3">Welcome to Baby Tracker!</h2>
+          <h2 className="text-2xl font-display font-bold text-white mb-3">
+            Welcome to Baby Tracker!
+          </h2>
           <p className="text-slate-400 max-w-md mx-auto mb-6">
-            Let's set up your pregnancy or baby information to start tracking growth and milestones.
+            Let's set up your pregnancy or baby information to start tracking
+            growth and milestones.
           </p>
           <Button onClick={() => setShowSetupModal(true)} className="px-8">
             <Settings className="w-4 h-4" />
@@ -312,22 +376,38 @@ export function BabyTrackerPage() {
               <Card variant="gradient" className="lg:col-span-2 p-6">
                 <div className="flex items-start justify-between mb-6">
                   <div>
-                    <Badge variant="primary" className="mb-2">Week {pregnancyInfo.currentWeek}</Badge>
-                    <h3 className="text-xl font-display font-bold text-white">Baby's Development</h3>
-                    <p className="text-slate-400">Your baby is the size of a {currentDev.size.toLowerCase()}</p>
+                    <Badge variant="primary" className="mb-2">
+                      Week {pregnancyInfo.currentWeek}
+                    </Badge>
+                    <h3 className="text-xl font-display font-bold text-white">
+                      Baby's Development
+                    </h3>
+                    <p className="text-slate-400">
+                      Your baby is the size of a {currentDev.size.toLowerCase()}
+                    </p>
                   </div>
-                  <span className="text-6xl">{currentDev.size === 'Avocado' ? '🥑' : currentDev.size === 'Banana' ? '🍌' : '🍇'}</span>
+                  <span className="text-6xl">
+                    {currentDev.size === 'Avocado'
+                      ? '🥑'
+                      : currentDev.size === 'Banana'
+                        ? '🍌'
+                        : '🍇'}
+                  </span>
                 </div>
 
                 <div className="grid grid-cols-3 gap-4 mb-6">
                   <div className="p-4 rounded-xl bg-white/5 text-center">
                     <Scale className="w-5 h-5 text-emerald-400 mx-auto mb-2" />
-                    <p className="text-xl font-bold text-white">{currentDev.weight}</p>
+                    <p className="text-xl font-bold text-white">
+                      {currentDev.weight}
+                    </p>
                     <p className="text-xs text-slate-400">Weight</p>
                   </div>
                   <div className="p-4 rounded-xl bg-white/5 text-center">
                     <Ruler className="w-5 h-5 text-blue-400 mx-auto mb-2" />
-                    <p className="text-xl font-bold text-white">{currentDev.length}</p>
+                    <p className="text-xl font-bold text-white">
+                      {currentDev.length}
+                    </p>
                     <p className="text-xs text-slate-400">Length</p>
                   </div>
                   <div className="p-4 rounded-xl bg-white/5 text-center">
@@ -337,34 +417,51 @@ export function BabyTrackerPage() {
                   </div>
                 </div>
 
-                <Progress 
-                  value={pregnancyInfo.progress} 
-                  variant="gradient" 
-                  showValue 
-                  label="Pregnancy Progress" 
+                <Progress
+                  value={pregnancyInfo.progress}
+                  variant="gradient"
+                  showValue
+                  label="Pregnancy Progress"
                 />
               </Card>
 
               {/* Mom's Stats */}
               <Card className="p-6">
-                <h3 className="font-display font-semibold text-white mb-4">Mom's Stats</h3>
+                <h3 className="font-display font-semibold text-white mb-4">
+                  Mom's Stats
+                </h3>
                 <div className="space-y-4">
                   {soyaRecords[0]?.pregnantMom?.weight && (
                     <div className="p-4 rounded-xl bg-white/5">
-                      <p className="text-sm text-slate-400 mb-1">Current Weight</p>
-                      <p className="text-2xl font-bold text-white">{soyaRecords[0].pregnantMom.weight} kg</p>
+                      <p className="text-sm text-slate-400 mb-1">
+                        Current Weight
+                      </p>
+                      <p className="text-2xl font-bold text-white">
+                        {soyaRecords[0].pregnantMom.weight} kg
+                      </p>
                     </div>
                   )}
                   <div className="p-4 rounded-xl bg-white/5">
                     <p className="text-sm text-slate-400 mb-1">Trimester</p>
-                    <p className="text-xl font-bold text-white">{pregnancyInfo.trimester}</p>
+                    <p className="text-xl font-bold text-white">
+                      {pregnancyInfo.trimester}
+                    </p>
                     <p className="text-xs text-slate-500">
-                      {pregnancyInfo.trimester === 1 ? 'First' : pregnancyInfo.trimester === 2 ? 'Second' : 'Third'} Trimester
+                      {pregnancyInfo.trimester === 1
+                        ? 'First'
+                        : pregnancyInfo.trimester === 2
+                          ? 'Second'
+                          : 'Third'}{' '}
+                      Trimester
                     </p>
                   </div>
                   <div className="p-4 rounded-xl bg-white/5">
-                    <p className="text-sm text-slate-400 mb-1">Days to Due Date</p>
-                    <p className="text-2xl font-bold gradient-text">{pregnancyInfo.daysRemaining}</p>
+                    <p className="text-sm text-slate-400 mb-1">
+                      Days to Due Date
+                    </p>
+                    <p className="text-2xl font-bold gradient-text">
+                      {pregnancyInfo.daysRemaining}
+                    </p>
                   </div>
                 </div>
               </Card>
@@ -375,8 +472,13 @@ export function BabyTrackerPage() {
           {!pregnancyInfo && (
             <Card className="p-6 text-center">
               <Heart className="w-12 h-12 text-pink-400 mx-auto mb-4" />
-              <h3 className="text-lg font-display font-semibold text-white mb-2">Set Your Conception Date</h3>
-              <p className="text-slate-400 mb-4">Configure your conception date to see pregnancy progress and development info</p>
+              <h3 className="text-lg font-display font-semibold text-white mb-2">
+                Set Your Conception Date
+              </h3>
+              <p className="text-slate-400 mb-4">
+                Configure your conception date to see pregnancy progress and
+                development info
+              </p>
               <Button onClick={() => setShowSetupModal(true)}>
                 <Settings className="w-4 h-4" />
                 Configure Now
@@ -387,7 +489,9 @@ export function BabyTrackerPage() {
           {/* Growth Chart */}
           {soyaRecords.length > 1 && (
             <Card className="p-6">
-              <h3 className="font-display font-semibold text-white mb-4">Growth Trends</h3>
+              <h3 className="font-display font-semibold text-white mb-4">
+                Growth Trends
+              </h3>
               <div className="h-64">
                 <Line data={growthChartData} options={chartOptions} />
               </div>
@@ -396,7 +500,9 @@ export function BabyTrackerPage() {
 
           {/* Records */}
           <Card className="p-6">
-            <h3 className="font-display font-semibold text-white mb-4">Checkup Records</h3>
+            <h3 className="font-display font-semibold text-white mb-4">
+              Checkup Records
+            </h3>
             {soyaRecords.length === 0 ? (
               <div className="text-center py-8 text-slate-500">
                 <Calendar className="w-12 h-12 mx-auto mb-3 opacity-50" />
@@ -417,17 +523,23 @@ export function BabyTrackerPage() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
-                        <Badge variant="primary" size="sm">{record.gestationalAge}</Badge>
+                        <Badge variant="primary" size="sm">
+                          {record.gestationalAge}
+                        </Badge>
                       </div>
                       <p className="text-sm text-slate-400">
-                        {new Date(record.date).toLocaleDateString('en-US', { 
-                          month: 'long', day: 'numeric', year: 'numeric' 
+                        {new Date(record.date).toLocaleDateString('en-US', {
+                          month: 'long',
+                          day: 'numeric',
+                          year: 'numeric',
                         })}
                       </p>
                     </div>
                     <div className="text-right">
                       {record.measurements?.heartRate && (
-                        <p className="text-white font-medium">{record.measurements.heartRate} BPM</p>
+                        <p className="text-white font-medium">
+                          {record.measurements.heartRate} BPM
+                        </p>
                       )}
                       <p className="text-xs text-slate-500">Heart Rate</p>
                     </div>
@@ -450,20 +562,28 @@ export function BabyTrackerPage() {
                   <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-pink-400 to-rose-500 flex items-center justify-center">
                     <BabyIcon className="w-10 h-10 text-white" />
                   </div>
-                  <h3 className="text-xl font-display font-bold text-white mb-1">Peanut</h3>
+                  <h3 className="text-xl font-display font-bold text-white mb-1">
+                    Peanut
+                  </h3>
                   <p className="text-slate-400">Your little one</p>
-                  
+
                   <div className="grid grid-cols-3 gap-3 mt-6">
                     <div className="p-3 rounded-lg bg-white/10">
-                      <p className="text-2xl font-bold text-white">{babyAge.days}</p>
+                      <p className="text-2xl font-bold text-white">
+                        {babyAge.days}
+                      </p>
                       <p className="text-xs text-slate-400">Days</p>
                     </div>
                     <div className="p-3 rounded-lg bg-white/10">
-                      <p className="text-2xl font-bold text-white">{babyAge.weeks}</p>
+                      <p className="text-2xl font-bold text-white">
+                        {babyAge.weeks}
+                      </p>
                       <p className="text-xs text-slate-400">Weeks</p>
                     </div>
                     <div className="p-3 rounded-lg bg-white/10">
-                      <p className="text-2xl font-bold text-white">{babyAge.months}</p>
+                      <p className="text-2xl font-bold text-white">
+                        {babyAge.months}
+                      </p>
                       <p className="text-xs text-slate-400">Months</p>
                     </div>
                   </div>
@@ -474,39 +594,51 @@ export function BabyTrackerPage() {
               {peanutRecords[0] && (
                 <>
                   <Card className="p-6">
-                    <h3 className="font-display font-semibold text-white mb-4">Latest Measurements</h3>
+                    <h3 className="font-display font-semibold text-white mb-4">
+                      Latest Measurements
+                    </h3>
                     <div className="space-y-4">
                       <div className="flex items-center justify-between p-4 rounded-xl bg-white/5">
                         <div className="flex items-center gap-3">
                           <Scale className="w-5 h-5 text-emerald-400" />
                           <span className="text-slate-400">Weight</span>
                         </div>
-                        <span className="text-xl font-bold text-white">{peanutRecords[0].weight} kg</span>
+                        <span className="text-xl font-bold text-white">
+                          {peanutRecords[0].weight} kg
+                        </span>
                       </div>
                       <div className="flex items-center justify-between p-4 rounded-xl bg-white/5">
                         <div className="flex items-center gap-3">
                           <Ruler className="w-5 h-5 text-blue-400" />
                           <span className="text-slate-400">Height</span>
                         </div>
-                        <span className="text-xl font-bold text-white">{peanutRecords[0].height} cm</span>
+                        <span className="text-xl font-bold text-white">
+                          {peanutRecords[0].height} cm
+                        </span>
                       </div>
                       <div className="flex items-center justify-between p-4 rounded-xl bg-white/5">
                         <div className="flex items-center gap-3">
                           <Activity className="w-5 h-5 text-pink-400" />
                           <span className="text-slate-400">Heart Rate</span>
                         </div>
-                        <span className="text-xl font-bold text-white">{peanutRecords[0].heartRate} bpm</span>
+                        <span className="text-xl font-bold text-white">
+                          {peanutRecords[0].heartRate} bpm
+                        </span>
                       </div>
                     </div>
                   </Card>
 
                   <Card className="p-6">
-                    <h3 className="font-display font-semibold text-white mb-4">Growth Trend</h3>
+                    <h3 className="font-display font-semibold text-white mb-4">
+                      Growth Trend
+                    </h3>
                     <div className="flex items-center gap-4">
                       <TrendingUp className="w-12 h-12 text-emerald-400" />
                       <div>
                         <p className="text-2xl font-bold text-white">+0.4 kg</p>
-                        <p className="text-sm text-slate-400">Since last checkup</p>
+                        <p className="text-sm text-slate-400">
+                          Since last checkup
+                        </p>
                       </div>
                     </div>
                     <div className="mt-4 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
@@ -524,8 +656,13 @@ export function BabyTrackerPage() {
           {!babyAge && (
             <Card className="p-6 text-center">
               <BabyIcon className="w-12 h-12 text-purple-400 mx-auto mb-4" />
-              <h3 className="text-lg font-display font-semibold text-white mb-2">Set Baby's Birth Date</h3>
-              <p className="text-slate-400 mb-4">Configure the birth date to see your baby's age and development milestones</p>
+              <h3 className="text-lg font-display font-semibold text-white mb-2">
+                Set Baby's Birth Date
+              </h3>
+              <p className="text-slate-400 mb-4">
+                Configure the birth date to see your baby's age and development
+                milestones
+              </p>
               <Button onClick={() => setShowSetupModal(true)}>
                 <Settings className="w-4 h-4" />
                 Configure Now
@@ -536,7 +673,9 @@ export function BabyTrackerPage() {
           {/* Growth Chart */}
           {peanutRecords.length > 1 && (
             <Card className="p-6">
-              <h3 className="font-display font-semibold text-white mb-4">Growth Chart</h3>
+              <h3 className="font-display font-semibold text-white mb-4">
+                Growth Chart
+              </h3>
               <div className="h-64">
                 <Line data={growthChartData} options={chartOptions} />
               </div>
@@ -545,7 +684,9 @@ export function BabyTrackerPage() {
 
           {/* Records */}
           <Card className="p-6">
-            <h3 className="font-display font-semibold text-white mb-4">Development Records</h3>
+            <h3 className="font-display font-semibold text-white mb-4">
+              Development Records
+            </h3>
             {peanutRecords.length === 0 ? (
               <div className="text-center py-8 text-slate-500">
                 <Calendar className="w-12 h-12 mx-auto mb-3 opacity-50" />
@@ -566,19 +707,25 @@ export function BabyTrackerPage() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="font-medium text-white">
-                        {new Date(record.date).toLocaleDateString('en-US', { 
-                          month: 'long', day: 'numeric', year: 'numeric' 
+                        {new Date(record.date).toLocaleDateString('en-US', {
+                          month: 'long',
+                          day: 'numeric',
+                          year: 'numeric',
                         })}
                       </p>
                       <p className="text-sm text-slate-400">{record.notes}</p>
                     </div>
                     <div className="flex gap-4 text-center">
                       <div>
-                        <p className="text-white font-medium">{record.weight} kg</p>
+                        <p className="text-white font-medium">
+                          {record.weight} kg
+                        </p>
                         <p className="text-xs text-slate-500">Weight</p>
                       </div>
                       <div>
-                        <p className="text-white font-medium">{record.height} cm</p>
+                        <p className="text-white font-medium">
+                          {record.height} cm
+                        </p>
                         <p className="text-xs text-slate-500">Height</p>
                       </div>
                     </div>
@@ -611,37 +758,56 @@ export function BabyTrackerPage() {
               <Input
                 label="Gestational Age (e.g., 16 weeks)"
                 value={formData.gestationalAge}
-                onChange={(e) => setFormData({ ...formData, gestationalAge: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, gestationalAge: e.target.value })
+                }
               />
               <div className="grid grid-cols-2 gap-4">
                 <Input
                   label="Mom's Weight (kg)"
                   type="number"
                   value={formData.momWeight}
-                  onChange={(e) => setFormData({ ...formData, momWeight: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, momWeight: e.target.value })
+                  }
                 />
                 <Input
                   label="Heart Rate (BPM)"
                   type="number"
                   value={formData.heartRate}
-                  onChange={(e) => setFormData({ ...formData, heartRate: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, heartRate: e.target.value })
+                  }
                 />
               </div>
               <Input
                 label="Blood Pressure"
                 placeholder="e.g., 120/80"
                 value={formData.bloodPressure}
-                onChange={(e) => setFormData({ ...formData, bloodPressure: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, bloodPressure: e.target.value })
+                }
               />
-              
+
               {bmiCategory && (
-                <div 
+                <div
                   className="p-4 rounded-xl"
-                  style={{ backgroundColor: `${bmiCategory.color}20`, borderColor: `${bmiCategory.color}50` }}
+                  style={{
+                    backgroundColor: `${bmiCategory.color}20`,
+                    borderColor: `${bmiCategory.color}50`,
+                  }}
                 >
                   <p className="text-sm text-slate-300">
-                    BMI: <span className="font-bold" style={{ color: bmiCategory.color }}>{momBMI}</span>
-                    <span className="ml-2 text-slate-400">({bmiCategory.label})</span>
+                    BMI:{' '}
+                    <span
+                      className="font-bold"
+                      style={{ color: bmiCategory.color }}
+                    >
+                      {momBMI}
+                    </span>
+                    <span className="ml-2 text-slate-400">
+                      ({bmiCategory.label})
+                    </span>
                   </p>
                 </div>
               )}
@@ -654,20 +820,26 @@ export function BabyTrackerPage() {
                   type="number"
                   step="0.1"
                   value={formData.weight}
-                  onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, weight: e.target.value })
+                  }
                 />
                 <Input
                   label="Height (cm)"
                   type="number"
                   value={formData.height}
-                  onChange={(e) => setFormData({ ...formData, height: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, height: e.target.value })
+                  }
                 />
               </div>
               <Input
                 label="Heart Rate (BPM)"
                 type="number"
                 value={formData.heartRate}
-                onChange={(e) => setFormData({ ...formData, heartRate: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, heartRate: e.target.value })
+                }
               />
             </>
           )}
@@ -675,7 +847,9 @@ export function BabyTrackerPage() {
           <Input
             label="Notes"
             value={formData.notes}
-            onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, notes: e.target.value })
+            }
             placeholder="Any notes about this checkup..."
           />
         </div>
@@ -684,9 +858,7 @@ export function BabyTrackerPage() {
           <Button variant="secondary" onClick={() => setShowAddModal(false)}>
             Cancel
           </Button>
-          <Button onClick={handleSave}>
-            Save Record
-          </Button>
+          <Button onClick={handleSave}>Save Record</Button>
         </ModalFooter>
       </Modal>
 
@@ -701,7 +873,9 @@ export function BabyTrackerPage() {
           <div className="p-4 rounded-xl bg-pink-500/10 border border-pink-500/20">
             <div className="flex items-center gap-3 mb-2">
               <Heart className="w-5 h-5 text-pink-400" />
-              <h4 className="font-medium text-white">Pregnancy Tracking (Soya)</h4>
+              <h4 className="font-medium text-white">
+                Pregnancy Tracking (Soya)
+              </h4>
             </div>
             <p className="text-sm text-slate-400 mb-4">
               Set the conception date to track pregnancy progress
@@ -709,7 +883,9 @@ export function BabyTrackerPage() {
             <DatePicker
               label="Conception Date"
               value={setupData.conceptionDate}
-              onChange={(date) => setSetupData({ ...setupData, conceptionDate: date })}
+              onChange={(date) =>
+                setSetupData({ ...setupData, conceptionDate: date })
+              }
               placeholder="Select conception date"
               maxDate={new Date().toISOString().split('T')[0]}
               centered
@@ -727,7 +903,9 @@ export function BabyTrackerPage() {
             <DatePicker
               label="Birth Date"
               value={setupData.babyBirthDate}
-              onChange={(date) => setSetupData({ ...setupData, babyBirthDate: date })}
+              onChange={(date) =>
+                setSetupData({ ...setupData, babyBirthDate: date })
+              }
               placeholder="Select birth date"
               maxDate={new Date().toISOString().split('T')[0]}
               centered
@@ -739,9 +917,7 @@ export function BabyTrackerPage() {
           <Button variant="secondary" onClick={() => setShowSetupModal(false)}>
             Cancel
           </Button>
-          <Button onClick={handleSetupSave}>
-            Save Settings
-          </Button>
+          <Button onClick={handleSetupSave}>Save Settings</Button>
         </ModalFooter>
       </Modal>
     </motion.div>

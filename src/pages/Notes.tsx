@@ -1,11 +1,37 @@
+/**
+ * @module NotesPage
+ * @description Rich-text notes page with tagging, pinning, search and ReactQuill editor.
+ */
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Search, Pin, Trash2, Edit, X, Tag, Clock, Type } from 'lucide-react';
-import { Card, Button, Badge, Modal, ModalFooter, Input } from '@/components/ui';
+import {
+  Plus,
+  Search,
+  Pin,
+  Trash2,
+  Edit,
+  X,
+  Tag,
+  Clock,
+  Type,
+} from 'lucide-react';
+import {
+  Card,
+  Button,
+  Badge,
+  Modal,
+  ModalFooter,
+  Input,
+} from '@/components/ui';
 import { useNotesStore } from '@/stores/notesStore';
 import { useAuthStore } from '@/stores/authStore';
 import { cn } from '@/lib/utils';
-import { generateId, formatRelativeTime, stripHtml, truncateText } from '@/lib/utils';
+import {
+  generateId,
+  formatRelativeTime,
+  stripHtml,
+  truncateText,
+} from '@/lib/utils';
 import type { Note } from '@/types';
 import { toast } from '@/components/ui/Toast';
 
@@ -13,19 +39,24 @@ import { toast } from '@/components/ui/Toast';
 const ReactQuill = lazy(() => import('react-quill'));
 import 'react-quill/dist/quill.snow.css';
 
+/**
+ * Notes management page.
+ * Supports creating, editing, pinning, tagging and deleting notes
+ * with a rich-text editor (ReactQuill). Data synced to Firestore in real-time.
+ */
 export function NotesPage() {
-  const { 
-    addNote, 
-    updateNote, 
-    deleteNote, 
+  const {
+    addNote,
+    updateNote,
+    deleteNote,
     togglePin,
-    searchQuery, 
+    searchQuery,
     setSearchQuery,
     selectedCategory,
     setSelectedCategory,
     getFilteredNotes,
     getCategories,
-    subscribeNotes
+    subscribeNotes,
   } = useNotesStore();
   const userId = useAuthStore((state) => state.user?.id);
 
@@ -99,7 +130,7 @@ export function NotesPage() {
   };
 
   const handleRemoveCategory = (cat: string) => {
-    setNoteCategories(noteCategories.filter(c => c !== cat));
+    setNoteCategories(noteCategories.filter((c) => c !== cat));
   };
 
   return (
@@ -111,13 +142,17 @@ export function NotesPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">Notes</h1>
+          <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">
+            Notes
+          </h1>
           <p className="text-slate-400 mt-1">Capture your thoughts and ideas</p>
         </div>
-        <Button onClick={() => {
-          setEditingNote(null);
-          setShowEditor(true);
-        }}>
+        <Button
+          onClick={() => {
+            setEditingNote(null);
+            setShowEditor(true);
+          }}
+        >
           <Plus className="w-4 h-4" />
           New Note
         </Button>
@@ -151,7 +186,9 @@ export function NotesPage() {
             {categories.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setSelectedCategory(cat === selectedCategory ? null : cat)}
+                onClick={() =>
+                  setSelectedCategory(cat === selectedCategory ? null : cat)
+                }
                 className={cn(
                   'px-3 py-2 rounded-xl text-sm font-medium transition-all',
                   selectedCategory === cat
@@ -179,8 +216,12 @@ export function NotesPage() {
                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/5 flex items-center justify-center">
                   <Edit className="w-8 h-8 text-slate-500" />
                 </div>
-                <h3 className="text-lg font-medium text-white mb-2">No notes yet</h3>
-                <p className="text-slate-400 mb-4">Start capturing your thoughts and ideas</p>
+                <h3 className="text-lg font-medium text-white mb-2">
+                  No notes yet
+                </h3>
+                <p className="text-slate-400 mb-4">
+                  Start capturing your thoughts and ideas
+                </p>
                 <Button onClick={() => setShowEditor(true)}>
                   <Plus className="w-4 h-4" />
                   Create your first note
@@ -197,8 +238,8 @@ export function NotesPage() {
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ delay: i * 0.05 }}
               >
-                <Card 
-                  hover 
+                <Card
+                  hover
                   className={cn(
                     'p-5 h-full flex flex-col cursor-pointer group',
                     note.isPinned && 'ring-1 ring-primary-500/50'
@@ -209,7 +250,9 @@ export function NotesPage() {
                   }}
                 >
                   <div className="flex items-start justify-between mb-3">
-                    <h3 className="font-medium text-white line-clamp-1 flex-1">{note.title}</h3>
+                    <h3 className="font-medium text-white line-clamp-1 flex-1">
+                      {note.title}
+                    </h3>
                     <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                       <button
                         onClick={(e) => {
@@ -244,7 +287,9 @@ export function NotesPage() {
                   <div className="flex items-center justify-between pt-3 border-t border-white/5">
                     <div className="flex items-center gap-1 text-xs text-slate-500">
                       <Clock className="w-3.5 h-3.5" />
-                      {formatRelativeTime(note.modifiedDate || note.createdDate)}
+                      {formatRelativeTime(
+                        note.modifiedDate || note.createdDate
+                      )}
                     </div>
                     {note.categories.length > 0 && (
                       <div className="flex gap-1">
@@ -288,10 +333,16 @@ export function NotesPage() {
 
           {/* Categories */}
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-2">Categories</label>
+            <label className="block text-sm font-medium text-slate-300 mb-2">
+              Categories
+            </label>
             <div className="flex flex-wrap gap-2 mb-2">
               {noteCategories.map((cat) => (
-                <Badge key={cat} variant="primary" className="flex items-center gap-1">
+                <Badge
+                  key={cat}
+                  variant="primary"
+                  className="flex items-center gap-1"
+                >
                   {cat}
                   <button
                     onClick={() => handleRemoveCategory(cat)}
@@ -319,13 +370,17 @@ export function NotesPage() {
 
           {/* Rich Text Editor */}
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-2">Content</label>
+            <label className="block text-sm font-medium text-slate-300 mb-2">
+              Content
+            </label>
             <div className="quill-dark">
-              <Suspense fallback={
-                <div className="h-64 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center">
-                  <Type className="w-8 h-8 text-slate-500 animate-pulse" />
-                </div>
-              }>
+              <Suspense
+                fallback={
+                  <div className="h-64 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center">
+                    <Type className="w-8 h-8 text-slate-500 animate-pulse" />
+                  </div>
+                }
+              >
                 <ReactQuill
                   theme="snow"
                   value={content}
@@ -349,10 +404,13 @@ export function NotesPage() {
         </div>
 
         <ModalFooter>
-          <Button variant="secondary" onClick={() => {
-            setShowEditor(false);
-            setEditingNote(null);
-          }}>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setShowEditor(false);
+              setEditingNote(null);
+            }}
+          >
             Cancel
           </Button>
           <Button onClick={handleSave}>

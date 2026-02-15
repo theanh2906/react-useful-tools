@@ -1,13 +1,18 @@
+/**
+ * @module ZipTool
+ * @description ZIP archive creation tool with drag-and-drop file selection,
+ * progress tracking and client-side compression via JSZip.
+ */
 import { useState, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Upload, 
-  Download, 
-  Trash2, 
+import {
+  Upload,
+  Download,
+  Trash2,
   X,
   CheckCircle,
   Loader2,
-  FolderArchive
+  FolderArchive,
 } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
@@ -15,14 +20,28 @@ import { Input } from '@/components/ui/Input';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
+/**
+ * Represents a file queued for inclusion in the ZIP archive.
+ */
 interface FileItem {
+  /** Unique identifier. */
   id: string;
+  /** Original `File` object. */
   file: File;
+  /** Display name. */
   name: string;
+  /** File size in bytes. */
   size: number;
+  /** MIME type. */
   type: string;
 }
 
+/**
+ * Formats a byte count into a human-readable string (e.g. `1.5 MB`).
+ *
+ * @param bytes - Raw byte count.
+ * @returns Formatted file size string.
+ */
 function formatFileSize(bytes: number): string {
   if (bytes === 0) return '0 Bytes';
   const k = 1024;
@@ -31,6 +50,12 @@ function formatFileSize(bytes: number): string {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 }
 
+/**
+ * Returns an emoji icon representing the given MIME type.
+ *
+ * @param type - File MIME type string.
+ * @returns An emoji character.
+ */
 function getFileIcon(type: string): string {
   if (type.startsWith('image/')) return '🖼️';
   if (type.startsWith('video/')) return '🎬';
@@ -38,10 +63,16 @@ function getFileIcon(type: string): string {
   if (type === 'application/pdf') return '📄';
   if (type.includes('word') || type.includes('document')) return '📝';
   if (type.includes('excel') || type.includes('spreadsheet')) return '📊';
-  if (type.includes('zip') || type.includes('archive') || type.includes('rar')) return '📦';
+  if (type.includes('zip') || type.includes('archive') || type.includes('rar'))
+    return '📦';
   return '📎';
 }
 
+/**
+ * ZIP tool page.
+ * Allows users to drag-and-drop or browse files, then compress them into
+ * a downloadable `.zip` archive using JSZip.
+ */
 export default function ZipTool() {
   const [files, setFiles] = useState<FileItem[]>([]);
   const [zipName, setZipName] = useState('archive');
@@ -54,22 +85,25 @@ export default function ZipTool() {
   const handleFileSelect = useCallback((selectedFiles: FileList | null) => {
     if (!selectedFiles) return;
 
-    const newFiles: FileItem[] = Array.from(selectedFiles).map(file => ({
+    const newFiles: FileItem[] = Array.from(selectedFiles).map((file) => ({
       id: crypto.randomUUID(),
       file,
       name: file.name,
       size: file.size,
-      type: file.type
+      type: file.type,
     }));
 
-    setFiles(prev => [...prev, ...newFiles]);
+    setFiles((prev) => [...prev, ...newFiles]);
   }, []);
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-    handleFileSelect(e.dataTransfer.files);
-  }, [handleFileSelect]);
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      setIsDragging(false);
+      handleFileSelect(e.dataTransfer.files);
+    },
+    [handleFileSelect]
+  );
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -82,7 +116,7 @@ export default function ZipTool() {
   }, []);
 
   const removeFile = useCallback((id: string) => {
-    setFiles(prev => prev.filter(f => f.id !== id));
+    setFiles((prev) => prev.filter((f) => f.id !== id));
   }, []);
 
   const clearAll = useCallback(() => {
@@ -110,18 +144,18 @@ export default function ZipTool() {
       }
 
       setProgress(90);
-      
-      const blob = await zip.generateAsync({ 
+
+      const blob = await zip.generateAsync({
         type: 'blob',
         compression: 'DEFLATE',
-        compressionOptions: { level: 6 }
+        compressionOptions: { level: 6 },
       });
 
       setProgress(100);
-      
+
       const fileName = zipName.trim() || 'archive';
       saveAs(blob, `${fileName}.zip`);
-      
+
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
     } catch (error) {
@@ -169,9 +203,10 @@ export default function ZipTool() {
               className={`
                 relative border-2 border-dashed rounded-xl p-8 text-center cursor-pointer
                 transition-all duration-300
-                ${isDragging 
-                  ? 'border-amber-500 bg-amber-500/10' 
-                  : 'border-white/20 hover:border-white/40 hover:bg-white/5'
+                ${
+                  isDragging
+                    ? 'border-amber-500 bg-amber-500/10'
+                    : 'border-white/20 hover:border-white/40 hover:bg-white/5'
                 }
               `}
             >
@@ -182,20 +217,20 @@ export default function ZipTool() {
                 onChange={(e) => handleFileSelect(e.target.files)}
                 className="hidden"
               />
-              
+
               <motion.div
                 animate={{ scale: isDragging ? 1.1 : 1 }}
                 transition={{ type: 'spring', stiffness: 300 }}
               >
-                <Upload className={`w-12 h-12 mx-auto mb-4 ${isDragging ? 'text-amber-400' : 'text-white/40'}`} />
+                <Upload
+                  className={`w-12 h-12 mx-auto mb-4 ${isDragging ? 'text-amber-400' : 'text-white/40'}`}
+                />
               </motion.div>
-              
+
               <p className="text-white/70 mb-2">
                 {isDragging ? 'Drop files here...' : 'Drag & drop files here'}
               </p>
-              <p className="text-white/40 text-sm">
-                or click to browse
-              </p>
+              <p className="text-white/40 text-sm">or click to browse</p>
             </div>
 
             {/* File List */}
@@ -205,11 +240,7 @@ export default function ZipTool() {
                   <h3 className="text-white font-medium">
                     Selected Files ({files.length})
                   </h3>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={clearAll}
-                  >
+                  <Button variant="ghost" size="sm" onClick={clearAll}>
                     <Trash2 className="w-4 h-4 mr-2" />
                     Clear All
                   </Button>
@@ -282,7 +313,9 @@ export default function ZipTool() {
               </div>
               <div className="p-3 bg-white/5 rounded-lg border border-white/10">
                 <p className="text-white/40 text-xs mb-1">Total Size</p>
-                <p className="text-white font-semibold">{formatFileSize(totalSize)}</p>
+                <p className="text-white font-semibold">
+                  {formatFileSize(totalSize)}
+                </p>
               </div>
             </div>
 
@@ -373,10 +406,26 @@ export default function ZipTool() {
           <h2 className="text-lg font-semibold text-white mb-4">Features</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { icon: '🔒', title: 'Local Processing', desc: 'Files never leave your device' },
-              { icon: '⚡', title: 'Fast Compression', desc: 'Efficient DEFLATE algorithm' },
-              { icon: '📁', title: 'Any File Type', desc: 'Support all file formats' },
-              { icon: '♾️', title: 'No Limits', desc: 'No file size restrictions' }
+              {
+                icon: '🔒',
+                title: 'Local Processing',
+                desc: 'Files never leave your device',
+              },
+              {
+                icon: '⚡',
+                title: 'Fast Compression',
+                desc: 'Efficient DEFLATE algorithm',
+              },
+              {
+                icon: '📁',
+                title: 'Any File Type',
+                desc: 'Support all file formats',
+              },
+              {
+                icon: '♾️',
+                title: 'No Limits',
+                desc: 'No file size restrictions',
+              },
             ].map((feature, index) => (
               <div
                 key={index}

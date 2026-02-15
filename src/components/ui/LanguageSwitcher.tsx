@@ -1,19 +1,32 @@
+/**
+ * @module LanguageSwitcher
+ * @description Dropdown component for switching the application language (i18n).
+ */
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Globe, Check } from 'lucide-react';
 import { languages } from '@/i18n';
 
+/**
+ * Language switcher dropdown that lets the user pick from the available locales.
+ * Closes on outside click. Uses `react-i18next` to persist the selection.
+ */
+
 export function LanguageSwitcher() {
   const { i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const currentLanguage = languages.find(l => l.code === i18n.language) || languages[0];
+  const currentLanguage =
+    languages.find((l) => l.code === i18n.language) || languages[0];
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     }
@@ -64,7 +77,9 @@ export function LanguageSwitcher() {
                 `}
               >
                 <span className="text-lg">{language.flag}</span>
-                <span className="flex-1 text-left text-white/80">{language.name}</span>
+                <span className="flex-1 text-left text-white/80">
+                  {language.name}
+                </span>
                 {i18n.language === language.code && (
                   <Check className="w-4 h-4 text-emerald-400" />
                 )}

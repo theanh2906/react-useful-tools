@@ -1,3 +1,8 @@
+/**
+ * @module main
+ * @description Application entry point. Mounts the React root, sets up React Query,
+ * React Router and the Toast provider.
+ */
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
@@ -7,6 +12,7 @@ import { ToastProvider } from '@/components/ui/Toast';
 import './i18n';
 import './index.css';
 
+/** Global React Query client with 5-minute stale time and single retry. */
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -24,5 +30,5 @@ createRoot(document.getElementById('root')!).render(
         <ToastProvider />
       </BrowserRouter>
     </QueryClientProvider>
-  </StrictMode>,
+  </StrictMode>
 );

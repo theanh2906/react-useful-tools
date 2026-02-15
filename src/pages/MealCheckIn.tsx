@@ -1,3 +1,8 @@
+/**
+ * @module MealCheckIn
+ * @description Meal check-in page with photo capture, daily calendar view
+ * and Firestore-backed meal logging.
+ */
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../stores/authStore';
@@ -6,25 +11,30 @@ import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Modal } from '../components/ui/Modal';
 import { Spinner } from '../components/ui/Spinner';
-import { 
-  ChevronLeft, 
-  ChevronRight, 
-  Camera, 
-  X, 
+import {
+  ChevronLeft,
+  ChevronRight,
+  Camera,
+  X,
   CheckCircle,
   Calendar as CalendarIcon,
-  Trash2
+  Trash2,
 } from 'lucide-react';
 
+/**
+ * Meal check-in page.
+ * Allows users to capture or upload meal photos, log meals for breakfast/lunch/dinner,
+ * and browse past check-ins on a calendar strip.
+ */
 export const MealCheckIn: React.FC = () => {
   const { t } = useTranslation();
   const { user } = useAuthStore();
-  const { 
-    checkIns, 
-    currentMonthStats, 
+  const {
+    checkIns,
+    currentMonthStats,
     isLoading,
     selectedCheckIn,
-    loadMonthCheckIns, 
+    loadMonthCheckIns,
     createCheckIn,
     deleteCheckIn,
     setSelectedCheckIn,
@@ -58,7 +68,7 @@ export const MealCheckIn: React.FC = () => {
   };
 
   const handleDateClick = (dateStr: string) => {
-    const checkIn = checkIns.find(c => c.date === dateStr);
+    const checkIn = checkIns.find((c) => c.date === dateStr);
     if (checkIn) {
       setSelectedCheckIn(checkIn);
       setShowImageModal(true);
@@ -125,17 +135,17 @@ export const MealCheckIn: React.FC = () => {
     const startingDayOfWeek = firstDay.getDay();
 
     const days: (number | null)[] = [];
-    
+
     // Add empty cells for days before the first day
     for (let i = 0; i < startingDayOfWeek; i++) {
       days.push(null);
     }
-    
+
     // Add days of the month
     for (let i = 1; i <= daysInMonth; i++) {
       days.push(i);
     }
-    
+
     return days;
   };
 
@@ -145,14 +155,16 @@ export const MealCheckIn: React.FC = () => {
 
   const hasCheckIn = (day: number): boolean => {
     const dateStr = getDateString(day);
-    return checkIns.some(c => c.date === dateStr);
+    return checkIns.some((c) => c.date === dateStr);
   };
 
   const isToday = (day: number): boolean => {
     const today = new Date();
-    return day === today.getDate() && 
-           month === today.getMonth() && 
-           year === today.getFullYear();
+    return (
+      day === today.getDate() &&
+      month === today.getMonth() &&
+      year === today.getFullYear()
+    );
   };
 
   const isFutureDate = (day: number): boolean => {
@@ -163,8 +175,18 @@ export const MealCheckIn: React.FC = () => {
   };
 
   const monthNames = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
   ];
 
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -172,7 +194,9 @@ export const MealCheckIn: React.FC = () => {
   if (!user) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p className="text-gray-600 dark:text-gray-400">{t('auth.pleaseLogin')}</p>
+        <p className="text-gray-600 dark:text-gray-400">
+          {t('auth.pleaseLogin')}
+        </p>
       </div>
     );
   }
@@ -197,7 +221,8 @@ export const MealCheckIn: React.FC = () => {
                 {t('mealCheckIn.monthlyProgress')}
               </h3>
               <p className="text-3xl font-bold text-green-600 dark:text-green-400">
-                {currentMonthStats.checkedInDays} / {currentMonthStats.totalDaysInMonth}
+                {currentMonthStats.checkedInDays} /{' '}
+                {currentMonthStats.totalDaysInMonth}
               </p>
               <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                 {currentMonthStats.percentage}% {t('mealCheckIn.complete')}
@@ -208,7 +233,7 @@ export const MealCheckIn: React.FC = () => {
             </div>
           </div>
           <div className="mt-4 bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
-            <div 
+            <div
               className="bg-green-600 dark:bg-green-400 h-full transition-all duration-500"
               style={{ width: `${currentMonthStats.percentage}%` }}
             />
@@ -217,27 +242,19 @@ export const MealCheckIn: React.FC = () => {
       )}
 
       {/* Calendar */}
-      <Card className='p-6'>
+      <Card className="p-6">
         {/* Calendar Header */}
         <div className="flex items-center justify-between mb-6">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handlePreviousMonth}
-          >
+          <Button variant="ghost" size="sm" onClick={handlePreviousMonth}>
             <ChevronLeft className="w-5 h-5" />
           </Button>
-          
+
           <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
             <CalendarIcon className="w-6 h-6" />
             {monthNames[month]} {year}
           </h2>
-          
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleNextMonth}
-          >
+
+          <Button variant="ghost" size="sm" onClick={handleNextMonth}>
             <ChevronRight className="w-5 h-5" />
           </Button>
         </div>
@@ -245,9 +262,9 @@ export const MealCheckIn: React.FC = () => {
         {/* Calendar Grid */}
         <div className="grid grid-cols-7 gap-2">
           {/* Week day headers */}
-          {weekDays.map(day => (
-            <div 
-              key={day} 
+          {weekDays.map((day) => (
+            <div
+              key={day}
               className="text-center font-semibold text-sm text-gray-600 dark:text-gray-400 py-2"
             >
               {day}
@@ -301,7 +318,8 @@ export const MealCheckIn: React.FC = () => {
         <div className="space-y-4">
           <div>
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-              {t('mealCheckIn.selectedDate')}: <span className="font-semibold">{selectedDate}</span>
+              {t('mealCheckIn.selectedDate')}:{' '}
+              <span className="font-semibold">{selectedDate}</span>
             </p>
           </div>
 
@@ -314,12 +332,12 @@ export const MealCheckIn: React.FC = () => {
               onChange={handleImageSelect}
               className="hidden"
             />
-            
+
             {previewUrl ? (
               <div className="relative">
-                <img 
-                  src={previewUrl} 
-                  alt="Preview" 
+                <img
+                  src={previewUrl}
+                  alt="Preview"
                   className="w-full h-64 object-cover rounded-lg"
                 />
                 <button
@@ -339,7 +357,9 @@ export const MealCheckIn: React.FC = () => {
                 className="w-full h-64 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg flex flex-col items-center justify-center hover:border-blue-400 dark:hover:border-blue-500 transition-colors"
               >
                 <Camera className="w-12 h-12 text-gray-400 mb-2" />
-                <p className="text-gray-600 dark:text-gray-400">{t('mealCheckIn.uploadImage')}</p>
+                <p className="text-gray-600 dark:text-gray-400">
+                  {t('mealCheckIn.uploadImage')}
+                </p>
                 <p className="text-sm text-gray-500 dark:text-gray-500 mt-1">
                   {t('mealCheckIn.maxSize')}
                 </p>
@@ -397,13 +417,14 @@ export const MealCheckIn: React.FC = () => {
           <div className="space-y-4">
             <div>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                {t('mealCheckIn.date')}: <span className="font-semibold">{selectedCheckIn.date}</span>
+                {t('mealCheckIn.date')}:{' '}
+                <span className="font-semibold">{selectedCheckIn.date}</span>
               </p>
             </div>
 
-            <img 
-              src={selectedCheckIn.imageUrl} 
-              alt="Check-in" 
+            <img
+              src={selectedCheckIn.imageUrl}
+              alt="Check-in"
               className="w-full rounded-lg"
             />
 

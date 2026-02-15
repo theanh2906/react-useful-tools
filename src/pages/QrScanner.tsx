@@ -1,11 +1,26 @@
+/**
+ * @module QrScannerPage
+ * @description QR code scanner that reads QR codes from uploaded images using jsQR.
+ */
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Camera, Image as ImageIcon, Copy, Check, Scan, AlertCircle } from 'lucide-react';
+import {
+  Camera,
+  Image as ImageIcon,
+  Copy,
+  Check,
+  Scan,
+  AlertCircle,
+} from 'lucide-react';
 import jsQR from 'jsqr';
 import { Card, Button, Badge } from '@/components/ui';
 import { cn } from '@/lib/utils';
 import { toast } from '@/components/ui/Toast';
 
+/**
+ * QR code scanner page.
+ * Allows users to upload or paste an image and decodes any embedded QR code.
+ */
 export function QrScannerPage() {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [result, setResult] = useState<string | null>(null);
@@ -69,9 +84,15 @@ export function QrScannerPage() {
   };
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="space-y-6"
+    >
       <div>
-        <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">QR Scanner</h1>
+        <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">
+          QR Scanner
+        </h1>
         <p className="text-slate-400 mt-1">Scan QR codes from images</p>
       </div>
 
@@ -81,7 +102,9 @@ export function QrScannerPage() {
             <div
               className={cn(
                 'border-2 border-dashed rounded-2xl p-8 text-center transition-all',
-                imageSrc ? 'border-primary-500/30 bg-primary-500/5' : 'border-white/10 hover:border-white/20'
+                imageSrc
+                  ? 'border-primary-500/30 bg-primary-500/5'
+                  : 'border-white/10 hover:border-white/20'
               )}
             >
               <div className="flex flex-col items-center gap-3">
@@ -102,7 +125,10 @@ export function QrScannerPage() {
                     if (file) handleImageUpload(file);
                   }}
                 />
-                <Button variant="secondary" onClick={() => fileInputRef.current?.click()}>
+                <Button
+                  variant="secondary"
+                  onClick={() => fileInputRef.current?.click()}
+                >
                   <Scan className="w-4 h-4" />
                   Choose Image
                 </Button>
@@ -121,7 +147,11 @@ export function QrScannerPage() {
                 <div className="space-y-3">
                   <p className="text-sm text-slate-300 break-all">{result}</p>
                   <Button size="sm" onClick={handleCopy}>
-                    {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                    {copied ? (
+                      <Check className="w-4 h-4" />
+                    ) : (
+                      <Copy className="w-4 h-4" />
+                    )}
                     {copied ? 'Copied' : 'Copy'}
                   </Button>
                 </div>
@@ -131,7 +161,9 @@ export function QrScannerPage() {
                   <span className="text-sm">{error}</span>
                 </div>
               ) : (
-                <p className="text-sm text-slate-500">Upload an image to scan.</p>
+                <p className="text-sm text-slate-500">
+                  Upload an image to scan.
+                </p>
               )}
             </div>
           </div>
@@ -142,12 +174,20 @@ export function QrScannerPage() {
         <Card className="p-4">
           <div className="flex items-center justify-between mb-3">
             <Badge variant="primary">Preview</Badge>
-            <Button variant="ghost" size="sm" onClick={() => scanImage(imageSrc)}>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => scanImage(imageSrc)}
+            >
               <Camera className="w-4 h-4" />
               Rescan
             </Button>
           </div>
-          <img src={imageSrc} alt="QR preview" className="max-h-[400px] w-full object-contain rounded-xl" />
+          <img
+            src={imageSrc}
+            alt="QR preview"
+            className="max-h-[400px] w-full object-contain rounded-xl"
+          />
         </Card>
       )}
     </motion.div>

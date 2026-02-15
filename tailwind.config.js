@@ -1,9 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'class',
   theme: {
     extend: {
@@ -45,7 +42,7 @@ export default {
         glass: {
           white: 'rgba(255, 255, 255, 0.1)',
           dark: 'rgba(0, 0, 0, 0.1)',
-        }
+        },
       },
       fontFamily: {
         display: ['Playfair Display', 'serif'],
@@ -54,16 +51,18 @@ export default {
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'gradient-conic':
+          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         'mesh-gradient': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        'aurora': 'linear-gradient(45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)',
-        'glass': 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))',
+        aurora: 'linear-gradient(45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)',
+        glass:
+          'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))',
       },
       animation: {
-        'float': 'float 6s ease-in-out infinite',
+        float: 'float 6s ease-in-out infinite',
         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'gradient': 'gradient 15s ease infinite',
-        'shimmer': 'shimmer 2s linear infinite',
+        gradient: 'gradient 15s ease infinite',
+        shimmer: 'shimmer 2s linear infinite',
         'bounce-slow': 'bounce 3s infinite',
         'slide-up': 'slideUp 0.5s ease-out',
         'slide-down': 'slideDown 0.5s ease-out',
@@ -101,8 +100,8 @@ export default {
         },
       },
       boxShadow: {
-        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
-        'glow': '0 0 20px rgba(217, 70, 239, 0.5)',
+        glass: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+        glow: '0 0 20px rgba(217, 70, 239, 0.5)',
         'glow-lg': '0 0 40px rgba(217, 70, 239, 0.6)',
         'inner-glow': 'inset 0 0 20px rgba(217, 70, 239, 0.3)',
       },
@@ -112,4 +111,4 @@ export default {
     },
   },
   plugins: [],
-}
+};

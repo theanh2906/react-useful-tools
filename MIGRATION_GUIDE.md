@@ -23,7 +23,9 @@
 ## 1. Tổng quan Project
 
 ### Mục đích
+
 **Useful Tools** là một ứng dụng web đa chức năng bao gồm:
+
 - 📅 **Calendar & Event Management**: Quản lý sự kiện với FullCalendar
 - 📝 **Notes**: Ghi chú với rich text editor (Quill)
 - 💾 **File Storage**: Upload/download files qua Firebase Storage hoặc Backend API
@@ -34,6 +36,7 @@
 - 🔗 **Live Share**: Chia sẻ realtime qua WebSocket
 
 ### Technical Highlights
+
 - **Framework**: Angular 18.2.7 (Standalone Components)
 - **State Management**: NgRx Store + NgRx Signals
 - **UI Libraries**: PrimeNG 17, Angular Material 18
@@ -237,20 +240,20 @@ src/
 // Các phương thức chính
 class AuthService {
   // Login với email/password (Firebase Auth)
-  login(config: LoginConfig): Observable<AuthResponseData>
-  
+  login(config: LoginConfig): Observable<AuthResponseData>;
+
   // Đăng ký tài khoản mới
-  signup(email: string, password: string): Observable<AuthResponseData>
-  
+  signup(email: string, password: string): Observable<AuthResponseData>;
+
   // Auto login từ session storage
-  autoLogin(expiredIn: number): Observable<boolean>
-  
+  autoLogin(expiredIn: number): Observable<boolean>;
+
   // Logout
-  logout(): void
-  
+  logout(): void;
+
   // Azure AD SSO Login
-  azureLogin(): void
-  
+  azureLogin(): void;
+
   // Google OAuth Login
   // Handled via gapi.auth2
 }
@@ -264,7 +267,7 @@ interface User {
   email: string;
   _token: string;
   tokenExpirationIn: number;
-  
+
   get token(): string | null;
   get tokenDuration(): number;
 }
@@ -277,7 +280,7 @@ enum LoginMethod {
   NONE = 0,
   CREDENTIAL = 1,
   GOOGLE = 2,
-  AZURE = 3
+  AZURE = 3,
 }
 
 interface AuthResponseData {
@@ -326,7 +329,9 @@ class LiveShareGuard implements CanActivate {
 ```
 
 ### 4.5 Migration Notes
+
 Khi migrate sang framework khác, cần implement:
+
 - Firebase Authentication integration
 - Google OAuth 2.0 flow
 - Azure AD MSAL flow
@@ -355,7 +360,7 @@ const reducers = {
   notes: notesReducer,
   events: eventsReducer,
   notification: notificationReducer,
-  data: dataReducer
+  data: dataReducer,
 };
 ```
 
@@ -426,12 +431,14 @@ const EventStore = signalStore(
 ```
 
 #### Dashboard Store (`src/app/signals/store/dashboard.store.ts`)
+
 - Computed values cho pregnancy tracking
 - Live countdown timer
 - Chart data preparation
 - Stats aggregation
 
 #### Files Store, Notes Store, System Store
+
 - Similar pattern với signalStore
 
 ### 5.3 Action Types
@@ -444,11 +451,12 @@ enum ActionType {
   SYNC = 'SYNC',
   EDIT = 'EDIT',
   CANCEL_EDITING = 'CANCEL_EDITING',
-  NONE = 'NONE'
+  NONE = 'NONE',
 }
 ```
 
 ### 5.4 Migration Notes
+
 - Redux, Zustand, Pinia, hoặc MobX là các alternatives
 - Cần maintain reactive updates khi state thay đổi
 - Effect system để handle side effects (API calls)
@@ -468,10 +476,10 @@ class BaseService {
   protected activatedRoute = inject(ActivatedRoute);
   protected store = inject(Store);
   protected spinner = inject(NgxSpinnerService);
-  
+
   // Observable subject for data
   public _subject = new BehaviorSubject<any>(null);
-  
+
   get apiUrl() {
     return this.utils.getApiUrl(); // Cloud hoặc Remote
   }
@@ -492,11 +500,11 @@ interface Note {
 }
 
 class NotesService {
-  addNote(note: Note): Observable<Note>
-  getAllNotes(): Observable<Note[]>
-  deleteNote(id: string): Observable<void>
-  editNote(note: Note): Observable<void>
-  syncNotes(): Observable<Note[]> // Sync từ Firebase
+  addNote(note: Note): Observable<Note>;
+  getAllNotes(): Observable<Note[]>;
+  deleteNote(id: string): Observable<void>;
+  editNote(note: Note): Observable<void>;
+  syncNotes(): Observable<Note[]>; // Sync từ Firebase
 }
 ```
 
@@ -518,16 +526,16 @@ interface EventData {
 }
 
 class EventService {
-  getEventEntries(): Observable<EventData[]>
-  getEventsByCategory(category: string): Observable<EventData[]>
-  getEventsInDateRange(start, end): Observable<EventData[]>
-  getUpcomingEvents(): Observable<EventData[]> // Next 30 days
-  addEvent(entry: EventData): Observable<void>
-  updateEvent(entry: EventData): Observable<void>
-  deleteEvent(entryId: string): Observable<void>
-  formatEventsForCalendar(events): FullCalendarEvent[]
-  getCategories(): Observable<EventCategory[]>
-  getTags(): Observable<EventTag[]>
+  getEventEntries(): Observable<EventData[]>;
+  getEventsByCategory(category: string): Observable<EventData[]>;
+  getEventsInDateRange(start, end): Observable<EventData[]>;
+  getUpcomingEvents(): Observable<EventData[]>; // Next 30 days
+  addEvent(entry: EventData): Observable<void>;
+  updateEvent(entry: EventData): Observable<void>;
+  deleteEvent(entryId: string): Observable<void>;
+  formatEventsForCalendar(events): FullCalendarEvent[];
+  getCategories(): Observable<EventCategory[]>;
+  getTags(): Observable<EventTag[]>;
 }
 ```
 
@@ -563,18 +571,18 @@ interface SoyaData {
 // Baby enum
 enum Baby {
   Peanut = 'peanut',
-  Soya = 'soya'
+  Soya = 'soya',
 }
 
 class BabyService {
-  getBabyDataEntries(baby: Baby): Observable<BabyData[]>
-  addBabyData(entry: BabyData, baby: Baby): Observable<void>
-  updateBabyData(entry: BabyData, baby: Baby): Observable<void>
-  deleteBabyData(entryId: string, baby: Baby): Observable<void>
-  getSoyaDataEntries(): Observable<SoyaData[]>
-  calculateBMI(weight, height): number
-  getBMICategory(bmi): string
-  uploadUltrasoundImage(file: File): Observable<string> // Returns URL
+  getBabyDataEntries(baby: Baby): Observable<BabyData[]>;
+  addBabyData(entry: BabyData, baby: Baby): Observable<void>;
+  updateBabyData(entry: BabyData, baby: Baby): Observable<void>;
+  deleteBabyData(entryId: string, baby: Baby): Observable<void>;
+  getSoyaDataEntries(): Observable<SoyaData[]>;
+  calculateBMI(weight, height): number;
+  getBMICategory(bmi): string;
+  uploadUltrasoundImage(file: File): Observable<string>; // Returns URL
 }
 ```
 
@@ -594,17 +602,17 @@ interface FileFolder {
 }
 
 class StorageService {
-  upload(formData: FormData): Observable<UploadResult>
-  getAllFiles(): Observable<FileInfo[]>
-  downloadFile(path: string): void
-  deleteFiles(paths: string[]): Observable<void>
-  editFileName(oldPath, newName): Observable<void>
-  editFolderName(oldPath, newName): Observable<void>
-  createZip(formData: FormData): Observable<Blob>
-  
+  upload(formData: FormData): Observable<UploadResult>;
+  getAllFiles(): Observable<FileInfo[]>;
+  downloadFile(path: string): void;
+  deleteFiles(paths: string[]): Observable<void>;
+  editFileName(oldPath, newName): Observable<void>;
+  editFolderName(oldPath, newName): Observable<void>;
+  createZip(formData: FormData): Observable<Blob>;
+
   // Firebase Storage methods (private)
-  uploadToFirebase(formData): Observable<UploadResult>
-  getAllFilesFromFirebase(): Observable<FileInfo[]>
+  uploadToFirebase(formData): Observable<UploadResult>;
+  getAllFilesFromFirebase(): Observable<FileInfo[]>;
 }
 ```
 
@@ -612,10 +620,10 @@ class StorageService {
 
 ```typescript
 class WeatherService {
-  buildQuery(place: string): void
-  buildCoordsQuery(lat: number, lng: number): void
-  forecast(): Observable<WeatherInfo>
-  getPlaceWeather(place: string): Observable<WeatherInfo>
+  buildQuery(place: string): void;
+  buildCoordsQuery(lat: number, lng: number): void;
+  forecast(): Observable<WeatherInfo>;
+  getPlaceWeather(place: string): Observable<WeatherInfo>;
 }
 ```
 
@@ -624,25 +632,25 @@ class WeatherService {
 ```typescript
 class JenkinsService {
   // SSE Monitoring
-  startSSEMonitoring(): void
-  stopSSEMonitoring(): void
-  
+  startSSEMonitoring(): void;
+  stopSSEMonitoring(): void;
+
   // Observable streams
-  jobs$: Observable<JenkinsJob[]>
-  status$: Observable<JenkinsStatus>
-  health$: Observable<JenkinsHealth>
-  queue$: Observable<JenkinsQueue>
-  connectionStatus$: Observable<'connected' | 'disconnected' | 'error'>
-  
+  jobs$: Observable<JenkinsJob[]>;
+  status$: Observable<JenkinsStatus>;
+  health$: Observable<JenkinsHealth>;
+  queue$: Observable<JenkinsQueue>;
+  connectionStatus$: Observable<'connected' | 'disconnected' | 'error'>;
+
   // API Methods
-  getJobs(): Observable<JenkinsJob[]>
-  getJobDetails(jobName): Observable<JenkinsJobDetails>
-  getJobBuilds(jobName, limit): Observable<JenkinsBuild[]>
-  triggerBuild(jobName, parameters?): Observable<BuildResponse>
-  getBuildConsoleOutput(jobName, buildNumber): Observable<ConsoleOutput>
-  streamBuildLog(jobName, buildNumber): Observable<LogData>
-  stopBuild(jobName, buildNumber): Observable<void>
-  getMetricCards(status, jobs): JenkinsMetricCard[]
+  getJobs(): Observable<JenkinsJob[]>;
+  getJobDetails(jobName): Observable<JenkinsJobDetails>;
+  getJobBuilds(jobName, limit): Observable<JenkinsBuild[]>;
+  triggerBuild(jobName, parameters?): Observable<BuildResponse>;
+  getBuildConsoleOutput(jobName, buildNumber): Observable<ConsoleOutput>;
+  streamBuildLog(jobName, buildNumber): Observable<LogData>;
+  stopBuild(jobName, buildNumber): Observable<void>;
+  getMetricCards(status, jobs): JenkinsMetricCard[];
 }
 ```
 
@@ -673,14 +681,14 @@ interface RoomFile {
 }
 
 class LiveShareService {
-  createRoom(): Observable<{ roomId: string }>
-  getRoom(roomId): Observable<Room>
-  getRoomContent(roomId): Observable<RoomContent[]>
-  addMessage(roomId, content): Observable<RoomMessage>
-  uploadFile(roomId, file): Observable<RoomFile>
-  deleteRoom(roomId): Observable<void>
-  getOrCreateAdminRoom(): Observable<{ roomId: string }>
-  clearHistory(roomId): Observable<void>
+  createRoom(): Observable<{ roomId: string }>;
+  getRoom(roomId): Observable<Room>;
+  getRoomContent(roomId): Observable<RoomContent[]>;
+  addMessage(roomId, content): Observable<RoomMessage>;
+  uploadFile(roomId, file): Observable<RoomFile>;
+  deleteRoom(roomId): Observable<void>;
+  getOrCreateAdminRoom(): Observable<{ roomId: string }>;
+  clearHistory(roomId): Observable<void>;
 }
 ```
 
@@ -688,12 +696,12 @@ class LiveShareService {
 
 ```typescript
 class SocketService {
-  connect(): void
-  disconnect(): void
-  emit(eventName: string, body?: any): void
-  emitWithAck(eventName, body): Observable<any>
-  on<T>(event: string): Observable<T>
-  sendMessage(message: string): void
+  connect(): void;
+  disconnect(): void;
+  emit(eventName: string, body?: any): void;
+  emitWithAck(eventName, body): Observable<any>;
+  on<T>(event: string): Observable<T>;
+  sendMessage(message: string): void;
 }
 ```
 
@@ -701,19 +709,19 @@ class SocketService {
 
 ```typescript
 class UtilsService {
-  get isMobile(): boolean
-  mediaMatch(maxWidth: number): boolean
-  getApiUrl(): string
-  getRemoteApiUrl(): string
-  isCloud(): boolean
-  isProduction(): boolean
-  showErrorMessage(message: string): void
-  showSuccessMessage(message: string): void
-  replacePlaceHolder(template, values): string
-  formatUrlFragment<T>(fragment): T
-  sortAscBy<T>(arr, field, order): T[]
-  cssClassParsing(elementRef, renderer): void
-  sleep(ms): Promise<void>
+  get isMobile(): boolean;
+  mediaMatch(maxWidth: number): boolean;
+  getApiUrl(): string;
+  getRemoteApiUrl(): string;
+  isCloud(): boolean;
+  isProduction(): boolean;
+  showErrorMessage(message: string): void;
+  showSuccessMessage(message: string): void;
+  replacePlaceHolder(template, values): string;
+  formatUrlFragment<T>(fragment): T;
+  sortAscBy<T>(arr, field, order): T[];
+  cssClassParsing(elementRef, renderer): void;
+  sleep(ms): Promise<void>;
   // ... more utilities
 }
 ```
@@ -866,7 +874,7 @@ enum RecurrenceCycle {
   QUARTERLY = 'QUARTERLY',
   YEARLY = 'YEARLY',
   BIENNIAL = 'BIENNIAL',
-  CUSTOM = 'CUSTOM'
+  CUSTOM = 'CUSTOM',
 }
 
 interface EventCategory {
@@ -928,17 +936,21 @@ const routes: Routes = [
   { path: 'monitor', component: MonitorComponent },
   { path: 'terminal', component: TerminalComponent },
   { path: 'crypto', component: CryptoComponent },
-  
+
   // Protected Routes (require AuthGuard)
   { path: 'invoice', component: InvoiceComponent, canActivate: [AuthGuard] },
   { path: 'notes', component: NotesComponent, canActivate: [AuthGuard] },
-  
+
   // Live Share Routes
-  { path: 'live-share', component: LiveShareComponent, canActivate: [LiveShareGuard] },
+  {
+    path: 'live-share',
+    component: LiveShareComponent,
+    canActivate: [LiveShareGuard],
+  },
   { path: 'live-share/room/:roomId', component: LiveShareRoomComponent },
-  
+
   // Fallback/Dynamic Route
-  { path: ':token', component: ChangeCaseComponent }
+  { path: ':token', component: ChangeCaseComponent },
 ];
 ```
 
@@ -972,7 +984,7 @@ canActivate(route, state) {
 @Component({
   selector: 'app-base',
   standalone: true,
-  template: ''
+  template: '',
 })
 class BaseComponent {
   protected messageService = inject(MessageService);
@@ -985,6 +997,7 @@ class BaseComponent {
 ```
 
 ### 9.2 Dashboard Component
+
 - Pregnancy progress tracking
 - Live countdown to EDD
 - Stats: baby records, events, ultrasounds, foods
@@ -992,6 +1005,7 @@ class BaseComponent {
 - Quick navigation cards
 
 ### 9.3 Calendar Component (FullCalendar integration)
+
 - Month/Week/Day views
 - Event CRUD operations
 - Category/Tag filtering
@@ -1000,6 +1014,7 @@ class BaseComponent {
 - Mobile responsive sidebar
 
 ### 9.4 Storage Component
+
 - File upload (drag & drop)
 - Firebase Storage integration
 - File preview (images, PDFs, Office docs)
@@ -1008,24 +1023,28 @@ class BaseComponent {
 - File rename
 
 ### 9.5 Notes Component
+
 - Rich text editor (Quill)
 - Categories support
 - Search & filter
 - CRUD operations
 
 ### 9.6 Monitor Component
+
 - Device monitoring via STOMP/RabbitMQ
 - Jenkins jobs monitoring via SSE
 - Kafka cluster monitoring
 - Real-time updates
 
 ### 9.7 Weather Component
+
 - Visual Crossing API integration
 - Location search
 - 7-day forecast
 - Geolocation support
 
 ### 9.8 Baby Tracking Components
+
 - Peanut & Soya tracking
 - BMI calculator
 - Growth charts
@@ -1074,9 +1093,9 @@ eventSource.onerror = (error) => {
 
 ```typescript
 class StompService {
-  connect(): void
-  publish(destination: string, body: any): void
-  subscribe(destination: string): Observable<Message>
+  connect(): void;
+  publish(destination: string, body: any): void;
+  subscribe(destination: string): Observable<Message>;
 }
 ```
 
@@ -1100,7 +1119,7 @@ const listResult = await listAll(folderRef);
 await deleteObject(fileRef);
 
 // Rename (copy + delete old)
-const blob = await fetch(downloadURL).then(r => r.blob());
+const blob = await fetch(downloadURL).then((r) => r.blob());
 await uploadBytes(newFileRef, blob);
 await deleteObject(oldFileRef);
 ```
@@ -1131,14 +1150,14 @@ src/assets/i18n/
 class I18nService {
   supportedLanguages = [
     { code: 'en', name: 'English', flag: '🇺🇸' },
-    { code: 'vi', name: 'Tiếng Việt', flag: '🇻🇳' }
+    { code: 'vi', name: 'Tiếng Việt', flag: '🇻🇳' },
   ];
-  
-  setLanguage(code: string): void
-  getCurrentLanguage(): string
-  translate$(key: string, params?): Observable<string>
-  translateSync(key: string, params?): string
-  switchLanguage(): void
+
+  setLanguage(code: string): void;
+  getCurrentLanguage(): string;
+  translate$(key: string, params?): Observable<string>;
+  translateSync(key: string, params?): string;
+  switchLanguage(): void;
 }
 ```
 
@@ -1184,62 +1203,63 @@ const environment = {
   cloud: false,
   rabbitMQEnabled: false,
   kafkaMockMode: false,
-  
+
   server: {
     cloudUrl: 'https://useful-tools-api-default-rtdb.firebaseio.com',
-    apiUrl: 'http://localhost:3000/api'
+    apiUrl: 'http://localhost:3000/api',
   },
-  
+
   webApiKey: 'AIzaSy...',
-  
+
   fshare: {
-    apiUrl: 'http://localhost:8081'
+    apiUrl: 'http://localhost:8081',
   },
-  
+
   facebook: {
-    appId: '1070009906931041'
+    appId: '1070009906931041',
   },
-  
+
   google: {
     oauth: {
       clientId: '740845971597-...',
       clientSecret: 'GOCSPX-...',
-      redirectURI: 'http://localhost:4200'
-    }
+      redirectURI: 'http://localhost:4200',
+    },
   },
-  
+
   azure: {
     clientId: '48447683-...',
     tenantId: '90d076c5-...',
     redirectURI: 'http://localhost:4200',
-    ssoUrl: 'https://login.microsoftonline.com/:tenantId/oauth2/v2.0/authorize?...',
+    ssoUrl:
+      'https://login.microsoftonline.com/:tenantId/oauth2/v2.0/authorize?...',
     serviceBus: {
       connectionString: 'Endpoint=sb://...',
       namespace: 'theanh2906',
-      queueName: 'benna'
-    }
+      queueName: 'benna',
+    },
   },
-  
+
   visualCrossing: {
     apiKey: 'W9ZMQH9J9C95VMW3EFA7XLNXB',
-    apiUrl: 'https://weather.visualcrossing.com/...'
+    apiUrl: 'https://weather.visualcrossing.com/...',
   },
-  
+
   wsEndpoint: 'http://localhost:3000',
   storageLocation: 'storage',
   useFirebaseStorage: true,
-  
+
   firebase: {
     apiKey: 'AIzaSy...',
     authDomain: 'useful-tools-api.firebaseapp.com',
     projectId: 'useful-tools-api',
     storageBucket: 'useful-tools-api.firebasestorage.app',
     messagingSenderId: 740845971597,
-    appId: '1:740845971597:web:...'
+    appId: '1:740845971597:web:...',
   },
-  
+
   vapidPublicKey: 'BMfGjKkOd44...',
-  rabbitMQStompUrl: 'ws://localhost:15674/ws'
+  rabbitMQStompUrl: 'ws://localhost:15674/ws',
 };
 ```
 
@@ -1281,7 +1301,7 @@ services:
         - BUILD_ENV=production
     container_name: useful-tools
     ports:
-      - "80:80"
+      - '80:80'
     restart: always
 ```
 
@@ -1308,6 +1328,7 @@ docker-compose up -d
 ## 15. Feature Migration Checklist
 
 ### ✅ Core Features
+
 - [ ] Authentication (Firebase/Google/Azure)
 - [ ] Route guards
 - [ ] HTTP interceptors
@@ -1315,6 +1336,7 @@ docker-compose up -d
 - [ ] i18n support
 
 ### ✅ UI Components
+
 - [ ] Navigation/Menu bar
 - [ ] Dialog/Modal system
 - [ ] Toast notifications
@@ -1323,6 +1345,7 @@ docker-compose up -d
 - [ ] Forms & validation
 
 ### ✅ Pages
+
 - [ ] Dashboard with pregnancy tracking
 - [ ] Calendar with FullCalendar
 - [ ] Notes with rich text editor
@@ -1337,11 +1360,13 @@ docker-compose up -d
 - [ ] Live share rooms
 
 ### ✅ Real-time Features
+
 - [ ] WebSocket connection
 - [ ] Server-Sent Events
 - [ ] STOMP/RabbitMQ integration
 
 ### ✅ External Integrations
+
 - [ ] Firebase Realtime Database
 - [ ] Firebase Storage
 - [ ] Firebase Cloud Messaging
@@ -1350,6 +1375,7 @@ docker-compose up -d
 - [ ] Kafka monitoring
 
 ### ✅ Styling
+
 - [ ] PrimeNG components → Alternative UI library
 - [ ] SCSS themes
 - [ ] Responsive design

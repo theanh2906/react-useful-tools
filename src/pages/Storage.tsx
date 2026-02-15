@@ -1,9 +1,26 @@
+/**
+ * @module StoragePage
+ * @description Firebase Cloud Storage browser with folder navigation,
+ * file upload/download and preview capabilities.
+ */
 import { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Upload, Download, Trash2, Search, Eye,
-  Folder, File, Image, Video, Music, FileText, 
-  Archive, ChevronRight, HardDrive, ArrowLeft
+import {
+  Upload,
+  Download,
+  Trash2,
+  Search,
+  Eye,
+  Folder,
+  File,
+  Image,
+  Video,
+  Music,
+  FileText,
+  Archive,
+  ChevronRight,
+  HardDrive,
+  ArrowLeft,
 } from 'lucide-react';
 import { Card, Button, Modal, ModalFooter } from '@/components/ui';
 import { cn } from '@/lib/utils';
@@ -12,12 +29,17 @@ import { listFiles, uploadFile, deleteFile } from '@/services/storageService';
 import type { FileInfo } from '@/types';
 import { toast } from '@/components/ui/Toast';
 
-// Actual folders from Firebase Storage
+/** Root-level folders exposed from Firebase Storage. */
 const FOLDERS = [
   { name: 'rooms', label: 'Rooms' },
   { name: 'ultrasound_images', label: 'Ultrasound Images' },
 ];
 
+/**
+ * Cloud storage browser page.
+ * Displays a folder/file tree from Firebase Storage with upload, download,
+ * preview and delete operations.
+ */
 export function StoragePage() {
   const [files, setFiles] = useState<FileInfo[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -30,7 +52,7 @@ export function StoragePage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
 
-  const filteredFiles = files.filter(f => 
+  const filteredFiles = files.filter((f) =>
     f.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -100,7 +122,7 @@ export function StoragePage() {
 
   const handleUpload = async (fileList: FileList | null) => {
     if (!fileList || fileList.length === 0) return;
-    
+
     setIsUploading(true);
     try {
       const selected = Array.from(fileList);
@@ -118,14 +140,20 @@ export function StoragePage() {
   const getFileIcon = (type: string) => {
     const fileType = type.split('/')[0];
     switch (fileType) {
-      case 'image': return <Image className="w-5 h-5 text-purple-400" />;
-      case 'video': return <Video className="w-5 h-5 text-blue-400" />;
-      case 'audio': return <Music className="w-5 h-5 text-pink-400" />;
+      case 'image':
+        return <Image className="w-5 h-5 text-purple-400" />;
+      case 'video':
+        return <Video className="w-5 h-5 text-blue-400" />;
+      case 'audio':
+        return <Music className="w-5 h-5 text-pink-400" />;
       case 'application':
-        if (type.includes('pdf')) return <FileText className="w-5 h-5 text-red-400" />;
-        if (type.includes('zip') || type.includes('rar')) return <Archive className="w-5 h-5 text-amber-400" />;
+        if (type.includes('pdf'))
+          return <FileText className="w-5 h-5 text-red-400" />;
+        if (type.includes('zip') || type.includes('rar'))
+          return <Archive className="w-5 h-5 text-amber-400" />;
         return <File className="w-5 h-5 text-slate-400" />;
-      default: return <File className="w-5 h-5 text-slate-400" />;
+      default:
+        return <File className="w-5 h-5 text-slate-400" />;
     }
   };
 
@@ -146,7 +174,9 @@ export function StoragePage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">Storage</h1>
+          <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">
+            Storage
+          </h1>
           <p className="text-slate-400 mt-1">Manage your files and documents</p>
         </div>
         <Button onClick={() => setShowUploadModal(true)}>
@@ -161,7 +191,9 @@ export function StoragePage() {
           <div className="flex items-center gap-2">
             <HardDrive className="w-4 h-4 text-primary-400" />
             <div>
-              <p className="text-lg font-bold text-white">{formatFileSize(totalSize)}</p>
+              <p className="text-lg font-bold text-white">
+                {formatFileSize(totalSize)}
+              </p>
               <p className="text-xs text-slate-500">Used</p>
             </div>
           </div>
@@ -186,18 +218,20 @@ export function StoragePage() {
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-sm flex-1">
             {currentPath && (
-              <button 
+              <button
                 onClick={() => setCurrentPath('')}
                 className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" />
               </button>
             )}
-            <button 
+            <button
               onClick={() => setCurrentPath('')}
               className={cn(
-                "transition-colors",
-                currentPath ? "text-slate-400 hover:text-white" : "text-white font-medium"
+                'transition-colors',
+                currentPath
+                  ? 'text-slate-400 hover:text-white'
+                  : 'text-white font-medium'
               )}
             >
               Storage
@@ -258,10 +292,16 @@ export function StoragePage() {
                   <div className="w-9 h-9 rounded-lg bg-amber-500/20 flex items-center justify-center shrink-0">
                     <Folder className="w-5 h-5 text-amber-400" />
                   </div>
-                  <span className="font-medium text-white truncate">{folder.label}</span>
+                  <span className="font-medium text-white truncate">
+                    {folder.label}
+                  </span>
                 </div>
-                <div className="hidden sm:flex sm:col-span-2 items-center text-sm text-slate-500">—</div>
-                <div className="hidden sm:flex sm:col-span-2 items-center text-sm text-slate-500">—</div>
+                <div className="hidden sm:flex sm:col-span-2 items-center text-sm text-slate-500">
+                  —
+                </div>
+                <div className="hidden sm:flex sm:col-span-2 items-center text-sm text-slate-500">
+                  —
+                </div>
                 <div className="hidden sm:flex sm:col-span-2 items-center justify-end">
                   <ChevronRight className="w-4 h-4 text-slate-500" />
                 </div>
@@ -281,8 +321,8 @@ export function StoragePage() {
                 exit={{ opacity: 0 }}
                 transition={{ delay: i * 0.02 }}
                 className={cn(
-                  "grid grid-cols-12 gap-4 px-4 py-3 hover:bg-white/5 transition-colors border-b border-white/5 last:border-b-0",
-                  isPreviewable(file) && "cursor-pointer"
+                  'grid grid-cols-12 gap-4 px-4 py-3 hover:bg-white/5 transition-colors border-b border-white/5 last:border-b-0',
+                  isPreviewable(file) && 'cursor-pointer'
                 )}
                 onClick={() => handlePreview(file)}
               >
@@ -292,7 +332,9 @@ export function StoragePage() {
                     {getFileIcon(file.type)}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="font-medium text-white truncate">{file.name}</p>
+                    <p className="font-medium text-white truncate">
+                      {file.name}
+                    </p>
                     <p className="text-xs text-slate-500 sm:hidden">
                       {formatFileSize(file.size)} • {formatDate(file.createdAt)}
                     </p>
@@ -352,11 +394,14 @@ export function StoragePage() {
         )}
 
         {/* Empty State for root with no files (but has folders) */}
-        {!isLoading && filteredFiles.length === 0 && currentPath === '' && FOLDERS.length > 0 && (
-          <div className="p-6 text-center border-t border-white/5">
-            <p className="text-slate-500 text-sm">No files at root level</p>
-          </div>
-        )}
+        {!isLoading &&
+          filteredFiles.length === 0 &&
+          currentPath === '' &&
+          FOLDERS.length > 0 && (
+            <div className="p-6 text-center border-t border-white/5">
+              <p className="text-slate-500 text-sm">No files at root level</p>
+            </div>
+          )}
       </Card>
 
       {/* Upload Modal */}
@@ -369,14 +414,18 @@ export function StoragePage() {
         <div className="space-y-4">
           <div className="border-2 border-dashed border-white/20 rounded-xl p-6 text-center hover:border-primary-500/50 transition-colors">
             <Upload className="w-10 h-10 text-slate-500 mx-auto mb-3" />
-            <p className="text-white font-medium mb-1">Choose files to upload</p>
-            <p className="text-sm text-slate-400 mb-4">
-              {currentPath ? `Uploading to: ${currentPath}/` : 'Uploading to: root'}
+            <p className="text-white font-medium mb-1">
+              Choose files to upload
             </p>
-            <input 
-              type="file" 
-              multiple 
-              className="hidden" 
+            <p className="text-sm text-slate-400 mb-4">
+              {currentPath
+                ? `Uploading to: ${currentPath}/`
+                : 'Uploading to: root'}
+            </p>
+            <input
+              type="file"
+              multiple
+              className="hidden"
               id="file-upload"
               onChange={(e) => handleUpload(e.target.files)}
             />
@@ -397,7 +446,7 @@ export function StoragePage() {
             </label>
           </div>
         </div>
-        
+
         <ModalFooter>
           <Button variant="secondary" onClick={() => setShowUploadModal(false)}>
             Close
@@ -417,15 +466,15 @@ export function StoragePage() {
             {/* Preview Content */}
             <div className="bg-black/30 rounded-xl overflow-hidden flex items-center justify-center min-h-[300px] max-h-[60vh]">
               {previewFile.type.startsWith('image') && previewFile.url ? (
-                <img 
-                  src={previewFile.url} 
+                <img
+                  src={previewFile.url}
                   alt={previewFile.name}
                   className="max-w-full max-h-[60vh] object-contain"
                 />
               ) : previewFile.type === 'application/pdf' && previewFile.url ? (
-                <iframe 
-                  src={previewFile.url} 
-                  className="w-full h-[60vh]" 
+                <iframe
+                  src={previewFile.url}
+                  className="w-full h-[60vh]"
                   title={previewFile.name}
                 />
               ) : (
@@ -435,30 +484,46 @@ export function StoragePage() {
                 </div>
               )}
             </div>
-            
+
             {/* File Info */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
               <div className="p-3 bg-white/5 rounded-lg">
                 <p className="text-slate-500 text-xs">Size</p>
-                <p className="text-white font-medium">{formatFileSize(previewFile.size)}</p>
+                <p className="text-white font-medium">
+                  {formatFileSize(previewFile.size)}
+                </p>
               </div>
               <div className="p-3 bg-white/5 rounded-lg">
                 <p className="text-slate-500 text-xs">Type</p>
-                <p className="text-white font-medium truncate">{previewFile.type}</p>
+                <p className="text-white font-medium truncate">
+                  {previewFile.type}
+                </p>
               </div>
               <div className="p-3 bg-white/5 rounded-lg col-span-2">
                 <p className="text-slate-500 text-xs">Created</p>
-                <p className="text-white font-medium">{formatDate(previewFile.createdAt)}</p>
+                <p className="text-white font-medium">
+                  {formatDate(previewFile.createdAt)}
+                </p>
               </div>
             </div>
           </div>
         )}
-        
+
         <ModalFooter>
-          <Button variant="secondary" onClick={() => setShowPreviewModal(false)}>
+          <Button
+            variant="secondary"
+            onClick={() => setShowPreviewModal(false)}
+          >
             Close
           </Button>
-          <Button onClick={() => previewFile && handleDownload(previewFile, { stopPropagation: () => {} } as React.MouseEvent)}>
+          <Button
+            onClick={() =>
+              previewFile &&
+              handleDownload(previewFile, {
+                stopPropagation: () => {},
+              } as React.MouseEvent)
+            }
+          >
             <Download className="w-4 h-4" />
             Download
           </Button>
@@ -477,11 +542,16 @@ export function StoragePage() {
             <Trash2 className="w-6 h-6 text-red-400" />
           </div>
           <p className="text-white mb-2">Are you sure you want to delete?</p>
-          <p className="text-slate-400 text-sm truncate px-4">"{fileToDelete?.name}"</p>
+          <p className="text-slate-400 text-sm truncate px-4">
+            "{fileToDelete?.name}"
+          </p>
         </div>
-        
+
         <ModalFooter>
-          <Button variant="secondary" onClick={() => setShowDeleteConfirm(false)}>
+          <Button
+            variant="secondary"
+            onClick={() => setShowDeleteConfirm(false)}
+          >
             Cancel
           </Button>
           <Button variant="danger" onClick={confirmDelete}>

@@ -10,6 +10,7 @@ A beautiful, modern React application for pregnancy tracking and productivity to
 ## ✨ Features
 
 ### 🍼 Baby & Family
+
 - **Dashboard** - Pregnancy progress tracking with live countdown
 - **Baby Tracker** - Track growth for both pregnancy (Soya) and born baby (Peanut)
 - **Calendar** - Event management with FullCalendar integration
@@ -18,11 +19,13 @@ A beautiful, modern React application for pregnancy tracking and productivity to
 - **Timeline** - Visual journey of your pregnancy
 
 ### 📋 Productivity
+
 - **Notes** - Rich text notes with categories
 - **Storage** - Cloud file management with Firebase Storage
 - **Live Share** - Real-time file/text sharing
 
 ### 🔧 Utilities
+
 - **Weather** - 7-day forecast with Visual Crossing API
 - **QR Scanner/Generator** - Scan and create QR codes
 - **Crypto Tools** - Text encryption/decryption
@@ -32,7 +35,7 @@ A beautiful, modern React application for pregnancy tracking and productivity to
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - npm or yarn
 
 ### Installation
@@ -89,6 +92,7 @@ src/
 ## 📱 Mobile-First Design
 
 The app is built with a mobile-first approach:
+
 - Responsive navigation with slide-out sidebar
 - Touch-friendly interactions
 - Optimized for various screen sizes
@@ -97,6 +101,7 @@ The app is built with a mobile-first approach:
 ## 🔐 Authentication
 
 Supports multiple authentication methods:
+
 - Email/Password (Firebase Auth)
 - Google OAuth 2.0
 - Microsoft Azure AD SSO

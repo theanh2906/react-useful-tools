@@ -1,11 +1,16 @@
+/**
+ * @module App
+ * @description Root application component that defines all routes and initialises
+ * authentication / profile listeners.
+ */
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from '@/components/layout';
 import { GlobalLoading } from '@/components/ui';
-import { 
-  Dashboard, 
-  CalendarPage, 
-  NotesPage, 
-  WeatherPage, 
+import {
+  Dashboard,
+  CalendarPage,
+  NotesPage,
+  WeatherPage,
   BabyTrackerPage,
   AuthPage,
   StoragePage,
@@ -19,26 +24,42 @@ import {
   SystemMonitorPage,
   ChangeCasePage,
   ZipToolPage,
-  MealCheckInPage
+  MealCheckInPage,
 } from '@/pages';
 import { useAuthStore } from '@/stores/authStore';
 import { useAppStore } from '@/stores/appStore';
 import { useEffect } from 'react';
 
-// Protected Route Component
+/**
+ * Route guard that redirects unauthenticated users to `/auth`.
+ *
+ * @param children - The protected page content.
+ */
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated } = useAuthStore();
-  
+
   if (!isAuthenticated) {
     return <Navigate to="/auth" replace />;
   }
-  
+
   return <>{children}</>;
 }
 
-
+/**
+ * Root `<App />` component.
+ *
+ * Responsibilities:
+ * - Checks and refreshes token expiration on mount (every 60 s).
+ * - Subscribes to Firebase Auth state changes.
+ * - Subscribes to the user profile document in Firestore.
+ * - Renders the global loading overlay and all application routes.
+ */
 export default function App() {
-  const { checkTokenExpiration, initAuthListener, isLoading: authLoading } = useAuthStore();
+  const {
+    checkTokenExpiration,
+    initAuthListener,
+    isLoading: authLoading,
+  } = useAuthStore();
   const { initProfileListener, isGlobalLoading } = useAppStore();
   const userId = useAuthStore((state) => state.user?.id);
 
@@ -69,7 +90,7 @@ export default function App() {
   return (
     <>
       <GlobalLoading isLoading={isGlobalLoading || authLoading} />
-      
+
       <Routes>
         <Route path="/auth" element={<AuthPage />} />
 
@@ -92,17 +113,23 @@ export default function App() {
           <Route path="/timeline" element={<TimelinePage />} />
           <Route path="/monitor" element={<SystemMonitorPage />} />
 
-          <Route path="/notes" element={
-            <ProtectedRoute>
-              <NotesPage />
-            </ProtectedRoute>
-          } />
+          <Route
+            path="/notes"
+            element={
+              <ProtectedRoute>
+                <NotesPage />
+              </ProtectedRoute>
+            }
+          />
 
-          <Route path="/meal-checkin" element={
-            <ProtectedRoute>
-              <MealCheckInPage />
-            </ProtectedRoute>
-          } />
+          <Route
+            path="/meal-checkin"
+            element={
+              <ProtectedRoute>
+                <MealCheckInPage />
+              </ProtectedRoute>
+            }
+          />
 
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>

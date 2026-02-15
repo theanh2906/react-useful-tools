@@ -11,6 +11,7 @@ Useful Tools React is a modern React application for pregnancy tracking and prod
 ## Core Principles
 
 Follow these fundamental principles at all times:
+
 - **YAGNI** (You Aren't Gonna Need It) - Don't add features until needed
 - **KISS** (Keep It Simple, Stupid) - Prefer simple solutions
 - **DRY** (Don't Repeat Yourself) - Avoid code duplication
@@ -50,12 +51,14 @@ src/
 ### Code Quality Standards
 
 #### TypeScript
+
 - Use strict TypeScript types - avoid `any`
 - Define interfaces in `src/types/index.ts`
 - Use type inference when obvious
 - Create meaningful type aliases for complex types
 
 #### React Best Practices
+
 - Use functional components with hooks
 - Prefer composition over prop drilling
 - Keep components focused and single-purpose
@@ -63,18 +66,21 @@ src/
 - Implement proper error boundaries
 
 #### State Management
+
 - Use Zustand for global state (`src/stores/`)
 - Keep state close to where it's used
 - Use React hooks for local component state
 - Follow immutable update patterns
 
 #### Styling
+
 - Use TailwindCSS utility classes
 - Follow mobile-first responsive design
 - Keep consistent spacing and colors
 - Use theme tokens from tailwind.config.js
 
 #### Firebase Integration
+
 - All Firebase operations go through services (`src/services/`)
 - Handle authentication states properly
 - Implement proper error handling for async operations
@@ -147,6 +153,7 @@ src/
 ### Common Patterns
 
 #### Creating a New Page
+
 ```typescript
 // src/pages/NewPage.tsx
 import React from 'react';
@@ -154,7 +161,7 @@ import { useTranslation } from 'react-i18next';
 
 export const NewPage: React.FC = () => {
   const { t } = useTranslation();
-  
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold">{t('newPage.title')}</h1>
@@ -165,22 +172,24 @@ export const NewPage: React.FC = () => {
 ```
 
 #### Creating a Custom Hook
+
 ```typescript
 // src/hooks/useCustomHook.ts
 import { useState, useEffect } from 'react';
 
 export const useCustomHook = () => {
   const [data, setData] = useState(null);
-  
+
   useEffect(() => {
     // Logic here
   }, []);
-  
+
   return { data };
 };
 ```
 
 #### Creating a Service
+
 ```typescript
 // src/services/newService.ts
 import { db } from '../config/firebase';
@@ -190,12 +199,12 @@ export const newService = {
   async getData() {
     try {
       const snapshot = await getDocs(collection(db, 'collection'));
-      return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     } catch (error) {
       console.error('Error fetching data:', error);
       throw error;
     }
-  }
+  },
 };
 ```
 
@@ -225,6 +234,7 @@ export const newService = {
 ## Environment Variables
 
 Required environment variables (never commit these):
+
 ```
 VITE_FIREBASE_API_KEY=
 VITE_FIREBASE_AUTH_DOMAIN=
@@ -238,6 +248,7 @@ VITE_WEATHER_API_KEY=
 ## Quick Reference
 
 ### Run Commands
+
 ```bash
 npm run dev      # Start development server
 npm run build    # Build for production
@@ -246,7 +257,9 @@ npm run lint     # Run ESLint
 ```
 
 ### Adding a New Feature
+
 When receiving a new feature request, first analyze requirements, then brainstorm solutions and scenarios, ask user to select (A,B,C or D) before implementation. Then follow these steps:
+
 1. Create types in `src/types/index.ts`
 2. Create service in `src/services/`
 3. If the feature requires database, add necessary Realtime Database or Firestore collections (for files upload management) and methods to modify data (CRUD) in the service.
@@ -255,7 +268,7 @@ When receiving a new feature request, first analyze requirements, then brainstor
 6. Add route in `src/App.tsx`
 7. Add i18n translations in `src/i18n/locales/`
 8. Test thoroughly before committing
-**NOTE:** All the component styles must adapt current project TailwindCSS theme. If new feature has some components that can be reused later, create them in `src/components/ui/` with generic and reusable design.
+   **NOTE:** All the component styles must adapt current project TailwindCSS theme. If new feature has some components that can be reused later, create them in `src/components/ui/` with generic and reusable design.
 
 ---
 

@@ -1,11 +1,32 @@
+/**
+ * @module Dashboard
+ * @description Landing dashboard with pregnancy overview, upcoming events,
+ * recent notes and quick-action cards.
+ */
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { 
-  Calendar, FileText, Baby, Image, Apple, Clock, 
-  TrendingUp, Heart, Activity, Sparkles, ArrowRight,
-  Sun
+import {
+  Calendar,
+  FileText,
+  Baby,
+  Image,
+  Apple,
+  Clock,
+  TrendingUp,
+  Heart,
+  Activity,
+  Sparkles,
+  ArrowRight,
+  Sun,
 } from 'lucide-react';
-import { Card, CardContent, Progress, CircularProgress, Badge, DatePicker } from '@/components/ui';
+import {
+  Card,
+  CardContent,
+  Progress,
+  CircularProgress,
+  Badge,
+  DatePicker,
+} from '@/components/ui';
 import { useAppStore } from '@/stores/appStore';
 import { useEventsStore } from '@/stores/eventsStore';
 import { useNotesStore } from '@/stores/notesStore';
@@ -20,15 +41,20 @@ const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1 }
-  }
+    transition: { staggerChildren: 0.1 },
+  },
 };
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 }
+  visible: { opacity: 1, y: 0 },
 };
 
+/**
+ * Main dashboard page.
+ * Aggregates pregnancy info, upcoming calendar events, recent notes,
+ * ultrasound gallery previews and baby growth stats into a single view.
+ */
 export function Dashboard() {
   const getPregnancyInfo = useAppStore((state) => state.getPregnancyInfo);
   const getBabyAge = useAppStore((state) => state.getBabyAge);
@@ -37,7 +63,7 @@ export function Dashboard() {
   const setConceptionDate = useAppStore((state) => state.setConceptionDate);
   const setBabyBirthDate = useAppStore((state) => state.setBabyBirthDate);
   const saveProfile = useAppStore((state) => state.saveProfile);
-  
+
   const pregnancyInfo = getPregnancyInfo();
   const babyAge = getBabyAge();
 
@@ -61,9 +87,11 @@ export function Dashboard() {
     let unsubPeanut: (() => void) | null = null;
     let unsubSoya: (() => void) | null = null;
 
-    listenUltrasounds((data) => setUltrasoundCount(data.length)).then((unsub) => {
-      unsubUltrasounds = unsub;
-    });
+    listenUltrasounds((data) => setUltrasoundCount(data.length)).then(
+      (unsub) => {
+        unsubUltrasounds = unsub;
+      }
+    );
     listenPeanutRecords((data) => setPeanutCount(data.length)).then((unsub) => {
       unsubPeanut = unsub;
     });
@@ -78,25 +106,73 @@ export function Dashboard() {
     };
   }, [userId]);
 
-  const stats = useMemo(() => ({
-    developmentRecords: peanutCount + soyaCount,
-    scheduledEvents: events.length,
-    ultrasoundScans: ultrasoundCount,
-  }), [peanutCount, soyaCount, events.length, ultrasoundCount]);
+  const stats = useMemo(
+    () => ({
+      developmentRecords: peanutCount + soyaCount,
+      scheduledEvents: events.length,
+      ultrasoundScans: ultrasoundCount,
+    }),
+    [peanutCount, soyaCount, events.length, ultrasoundCount]
+  );
 
   const quickActions = [
-    { icon: Calendar, label: 'Calendar', path: '/calendar', color: 'from-pink-500 to-rose-500' },
-    { icon: FileText, label: 'Notes', path: '/notes', color: 'from-blue-500 to-cyan-500' },
-    { icon: Baby, label: 'Baby Tracker', path: '/baby', color: 'from-purple-500 to-violet-500' },
-    { icon: Image, label: 'Ultrasounds', path: '/ultrasounds', color: 'from-amber-500 to-orange-500' },
-    { icon: Apple, label: 'Food Guide', path: '/foods', color: 'from-emerald-500 to-teal-500' },
-    { icon: Clock, label: 'Timeline', path: '/timeline', color: 'from-indigo-500 to-purple-500' },
+    {
+      icon: Calendar,
+      label: 'Calendar',
+      path: '/calendar',
+      color: 'from-pink-500 to-rose-500',
+    },
+    {
+      icon: FileText,
+      label: 'Notes',
+      path: '/notes',
+      color: 'from-blue-500 to-cyan-500',
+    },
+    {
+      icon: Baby,
+      label: 'Baby Tracker',
+      path: '/baby',
+      color: 'from-purple-500 to-violet-500',
+    },
+    {
+      icon: Image,
+      label: 'Ultrasounds',
+      path: '/ultrasounds',
+      color: 'from-amber-500 to-orange-500',
+    },
+    {
+      icon: Apple,
+      label: 'Food Guide',
+      path: '/foods',
+      color: 'from-emerald-500 to-teal-500',
+    },
+    {
+      icon: Clock,
+      label: 'Timeline',
+      path: '/timeline',
+      color: 'from-indigo-500 to-purple-500',
+    },
   ];
 
   const trimesterInfo = [
-    { trimester: 1, label: 'First Trimester', weeks: '1-12', description: 'Baby is forming' },
-    { trimester: 2, label: 'Second Trimester', weeks: '13-27', description: 'Baby is growing' },
-    { trimester: 3, label: 'Third Trimester', weeks: '28-40', description: 'Almost there!' },
+    {
+      trimester: 1,
+      label: 'First Trimester',
+      weeks: '1-12',
+      description: 'Baby is forming',
+    },
+    {
+      trimester: 2,
+      label: 'Second Trimester',
+      weeks: '13-27',
+      description: 'Baby is growing',
+    },
+    {
+      trimester: 3,
+      label: 'Third Trimester',
+      weeks: '28-40',
+      description: 'Almost there!',
+    },
   ];
 
   return (
@@ -111,8 +187,12 @@ export function Dashboard() {
           <Card className="p-6">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h2 className="text-lg font-display font-semibold text-white">Quick Setup</h2>
-                <p className="text-sm text-slate-400">Add key dates to personalize your dashboard</p>
+                <h2 className="text-lg font-display font-semibold text-white">
+                  Quick Setup
+                </h2>
+                <p className="text-sm text-slate-400">
+                  Add key dates to personalize your dashboard
+                </p>
               </div>
               <Badge variant="warning">Setup</Badge>
             </div>
@@ -133,10 +213,7 @@ export function Dashboard() {
               />
             </div>
             <div className="mt-4 flex justify-end">
-              <button
-                className="btn-primary"
-                onClick={() => saveProfile()}
-              >
+              <button className="btn-primary" onClick={() => saveProfile()}>
                 Save Profile
               </button>
             </div>
@@ -149,13 +226,13 @@ export function Dashboard() {
           <div className="absolute inset-0 bg-gradient-to-br from-primary-500/20 via-pink-500/10 to-accent-500/20" />
           <div className="absolute top-0 right-0 w-64 h-64 bg-primary-500/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
           <div className="absolute bottom-0 left-0 w-48 h-48 bg-accent-500/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
-          
+
           <CardContent className="relative z-10 py-8 lg:py-12">
             <div className="grid lg:grid-cols-2 gap-8 items-center">
               {/* Left - Info */}
               <div className="space-y-6">
                 <div>
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     className="flex items-center gap-2 mb-3"
@@ -183,13 +260,21 @@ export function Dashboard() {
                         Day {pregnancyInfo.currentDay}
                       </span>
                     </div>
-                    
+
                     <div className="space-y-2">
                       <div className="flex items-center justify-between text-sm">
-                        <span className="text-slate-400">Pregnancy Progress</span>
-                        <span className="text-primary-400 font-medium">{Math.round(pregnancyInfo.progress)}%</span>
+                        <span className="text-slate-400">
+                          Pregnancy Progress
+                        </span>
+                        <span className="text-primary-400 font-medium">
+                          {Math.round(pregnancyInfo.progress)}%
+                        </span>
                       </div>
-                      <Progress value={pregnancyInfo.progress} variant="gradient" size="md" />
+                      <Progress
+                        value={pregnancyInfo.progress}
+                        variant="gradient"
+                        size="md"
+                      />
                     </div>
 
                     {/* Trimester Indicator */}
@@ -204,11 +289,17 @@ export function Dashboard() {
                               : 'bg-white/5 border-white/10 opacity-50'
                           )}
                         >
-                          <p className="text-xs text-slate-400">{t.weeks} weeks</p>
-                          <p className={cn(
-                            'text-sm font-medium',
-                            pregnancyInfo.trimester === t.trimester ? 'text-white' : 'text-slate-500'
-                          )}>
+                          <p className="text-xs text-slate-400">
+                            {t.weeks} weeks
+                          </p>
+                          <p
+                            className={cn(
+                              'text-sm font-medium',
+                              pregnancyInfo.trimester === t.trimester
+                                ? 'text-white'
+                                : 'text-slate-500'
+                            )}
+                          >
                             {t.label}
                           </p>
                         </div>
@@ -225,7 +316,7 @@ export function Dashboard() {
                     <Heart className="w-4 h-4 text-pink-400 animate-pulse" />
                     Time until meeting your baby
                   </p>
-                  
+
                   <div className="grid grid-cols-4 gap-4 mb-6">
                     {[
                       { value: countdown.days, label: 'Days' },
@@ -245,13 +336,18 @@ export function Dashboard() {
                             {String(item.value).padStart(2, '0')}
                           </span>
                         </div>
-                        <span className="text-xs text-slate-500">{item.label}</span>
+                        <span className="text-xs text-slate-500">
+                          {item.label}
+                        </span>
                       </motion.div>
                     ))}
                   </div>
 
                   <p className="text-slate-400">
-                    <span className="text-white font-medium">{pregnancyInfo?.daysRemaining || 0}</span> days to go
+                    <span className="text-white font-medium">
+                      {pregnancyInfo?.daysRemaining || 0}
+                    </span>{' '}
+                    days to go
                   </p>
                 </div>
               </div>
@@ -264,9 +360,24 @@ export function Dashboard() {
       <motion.div variants={itemVariants}>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
           {[
-            { icon: Activity, label: 'Development Records', value: stats.developmentRecords, color: 'text-emerald-400' },
-            { icon: Calendar, label: 'Scheduled Events', value: stats.scheduledEvents, color: 'text-blue-400' },
-            { icon: Image, label: 'Ultrasound Scans', value: stats.ultrasoundScans, color: 'text-purple-400' },
+            {
+              icon: Activity,
+              label: 'Development Records',
+              value: stats.developmentRecords,
+              color: 'text-emerald-400',
+            },
+            {
+              icon: Calendar,
+              label: 'Scheduled Events',
+              value: stats.scheduledEvents,
+              color: 'text-blue-400',
+            },
+            {
+              icon: Image,
+              label: 'Ultrasound Scans',
+              value: stats.ultrasoundScans,
+              color: 'text-purple-400',
+            },
           ].map((stat, i) => (
             <motion.div
               key={stat.label}
@@ -275,7 +386,12 @@ export function Dashboard() {
               transition={{ delay: i * 0.1 }}
             >
               <Card hover glow className="p-5 lg:p-6">
-                <div className={cn('w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center mb-4', stat.color)}>
+                <div
+                  className={cn(
+                    'w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center mb-4',
+                    stat.color
+                  )}
+                >
                   <stat.icon className="w-5 h-5" />
                 </div>
                 <p className="stat-value">{stat.value}</p>
@@ -292,7 +408,9 @@ export function Dashboard() {
         <motion.div variants={itemVariants} className="lg:col-span-2">
           <Card className="p-6">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-display font-semibold text-white">Quick Actions</h2>
+              <h2 className="text-lg font-display font-semibold text-white">
+                Quick Actions
+              </h2>
               <Badge variant="info">6 Tools</Badge>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
@@ -307,10 +425,12 @@ export function Dashboard() {
                     to={action.path}
                     className="group flex flex-col items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all"
                   >
-                    <div className={cn(
-                      'w-12 h-12 rounded-xl bg-gradient-to-br flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform',
-                      action.color
-                    )}>
+                    <div
+                      className={cn(
+                        'w-12 h-12 rounded-xl bg-gradient-to-br flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform',
+                        action.color
+                      )}
+                    >
                       <action.icon className="w-6 h-6 text-white" />
                     </div>
                     <span className="text-sm font-medium text-slate-300 group-hover:text-white transition-colors">
@@ -332,7 +452,9 @@ export function Dashboard() {
                   <Baby className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-display font-semibold text-white">Peanut's Age</h3>
+                  <h3 className="font-display font-semibold text-white">
+                    Peanut's Age
+                  </h3>
                   <p className="text-xs text-slate-400">Your little one</p>
                 </div>
               </div>
@@ -343,15 +465,21 @@ export function Dashboard() {
 
               <div className="grid grid-cols-3 gap-3 text-center">
                 <div className="p-3 rounded-lg bg-white/5">
-                  <p className="text-2xl font-display font-bold text-white">{babyAge.days}</p>
+                  <p className="text-2xl font-display font-bold text-white">
+                    {babyAge.days}
+                  </p>
                   <p className="text-xs text-slate-400">Days</p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/5">
-                  <p className="text-2xl font-display font-bold text-white">{babyAge.weeks}</p>
+                  <p className="text-2xl font-display font-bold text-white">
+                    {babyAge.weeks}
+                  </p>
                   <p className="text-xs text-slate-400">Weeks</p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/5">
-                  <p className="text-2xl font-display font-bold text-white">{babyAge.months}</p>
+                  <p className="text-2xl font-display font-bold text-white">
+                    {babyAge.months}
+                  </p>
                   <p className="text-xs text-slate-400">Months</p>
                 </div>
               </div>
@@ -366,8 +494,13 @@ export function Dashboard() {
         <motion.div variants={itemVariants}>
           <Card className="p-6">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-display font-semibold text-white">Recent Activity</h2>
-              <Link to="/timeline" className="text-sm text-primary-400 hover:text-primary-300 flex items-center gap-1">
+              <h2 className="text-lg font-display font-semibold text-white">
+                Recent Activity
+              </h2>
+              <Link
+                to="/timeline"
+                className="text-sm text-primary-400 hover:text-primary-300 flex items-center gap-1"
+              >
                 View All <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -385,25 +518,36 @@ export function Dashboard() {
                   time: new Date(note.createdDate).toLocaleString(),
                   color: 'bg-amber-500/20 text-amber-400',
                 })),
-              ].slice(0, 4).map((activity, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  className="flex items-center gap-4 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
-                >
-                  <div className={cn('w-10 h-10 rounded-lg flex items-center justify-center', activity.color)}>
-                    <activity.icon className="w-5 h-5" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-white truncate">{activity.title}</p>
-                    <p className="text-xs text-slate-500">{activity.time}</p>
-                  </div>
-                </motion.div>
-              ))}
+              ]
+                .slice(0, 4)
+                .map((activity, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    className="flex items-center gap-4 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
+                  >
+                    <div
+                      className={cn(
+                        'w-10 h-10 rounded-lg flex items-center justify-center',
+                        activity.color
+                      )}
+                    >
+                      <activity.icon className="w-5 h-5" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-white truncate">
+                        {activity.title}
+                      </p>
+                      <p className="text-xs text-slate-500">{activity.time}</p>
+                    </div>
+                  </motion.div>
+                ))}
               {events.length === 0 && notes.length === 0 && (
-                <p className="text-sm text-slate-500">No recent activity yet.</p>
+                <p className="text-sm text-slate-500">
+                  No recent activity yet.
+                </p>
               )}
             </div>
           </Card>
@@ -417,16 +561,22 @@ export function Dashboard() {
                 <Sun className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h3 className="font-display font-semibold text-white">Today's Tip</h3>
-                <p className="text-xs text-slate-400">Week {pregnancyInfo?.currentWeek || 0} advice</p>
+                <h3 className="font-display font-semibold text-white">
+                  Today's Tip
+                </h3>
+                <p className="text-xs text-slate-400">
+                  Week {pregnancyInfo?.currentWeek || 0} advice
+                </p>
               </div>
             </div>
 
             <div className="space-y-4">
               <div className="p-4 rounded-xl bg-gradient-to-br from-amber-500/10 to-orange-500/10 border border-amber-500/20">
                 <p className="text-slate-300 leading-relaxed">
-                  💡 <span className="text-white font-medium">Stay hydrated!</span> Aim for 8-10 glasses of water daily. 
-                  This helps maintain amniotic fluid levels and supports your baby's development.
+                  💡{' '}
+                  <span className="text-white font-medium">Stay hydrated!</span>{' '}
+                  Aim for 8-10 glasses of water daily. This helps maintain
+                  amniotic fluid levels and supports your baby's development.
                 </p>
               </div>
 

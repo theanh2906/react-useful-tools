@@ -1,18 +1,64 @@
+/**
+ * @module TimelinePage
+ * @description Pregnancy timeline page with categorised milestone, checkup,
+ * ultrasound and note events.
+ */
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Plus, Calendar, Baby, Heart, Activity, Image as ImageIcon } from 'lucide-react';
-import { Card, Button, Badge, Modal, ModalFooter, Input, DatePicker } from '@/components/ui';
-import { addTimelineEvent, listenTimeline, type TimelineEvent } from '@/services/timelineService';
+import {
+  Plus,
+  Calendar,
+  Baby,
+  Heart,
+  Activity,
+  Image as ImageIcon,
+} from 'lucide-react';
+import {
+  Card,
+  Button,
+  Badge,
+  Modal,
+  ModalFooter,
+  Input,
+  DatePicker,
+} from '@/components/ui';
+import {
+  addTimelineEvent,
+  listenTimeline,
+  type TimelineEvent,
+} from '@/services/timelineService';
 import { useAuthStore } from '@/stores/authStore';
 import { toast } from '@/components/ui/Toast';
 
+/** Visual configuration for each timeline event type (label, icon, colour). */
 const typeConfig = {
-  checkup: { label: 'Checkup', icon: Activity, color: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' },
-  milestone: { label: 'Milestone', icon: Baby, color: 'bg-pink-500/20 text-pink-300 border-pink-500/30' },
-  ultrasound: { label: 'Ultrasound', icon: ImageIcon, color: 'bg-blue-500/20 text-blue-300 border-blue-500/30' },
-  note: { label: 'Note', icon: Heart, color: 'bg-purple-500/20 text-purple-300 border-purple-500/30' },
+  checkup: {
+    label: 'Checkup',
+    icon: Activity,
+    color: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
+  },
+  milestone: {
+    label: 'Milestone',
+    icon: Baby,
+    color: 'bg-pink-500/20 text-pink-300 border-pink-500/30',
+  },
+  ultrasound: {
+    label: 'Ultrasound',
+    icon: ImageIcon,
+    color: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
+  },
+  note: {
+    label: 'Note',
+    icon: Heart,
+    color: 'bg-purple-500/20 text-purple-300 border-purple-500/30',
+  },
 };
 
+/**
+ * Timeline page.
+ * Displays a vertical timeline of pregnancy-related events (checkups,
+ * milestones, ultrasounds, notes) synced via Firebase.
+ */
 export function TimelinePage() {
   const [events, setEvents] = useState<TimelineEvent[]>([]);
   const userId = useAuthStore((state) => state.user?.id);
@@ -45,11 +91,19 @@ export function TimelinePage() {
   };
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="space-y-6"
+    >
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">Timeline</h1>
-          <p className="text-slate-400 mt-1">Your pregnancy journey, beautifully captured</p>
+          <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">
+            Timeline
+          </h1>
+          <p className="text-slate-400 mt-1">
+            Your pregnancy journey, beautifully captured
+          </p>
         </div>
         <Button onClick={() => setShowModal(true)}>
           <Plus className="w-4 h-4" />
@@ -82,7 +136,9 @@ export function TimelinePage() {
                     <Calendar className="w-3.5 h-3.5" />
                     {event.date}
                   </div>
-                  <p className="text-sm text-slate-400 mt-2">{event.description}</p>
+                  <p className="text-sm text-slate-400 mt-2">
+                    {event.description}
+                  </p>
                 </div>
               </div>
             );
@@ -90,10 +146,23 @@ export function TimelinePage() {
         </div>
       </Card>
 
-      <Modal isOpen={showModal} onClose={() => setShowModal(false)} title="Add Timeline Event">
+      <Modal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        title="Add Timeline Event"
+      >
         <div className="space-y-4">
-          <Input label="Title" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
-          <DatePicker label="Date" value={form.date} onChange={(date) => setForm({ ...form, date })} placeholder="Select date" />
+          <Input
+            label="Title"
+            value={form.title}
+            onChange={(e) => setForm({ ...form, title: e.target.value })}
+          />
+          <DatePicker
+            label="Date"
+            value={form.date}
+            onChange={(date) => setForm({ ...form, date })}
+            placeholder="Select date"
+          />
           <Input
             label="Description"
             placeholder="What happened?"
@@ -101,14 +170,20 @@ export function TimelinePage() {
             onChange={(e) => setForm({ ...form, description: e.target.value })}
           />
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-2">Type</label>
+            <label className="block text-sm font-medium text-slate-300 mb-2">
+              Type
+            </label>
             <div className="flex flex-wrap gap-2">
               {Object.entries(typeConfig).map(([key, cfg]) => (
                 <button
                   key={key}
-                  onClick={() => setForm({ ...form, type: key as TimelineEvent['type'] })}
+                  onClick={() =>
+                    setForm({ ...form, type: key as TimelineEvent['type'] })
+                  }
                   className={`px-3 py-2 rounded-xl text-sm font-medium transition-all ${
-                    form.type === key ? 'bg-white/20 text-white' : 'bg-white/5 text-slate-400 hover:bg-white/10'
+                    form.type === key
+                      ? 'bg-white/20 text-white'
+                      : 'bg-white/5 text-slate-400 hover:bg-white/10'
                   }`}
                 >
                   {cfg.label}

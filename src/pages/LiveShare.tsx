@@ -1,26 +1,45 @@
+/**
+ * @module LiveSharePage
+ * @description Real-time collaborative sharing room with text messages and file uploads
+ * backed by Firebase Realtime Database and Storage.
+ */
 import { useMemo, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Share2, Copy, Send, Upload, Trash2, User, File as FileIcon, Crown } from 'lucide-react';
+import {
+  Share2,
+  Copy,
+  Send,
+  Upload,
+  Trash2,
+  User,
+  File as FileIcon,
+  Crown,
+} from 'lucide-react';
 import { Card, Button, Input, Badge } from '@/components/ui';
 import { formatFileSize } from '@/lib/utils';
-import { 
-  addMessage, 
-  clearRoom, 
-  listenRoomFiles, 
-  listenRoomMessages, 
-  uploadRoomFile, 
+import {
+  addMessage,
+  clearRoom,
+  listenRoomFiles,
+  listenRoomMessages,
+  uploadRoomFile,
   getAdminRoomId,
-  type RoomFile, 
-  type RoomMessage 
+  type RoomFile,
+  type RoomMessage,
 } from '@/services/liveShareService';
 import { toast } from '@/components/ui/Toast';
 import { useAuthStore } from '@/stores/authStore';
 
+/**
+ * Live Share page.
+ * Creates or joins a shareable room with real-time messaging and file sharing.
+ * Room ownership is determined by the admin room ID.
+ */
 export function LiveSharePage() {
   const { roomId: paramRoomId } = useParams();
   const user = useAuthStore((state) => state.user);
-  
+
   const [roomId, setRoomId] = useState('');
   const [activeRoom, setActiveRoom] = useState<string | null>(null);
   const [message, setMessage] = useState('');
@@ -29,12 +48,15 @@ export function LiveSharePage() {
   const [isProcessing, setIsProcessing] = useState(false);
 
   const roomUrl = useMemo(() => {
-    return activeRoom ? `${window.location.origin}/live-share/room/${activeRoom}` : '';
+    return activeRoom
+      ? `${window.location.origin}/live-share/room/${activeRoom}`
+      : '';
   }, [activeRoom]);
 
   // Effect to auto-join Admin Room if logged in
   useEffect(() => {
-    if (user?.id && !paramRoomId) { // Only if not navigating to specific room via URL
+    if (user?.id && !paramRoomId) {
+      // Only if not navigating to specific room via URL
       const adminRoom = getAdminRoomId(user.id);
       setActiveRoom(adminRoom);
       setRoomId(adminRoom);
@@ -51,7 +73,7 @@ export function LiveSharePage() {
 
   const createRoom = () => {
     if (user) {
-      toast.info("You are using your personal Admin Room");
+      toast.info('You are using your personal Admin Room');
       return;
     }
     const id = Math.random().toString(36).slice(2, 10);
@@ -72,7 +94,7 @@ export function LiveSharePage() {
   const handleSend = async () => {
     if (!message.trim()) return;
     if (!activeRoom) return;
-    
+
     try {
       await addMessage(activeRoom, {
         content: message.trim(),
@@ -116,9 +138,11 @@ export function LiveSharePage() {
     let unsubscribeMessages: (() => void) | null = null;
     let unsubscribeFiles: (() => void) | null = null;
 
-    listenRoomMessages(activeRoom, (data) => setMessages(data)).then((unsub) => {
-      unsubscribeMessages = unsub;
-    });
+    listenRoomMessages(activeRoom, (data) => setMessages(data)).then(
+      (unsub) => {
+        unsubscribeMessages = unsub;
+      }
+    );
     listenRoomFiles(activeRoom, (data) => setFiles(data)).then((unsub) => {
       unsubscribeFiles = unsub;
     });
@@ -132,30 +156,41 @@ export function LiveSharePage() {
   const isAdminRoom = user && activeRoom === getAdminRoomId(user.id);
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="space-y-6"
+    >
       <div>
         <h1 className="text-2xl lg:text-3xl font-display font-bold text-white flex items-center gap-3">
-          Live Share 
-          {isAdminRoom && <Badge variant="warning" className="text-sm"><Crown className="w-3 h-3 mr-1"/> Admin Mode</Badge>}
+          Live Share
+          {isAdminRoom && (
+            <Badge variant="warning" className="text-sm">
+              <Crown className="w-3 h-3 mr-1" /> Admin Mode
+            </Badge>
+          )}
         </h1>
         <p className="text-slate-400 mt-1">Share text and files in real-time</p>
       </div>
 
       <Card className="p-6 space-y-4">
         {user ? (
-           <div className="bg-primary-500/10 border border-primary-500/20 p-4 rounded-xl flex items-center justify-between">
-              <div>
-                <h3 className="text-primary-300 font-medium flex items-center gap-2">
-                  <User className="w-4 h-4" /> Personal Admin Room
-                </h3>
-                <p className="text-sm text-slate-400 mt-1">
-                  You are in your persistent room. Share your Room ID with others to invite them.
-                </p>
-              </div>
-              <div className="text-right">
-                <span className="text-2xl font-mono text-white block">{activeRoom}</span>
-              </div>
-           </div>
+          <div className="bg-primary-500/10 border border-primary-500/20 p-4 rounded-xl flex items-center justify-between">
+            <div>
+              <h3 className="text-primary-300 font-medium flex items-center gap-2">
+                <User className="w-4 h-4" /> Personal Admin Room
+              </h3>
+              <p className="text-sm text-slate-400 mt-1">
+                You are in your persistent room. Share your Room ID with others
+                to invite them.
+              </p>
+            </div>
+            <div className="text-right">
+              <span className="text-2xl font-mono text-white block">
+                {activeRoom}
+              </span>
+            </div>
+          </div>
         ) : (
           <div className="flex flex-wrap gap-2 items-center">
             <Input
@@ -180,13 +215,23 @@ export function LiveSharePage() {
         {activeRoom && (
           <div className="flex flex-col sm:flex-row sm:items-center gap-2 justify-between bg-white/5 border border-white/10 rounded-xl p-3">
             <div className="text-sm text-slate-300">
-              Sharing Link: <span className="text-blue-400 underline cursor-pointer" onClick={() => window.open(roomUrl, '_blank')}>{roomUrl}</span>
+              Sharing Link:{' '}
+              <span
+                className="text-blue-400 underline cursor-pointer"
+                onClick={() => window.open(roomUrl, '_blank')}
+              >
+                {roomUrl}
+              </span>
             </div>
             <div className="flex gap-2">
-              <Button variant="ghost" size="sm" onClick={async () => {
-                await navigator.clipboard.writeText(roomUrl);
-                toast.success('Room link copied');
-              }}>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={async () => {
+                  await navigator.clipboard.writeText(roomUrl);
+                  toast.success('Room link copied');
+                }}
+              >
                 <Copy className="w-4 h-4" />
                 Copy Link
               </Button>
@@ -204,7 +249,7 @@ export function LiveSharePage() {
           <div className="flex items-center gap-2">
             <Badge variant="primary">Messages</Badge>
           </div>
-          
+
           <div className="flex-1 overflow-y-auto space-y-3 custom-scrollbar pr-2">
             {messages.length === 0 ? (
               <div className="h-full flex items-center justify-center text-slate-500 text-sm">
@@ -214,22 +259,36 @@ export function LiveSharePage() {
               messages.map((msg) => {
                 const isMe = msg.author === (user?.displayName || 'You'); // Simplified check
                 return (
-                  <div key={msg.id} className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
-                      <div className={`max-w-[85%] p-3 rounded-xl border ${
-                        msg.isAdmin 
-                          ? 'bg-primary-500/20 border-primary-500/30' 
+                  <div
+                    key={msg.id}
+                    className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}
+                  >
+                    <div
+                      className={`max-w-[85%] p-3 rounded-xl border ${
+                        msg.isAdmin
+                          ? 'bg-primary-500/20 border-primary-500/30'
                           : 'bg-white/5 border-white/10'
-                      }`}>
-                        <div className="flex items-center justify-between gap-4 text-xs text-slate-500 mb-1">
-                          <span className={`${msg.isAdmin ? 'text-primary-300 font-medium' : ''}`}>
-                            {msg.author}
-                          </span>
-                          <span>{new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
-                        </div>
-                        <p className="text-sm text-slate-200 whitespace-pre-wrap">{msg.content}</p>
+                      }`}
+                    >
+                      <div className="flex items-center justify-between gap-4 text-xs text-slate-500 mb-1">
+                        <span
+                          className={`${msg.isAdmin ? 'text-primary-300 font-medium' : ''}`}
+                        >
+                          {msg.author}
+                        </span>
+                        <span>
+                          {new Date(msg.timestamp).toLocaleTimeString([], {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                          })}
+                        </span>
                       </div>
+                      <p className="text-sm text-slate-200 whitespace-pre-wrap">
+                        {msg.content}
+                      </p>
+                    </div>
                   </div>
-                )
+                );
               })
             )}
           </div>
@@ -252,7 +311,7 @@ export function LiveSharePage() {
           <div className="flex items-center gap-2">
             <Badge variant="primary">Files</Badge>
           </div>
-          
+
           <div className="flex-1 overflow-y-auto space-y-3 custom-scrollbar pr-2">
             {files.length === 0 ? (
               <div className="h-full flex items-center justify-center text-slate-500 text-sm">
@@ -260,15 +319,25 @@ export function LiveSharePage() {
               </div>
             ) : (
               files.map((file) => (
-                <div key={file.id} className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-center gap-3">
+                <div
+                  key={file.id}
+                  className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-center gap-3"
+                >
                   <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">
                     <FileIcon className="w-5 h-5 text-slate-400" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm text-white truncate">{file.name}</p>
-                    <p className="text-xs text-slate-500">{formatFileSize(file.size)} • {new Date(file.timestamp).toLocaleDateString()}</p>
+                    <p className="text-xs text-slate-500">
+                      {formatFileSize(file.size)} •{' '}
+                      {new Date(file.timestamp).toLocaleDateString()}
+                    </p>
                   </div>
-                  <Button variant="ghost" size="sm" onClick={() => window.open(file.url, '_blank')}>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => window.open(file.url, '_blank')}
+                  >
                     Open
                   </Button>
                 </div>
@@ -288,7 +357,11 @@ export function LiveSharePage() {
               disabled={!activeRoom || isProcessing}
             />
             <label htmlFor="live-share-file">
-              <Button variant="secondary" className="w-full" disabled={!activeRoom || isProcessing}>
+              <Button
+                variant="secondary"
+                className="w-full"
+                disabled={!activeRoom || isProcessing}
+              >
                 <Upload className="w-4 h-4" />
                 {isProcessing ? 'Uploading...' : 'Upload File'}
               </Button>

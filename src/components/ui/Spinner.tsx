@@ -1,10 +1,25 @@
+/**
+ * @module Spinner
+ * @description Loading spinner and skeleton placeholder components.
+ */
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 
+/**
+ * Props for the {@link Spinner} component.
+ */
 interface SpinnerProps {
+  /** Spinner diameter. @default 'md' */
   size?: 'sm' | 'md' | 'lg' | 'xl';
+  /** Additional CSS classes. */
   className?: string;
 }
+
+/**
+ * Rotating ring spinner with dual-border animation.
+ *
+ * @param props - {@link SpinnerProps}
+ */
 
 export function Spinner({ size = 'md', className }: SpinnerProps) {
   const sizes = {
@@ -30,12 +45,27 @@ export function Spinner({ size = 'md', className }: SpinnerProps) {
   );
 }
 
+/**
+ * Props for the {@link GlobalLoading} component.
+ */
 interface GlobalLoadingProps {
+  /** Whether the full-screen overlay is visible. */
   isLoading: boolean;
+  /** Text shown below the spinner. @default 'Loading...' */
   message?: string;
 }
 
-export function GlobalLoading({ isLoading, message = 'Loading...' }: GlobalLoadingProps) {
+/**
+ * Full-screen loading overlay with a multi-ring spinner animation.
+ * Rendered as a fixed overlay at the highest z-index.
+ *
+ * @param props - {@link GlobalLoadingProps}
+ */
+
+export function GlobalLoading({
+  isLoading,
+  message = 'Loading...',
+}: GlobalLoadingProps) {
   return (
     <AnimatePresence>
       {isLoading && (
@@ -76,6 +106,9 @@ export function GlobalLoading({ isLoading, message = 'Loading...' }: GlobalLoadi
   );
 }
 
+/**
+ * Page-level loading placeholder with a centred spinner.
+ */
 export function PageLoading() {
   return (
     <div className="flex items-center justify-center min-h-[400px]">
@@ -87,6 +120,9 @@ export function PageLoading() {
   );
 }
 
+/**
+ * Skeleton placeholder card with pulsing lines.
+ */
 export function SkeletonCard() {
   return (
     <div className="p-6 rounded-2xl bg-white/5 border border-white/10 animate-pulse">
@@ -97,6 +133,11 @@ export function SkeletonCard() {
   );
 }
 
+/**
+ * Renders a vertical list of {@link SkeletonCard} placeholders.
+ *
+ * @param count - Number of skeleton cards to render. @default 3
+ */
 export function SkeletonList({ count = 3 }: { count?: number }) {
   return (
     <div className="space-y-4">

@@ -1,16 +1,59 @@
+/**
+ * @module SystemMonitorPage
+ * @description System monitoring dashboard displaying device health, Jenkins CI
+ * and Kafka cluster status with auto-refresh.
+ */
 import { motion } from 'framer-motion';
-import { Activity, Server, Wifi, Cpu, HardDrive, MemoryStick, AlertTriangle } from 'lucide-react';
+import {
+  Activity,
+  Server,
+  Wifi,
+  Cpu,
+  HardDrive,
+  MemoryStick,
+  AlertTriangle,
+} from 'lucide-react';
 import { Card, Badge } from '@/components/ui';
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
-import { fetchDevices, fetchJenkinsSummary, fetchKafkaSummary, type DeviceMonitor, type JenkinsSummary, type KafkaSummary } from '@/services/monitorService';
+import {
+  fetchDevices,
+  fetchJenkinsSummary,
+  fetchKafkaSummary,
+  type DeviceMonitor,
+  type JenkinsSummary,
+  type KafkaSummary,
+} from '@/services/monitorService';
 
+/** Fallback device list used when the monitoring API is unavailable. */
 const fallbackDevices = [
-  { device_name: 'Home PC', status: 'up', cpu_usage: 42, memory_percentage: 68, disk_usage: 55, last_update: Date.now() - 10000 },
-  { device_name: 'Office Server', status: 'up', cpu_usage: 31, memory_percentage: 52, disk_usage: 63, last_update: Date.now() - 18000 },
-  { device_name: 'NAS Storage', status: 'down', cpu_usage: 0, memory_percentage: 0, disk_usage: 0, last_update: Date.now() - 180000 },
+  {
+    device_name: 'Home PC',
+    status: 'up',
+    cpu_usage: 42,
+    memory_percentage: 68,
+    disk_usage: 55,
+    last_update: Date.now() - 10000,
+  },
+  {
+    device_name: 'Office Server',
+    status: 'up',
+    cpu_usage: 31,
+    memory_percentage: 52,
+    disk_usage: 63,
+    last_update: Date.now() - 18000,
+  },
+  {
+    device_name: 'NAS Storage',
+    status: 'down',
+    cpu_usage: 0,
+    memory_percentage: 0,
+    disk_usage: 0,
+    last_update: Date.now() - 180000,
+  },
 ];
 
+/** Fallback Jenkins summary used when the CI API is unavailable. */
 const fallbackJenkins = {
   total: 32,
   success: 24,
@@ -20,6 +63,7 @@ const fallbackJenkins = {
   executors: 8,
 };
 
+/** Fallback Kafka cluster summary used when the API is unavailable. */
 const fallbackKafka = {
   brokers: 3,
   topics: 42,
@@ -28,16 +72,30 @@ const fallbackKafka = {
   state: 'online',
 } as KafkaSummary;
 
+/**
+ * System monitor dashboard page.
+ * Polls device, Jenkins and Kafka APIs every 30 seconds and displays
+ * live gauges with graceful fallback data.
+ */
 export function SystemMonitorPage() {
-  const [devices, setDevices] = useState<DeviceMonitor[]>(fallbackDevices as DeviceMonitor[]);
-  const [jenkinsJobs, setJenkinsJobs] = useState<JenkinsSummary>(fallbackJenkins);
+  const [devices, setDevices] = useState<DeviceMonitor[]>(
+    fallbackDevices as DeviceMonitor[]
+  );
+  const [jenkinsJobs, setJenkinsJobs] =
+    useState<JenkinsSummary>(fallbackJenkins);
   const [kafkaStatus, setKafkaStatus] = useState<KafkaSummary>(fallbackKafka);
 
   useEffect(() => {
     const load = () => {
-      fetchDevices().then(setDevices).catch(() => undefined);
-      fetchJenkinsSummary().then(setJenkinsJobs).catch(() => undefined);
-      fetchKafkaSummary().then(setKafkaStatus).catch(() => undefined);
+      fetchDevices()
+        .then(setDevices)
+        .catch(() => undefined);
+      fetchJenkinsSummary()
+        .then(setJenkinsJobs)
+        .catch(() => undefined);
+      fetchKafkaSummary()
+        .then(setKafkaStatus)
+        .catch(() => undefined);
     };
     load();
     const interval = setInterval(load, 10000);
@@ -45,10 +103,18 @@ export function SystemMonitorPage() {
   }, []);
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="space-y-6"
+    >
       <div>
-        <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">System Monitor</h1>
-        <p className="text-slate-400 mt-1">Real-time device, Jenkins, and Kafka overview</p>
+        <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">
+          System Monitor
+        </h1>
+        <p className="text-slate-400 mt-1">
+          Real-time device, Jenkins, and Kafka overview
+        </p>
       </div>
 
       {/* Overview */}
@@ -59,7 +125,9 @@ export function SystemMonitorPage() {
               <Wifi className="w-5 h-5 text-emerald-400" />
             </div>
             <div>
-              <p className="text-xl font-bold text-white">{devices.filter((d) => d.status === 'up').length}</p>
+              <p className="text-xl font-bold text-white">
+                {devices.filter((d) => d.status === 'up').length}
+              </p>
               <p className="text-xs text-slate-400">Devices Up</p>
             </div>
           </div>
@@ -70,7 +138,9 @@ export function SystemMonitorPage() {
               <Server className="w-5 h-5 text-blue-400" />
             </div>
             <div>
-              <p className="text-xl font-bold text-white">{jenkinsJobs.total}</p>
+              <p className="text-xl font-bold text-white">
+                {jenkinsJobs.total}
+              </p>
               <p className="text-xs text-slate-400">Jenkins Jobs</p>
             </div>
           </div>
@@ -81,7 +151,9 @@ export function SystemMonitorPage() {
               <Activity className="w-5 h-5 text-purple-400" />
             </div>
             <div>
-              <p className="text-xl font-bold text-white">{kafkaStatus.topics}</p>
+              <p className="text-xl font-bold text-white">
+                {kafkaStatus.topics}
+              </p>
               <p className="text-xs text-slate-400">Kafka Topics</p>
             </div>
           </div>
@@ -90,7 +162,9 @@ export function SystemMonitorPage() {
 
       {/* Devices */}
       <Card className="p-6">
-        <h3 className="text-lg font-display font-semibold text-white mb-4">Devices</h3>
+        <h3 className="text-lg font-display font-semibold text-white mb-4">
+          Devices
+        </h3>
         <div className="space-y-3">
           {devices.map((device) => (
             <div
@@ -107,7 +181,11 @@ export function SystemMonitorPage() {
                 <div>
                   <p className="text-white font-medium">{device.device_name}</p>
                   <p className="text-xs text-slate-500">
-                    {Math.max(0, Math.floor((Date.now() - device.last_update) / 1000))}s ago
+                    {Math.max(
+                      0,
+                      Math.floor((Date.now() - device.last_update) / 1000)
+                    )}
+                    s ago
                   </p>
                 </div>
               </div>
@@ -141,52 +219,76 @@ export function SystemMonitorPage() {
       {/* Jenkins + Kafka */}
       <div className="grid lg:grid-cols-2 gap-6">
         <Card className="p-6">
-          <h3 className="text-lg font-display font-semibold text-white mb-4">Jenkins</h3>
+          <h3 className="text-lg font-display font-semibold text-white mb-4">
+            Jenkins
+          </h3>
           <div className="grid grid-cols-2 gap-4">
             <div className="p-4 rounded-xl bg-white/5">
               <p className="text-sm text-slate-400">Success</p>
-              <p className="text-2xl font-bold text-emerald-400">{jenkinsJobs.success}</p>
+              <p className="text-2xl font-bold text-emerald-400">
+                {jenkinsJobs.success}
+              </p>
             </div>
             <div className="p-4 rounded-xl bg-white/5">
               <p className="text-sm text-slate-400">Failed</p>
-              <p className="text-2xl font-bold text-red-400">{jenkinsJobs.failed}</p>
+              <p className="text-2xl font-bold text-red-400">
+                {jenkinsJobs.failed}
+              </p>
             </div>
             <div className="p-4 rounded-xl bg-white/5">
               <p className="text-sm text-slate-400">Unstable</p>
-              <p className="text-2xl font-bold text-amber-400">{jenkinsJobs.unstable}</p>
+              <p className="text-2xl font-bold text-amber-400">
+                {jenkinsJobs.unstable}
+              </p>
             </div>
             <div className="p-4 rounded-xl bg-white/5">
               <p className="text-sm text-slate-400">Queue</p>
-              <p className="text-2xl font-bold text-blue-400">{jenkinsJobs.queue}</p>
+              <p className="text-2xl font-bold text-blue-400">
+                {jenkinsJobs.queue}
+              </p>
             </div>
           </div>
-          <div className="mt-4 text-sm text-slate-500">Executors: {jenkinsJobs.executors}</div>
+          <div className="mt-4 text-sm text-slate-500">
+            Executors: {jenkinsJobs.executors}
+          </div>
         </Card>
 
         <Card className="p-6">
-          <h3 className="text-lg font-display font-semibold text-white mb-4">Kafka</h3>
+          <h3 className="text-lg font-display font-semibold text-white mb-4">
+            Kafka
+          </h3>
           <div className="space-y-3">
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/5">
               <span className="text-slate-400">State</span>
-              <Badge variant={kafkaStatus.state === 'online' ? 'success' : 'danger'}>
+              <Badge
+                variant={kafkaStatus.state === 'online' ? 'success' : 'danger'}
+              >
                 {kafkaStatus.state}
               </Badge>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/5">
               <span className="text-slate-400">Brokers</span>
-              <span className="text-white font-medium">{kafkaStatus.brokers}</span>
+              <span className="text-white font-medium">
+                {kafkaStatus.brokers}
+              </span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/5">
               <span className="text-slate-400">Topics</span>
-              <span className="text-white font-medium">{kafkaStatus.topics}</span>
+              <span className="text-white font-medium">
+                {kafkaStatus.topics}
+              </span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/5">
               <span className="text-slate-400">Partitions</span>
-              <span className="text-white font-medium">{kafkaStatus.partitions}</span>
+              <span className="text-white font-medium">
+                {kafkaStatus.partitions}
+              </span>
             </div>
             <div className="flex items-center justify-between p-3 rounded-xl bg-white/5">
               <span className="text-slate-400">Consumer Groups</span>
-              <span className="text-white font-medium">{kafkaStatus.consumerGroups}</span>
+              <span className="text-white font-medium">
+                {kafkaStatus.consumerGroups}
+              </span>
             </div>
           </div>
         </Card>

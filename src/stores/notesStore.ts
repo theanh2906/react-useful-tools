@@ -1,7 +1,19 @@
+/**
+ * @module stores/notesStore
+ * @description Notes state store.
+ * Manages note CRUD operations, search, filtering, pinning, and real-time subscriptions.
+ */
+
 import { create } from 'zustand';
 import type { Note } from '@/types';
-import { createNote, deleteNoteById, listenNotes, updateNoteById } from '@/services/notesService';
+import {
+  createNote,
+  deleteNoteById,
+  listenNotes,
+  updateNoteById,
+} from '@/services/notesService';
 
+/** Notes state shape and actions. */
 interface NotesState {
   notes: Note[];
   isLoading: boolean;
@@ -10,7 +22,7 @@ interface NotesState {
   selectedCategory: string | null;
   editingNote: Note | null;
   unsubscribe?: () => void;
-  
+
   // Actions
   setNotes: (notes: Note[]) => void;
   addNote: (note: Note) => Promise<void>;
@@ -18,13 +30,13 @@ interface NotesState {
   deleteNote: (noteId: string) => Promise<void>;
   togglePin: (noteId: string) => Promise<void>;
   subscribeNotes: () => Promise<void>;
-  
+
   setSearchQuery: (query: string) => void;
   setSelectedCategory: (category: string | null) => void;
   setEditingNote: (note: Note | null) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
-  
+
   // Computed
   getFilteredNotes: () => Note[];
   getCategories: () => string[];
@@ -40,16 +52,16 @@ export const useNotesStore = create<NotesState>((set, get) => ({
   unsubscribe: undefined,
 
   setNotes: (notes) => set({ notes }),
-  
+
   addNote: async (note) => {
     await createNote(note);
   },
-  
+
   updateNote: async (note) => {
     if (!note.id) return;
     await updateNoteById(note.id, { ...note, modifiedDate: Date.now() });
   },
-  
+
   deleteNote: async (noteId) => {
     await deleteNoteById(noteId);
   },
@@ -78,16 +90,17 @@ export const useNotesStore = create<NotesState>((set, get) => ({
 
   getFilteredNotes: () => {
     const { notes, searchQuery, selectedCategory } = get();
-    
+
     return notes
       .filter((note) => {
-        const matchesSearch = !searchQuery || 
+        const matchesSearch =
+          !searchQuery ||
           note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
           note.content.toLowerCase().includes(searchQuery.toLowerCase());
-        
-        const matchesCategory = !selectedCategory || 
-          note.categories.includes(selectedCategory);
-        
+
+        const matchesCategory =
+          !selectedCategory || note.categories.includes(selectedCategory);
+
         return matchesSearch && matchesCategory;
       })
       .sort((a, b) => {
@@ -106,5 +119,5 @@ export const useNotesStore = create<NotesState>((set, get) => ({
       note.categories.forEach((cat) => categories.add(cat));
     });
     return Array.from(categories);
-  }
+  },
 }));

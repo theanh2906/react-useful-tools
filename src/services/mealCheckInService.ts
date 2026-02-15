@@ -1,8 +1,28 @@
-import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
-import { ref as dbRef, set, get, remove, query, orderByChild, equalTo } from 'firebase/database';
+/**
+ * @module services/mealCheckInService
+ * @description Meal check-in service for daily meal photo tracking.
+ * Handles image upload, CRUD operations, and monthly statistics.
+ */
+
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from 'firebase/storage';
+import {
+  ref as dbRef,
+  set,
+  get,
+  remove,
+  query,
+  orderByChild,
+  equalTo,
+} from 'firebase/database';
 import { database, storage } from '../config/firebase';
 import type { MealCheckIn, MealCheckInStats } from '../types';
 
+/** @internal Realtime Database collection name for meal check-ins. */
 const COLLECTION_NAME = 'mealCheckIns';
 
 export const mealCheckInService = {
@@ -140,7 +160,7 @@ export const mealCheckInService = {
     try {
       const checkInId = `${userId}_${date}`;
       const checkInRef = dbRef(database, `${COLLECTION_NAME}/${checkInId}`);
-      
+
       await set(checkInRef, {
         notes,
         updatedAt: Date.now(),
@@ -182,7 +202,11 @@ export const mealCheckInService = {
   async getAllCheckIns(userId: string): Promise<MealCheckIn[]> {
     try {
       const checkInsRef = dbRef(database, COLLECTION_NAME);
-      const userQuery = query(checkInsRef, orderByChild('userId'), equalTo(userId));
+      const userQuery = query(
+        checkInsRef,
+        orderByChild('userId'),
+        equalTo(userId)
+      );
       const snapshot = await get(userQuery);
 
       if (!snapshot.exists()) {

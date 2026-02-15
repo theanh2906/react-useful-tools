@@ -1,32 +1,62 @@
+/**
+ * @module Button
+ * @description Animated button component built on Framer Motion with multiple variants, sizes and loading state.
+ */
 import { forwardRef } from 'react';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 
-interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onDrag' | 'onDragStart' | 'onDragEnd' | 'onAnimationStart' | 'onAnimationEnd'> {
+/**
+ * Props for the {@link Button} component.
+ * Extends native button attributes (excluding Framer Motion conflicts).
+ */
+interface ButtonProps extends Omit<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  'onDrag' | 'onDragStart' | 'onDragEnd' | 'onAnimationStart' | 'onAnimationEnd'
+> {
+  /** Visual style variant. @default 'primary' */
   variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
+  /** Size of the button. @default 'md' */
   size?: 'sm' | 'md' | 'lg';
+  /** When `true`, shows a spinner and disables interaction. */
   isLoading?: boolean;
+  /** Icon rendered before the label. */
   leftIcon?: React.ReactNode;
+  /** Icon rendered after the label. */
   rightIcon?: React.ReactNode;
 }
 
+/**
+ * Animated button component with scale micro-interactions.
+ *
+ * @param props - {@link ButtonProps}
+ * @param ref - Forwarded ref to the underlying `<button>` element.
+ * @returns The rendered button element.
+ */
+
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ 
-    className, 
-    variant = 'primary', 
-    size = 'md', 
-    isLoading, 
-    leftIcon, 
-    rightIcon, 
-    children, 
-    disabled,
-    ...props 
-  }, ref) => {
+  (
+    {
+      className,
+      variant = 'primary',
+      size = 'md',
+      isLoading,
+      leftIcon,
+      rightIcon,
+      children,
+      disabled,
+      ...props
+    },
+    ref
+  ) => {
     const variants = {
-      primary: 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg shadow-primary-500/25 hover:shadow-xl hover:shadow-primary-500/40',
-      secondary: 'bg-white/10 text-white border border-white/10 hover:bg-white/20 hover:border-white/20',
+      primary:
+        'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg shadow-primary-500/25 hover:shadow-xl hover:shadow-primary-500/40',
+      secondary:
+        'bg-white/10 text-white border border-white/10 hover:bg-white/20 hover:border-white/20',
       ghost: 'text-slate-300 hover:text-white hover:bg-white/10',
-      danger: 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg shadow-red-500/25 hover:shadow-xl hover:shadow-red-500/40',
+      danger:
+        'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg shadow-red-500/25 hover:shadow-xl hover:shadow-red-500/40',
     };
 
     const sizes = {
@@ -54,22 +84,26 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {isLoading ? (
           <span className="absolute inset-0 flex items-center justify-center">
             <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-              <circle 
-                className="opacity-25" 
-                cx="12" cy="12" r="10" 
-                stroke="currentColor" 
-                strokeWidth="4" 
-                fill="none" 
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+                fill="none"
               />
-              <path 
-                className="opacity-75" 
-                fill="currentColor" 
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" 
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               />
             </svg>
           </span>
         ) : null}
-        <span className={cn('flex items-center gap-2', isLoading && 'invisible')}>
+        <span
+          className={cn('flex items-center gap-2', isLoading && 'invisible')}
+        >
           {leftIcon}
           {children}
           {rightIcon}

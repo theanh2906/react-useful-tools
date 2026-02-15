@@ -1,3 +1,8 @@
+/**
+ * @module CalendarPage
+ * @description Full-featured calendar page built on FullCalendar with event CRUD,
+ * category filtering and recurrence support.
+ */
 import { useState, useCallback, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import FullCalendar from '@fullcalendar/react';
@@ -5,7 +10,16 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { Plus, Filter } from 'lucide-react';
-import { Card, Button, Badge, Modal, ModalFooter, Input, TextArea, DatePicker } from '@/components/ui';
+import {
+  Card,
+  Button,
+  Badge,
+  Modal,
+  ModalFooter,
+  Input,
+  TextArea,
+  DatePicker,
+} from '@/components/ui';
 import { useEventsStore } from '@/stores/eventsStore';
 import { useAuthStore } from '@/stores/authStore';
 import { EVENT_CATEGORIES } from '@/config/constants';
@@ -14,8 +28,19 @@ import { generateId } from '@/lib/utils';
 import type { EventData } from '@/types';
 import { toast } from '@/components/ui/Toast';
 
+/**
+ * Calendar page with day/week/month views, drag-and-drop event management
+ * and real-time sync via Firestore.
+ */
 export function CalendarPage() {
-  const { events, addEvent, updateEvent, deleteEvent, categories, subscribeEvents } = useEventsStore();
+  const {
+    events,
+    addEvent,
+    updateEvent,
+    deleteEvent,
+    categories,
+    subscribeEvents,
+  } = useEventsStore();
   const userId = useAuthStore((state) => state.user?.id);
   const [showEventModal, setShowEventModal] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<EventData | null>(null);
@@ -34,20 +59,22 @@ export function CalendarPage() {
   });
 
   const filteredEvents = filterCategory
-    ? events.filter(e => e.categories?.includes(filterCategory))
+    ? events.filter((e) => e.categories?.includes(filterCategory))
     : events;
 
   useEffect(() => {
     subscribeEvents();
   }, [subscribeEvents, userId]);
 
-  const calendarEvents = filteredEvents.map(event => ({
+  const calendarEvents = filteredEvents.map((event) => ({
     id: event.id,
     title: event.title,
     start: event.start,
     end: event.end,
     allDay: event.allDay ?? true,
-    backgroundColor: EVENT_CATEGORIES.find(c => c.id === event.categories?.[0])?.color || '#FFD1DC',
+    backgroundColor:
+      EVENT_CATEGORIES.find((c) => c.id === event.categories?.[0])?.color ||
+      '#FFD1DC',
     borderColor: 'transparent',
     extendedProps: event,
   }));
@@ -73,7 +100,9 @@ export function CalendarPage() {
     setFormData({
       title: event.title,
       date: event.start.split('T')[0],
-      time: event.start.includes('T') ? event.start.split('T')[1]?.substring(0, 5) : '',
+      time: event.start.includes('T')
+        ? event.start.split('T')[1]?.substring(0, 5)
+        : '',
       category: event.categories?.[0] || 'appointment',
       location: event.location || '',
       notes: event.notes || '',
@@ -91,7 +120,9 @@ export function CalendarPage() {
     const eventData: EventData = {
       id: selectedEvent?.id || generateId(),
       title: formData.title,
-      start: formData.time ? `${formData.date}T${formData.time}` : formData.date,
+      start: formData.time
+        ? `${formData.date}T${formData.time}`
+        : formData.date,
       allDay: !formData.time,
       categories: [formData.category],
       location: formData.location,
@@ -130,23 +161,29 @@ export function CalendarPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">Calendar</h1>
-          <p className="text-slate-400 mt-1">Manage your appointments and events</p>
+          <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">
+            Calendar
+          </h1>
+          <p className="text-slate-400 mt-1">
+            Manage your appointments and events
+          </p>
         </div>
-        <Button onClick={() => {
-          setSelectedEvent(null);
-          // setSelectedDate(new Date().toISOString().split('T')[0]);
-          setFormData({
-            title: '',
-            date: new Date().toISOString().split('T')[0],
-            time: '',
-            category: 'appointment',
-            location: '',
-            notes: '',
-            isImportant: false,
-          });
-          setShowEventModal(true);
-        }}>
+        <Button
+          onClick={() => {
+            setSelectedEvent(null);
+            // setSelectedDate(new Date().toISOString().split('T')[0]);
+            setFormData({
+              title: '',
+              date: new Date().toISOString().split('T')[0],
+              time: '',
+              category: 'appointment',
+              location: '',
+              notes: '',
+              isImportant: false,
+            });
+            setShowEventModal(true);
+          }}
+        >
           <Plus className="w-4 h-4" />
           New Event
         </Button>
@@ -170,7 +207,9 @@ export function CalendarPage() {
           {categories.map((cat) => (
             <button
               key={cat.id}
-              onClick={() => setFilterCategory(cat.id === filterCategory ? null : cat.id)}
+              onClick={() =>
+                setFilterCategory(cat.id === filterCategory ? null : cat.id)
+              }
               className={cn(
                 'px-3 py-1.5 rounded-full text-sm font-medium transition-all flex items-center gap-2',
                 filterCategory === cat.id
@@ -197,7 +236,7 @@ export function CalendarPage() {
             headerToolbar={{
               left: 'prev,next today',
               center: 'title',
-              right: 'dayGridMonth,timeGridWeek,timeGridDay'
+              right: 'dayGridMonth,timeGridWeek,timeGridDay',
             }}
             events={calendarEvents}
             dateClick={handleDateClick}
@@ -242,7 +281,7 @@ export function CalendarPage() {
             eventTimeFormat={{
               hour: '2-digit',
               minute: '2-digit',
-              meridiem: false
+              meridiem: false,
             }}
           />
         </div>
@@ -250,13 +289,19 @@ export function CalendarPage() {
 
       {/* Upcoming Events */}
       <Card className="p-6">
-        <h3 className="text-lg font-display font-semibold text-white mb-4">Upcoming Events</h3>
+        <h3 className="text-lg font-display font-semibold text-white mb-4">
+          Upcoming Events
+        </h3>
         <div className="space-y-3">
           {events.length === 0 ? (
-            <p className="text-slate-400 text-center py-8">No events scheduled yet</p>
+            <p className="text-slate-400 text-center py-8">
+              No events scheduled yet
+            </p>
           ) : (
             events.slice(0, 5).map((event) => {
-              const category = EVENT_CATEGORIES.find(c => c.id === event.categories?.[0]);
+              const category = EVENT_CATEGORIES.find(
+                (c) => c.id === event.categories?.[0]
+              );
               return (
                 <motion.div
                   key={event.id}
@@ -268,7 +313,9 @@ export function CalendarPage() {
                     setFormData({
                       title: event.title,
                       date: event.start.split('T')[0],
-                      time: event.start.includes('T') ? event.start.split('T')[1]?.substring(0, 5) : '',
+                      time: event.start.includes('T')
+                        ? event.start.split('T')[1]?.substring(0, 5)
+                        : '',
                       category: event.categories?.[0] || 'appointment',
                       location: event.location || '',
                       notes: event.notes || '',
@@ -282,12 +329,14 @@ export function CalendarPage() {
                     style={{ backgroundColor: category?.color }}
                   />
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium text-white truncate">{event.title}</p>
+                    <p className="font-medium text-white truncate">
+                      {event.title}
+                    </p>
                     <p className="text-sm text-slate-400">
                       {new Date(event.start).toLocaleDateString('en-US', {
                         weekday: 'short',
                         month: 'short',
-                        day: 'numeric'
+                        day: 'numeric',
                       })}
                       {event.location && ` • ${event.location}`}
                     </p>
@@ -317,7 +366,9 @@ export function CalendarPage() {
             label="Event Title"
             placeholder="e.g., Doctor appointment"
             value={formData.title}
-            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, title: e.target.value })
+            }
           />
 
           <div className="grid grid-cols-2 gap-4">
@@ -331,12 +382,16 @@ export function CalendarPage() {
               label="Time (optional)"
               type="time"
               value={formData.time}
-              onChange={(e) => setFormData({ ...formData, time: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, time: e.target.value })
+              }
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-2">Category</label>
+            <label className="block text-sm font-medium text-slate-300 mb-2">
+              Category
+            </label>
             <div className="flex flex-wrap gap-2">
               {EVENT_CATEGORIES.map((cat) => (
                 <button
@@ -363,21 +418,27 @@ export function CalendarPage() {
             label="Location (optional)"
             placeholder="e.g., City Hospital"
             value={formData.location}
-            onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, location: e.target.value })
+            }
           />
 
           <TextArea
             label="Notes (optional)"
             placeholder="Add any additional notes..."
             value={formData.notes}
-            onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, notes: e.target.value })
+            }
           />
 
           <label className="flex items-center gap-3 cursor-pointer">
             <input
               type="checkbox"
               checked={formData.isImportant}
-              onChange={(e) => setFormData({ ...formData, isImportant: e.target.checked })}
+              onChange={(e) =>
+                setFormData({ ...formData, isImportant: e.target.checked })
+              }
               className="w-4 h-4 rounded border-white/20 bg-white/5 text-primary-500 focus:ring-primary-500/50"
             />
             <span className="text-sm text-slate-300">Mark as important</span>

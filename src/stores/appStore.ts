@@ -1,10 +1,23 @@
+/**
+ * @module stores/appStore
+ * @description Global application state store.
+ * Manages theme, language, sidebar, pregnancy info, baby birth date,
+ * profile sync with Firebase, and global loading state.
+ * Persisted to session storage.
+ */
+
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import type { ThemeMode, PregnancyInfo } from '@/types';
 import { differenceInDays, addDays } from 'date-fns';
-import { PREGNANCY_WEEKS, DAYS_PER_WEEK, TRIMESTER_RANGES } from '@/config/constants';
+import {
+  PREGNANCY_WEEKS,
+  DAYS_PER_WEEK,
+  TRIMESTER_RANGES,
+} from '@/config/constants';
 import { listenProfile, saveProfile } from '@/services/profileService';
 
+/** Application-wide state shape and actions. */
 interface AppState {
   // Theme
   theme: ThemeMode;
@@ -59,7 +72,8 @@ export const useAppStore = create<AppState>()(
       // Sidebar
       sidebarOpen: true,
       setSidebarOpen: (sidebarOpen) => set({ sidebarOpen }),
-      toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
+      toggleSidebar: () =>
+        set((state) => ({ sidebarOpen: !state.sidebarOpen })),
 
       // Mobile menu
       mobileMenuOpen: false,
@@ -75,12 +89,18 @@ export const useAppStore = create<AppState>()(
         const conception = new Date(conceptionDate);
         const today = new Date();
         const dueDate = addDays(conception, PREGNANCY_WEEKS * DAYS_PER_WEEK);
-        
+
         const daysSinceConception = differenceInDays(today, conception);
         const currentWeek = Math.floor(daysSinceConception / DAYS_PER_WEEK) + 1;
         const currentDay = (daysSinceConception % DAYS_PER_WEEK) + 1;
         const daysRemaining = differenceInDays(dueDate, today);
-        const progress = Math.min(100, Math.max(0, (daysSinceConception / (PREGNANCY_WEEKS * DAYS_PER_WEEK)) * 100));
+        const progress = Math.min(
+          100,
+          Math.max(
+            0,
+            (daysSinceConception / (PREGNANCY_WEEKS * DAYS_PER_WEEK)) * 100
+          )
+        );
 
         let trimester: 1 | 2 | 3 = 1;
         if (currentWeek >= TRIMESTER_RANGES.third.start) {
@@ -96,7 +116,7 @@ export const useAppStore = create<AppState>()(
           currentDay,
           daysRemaining: Math.max(0, daysRemaining),
           trimester,
-          progress
+          progress,
         };
       },
 
@@ -110,11 +130,11 @@ export const useAppStore = create<AppState>()(
         const birthDate = new Date(babyBirthDate);
         const today = new Date();
         const days = differenceInDays(today, birthDate);
-        
+
         return {
           days,
           weeks: Math.floor(days / 7),
-          months: Math.floor(days / 30)
+          months: Math.floor(days / 30),
         };
       },
 

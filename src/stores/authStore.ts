@@ -1,3 +1,10 @@
+/**
+ * @module stores/authStore
+ * @description Authentication state store.
+ * Manages user session, login/logout, token expiration, and Firebase auth listener.
+ * Persisted to session storage.
+ */
+
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import type { User } from '@/types';
@@ -5,6 +12,7 @@ import type { User as FirebaseUser } from 'firebase/auth';
 import { signOutUser, subscribeToAuthChanges } from '@/services/authService';
 import { clearResolvedPathCache } from '@/services/realtimeDb';
 
+/** Authentication state shape and actions. */
 interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
@@ -28,21 +36,21 @@ export const useAuthStore = create<AuthState>()(
       error: null,
 
       login: (user: User) => {
-        set({ 
-          user, 
-          isAuthenticated: true, 
-          isLoading: false, 
-          error: null 
+        set({
+          user,
+          isAuthenticated: true,
+          isLoading: false,
+          error: null,
         });
       },
 
       logout: () => {
         signOutUser().catch(() => undefined);
-        set({ 
-          user: null, 
-          isAuthenticated: false, 
-          isLoading: false, 
-          error: null 
+        set({
+          user: null,
+          isAuthenticated: false,
+          isLoading: false,
+          error: null,
         });
       },
 
@@ -57,7 +65,7 @@ export const useAuthStore = create<AuthState>()(
       checkTokenExpiration: () => {
         const { user } = get();
         if (!user) return false;
-        
+
         const now = Date.now();
         if (now >= user.tokenExpirationIn) {
           get().logout();
@@ -101,9 +109,9 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: 'auth-storage',
-      partialize: (state) => ({ 
-        user: state.user, 
-        isAuthenticated: state.isAuthenticated 
+      partialize: (state) => ({
+        user: state.user,
+        isAuthenticated: state.isAuthenticated,
       }),
       storage: createJSONStorage(() => sessionStorage),
     }

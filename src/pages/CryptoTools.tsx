@@ -1,3 +1,8 @@
+/**
+ * @module CryptoToolsPage
+ * @description Text encryption/decryption tool supporting AES, DES, Triple DES and RC4
+ * algorithms via CryptoJS.
+ */
 import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Lock, Unlock, Copy, Check, RefreshCw } from 'lucide-react';
@@ -5,6 +10,7 @@ import { Card, Button, Input, Badge } from '@/components/ui';
 import CryptoJS from 'crypto-js';
 import { toast } from '@/components/ui/Toast';
 
+/** Available cipher algorithms. */
 const algorithms = [
   { id: 'AES', label: 'AES' },
   { id: 'DES', label: 'DES' },
@@ -12,6 +18,10 @@ const algorithms = [
   { id: 'RC4', label: 'RC4' },
 ];
 
+/**
+ * Encryption & decryption workbench page.
+ * Lets the user select an algorithm, enter a secret key, and encrypt/decrypt text.
+ */
 export function CryptoToolsPage() {
   const [mode, setMode] = useState<'encrypt' | 'decrypt'>('encrypt');
   const [algorithm, setAlgorithm] = useState('AES');
@@ -56,9 +66,15 @@ export function CryptoToolsPage() {
   };
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="space-y-6"
+    >
       <div>
-        <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">Crypto Tools</h1>
+        <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">
+          Crypto Tools
+        </h1>
         <p className="text-slate-400 mt-1">Encrypt and decrypt text securely</p>
       </div>
 
@@ -97,7 +113,11 @@ export function CryptoToolsPage() {
 
         <Input
           label={mode === 'encrypt' ? 'Plain Text' : 'Encrypted Text'}
-          placeholder={mode === 'encrypt' ? 'Enter text to encrypt...' : 'Paste encrypted text...'}
+          placeholder={
+            mode === 'encrypt'
+              ? 'Enter text to encrypt...'
+              : 'Paste encrypted text...'
+          }
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
@@ -113,16 +133,26 @@ export function CryptoToolsPage() {
           <div className="flex items-center justify-between mb-3">
             <Badge variant="primary">Output</Badge>
             <Button variant="ghost" size="sm" onClick={handleCopy}>
-              {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              {copied ? (
+                <Check className="w-4 h-4" />
+              ) : (
+                <Copy className="w-4 h-4" />
+              )}
               {copied ? 'Copied' : 'Copy'}
             </Button>
           </div>
-          <p className="text-sm text-slate-300 break-all">{output || 'Output will appear here.'}</p>
+          <p className="text-sm text-slate-300 break-all">
+            {output || 'Output will appear here.'}
+          </p>
         </div>
 
         <div className="flex gap-2">
           <Button variant="secondary" onClick={() => setText(output)}>
-            {mode === 'encrypt' ? <Lock className="w-4 h-4" /> : <Unlock className="w-4 h-4" />}
+            {mode === 'encrypt' ? (
+              <Lock className="w-4 h-4" />
+            ) : (
+              <Unlock className="w-4 h-4" />
+            )}
             Use output as input
           </Button>
           <Button

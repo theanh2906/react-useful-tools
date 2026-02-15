@@ -1,8 +1,20 @@
+/**
+ * @module stores/eventsStore
+ * @description Calendar events state store.
+ * Manages event CRUD operations, real-time subscriptions, filtering, and computed queries.
+ */
+
 import { create } from 'zustand';
 import type { EventData, EventCategory, EventTag } from '@/types';
 import { EVENT_CATEGORIES } from '@/config/constants';
-import { createEvent, deleteEventById, listenEvents, updateEventById } from '@/services/eventsService';
+import {
+  createEvent,
+  deleteEventById,
+  listenEvents,
+  updateEventById,
+} from '@/services/eventsService';
 
+/** Calendar events state shape and actions. */
 interface EventsState {
   events: EventData[];
   categories: EventCategory[];
@@ -11,7 +23,7 @@ interface EventsState {
   error: string | null;
   selectedDate: string | null;
   unsubscribe?: () => void;
-  
+
   // Actions
   setEvents: (events: EventData[]) => void;
   addEvent: (event: EventData) => Promise<void>;
@@ -19,13 +31,13 @@ interface EventsState {
   deleteEvent: (eventId: string) => Promise<void>;
   deleteEvents: (eventIds: string[]) => Promise<void>;
   subscribeEvents: () => Promise<void>;
-  
+
   setCategories: (categories: EventCategory[]) => void;
   setTags: (tags: EventTag[]) => void;
   setSelectedDate: (date: string | null) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
-  
+
   // Computed
   getEventsByDate: (date: string) => EventData[];
   getEventsByCategory: (categoryId: string) => EventData[];
@@ -42,20 +54,20 @@ export const useEventsStore = create<EventsState>((set, get) => ({
   unsubscribe: undefined,
 
   setEvents: (events) => set({ events }),
-  
+
   addEvent: async (event) => {
     await createEvent(event);
   },
-  
+
   updateEvent: async (event) => {
     if (!event.id) return;
     await updateEventById(event.id, event);
   },
-  
+
   deleteEvent: async (eventId) => {
     await deleteEventById(eventId);
   },
-  
+
   deleteEvents: async (eventIds) => {
     await Promise.all(eventIds.map((id) => deleteEventById(id)));
   },
@@ -91,12 +103,14 @@ export const useEventsStore = create<EventsState>((set, get) => ({
     const today = new Date();
     const futureDate = new Date();
     futureDate.setDate(today.getDate() + days);
-    
+
     return events
       .filter((e) => {
         const eventDate = new Date(e.start);
         return eventDate >= today && eventDate <= futureDate;
       })
-      .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
-  }
+      .sort(
+        (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime()
+      );
+  },
 }));

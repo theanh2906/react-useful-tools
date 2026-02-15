@@ -1,25 +1,23 @@
+/**
+ * @module ChangeCase
+ * @description Text case conversion tool supporting 10+ case formats
+ * (uppercase, camelCase, snake_case, etc.).
+ */
 import { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Type, 
-  Copy, 
-  Check, 
-  ArrowRight,
-  Trash2,
-  RotateCcw
-} from 'lucide-react';
+import { Type, Copy, Check, ArrowRight, Trash2, RotateCcw } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 
-type CaseType = 
-  | 'uppercase' 
-  | 'lowercase' 
-  | 'titlecase' 
-  | 'sentencecase' 
-  | 'camelcase' 
+type CaseType =
+  | 'uppercase'
+  | 'lowercase'
+  | 'titlecase'
+  | 'sentencecase'
+  | 'camelcase'
   | 'pascalcase'
-  | 'snakecase' 
-  | 'kebabcase' 
+  | 'snakecase'
+  | 'kebabcase'
   | 'dotcase'
   | 'constantcase'
   | 'reverse'
@@ -39,107 +37,123 @@ const caseOptions: CaseOption[] = [
     label: 'UPPERCASE',
     description: 'Convert all letters to uppercase',
     example: 'HELLO WORLD',
-    transform: (text) => text.toUpperCase()
+    transform: (text) => text.toUpperCase(),
   },
   {
     id: 'lowercase',
     label: 'lowercase',
     description: 'Convert all letters to lowercase',
     example: 'hello world',
-    transform: (text) => text.toLowerCase()
+    transform: (text) => text.toLowerCase(),
   },
   {
     id: 'titlecase',
     label: 'Title Case',
     description: 'Capitalize first letter of each word',
     example: 'Hello World',
-    transform: (text) => text.toLowerCase().replace(/\b\w/g, c => c.toUpperCase())
+    transform: (text) =>
+      text.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase()),
   },
   {
     id: 'sentencecase',
     label: 'Sentence case',
     description: 'Capitalize first letter of each sentence',
     example: 'Hello world. How are you?',
-    transform: (text) => text.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, c => c.toUpperCase())
+    transform: (text) =>
+      text
+        .toLowerCase()
+        .replace(/(^\s*\w|[.!?]\s*\w)/g, (c) => c.toUpperCase()),
   },
   {
     id: 'camelcase',
     label: 'camelCase',
     description: 'Remove spaces, capitalize each word except first',
     example: 'helloWorld',
-    transform: (text) => text
-      .toLowerCase()
-      .replace(/[^a-zA-Z0-9]+(.)/g, (_, c) => c.toUpperCase())
-      .replace(/^[A-Z]/, c => c.toLowerCase())
+    transform: (text) =>
+      text
+        .toLowerCase()
+        .replace(/[^a-zA-Z0-9]+(.)/g, (_, c) => c.toUpperCase())
+        .replace(/^[A-Z]/, (c) => c.toLowerCase()),
   },
   {
     id: 'pascalcase',
     label: 'PascalCase',
     description: 'Remove spaces, capitalize each word',
     example: 'HelloWorld',
-    transform: (text) => text
-      .toLowerCase()
-      .replace(/(?:^|[^a-zA-Z0-9]+)(.)/g, (_, c) => c.toUpperCase())
+    transform: (text) =>
+      text
+        .toLowerCase()
+        .replace(/(?:^|[^a-zA-Z0-9]+)(.)/g, (_, c) => c.toUpperCase()),
   },
   {
     id: 'snakecase',
     label: 'snake_case',
     description: 'Replace spaces with underscores',
     example: 'hello_world',
-    transform: (text) => text
-      .toLowerCase()
-      .replace(/\s+/g, '_')
-      .replace(/[^a-zA-Z0-9_]/g, '')
+    transform: (text) =>
+      text
+        .toLowerCase()
+        .replace(/\s+/g, '_')
+        .replace(/[^a-zA-Z0-9_]/g, ''),
   },
   {
     id: 'kebabcase',
     label: 'kebab-case',
     description: 'Replace spaces with hyphens',
     example: 'hello-world',
-    transform: (text) => text
-      .toLowerCase()
-      .replace(/\s+/g, '-')
-      .replace(/[^a-zA-Z0-9-]/g, '')
+    transform: (text) =>
+      text
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^a-zA-Z0-9-]/g, ''),
   },
   {
     id: 'dotcase',
     label: 'dot.case',
     description: 'Replace spaces with dots',
     example: 'hello.world',
-    transform: (text) => text
-      .toLowerCase()
-      .replace(/\s+/g, '.')
-      .replace(/[^a-zA-Z0-9.]/g, '')
+    transform: (text) =>
+      text
+        .toLowerCase()
+        .replace(/\s+/g, '.')
+        .replace(/[^a-zA-Z0-9.]/g, ''),
   },
   {
     id: 'constantcase',
     label: 'CONSTANT_CASE',
     description: 'Uppercase with underscores',
     example: 'HELLO_WORLD',
-    transform: (text) => text
-      .toUpperCase()
-      .replace(/\s+/g, '_')
-      .replace(/[^A-Z0-9_]/g, '')
+    transform: (text) =>
+      text
+        .toUpperCase()
+        .replace(/\s+/g, '_')
+        .replace(/[^A-Z0-9_]/g, ''),
   },
   {
     id: 'reverse',
     label: 'esreveR',
     description: 'Reverse the text',
     example: 'dlrow olleh',
-    transform: (text) => text.split('').reverse().join('')
+    transform: (text) => text.split('').reverse().join(''),
   },
   {
     id: 'alternating',
     label: 'aLtErNaTiNg',
     description: 'Alternate between lower and upper case',
     example: 'hElLo WoRlD',
-    transform: (text) => text
-      .split('')
-      .map((c, i) => i % 2 === 0 ? c.toLowerCase() : c.toUpperCase())
-      .join('')
-  }
+    transform: (text) =>
+      text
+        .split('')
+        .map((c, i) => (i % 2 === 0 ? c.toLowerCase() : c.toUpperCase()))
+        .join(''),
+  },
 ];
 
+/**
+ * Text case converter page.
+ * Provides a textarea input and converts text to the selected case format
+ * with one-click copy to clipboard.
+ */
 export default function ChangeCase() {
   const [inputText, setInputText] = useState('');
   const [outputText, setOutputText] = useState('');
@@ -147,25 +161,28 @@ export default function ChangeCase() {
   const [copied, setCopied] = useState(false);
   const [history, setHistory] = useState<string[]>([]);
 
-  const handleTransform = useCallback((caseType: CaseType) => {
-    if (!inputText.trim()) return;
-    
-    const option = caseOptions.find(o => o.id === caseType);
-    if (!option) return;
+  const handleTransform = useCallback(
+    (caseType: CaseType) => {
+      if (!inputText.trim()) return;
 
-    const result = option.transform(inputText);
-    setOutputText(result);
-    setSelectedCase(caseType);
-    
-    // Add to history
-    if (!history.includes(result)) {
-      setHistory(prev => [result, ...prev].slice(0, 10));
-    }
-  }, [inputText, history]);
+      const option = caseOptions.find((o) => o.id === caseType);
+      if (!option) return;
+
+      const result = option.transform(inputText);
+      setOutputText(result);
+      setSelectedCase(caseType);
+
+      // Add to history
+      if (!history.includes(result)) {
+        setHistory((prev) => [result, ...prev].slice(0, 10));
+      }
+    },
+    [inputText, history]
+  );
 
   const handleCopy = useCallback(async () => {
     if (!outputText) return;
-    
+
     try {
       await navigator.clipboard.writeText(outputText);
       setCopied(true);
@@ -184,14 +201,14 @@ export default function ChangeCase() {
   const handleUndo = useCallback(() => {
     if (history.length > 1) {
       setOutputText(history[1]);
-      setHistory(prev => prev.slice(1));
+      setHistory((prev) => prev.slice(1));
     }
   }, [history]);
 
   const stats = {
     characters: inputText.length,
     words: inputText.trim() ? inputText.trim().split(/\s+/).length : 0,
-    lines: inputText ? inputText.split('\n').length : 0
+    lines: inputText ? inputText.split('\n').length : 0,
   };
 
   return (
@@ -233,7 +250,7 @@ export default function ChangeCase() {
                 <span>{stats.lines} lines</span>
               </div>
             </div>
-            
+
             <textarea
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
@@ -280,7 +297,7 @@ export default function ChangeCase() {
                 Output
                 {selectedCase && (
                   <span className="text-sm font-normal text-white/50">
-                    ({caseOptions.find(o => o.id === selectedCase)?.label})
+                    ({caseOptions.find((o) => o.id === selectedCase)?.label})
                   </span>
                 )}
               </h2>
@@ -303,9 +320,11 @@ export default function ChangeCase() {
                 )}
               </Button>
             </div>
-            
-            <div className="w-full h-64 bg-white/5 border border-white/10 rounded-xl p-4 
-                          text-white overflow-auto whitespace-pre-wrap break-words">
+
+            <div
+              className="w-full h-64 bg-white/5 border border-white/10 rounded-xl p-4 
+                          text-white overflow-auto whitespace-pre-wrap break-words"
+            >
               {outputText || (
                 <span className="text-white/30">
                   Transformed text will appear here...
@@ -326,7 +345,7 @@ export default function ChangeCase() {
           <h2 className="text-lg font-semibold text-white mb-4">
             Select Case Type
           </h2>
-          
+
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
             {caseOptions.map((option, index) => (
               <motion.button
@@ -338,9 +357,10 @@ export default function ChangeCase() {
                 disabled={!inputText.trim()}
                 className={`
                   p-4 rounded-xl border transition-all text-left
-                  ${selectedCase === option.id
-                    ? 'bg-violet-500/20 border-violet-500/50 ring-2 ring-violet-500/30'
-                    : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
+                  ${
+                    selectedCase === option.id
+                      ? 'bg-violet-500/20 border-violet-500/50 ring-2 ring-violet-500/30'
+                      : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
                   }
                   ${!inputText.trim() ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
                 `}
@@ -367,10 +387,10 @@ export default function ChangeCase() {
           <h2 className="text-lg font-semibold text-white mb-4">
             Quick Reference
           </h2>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {caseOptions.slice(0, 6).map((option) => (
-              <div 
+              <div
                 key={option.id}
                 className="p-3 bg-white/5 rounded-lg border border-white/10"
               >

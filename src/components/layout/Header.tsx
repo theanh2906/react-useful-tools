@@ -1,3 +1,8 @@
+/**
+ * @module Header
+ * @description Top navigation bar with hamburger toggle, language/theme switcher,
+ * notifications and user profile menu.
+ */
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Menu, Bell, User, LogOut, Settings, Sun, Moon } from 'lucide-react';
@@ -8,10 +13,15 @@ import { useIsMobile } from '@/hooks';
 import { useState } from 'react';
 import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
 
+/**
+ * Application header bar rendered at the top of every authenticated page.
+ * Provides sidebar toggle, theme switch, language switch, notifications and user menu.
+ */
 export function Header() {
   const { t } = useTranslation();
   const isMobile = useIsMobile();
-  const { sidebarOpen, setSidebarOpen, setMobileMenuOpen, theme, setTheme } = useAppStore();
+  const { sidebarOpen, setSidebarOpen, setMobileMenuOpen, theme, setTheme } =
+    useAppStore();
   const { user, isAuthenticated, logout } = useAuthStore();
   const [showUserMenu, setShowUserMenu] = useState(false);
 
@@ -45,7 +55,11 @@ export function Header() {
           onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
           className="p-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
         >
-          {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+          {theme === 'dark' ? (
+            <Sun className="w-5 h-5" />
+          ) : (
+            <Moon className="w-5 h-5" />
+          )}
         </button>
 
         {/* Notifications */}
@@ -63,7 +77,11 @@ export function Header() {
             >
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center">
                 {user?.photoURL ? (
-                  <img src={user.photoURL} alt="" className="w-full h-full rounded-full object-cover" />
+                  <img
+                    src={user.photoURL}
+                    alt=""
+                    className="w-full h-full rounded-full object-cover"
+                  />
                 ) : (
                   <User className="w-4 h-4 text-white" />
                 )}
@@ -80,7 +98,9 @@ export function Header() {
                 className="absolute right-0 mt-2 w-48 bg-slate-800/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-xl overflow-hidden"
               >
                 <div className="p-3 border-b border-white/5">
-                  <p className="text-sm font-medium text-white">{user?.displayName || 'User'}</p>
+                  <p className="text-sm font-medium text-white">
+                    {user?.displayName || 'User'}
+                  </p>
                   <p className="text-xs text-slate-400">{user?.email}</p>
                 </div>
                 <div className="p-1">

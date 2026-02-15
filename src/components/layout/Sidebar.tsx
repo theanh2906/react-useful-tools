@@ -1,3 +1,8 @@
+/**
+ * @module Sidebar
+ * @description Animated sidebar navigation categorised by feature group.
+ * Supports both desktop (collapsible) and mobile (overlay) modes.
+ */
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
@@ -9,38 +14,54 @@ import { useIsMobile } from '@/hooks';
 import * as Icons from 'lucide-react';
 import { X, ChevronLeft, Sparkles } from 'lucide-react';
 
+/** Lucide icon name key type alias. */
 type IconName = keyof typeof Icons;
 
+/**
+ * Resolves a Lucide icon component by name.
+ *
+ * @param name - Icon name matching a key in `lucide-react`.
+ * @returns The icon component, or a fallback `Circle` icon.
+ */
 function getIcon(name: string) {
-  const Icon = Icons[name as IconName] as React.ComponentType<{ className?: string }>;
+  const Icon = Icons[name as IconName] as React.ComponentType<{
+    className?: string;
+  }>;
   return Icon || Icons.Circle;
 }
 
+/**
+ * Sidebar navigation panel.
+ * On desktop it slides in/out from the left; on mobile it renders as a
+ * full-height overlay with a backdrop. Navigation items are grouped by
+ * {@link NAV_CATEGORIES} and filtered by authentication status.
+ */
 export function Sidebar() {
   const { t } = useTranslation();
   const location = useLocation();
   const isMobile = useIsMobile();
-  const { sidebarOpen, setSidebarOpen, mobileMenuOpen, setMobileMenuOpen } = useAppStore();
+  const { sidebarOpen, setSidebarOpen, mobileMenuOpen, setMobileMenuOpen } =
+    useAppStore();
   const { isAuthenticated } = useAuthStore();
 
   const isOpen = isMobile ? mobileMenuOpen : sidebarOpen;
   const setIsOpen = isMobile ? setMobileMenuOpen : setSidebarOpen;
 
   const sidebarVariants = {
-    open: { 
+    open: {
       x: 0,
-      transition: { type: 'spring', stiffness: 300, damping: 30 }
+      transition: { type: 'spring', stiffness: 300, damping: 30 },
     },
-    closed: { 
+    closed: {
       x: isMobile ? '-100%' : '-100%',
-      transition: { type: 'spring', stiffness: 300, damping: 30 }
-    }
+      transition: { type: 'spring', stiffness: 300, damping: 30 },
+    },
   };
 
-  const groupedItems = NAV_CATEGORIES.map(category => ({
+  const groupedItems = NAV_CATEGORIES.map((category) => ({
     ...category,
-    items: NAV_ITEMS.filter(item => item.category === category.id)
-  })).filter(group => group.items.length > 0);
+    items: NAV_ITEMS.filter((item) => item.category === category.id),
+  })).filter((group) => group.items.length > 0);
 
   return (
     <>
@@ -70,7 +91,11 @@ export function Sidebar() {
       >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-white/5">
-          <Link to="/" className="flex items-center gap-3" onClick={() => isMobile && setMobileMenuOpen(false)}>
+          <Link
+            to="/"
+            className="flex items-center gap-3"
+            onClick={() => isMobile && setMobileMenuOpen(false)}
+          >
             <div className="relative">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center">
                 <Sparkles className="w-5 h-5 text-white" />
@@ -78,7 +103,9 @@ export function Sidebar() {
               <div className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full border-2 border-slate-900 animate-pulse" />
             </div>
             <div>
-              <h1 className="font-display font-bold text-white text-lg">Useful Tools</h1>
+              <h1 className="font-display font-bold text-white text-lg">
+                Useful Tools
+              </h1>
               <p className="text-xs text-slate-500">Pregnancy & Productivity</p>
             </div>
           </Link>
@@ -86,7 +113,11 @@ export function Sidebar() {
             onClick={() => setIsOpen(false)}
             className="p-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
           >
-            {isMobile ? <X className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
+            {isMobile ? (
+              <X className="w-5 h-5" />
+            ) : (
+              <ChevronLeft className="w-5 h-5" />
+            )}
           </button>
         </div>
 
@@ -106,7 +137,11 @@ export function Sidebar() {
                   return (
                     <li key={item.id}>
                       <Link
-                        to={isProtected ? `/auth?redirect=${item.path}` : item.path}
+                        to={
+                          isProtected
+                            ? `/auth?redirect=${item.path}`
+                            : item.path
+                        }
                         onClick={() => isMobile && setMobileMenuOpen(false)}
                         className={cn(
                           'flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group',
@@ -115,10 +150,14 @@ export function Sidebar() {
                             : 'text-slate-400 hover:text-white hover:bg-white/5'
                         )}
                       >
-                        <Icon className={cn(
-                          'w-5 h-5 transition-colors',
-                          isActive ? 'text-primary-400' : 'text-slate-500 group-hover:text-slate-300'
-                        )} />
+                        <Icon
+                          className={cn(
+                            'w-5 h-5 transition-colors',
+                            isActive
+                              ? 'text-primary-400'
+                              : 'text-slate-500 group-hover:text-slate-300'
+                          )}
+                        />
                         <span className="font-medium">
                           {item.labelKey ? t(item.labelKey) : item.label}
                         </span>

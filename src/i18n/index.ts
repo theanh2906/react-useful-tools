@@ -7,7 +7,7 @@ import vi from './locales/vi.json';
 
 const resources = {
   en: { translation: en },
-  vi: { translation: vi }
+  vi: { translation: vi },
 };
 
 i18n
@@ -17,19 +17,19 @@ i18n
     resources,
     fallbackLng: 'en',
     supportedLngs: ['en', 'vi'],
-    
+
     detection: {
       order: ['localStorage', 'navigator'],
-      caches: ['localStorage']
+      caches: ['localStorage'],
     },
-    
+
     interpolation: {
-      escapeValue: false
+      escapeValue: false,
     },
-    
+
     react: {
-      useSuspense: false
-    }
+      useSuspense: false,
+    },
   });
 
 export default i18n;
@@ -37,5 +37,5 @@ export default i18n;
 // Language options for UI
 export const languages = [
   { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'vi', name: 'Tiếng Việt', flag: '🇻🇳' }
+  { code: 'vi', name: 'Tiếng Việt', flag: '🇻🇳' },
 ];

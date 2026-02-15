@@ -1,18 +1,39 @@
+/**
+ * @module Modal
+ * @description Animated modal dialog with backdrop, configurable size and optional close behaviour.
+ */
 import { Fragment } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+/**
+ * Props for the {@link Modal} component.
+ */
 interface ModalProps {
+  /** Whether the modal is visible. */
   isOpen: boolean;
+  /** Callback invoked when the modal should close. */
   onClose: () => void;
+  /** Optional title shown in the header. */
   title?: string;
+  /** Optional description shown below the title. */
   description?: string;
+  /** Maximum width of the modal. @default 'md' */
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  /** Modal body content. */
   children: React.ReactNode;
+  /** Show an "X" close button in the header. @default true */
   showCloseButton?: boolean;
+  /** Close modal when clicking the backdrop. @default true */
   closeOnOverlayClick?: boolean;
 }
+
+/**
+ * Animated modal dialog with spring transition, backdrop blur and keyboard-friendly focus.
+ *
+ * @param props - {@link ModalProps}
+ */
 
 export function Modal({
   isOpen,
@@ -96,14 +117,27 @@ export function Modal({
   );
 }
 
+/**
+ * Props for the {@link ModalFooter} component.
+ */
 interface ModalFooterProps {
+  /** Additional CSS classes. */
   className?: string;
+  /** Footer content (typically action buttons). */
   children: React.ReactNode;
 }
 
+/**
+ * Sticky footer for a {@link Modal}, typically containing action buttons.
+ */
 export function ModalFooter({ className, children }: ModalFooterProps) {
   return (
-    <div className={cn('flex items-center justify-end gap-3 pt-6 border-t border-white/5 -mx-6 -mb-6 px-6 py-4 bg-slate-800/50', className)}>
+    <div
+      className={cn(
+        'flex items-center justify-end gap-3 pt-6 border-t border-white/5 -mx-6 -mb-6 px-6 py-4 bg-slate-800/50',
+        className
+      )}
+    >
       {children}
     </div>
   );

@@ -1,15 +1,35 @@
+/**
+ * @module Progress
+ * @description Linear and circular progress indicator components with animated transitions.
+ */
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 
+/**
+ * Props for the {@link Progress} component.
+ */
 interface ProgressProps {
+  /** Current progress value. */
   value: number;
+  /** Maximum value (100 = 100%). @default 100 */
   max?: number;
+  /** Bar thickness. @default 'md' */
   size?: 'sm' | 'md' | 'lg';
+  /** Colour variant of the filled bar. @default 'gradient' */
   variant?: 'default' | 'gradient' | 'success' | 'warning' | 'danger';
+  /** Show the numeric percentage label. @default false */
   showValue?: boolean;
+  /** Additional CSS classes. */
   className?: string;
+  /** Optional text label shown above the bar. */
   label?: string;
 }
+
+/**
+ * Animated linear progress bar.
+ *
+ * @param props - {@link ProgressProps}
+ */
 
 export function Progress({
   value,
@@ -42,11 +62,18 @@ export function Progress({
         <div className="flex items-center justify-between text-sm">
           {label && <span className="text-slate-400">{label}</span>}
           {showValue && (
-            <span className="text-slate-300 font-medium">{Math.round(percentage)}%</span>
+            <span className="text-slate-300 font-medium">
+              {Math.round(percentage)}%
+            </span>
           )}
         </div>
       )}
-      <div className={cn('bg-slate-700/50 rounded-full overflow-hidden', sizes[size])}>
+      <div
+        className={cn(
+          'bg-slate-700/50 rounded-full overflow-hidden',
+          sizes[size]
+        )}
+      >
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${percentage}%` }}
@@ -58,15 +85,31 @@ export function Progress({
   );
 }
 
+/**
+ * Props for the {@link CircularProgress} component.
+ */
 interface CircularProgressProps {
+  /** Current progress value. */
   value: number;
+  /** Maximum value. @default 100 */
   max?: number;
+  /** Diameter in pixels. @default 120 */
   size?: number;
+  /** Stroke width in pixels. @default 8 */
   strokeWidth?: number;
+  /** Show percentage text in the centre. @default true */
   showValue?: boolean;
+  /** Colour variant. @default 'gradient' */
   variant?: 'default' | 'gradient';
+  /** Additional CSS classes. */
   className?: string;
 }
+
+/**
+ * Animated circular / ring progress indicator using SVG.
+ *
+ * @param props - {@link CircularProgressProps}
+ */
 
 export function CircularProgress({
   value,
@@ -83,7 +126,10 @@ export function CircularProgress({
   const offset = circumference - (percentage / 100) * circumference;
 
   return (
-    <div className={cn('relative inline-flex', className)} style={{ width: size, height: size }}>
+    <div
+      className={cn('relative inline-flex', className)}
+      style={{ width: size, height: size }}
+    >
       <svg width={size} height={size} className="transform -rotate-90">
         {/* Background circle */}
         <circle

@@ -1,3 +1,8 @@
+/**
+ * @module QrGeneratorPage
+ * @description QR code generator with customisable size, foreground/background colours
+ * and downloadable output.
+ */
 import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Download, RefreshCw, QrCode } from 'lucide-react';
@@ -5,6 +10,10 @@ import { Card, Button, Input, Badge } from '@/components/ui';
 import { cn } from '@/lib/utils';
 import { toast } from '@/components/ui/Toast';
 
+/**
+ * QR code generator page.
+ * Encodes user-provided text into a QR code with adjustable size and colour palette.
+ */
 export function QrGeneratorPage() {
   const [text, setText] = useState('https://useful-tools.app');
   const [size, setSize] = useState(280);
@@ -30,10 +39,18 @@ export function QrGeneratorPage() {
   };
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="space-y-6"
+    >
       <div>
-        <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">QR Generator</h1>
-        <p className="text-slate-400 mt-1">Generate QR codes for links and text</p>
+        <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">
+          QR Generator
+        </h1>
+        <p className="text-slate-400 mt-1">
+          Generate QR codes for links and text
+        </p>
       </div>
 
       <div className="grid lg:grid-cols-2 gap-6">
@@ -55,14 +72,24 @@ export function QrGeneratorPage() {
               onChange={(e) => setSize(Number(e.target.value || 280))}
             />
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-slate-300">Colors</label>
+              <label className="block text-sm font-medium text-slate-300">
+                Colors
+              </label>
               <div className="flex gap-3">
                 <label className="flex items-center gap-2 text-sm text-slate-400">
-                  <input type="color" value={fgColor} onChange={(e) => setFgColor(e.target.value)} />
+                  <input
+                    type="color"
+                    value={fgColor}
+                    onChange={(e) => setFgColor(e.target.value)}
+                  />
                   Foreground
                 </label>
                 <label className="flex items-center gap-2 text-sm text-slate-400">
-                  <input type="color" value={bgColor} onChange={(e) => setBgColor(e.target.value)} />
+                  <input
+                    type="color"
+                    value={bgColor}
+                    onChange={(e) => setBgColor(e.target.value)}
+                  />
                   Background
                 </label>
               </div>
@@ -98,7 +125,10 @@ export function QrGeneratorPage() {
               <img
                 src={qrUrl}
                 alt="QR Code"
-                className={cn('rounded-xl', size > 360 ? 'w-[360px]' : 'w-[280px]')}
+                className={cn(
+                  'rounded-xl',
+                  size > 360 ? 'w-[360px]' : 'w-[280px]'
+                )}
               />
             ) : (
               <div className="w-[280px] h-[280px] flex items-center justify-center text-slate-500">
@@ -106,7 +136,9 @@ export function QrGeneratorPage() {
               </div>
             )}
           </div>
-          <p className="text-xs text-slate-500 mt-4">QR generated via public API</p>
+          <p className="text-xs text-slate-500 mt-4">
+            QR generated via public API
+          </p>
         </Card>
       </div>
     </motion.div>

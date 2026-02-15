@@ -1,15 +1,37 @@
 import { useState, useEffect, useCallback } from 'react';
 
+/** Represents the broken-down time remaining until a target date. */
 interface CountdownTime {
+  /** Remaining full days. */
   days: number;
+  /** Remaining hours (0–23). */
   hours: number;
+  /** Remaining minutes (0–59). */
   minutes: number;
+  /** Remaining seconds (0–59). */
   seconds: number;
+  /** Total remaining time in milliseconds. */
   total: number;
+  /** Whether the countdown has reached zero. */
   isComplete: boolean;
 }
 
-export function useCountdown(targetDate: Date | string | number): CountdownTime {
+/**
+ * Custom hook that provides a live countdown to a target date.
+ *
+ * Updates every second and returns the broken-down remaining time.
+ * When the target date is reached or passed, `isComplete` becomes `true`
+ * and all time values are zeroed out.
+ *
+ * @param targetDate - The target date to count down to (Date, ISO string, or timestamp).
+ * @returns The current countdown state with days, hours, minutes, seconds, total, and completion status.
+ *
+ * @example
+ * const { days, hours, minutes, seconds, isComplete } = useCountdown('2026-12-31');
+ */
+export function useCountdown(
+  targetDate: Date | string | number
+): CountdownTime {
   const calculateTimeLeft = useCallback((): CountdownTime => {
     const target = new Date(targetDate).getTime();
     const now = Date.now();
@@ -22,7 +44,7 @@ export function useCountdown(targetDate: Date | string | number): CountdownTime 
         minutes: 0,
         seconds: 0,
         total: 0,
-        isComplete: true
+        isComplete: true,
       };
     }
 
@@ -32,7 +54,7 @@ export function useCountdown(targetDate: Date | string | number): CountdownTime 
       minutes: Math.floor((difference / 1000 / 60) % 60),
       seconds: Math.floor((difference / 1000) % 60),
       total: difference,
-      isComplete: false
+      isComplete: false,
     };
   }, [targetDate]);
 
