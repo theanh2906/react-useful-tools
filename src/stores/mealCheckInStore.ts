@@ -71,7 +71,7 @@ export const useMealCheckInStore = create<MealCheckInState>((set, get) => ({
       }
 
       const endDate = format(
-        addDays(new Date(config.startDate), config.cycleDays - 1),
+        addDays(new Date(config.startDate + 'T00:00:00'), config.cycleDays - 1),
         'yyyy-MM-dd'
       );
 
@@ -162,7 +162,10 @@ export const useMealCheckInStore = create<MealCheckInState>((set, get) => ({
       const config = get().cycleConfig;
       if (config) {
         const endDate = format(
-          addDays(new Date(config.startDate), config.cycleDays - 1),
+          addDays(
+            new Date(config.startDate + 'T00:00:00'),
+            config.cycleDays - 1
+          ),
           'yyyy-MM-dd'
         );
         const stats = await mealCheckInService.getCycleStats(
@@ -199,7 +202,10 @@ export const useMealCheckInStore = create<MealCheckInState>((set, get) => ({
       const config = get().cycleConfig;
       if (config) {
         const endDate = format(
-          addDays(new Date(config.startDate), config.cycleDays - 1),
+          addDays(
+            new Date(config.startDate + 'T00:00:00'),
+            config.cycleDays - 1
+          ),
           'yyyy-MM-dd'
         );
         const stats = await mealCheckInService.getCycleStats(

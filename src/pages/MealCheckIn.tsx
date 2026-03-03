@@ -140,18 +140,15 @@ export const MealCheckIn: React.FC = () => {
   };
 
   const isTodayDate = (date: Date): boolean => {
-    const today = new Date();
-    return (
-      date.getDate() === today.getDate() &&
-      date.getMonth() === today.getMonth() &&
-      date.getFullYear() === today.getFullYear()
-    );
+    const todayStr = format(new Date(), 'yyyy-MM-dd');
+    const dateStr = format(date, 'yyyy-MM-dd');
+    return dateStr === todayStr;
   };
 
   const isFutureDateObj = (date: Date): boolean => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return date > today;
+    const todayStr = format(new Date(), 'yyyy-MM-dd');
+    const dateStr = format(date, 'yyyy-MM-dd');
+    return dateStr > todayStr;
   };
 
 
@@ -214,8 +211,8 @@ export const MealCheckIn: React.FC = () => {
             <CalendarIcon className="w-6 h-6" />
             {cycleConfig && (
               <>
-                Current Cycle: {format(new Date(cycleConfig.startDate), 'MMM d, yyyy')} -{' '}
-                {format(addDays(new Date(cycleConfig.startDate), cycleConfig.cycleDays - 1), 'MMM d, yyyy')}
+                Current Cycle: {format(new Date(cycleConfig.startDate + 'T00:00:00'), 'MMM d, yyyy')} -{' '}
+                {format(addDays(new Date(cycleConfig.startDate + 'T00:00:00'), cycleConfig.cycleDays - 1), 'MMM d, yyyy')}
               </>
             )}
             {!cycleConfig && "Loading Cycle..."}
@@ -230,7 +227,7 @@ export const MealCheckIn: React.FC = () => {
         <div className="grid grid-cols-5 sm:grid-cols-7 gap-2">
           {/* Calendar days */}
           {cycleConfig && Array.from({ length: cycleConfig.cycleDays }, (_, i) => i + 1).map((dayNumber) => {
-            const dateObj = addDays(new Date(cycleConfig.startDate), dayNumber - 1);
+            const dateObj = addDays(new Date(cycleConfig.startDate + 'T00:00:00'), dayNumber - 1);
             const dateStr = format(dateObj, 'yyyy-MM-dd');
             const checked = hasCheckIn(dateStr);
             const today = isTodayDate(dateObj);
