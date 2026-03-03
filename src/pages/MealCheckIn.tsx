@@ -11,9 +11,11 @@ import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Modal } from '../components/ui/Modal';
 import { Spinner } from '../components/ui/Spinner';
+import { Input } from '../components/ui/Input';
+import { DatePicker } from '../components/ui/DatePicker';
+import { addDays, format } from 'date-fns';
+
 import {
-  ChevronLeft,
-  ChevronRight,
   Camera,
   X,
   CheckCircle,
@@ -31,40 +33,45 @@ export const MealCheckIn: React.FC = () => {
   const { user } = useAuthStore();
   const {
     checkIns,
-    currentMonthStats,
+    cycleStats,
+    cycleConfig,
     isLoading,
     selectedCheckIn,
-    loadMonthCheckIns,
+    loadCycleData,
+    saveCycleConfig,
     createCheckIn,
     deleteCheckIn,
     setSelectedCheckIn,
   } = useMealCheckInStore();
 
-  const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [showImageModal, setShowImageModal] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [showNewCycleModal, setShowNewCycleModal] = useState(false);
+  
+  const [newCycleStartDate, setNewCycleStartDate] = useState('');
+  const [newCycleDays, setNewCycleDays] = useState(30);
+
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [notes, setNotes] = useState('');
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const year = currentDate.getFullYear();
-  const month = currentDate.getMonth();
-
   useEffect(() => {
     if (user) {
-      loadMonthCheckIns(user.id, year, month + 1);
+      loadCycleData(user.id);
     }
-  }, [user, year, month, loadMonthCheckIns]);
+  }, [user, loadCycleData]);
 
-  const handlePreviousMonth = () => {
-    setCurrentDate(new Date(year, month - 1));
-  };
-
-  const handleNextMonth = () => {
-    setCurrentDate(new Date(year, month + 1));
+  const handleSaveCycle = async () => {
+    if (!user || !newCycleStartDate || newCycleDays < 1) return;
+    try {
+      await saveCycleConfig(user.id, newCycleStartDate, newCycleDays);
+      setShowNewCycleModal(false);
+    } catch (error) {
+      console.error('Error saving cycle config:', error);
+    }
   };
 
   const handleDateClick = (dateStr: string) => {
@@ -128,68 +135,26 @@ export const MealCheckIn: React.FC = () => {
     }
   };
 
-  const getDaysInMonth = () => {
-    const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
-    const daysInMonth = lastDay.getDate();
-    const startingDayOfWeek = firstDay.getDay();
-
-    const days: (number | null)[] = [];
-
-    // Add empty cells for days before the first day
-    for (let i = 0; i < startingDayOfWeek; i++) {
-      days.push(null);
-    }
-
-    // Add days of the month
-    for (let i = 1; i <= daysInMonth; i++) {
-      days.push(i);
-    }
-
-    return days;
-  };
-
-  const getDateString = (day: number): string => {
-    return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-  };
-
-  const hasCheckIn = (day: number): boolean => {
-    const dateStr = getDateString(day);
+  const hasCheckIn = (dateStr: string): boolean => {
     return checkIns.some((c) => c.date === dateStr);
   };
 
-  const isToday = (day: number): boolean => {
+  const isTodayDate = (date: Date): boolean => {
     const today = new Date();
     return (
-      day === today.getDate() &&
-      month === today.getMonth() &&
-      year === today.getFullYear()
+      date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
     );
   };
 
-  const isFutureDate = (day: number): boolean => {
-    const date = new Date(year, month, day);
+  const isFutureDateObj = (date: Date): boolean => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     return date > today;
   };
 
-  const monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
 
-  const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
   if (!user) {
     return (
@@ -213,19 +178,19 @@ export const MealCheckIn: React.FC = () => {
       </div>
 
       {/* Stats Card */}
-      {currentMonthStats && (
+      {cycleStats && (
         <Card className="p-6 mb-6 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border-green-200 dark:border-green-800">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
-                {t('mealCheckIn.monthlyProgress')}
+                Cycle Progress
               </h3>
               <p className="text-3xl font-bold text-green-600 dark:text-green-400">
-                {currentMonthStats.checkedInDays} /{' '}
-                {currentMonthStats.totalDaysInMonth}
+                {cycleStats.checkedInDays} /{' '}
+                {cycleStats.totalCycleDays}
               </p>
               <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                {currentMonthStats.percentage}% {t('mealCheckIn.complete')}
+                {cycleStats.percentage}% {t('mealCheckIn.complete')}
               </p>
             </div>
             <div className="h-20 w-20 rounded-full border-4 border-green-600 dark:border-green-400 flex items-center justify-center">
@@ -235,7 +200,7 @@ export const MealCheckIn: React.FC = () => {
           <div className="mt-4 bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
             <div
               className="bg-green-600 dark:bg-green-400 h-full transition-all duration-500"
-              style={{ width: `${currentMonthStats.percentage}%` }}
+              style={{ width: `${cycleStats.percentage}%` }}
             />
           </div>
         </Card>
@@ -244,47 +209,36 @@ export const MealCheckIn: React.FC = () => {
       {/* Calendar */}
       <Card className="p-6">
         {/* Calendar Header */}
-        <div className="flex items-center justify-between mb-6">
-          <Button variant="ghost" size="sm" onClick={handlePreviousMonth}>
-            <ChevronLeft className="w-5 h-5" />
-          </Button>
-
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
           <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
             <CalendarIcon className="w-6 h-6" />
-            {monthNames[month]} {year}
+            {cycleConfig && (
+              <>
+                Current Cycle: {format(new Date(cycleConfig.startDate), 'MMM d, yyyy')} -{' '}
+                {format(addDays(new Date(cycleConfig.startDate), cycleConfig.cycleDays - 1), 'MMM d, yyyy')}
+              </>
+            )}
+            {!cycleConfig && "Loading Cycle..."}
           </h2>
 
-          <Button variant="ghost" size="sm" onClick={handleNextMonth}>
-            <ChevronRight className="w-5 h-5" />
+          <Button onClick={() => setShowNewCycleModal(true)}>
+            Add new cycle
           </Button>
         </div>
 
         {/* Calendar Grid */}
-        <div className="grid grid-cols-7 gap-2">
-          {/* Week day headers */}
-          {weekDays.map((day) => (
-            <div
-              key={day}
-              className="text-center font-semibold text-sm text-gray-600 dark:text-gray-400 py-2"
-            >
-              {day}
-            </div>
-          ))}
-
+        <div className="grid grid-cols-5 sm:grid-cols-7 gap-2">
           {/* Calendar days */}
-          {getDaysInMonth().map((day, index) => {
-            if (day === null) {
-              return <div key={`empty-${index}`} className="aspect-square" />;
-            }
-
-            const dateStr = getDateString(day);
-            const checked = hasCheckIn(day);
-            const today = isToday(day);
-            const future = isFutureDate(day);
+          {cycleConfig && Array.from({ length: cycleConfig.cycleDays }, (_, i) => i + 1).map((dayNumber) => {
+            const dateObj = addDays(new Date(cycleConfig.startDate), dayNumber - 1);
+            const dateStr = format(dateObj, 'yyyy-MM-dd');
+            const checked = hasCheckIn(dateStr);
+            const today = isTodayDate(dateObj);
+            const future = isFutureDateObj(dateObj);
 
             return (
               <button
-                key={day}
+                key={dayNumber}
                 onClick={() => !future && handleDateClick(dateStr)}
                 disabled={future}
                 className={`
@@ -293,10 +247,10 @@ export const MealCheckIn: React.FC = () => {
                   ${checked ? 'bg-green-500 dark:bg-green-600 text-white' : 'bg-white dark:bg-gray-800'}
                   ${future ? 'opacity-40 cursor-not-allowed' : 'hover:shadow-md cursor-pointer'}
                   ${!checked && !future ? 'hover:border-blue-400 dark:hover:border-blue-500' : ''}
-                  relative
+                  relative flex items-center justify-center p-2
                 `}
               >
-                <span className="text-lg font-semibold">{day}</span>
+                <span className="text-lg font-semibold">{dayNumber}</span>
                 {checked && (
                   <CheckCircle className="w-4 h-4 absolute bottom-1 right-1 hidden sm:block" />
                 )}
@@ -305,6 +259,46 @@ export const MealCheckIn: React.FC = () => {
           })}
         </div>
       </Card>
+
+      {/* New Cycle Modal */}
+      <Modal
+        isOpen={showNewCycleModal}
+        onClose={() => setShowNewCycleModal(false)}
+        title="Add new cycle"
+      >
+        <div className="space-y-4">
+          <DatePicker
+            label="Cycle Start Date"
+            value={newCycleStartDate}
+            onChange={setNewCycleStartDate}
+            centered
+          />
+          <Input 
+            label="Number of Cycle Days"
+            type="number"
+            min={1}
+            max={365}
+            value={newCycleDays}
+            onChange={(e) => setNewCycleDays(parseInt(e.target.value) || 0)}
+          />
+          <div className="flex gap-3 mt-6">
+            <Button
+              onClick={() => setShowNewCycleModal(false)}
+              variant="ghost"
+              className="flex-1"
+            >
+              {t('common.cancel')}
+            </Button>
+            <Button
+              onClick={handleSaveCycle}
+              disabled={isLoading || !newCycleStartDate || newCycleDays < 1}
+              className="flex-1"
+            >
+              Save Cycle
+            </Button>
+          </div>
+        </div>
+      </Modal>
 
       {/* Upload Modal */}
       <Modal

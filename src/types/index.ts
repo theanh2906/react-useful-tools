@@ -344,6 +344,16 @@ export interface Room {
 
 // ─── Meal Check-in Types ─────────────────────────────────────────────────────
 
+/** Configuration for a meal check-in cycle. */
+export interface MealCheckInCycleConfig {
+  /** User ID inheriting this config. */
+  userId: string;
+  /** The cycle start date in YYYY-MM-DD format. */
+  startDate: string;
+  /** The total number of days in the cycle. */
+  cycleDays: number;
+}
+
 /** A daily meal check-in record with photo proof. */
 export interface MealCheckIn {
   /** Unique check-in identifier (format: `{userId}_{date}`). */
@@ -364,11 +374,11 @@ export interface MealCheckIn {
   updatedAt?: number;
 }
 
-/** Monthly statistics for meal check-ins. */
-export interface MealCheckInStats {
-  /** Total number of days in the month. */
-  totalDaysInMonth: number;
-  /** Number of days with a check-in. */
+/** Statistics for meal check-in cycle. */
+export interface MealCheckInCycleStats {
+  /** Total number of days in the cycle. */
+  totalCycleDays: number;
+  /** Number of days with a check-in in the cycle. */
   checkedInDays: number;
   /** Check-in completion percentage (0-100). */
   percentage: number;

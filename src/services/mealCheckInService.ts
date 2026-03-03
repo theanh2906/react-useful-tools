@@ -20,10 +20,15 @@ import {
   equalTo,
 } from 'firebase/database';
 import { database, storage } from '../config/firebase';
-import type { MealCheckIn, MealCheckInStats } from '../types';
+import type {
+  MealCheckIn,
+  MealCheckInCycleConfig,
+  MealCheckInCycleStats,
+} from '../types';
 
 /** @internal Realtime Database collection name for meal check-ins. */
 const COLLECTION_NAME = 'mealCheckIns';
+const CONFIG_COLLECTION_NAME = 'mealCheckInConfigs';
 
 export const mealCheckInService = {
   /**
@@ -91,12 +96,12 @@ export const mealCheckInService = {
   },
 
   /**
-   * Get all check-ins for a specific month
+   * Get all check-ins for a specific date range
    */
-  async getCheckInsByMonth(
+  async getCheckInsByDateRange(
     userId: string,
-    year: number,
-    month: number
+    startDate: string,
+    endDate: string
   ): Promise<MealCheckIn[]> {
     try {
       // Get all check-ins from database
@@ -107,11 +112,8 @@ export const mealCheckInService = {
         return [];
       }
 
-      const startDate = `${year}-${String(month).padStart(2, '0')}-01`;
-      const endDate = `${year}-${String(month).padStart(2, '0')}-31`;
-
-      // Filter check-ins for the specific user and month
-      const monthCheckIns: MealCheckIn[] = [];
+      // Filter check-ins for the specific user and date range
+      const rangeCheckIns: MealCheckIn[] = [];
       snapshot.forEach((childSnapshot) => {
         const checkIn = childSnapshot.val() as MealCheckIn;
         // Filter by userId and date range
@@ -120,13 +122,59 @@ export const mealCheckInService = {
           checkIn.date >= startDate &&
           checkIn.date <= endDate
         ) {
-          monthCheckIns.push(checkIn);
+          rangeCheckIns.push(checkIn);
         }
       });
 
-      return monthCheckIns.sort((a, b) => a.date.localeCompare(b.date));
+      return rangeCheckIns.sort((a, b) => a.date.localeCompare(b.date));
     } catch (error) {
-      console.error('Error getting monthly check-ins:', error);
+      console.error('Error getting range check-ins:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Get all check-ins for a specific month (deprecated - use getCheckInsByDateRange)
+   */
+  async getCheckInsByMonth(
+    userId: string,
+    year: number,
+    month: number
+  ): Promise<MealCheckIn[]> {
+    const startDate = `${year}-${String(month).padStart(2, '0')}-01`;
+    const endDate = `${year}-${String(month).padStart(2, '0')}-31`;
+    return this.getCheckInsByDateRange(userId, startDate, endDate);
+  },
+
+  /**
+   * Save a meal check-in cycle configuration
+   */
+  async saveCycleConfig(config: MealCheckInCycleConfig): Promise<void> {
+    try {
+      const configRef = dbRef(
+        database,
+        `${CONFIG_COLLECTION_NAME}/${config.userId}`
+      );
+      await set(configRef, config);
+    } catch (error) {
+      console.error('Error saving cycle config:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Get cycle config for a user
+   */
+  async getCycleConfig(userId: string): Promise<MealCheckInCycleConfig | null> {
+    try {
+      const configRef = dbRef(database, `${CONFIG_COLLECTION_NAME}/${userId}`);
+      const snapshot = await get(configRef);
+      if (snapshot.exists()) {
+        return snapshot.val() as MealCheckInCycleConfig;
+      }
+      return null;
+    } catch (error) {
+      console.error('Error getting cycle config:', error);
       throw error;
     }
   },
@@ -172,28 +220,53 @@ export const mealCheckInService = {
   },
 
   /**
-   * Get statistics for a specific month
+   * Get statistics for a cycle
+   */
+  async getCycleStats(
+    userId: string,
+    startDate: string,
+    endDate: string,
+    cycleDays: number
+  ): Promise<MealCheckInCycleStats> {
+    try {
+      const checkIns = await this.getCheckInsByDateRange(
+        userId,
+        startDate,
+        endDate
+      );
+      const checkedInDays = checkIns.length;
+
+      // Calculate percentage based on cycle days
+      // If cycleDays is fewer than checked in, limit to 100%
+      const percentage = Math.min(
+        100,
+        Math.round((checkedInDays / cycleDays) * 100)
+      );
+
+      return {
+        totalCycleDays: cycleDays,
+        checkedInDays,
+        percentage,
+      };
+    } catch (error) {
+      console.error('Error getting cycle stats:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Get statistics for a specific month (deprecated - use getCycleStats)
    */
   async getMonthStats(
     userId: string,
     year: number,
     month: number
-  ): Promise<MealCheckInStats> {
-    try {
-      const checkIns = await this.getCheckInsByMonth(userId, year, month);
-      const totalDaysInMonth = new Date(year, month, 0).getDate();
-      const checkedInDays = checkIns.length;
-      const percentage = Math.round((checkedInDays / totalDaysInMonth) * 100);
+  ): Promise<MealCheckInCycleStats> {
+    const totalDaysInMonth = new Date(year, month, 0).getDate();
+    const startDate = `${year}-${String(month).padStart(2, '0')}-01`;
+    const endDate = `${year}-${String(month).padStart(2, '0')}-${String(totalDaysInMonth).padStart(2, '0')}`;
 
-      return {
-        totalDaysInMonth,
-        checkedInDays,
-        percentage,
-      };
-    } catch (error) {
-      console.error('Error getting month stats:', error);
-      throw error;
-    }
+    return this.getCycleStats(userId, startDate, endDate, totalDaysInMonth);
   },
 
   /**
