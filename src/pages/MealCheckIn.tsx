@@ -3,7 +3,7 @@
  * @description Meal check-in page with photo capture, daily calendar view
  * and Firestore-backed meal logging.
  */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../stores/authStore';
 import { useMealCheckInStore } from '../stores/mealCheckInStore';
@@ -13,7 +13,7 @@ import { Modal } from '../components/ui/Modal';
 import { Spinner } from '../components/ui/Spinner';
 import { Input } from '../components/ui/Input';
 import { DatePicker } from '../components/ui/DatePicker';
-import { addDays, format } from 'date-fns';
+import { addDays, eachDayOfInterval, format, isWithinInterval } from 'date-fns';
 
 import {
   Camera,
@@ -49,7 +49,7 @@ export const MealCheckIn: React.FC = () => {
   const [showImageModal, setShowImageModal] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showNewCycleModal, setShowNewCycleModal] = useState(false);
-  
+
   const [newCycleStartDate, setNewCycleStartDate] = useState('');
   const [newCycleDays, setNewCycleDays] = useState(30);
 
@@ -151,7 +151,22 @@ export const MealCheckIn: React.FC = () => {
     return dateStr > todayStr;
   };
 
+  const currentMonthDates = useMemo(() => {
+    const now = new Date();
+    const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+    const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0);
 
+    return eachDayOfInterval({ start: monthStart, end: monthEnd });
+  }, []);
+
+  const isOutsideCycleDate = (date: Date): boolean => {
+    if (!cycleConfig) return true;
+
+    const cycleStart = new Date(cycleConfig.startDate + 'T00:00:00');
+    const cycleEnd = addDays(cycleStart, cycleConfig.cycleDays - 1);
+
+    return !isWithinInterval(date, { start: cycleStart, end: cycleEnd });
+  };
 
   if (!user) {
     return (
@@ -183,8 +198,7 @@ export const MealCheckIn: React.FC = () => {
                 Cycle Progress
               </h3>
               <p className="text-3xl font-bold text-green-600 dark:text-green-400">
-                {cycleStats.checkedInDays} /{' '}
-                {cycleStats.totalCycleDays}
+                {cycleStats.checkedInDays} / {cycleStats.totalCycleDays}
               </p>
               <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                 {cycleStats.percentage}% {t('mealCheckIn.complete')}
@@ -211,11 +225,22 @@ export const MealCheckIn: React.FC = () => {
             <CalendarIcon className="w-6 h-6" />
             {cycleConfig && (
               <>
-                Current Cycle: {format(new Date(cycleConfig.startDate + 'T00:00:00'), 'MMM d, yyyy')} -{' '}
-                {format(addDays(new Date(cycleConfig.startDate + 'T00:00:00'), cycleConfig.cycleDays - 1), 'MMM d, yyyy')}
+                Current Cycle:{' '}
+                {format(
+                  new Date(cycleConfig.startDate + 'T00:00:00'),
+                  'MMM d, yyyy'
+                )}{' '}
+                -{' '}
+                {format(
+                  addDays(
+                    new Date(cycleConfig.startDate + 'T00:00:00'),
+                    cycleConfig.cycleDays - 1
+                  ),
+                  'MMM d, yyyy'
+                )}
               </>
             )}
-            {!cycleConfig && "Loading Cycle..."}
+            {!cycleConfig && 'Loading Cycle...'}
           </h2>
 
           <Button onClick={() => setShowNewCycleModal(true)}>
@@ -226,34 +251,36 @@ export const MealCheckIn: React.FC = () => {
         {/* Calendar Grid */}
         <div className="grid grid-cols-5 sm:grid-cols-7 gap-2">
           {/* Calendar days */}
-          {cycleConfig && Array.from({ length: cycleConfig.cycleDays }, (_, i) => i + 1).map((dayNumber) => {
-            const dateObj = addDays(new Date(cycleConfig.startDate + 'T00:00:00'), dayNumber - 1);
-            const dateStr = format(dateObj, 'yyyy-MM-dd');
-            const checked = hasCheckIn(dateStr);
-            const today = isTodayDate(dateObj);
-            const future = isFutureDateObj(dateObj);
+          {cycleConfig &&
+            currentMonthDates.map((dateObj) => {
+              const dateStr = format(dateObj, 'yyyy-MM-dd');
+              const checked = hasCheckIn(dateStr);
+              const today = isTodayDate(dateObj);
+              const future = isFutureDateObj(dateObj);
+              const outsideCycle = isOutsideCycleDate(dateObj);
+              const disabled = future || outsideCycle;
 
-            return (
-              <button
-                key={dayNumber}
-                onClick={() => !future && handleDateClick(dateStr)}
-                disabled={future}
-                className={`
+              return (
+                <button
+                  key={dateStr}
+                  onClick={() => !disabled && handleDateClick(dateStr)}
+                  disabled={disabled}
+                  className={`
                   aspect-square rounded-lg border-2 transition-all duration-200
                   ${today ? 'border-blue-500 dark:border-blue-400' : 'border-gray-200 dark:border-gray-700'}
                   ${checked ? 'bg-green-500 dark:bg-green-600 text-white' : 'bg-white dark:bg-gray-800'}
-                  ${future ? 'opacity-40 cursor-not-allowed' : 'hover:shadow-md cursor-pointer'}
-                  ${!checked && !future ? 'hover:border-blue-400 dark:hover:border-blue-500' : ''}
+                  ${disabled ? 'opacity-40 cursor-not-allowed' : 'hover:shadow-md cursor-pointer'}
+                  ${!checked && !disabled ? 'hover:border-blue-400 dark:hover:border-blue-500' : ''}
                   relative flex items-center justify-center p-2
                 `}
-              >
-                <span className="text-lg font-semibold">{dayNumber}</span>
-                {checked && (
-                  <CheckCircle className="w-4 h-4 absolute bottom-1 right-1 hidden sm:block" />
-                )}
-              </button>
-            );
-          })}
+                >
+                  <span className="text-lg font-semibold">{dateObj.getDate()}</span>
+                  {checked && (
+                    <CheckCircle className="w-4 h-4 absolute bottom-1 right-1 hidden sm:block" />
+                  )}
+                </button>
+              );
+            })}
         </div>
       </Card>
 
@@ -270,7 +297,7 @@ export const MealCheckIn: React.FC = () => {
             onChange={setNewCycleStartDate}
             centered
           />
-          <Input 
+          <Input
             label="Number of Cycle Days"
             type="number"
             min={1}

@@ -2,42 +2,42 @@
  * @module NotesPage
  * @description Rich-text notes page with tagging, pinning, search and ReactQuill editor.
  */
-import { useState, useEffect, lazy, Suspense } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Plus,
-  Search,
-  Pin,
-  Trash2,
-  Edit,
-  X,
-  Tag,
-  Clock,
-  Type,
-} from 'lucide-react';
-import {
-  Card,
-  Button,
   Badge,
+  Button,
+  Card,
+  Input,
   Modal,
   ModalFooter,
-  Input,
 } from '@/components/ui';
-import { useNotesStore } from '@/stores/notesStore';
-import { useAuthStore } from '@/stores/authStore';
-import { cn } from '@/lib/utils';
+import { toast } from '@/components/ui/Toast';
 import {
-  generateId,
+  cn,
   formatRelativeTime,
+  generateId,
   stripHtml,
   truncateText,
 } from '@/lib/utils';
+import { useAuthStore } from '@/stores/authStore';
+import { useNotesStore } from '@/stores/notesStore';
 import type { Note } from '@/types';
-import { toast } from '@/components/ui/Toast';
+import { AnimatePresence, motion } from 'framer-motion';
+import {
+  Clock,
+  Edit,
+  Pin,
+  Plus,
+  Search,
+  Tag,
+  Trash2,
+  Type,
+  X,
+} from 'lucide-react';
+import { lazy, Suspense, useEffect, useState } from 'react';
+import 'react-quill/dist/quill.snow.css';
 
 // Lazy load ReactQuill for better performance
 const ReactQuill = lazy(() => import('react-quill'));
-import 'react-quill/dist/quill.snow.css';
 
 /**
  * Notes management page.
