@@ -159,6 +159,25 @@ export const MealCheckIn: React.FC = () => {
     return eachDayOfInterval({ start: monthStart, end: monthEnd });
   }, []);
 
+  const weekdayLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+  const calendarCells = useMemo(() => {
+    if (currentMonthDates.length === 0) return [] as Array<Date | null>;
+
+    const firstDayOfWeek = currentMonthDates[0].getDay();
+    const leadingEmptyCells = Array.from({ length: firstDayOfWeek }, () => null);
+    const totalCellsBeforeTrailing =
+      leadingEmptyCells.length + currentMonthDates.length;
+    const trailingCellCount =
+      totalCellsBeforeTrailing % 7 === 0 ? 0 : 7 - (totalCellsBeforeTrailing % 7);
+    const trailingEmptyCells = Array.from(
+      { length: trailingCellCount },
+      () => null
+    );
+
+    return [...leadingEmptyCells, ...currentMonthDates, ...trailingEmptyCells];
+  }, [currentMonthDates]);
+
   const isOutsideCycleDate = (date: Date): boolean => {
     if (!cycleConfig) return true;
 
@@ -249,10 +268,31 @@ export const MealCheckIn: React.FC = () => {
         </div>
 
         {/* Calendar Grid */}
-        <div className="grid grid-cols-5 sm:grid-cols-7 gap-2">
+        <div className="grid grid-cols-7 gap-2 mb-2">
+          {weekdayLabels.map((label) => (
+            <div
+              key={label}
+              className="text-center text-xs sm:text-sm font-semibold text-gray-500 dark:text-gray-400 py-1"
+            >
+              {label}
+            </div>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-7 gap-2">
           {/* Calendar days */}
           {cycleConfig &&
-            currentMonthDates.map((dateObj) => {
+            calendarCells.map((dateObj, index) => {
+              if (!dateObj) {
+                return (
+                  <div
+                    key={`empty-${index}`}
+                    className="aspect-square rounded-lg border border-transparent"
+                    aria-hidden="true"
+                  />
+                );
+              }
+
               const dateStr = format(dateObj, 'yyyy-MM-dd');
               const checked = hasCheckIn(dateStr);
               const today = isTodayDate(dateObj);
