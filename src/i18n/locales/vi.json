@@ -340,6 +340,18 @@
     "checkedIn": "Đã Check-in",
     "notCheckedIn": "Chưa Check-in",
     "stats": "Thống kê",
-    "daysThisMonth": "Số ngày trong tháng"
+    "daysThisMonth": "Số ngày trong tháng",
+    "share": "Chia sẻ",
+    "shareTitle": "Chia sẻ Meal Check-in",
+    "shareDescription": "Chia sẻ link này với người thân để họ xem tiến độ của bạn.",
+    "generateLink": "Tạo link chia sẻ",
+    "copyLink": "Sao chép link",
+    "linkCopied": "Đã sao chép!",
+    "revokeLink": "Thu hồi link",
+    "revokeConfirm": "Thu hồi link này? Ai đang có link cũ sẽ mất quyền truy cập.",
+    "readOnlyView": "Chế độ xem",
+    "readOnlyDescription": "Bạn đang xem trang check-in bữa ăn được chia sẻ.",
+    "invalidShareLink": "Link chia sẻ không hợp lệ hoặc đã bị thu hồi.",
+    "generating": "Đang tạo..."
   }
 }

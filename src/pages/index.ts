@@ -20,3 +20,4 @@ export { default as SystemMonitorPage } from './SystemMonitor';
 export { default as ChangeCasePage } from './ChangeCase';
 export { default as ZipToolPage } from './ZipTool';
 export { MealCheckIn as MealCheckInPage } from './MealCheckIn';
+export { default as MealCheckInSharePage } from './MealCheckInShare';

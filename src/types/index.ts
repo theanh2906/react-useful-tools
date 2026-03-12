@@ -352,6 +352,8 @@ export interface MealCheckInCycleConfig {
   startDate: string;
   /** The total number of days in the cycle. */
   cycleDays: number;
+  /** Optional share token for public read-only access. */
+  shareToken?: string;
 }
 
 /** A daily meal check-in record with photo proof. */

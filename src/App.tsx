@@ -25,6 +25,7 @@ import {
   ChangeCasePage,
   ZipToolPage,
   MealCheckInPage,
+  MealCheckInSharePage,
 } from '@/pages';
 import { useAuthStore } from '@/stores/authStore';
 import { useAppStore } from '@/stores/appStore';
@@ -93,6 +94,10 @@ export default function App() {
 
       <Routes>
         <Route path="/auth" element={<AuthPage />} />
+        <Route
+          path="/meal-checkin/share/:shareToken"
+          element={<MealCheckInSharePage />}
+        />
 
         <Route element={<Layout />}>
           <Route path="/" element={<Dashboard />} />

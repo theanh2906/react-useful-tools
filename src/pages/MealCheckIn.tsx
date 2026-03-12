@@ -14,6 +14,7 @@ import { Spinner } from '../components/ui/Spinner';
 import { Input } from '../components/ui/Input';
 import { DatePicker } from '../components/ui/DatePicker';
 import { addDays, eachDayOfInterval, format, isWithinInterval } from 'date-fns';
+import { mealCheckInService } from '../services/mealCheckInService';
 
 import {
   Camera,
@@ -21,6 +22,10 @@ import {
   CheckCircle,
   Calendar as CalendarIcon,
   Trash2,
+  Share2,
+  Copy,
+  Check,
+  LinkIcon,
 } from 'lucide-react';
 
 /**
@@ -49,6 +54,11 @@ export const MealCheckIn: React.FC = () => {
   const [showImageModal, setShowImageModal] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showNewCycleModal, setShowNewCycleModal] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [shareToken, setShareToken] = useState<string | null>(null);
+  const [isGeneratingToken, setIsGeneratingToken] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
+  const [showRevokeConfirm, setShowRevokeConfirm] = useState(false);
 
   const [newCycleStartDate, setNewCycleStartDate] = useState('');
   const [newCycleDays, setNewCycleDays] = useState(30);
@@ -63,6 +73,47 @@ export const MealCheckIn: React.FC = () => {
       loadCycleData(user.id);
     }
   }, [user, loadCycleData]);
+
+  // Sync shareToken from loaded cycleConfig
+  useEffect(() => {
+    if (cycleConfig?.shareToken) {
+      setShareToken(cycleConfig.shareToken);
+    } else {
+      setShareToken(null);
+    }
+  }, [cycleConfig]);
+
+  const handleGenerateToken = async () => {
+    if (!user) return;
+    setIsGeneratingToken(true);
+    try {
+      const token = await mealCheckInService.generateShareToken(user.id);
+      setShareToken(token);
+    } catch (error) {
+      console.error('Error generating share token:', error);
+    } finally {
+      setIsGeneratingToken(false);
+    }
+  };
+
+  const handleRevokeToken = async () => {
+    if (!user || !shareToken) return;
+    try {
+      await mealCheckInService.revokeShareToken(user.id, shareToken);
+      setShareToken(null);
+      setShowRevokeConfirm(false);
+    } catch (error) {
+      console.error('Error revoking share token:', error);
+    }
+  };
+
+  const handleCopyLink = async () => {
+    if (!shareToken) return;
+    const url = `${window.location.origin}/meal-checkin/share/${shareToken}`;
+    await navigator.clipboard.writeText(url);
+    setLinkCopied(true);
+    setTimeout(() => setLinkCopied(false), 2000);
+  };
 
   const handleSaveCycle = async () => {
     if (!user || !newCycleStartDate || newCycleDays < 1) return;
@@ -262,9 +313,19 @@ export const MealCheckIn: React.FC = () => {
             {!cycleConfig && 'Loading Cycle...'}
           </h2>
 
-          <Button onClick={() => setShowNewCycleModal(true)}>
-            Add new cycle
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              onClick={() => setShowShareModal(true)}
+              variant="ghost"
+              className="flex items-center gap-2"
+            >
+              <Share2 className="w-4 h-4" />
+              {t('mealCheckIn.share')}
+            </Button>
+            <Button onClick={() => setShowNewCycleModal(true)}>
+              Add new cycle
+            </Button>
+          </div>
         </div>
 
         {/* Calendar Grid */}
@@ -546,6 +607,88 @@ export const MealCheckIn: React.FC = () => {
               className="flex-1"
             >
               {t('common.delete')}
+            </Button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Share Modal */}
+      <Modal
+        isOpen={showShareModal}
+        onClose={() => setShowShareModal(false)}
+        title={t('mealCheckIn.shareTitle')}
+        size="sm"
+      >
+        <div className="space-y-4">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            {t('mealCheckIn.shareDescription')}
+          </p>
+
+          {!shareToken ? (
+            <Button
+              onClick={handleGenerateToken}
+              disabled={isGeneratingToken}
+              className="w-full"
+            >
+              {isGeneratingToken ? (
+                <><Spinner size="sm" />&nbsp;{t('mealCheckIn.generating')}</>
+              ) : (
+                <><LinkIcon className="w-4 h-4 mr-2" />{t('mealCheckIn.generateLink')}</>
+              )}
+            </Button>
+          ) : (
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 rounded-lg p-3">
+                <span className="text-xs text-gray-700 dark:text-gray-300 flex-1 break-all select-all">
+                  {`${window.location.origin}/meal-checkin/share/${shareToken}`}
+                </span>
+              </div>
+              <div className="flex gap-2">
+                <Button onClick={handleCopyLink} className="flex-1 flex items-center justify-center gap-2">
+                  {linkCopied ? (
+                    <><Check className="w-4 h-4" />{t('mealCheckIn.linkCopied')}</>
+                  ) : (
+                    <><Copy className="w-4 h-4" />{t('mealCheckIn.copyLink')}</>
+                  )}
+                </Button>
+                <Button
+                  onClick={() => setShowRevokeConfirm(true)}
+                  variant="danger"
+                  className="flex-1"
+                >
+                  {t('mealCheckIn.revokeLink')}
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+      </Modal>
+
+      {/* Revoke Confirmation Modal */}
+      <Modal
+        isOpen={showRevokeConfirm}
+        onClose={() => setShowRevokeConfirm(false)}
+        title={t('mealCheckIn.revokeLink')}
+        size="sm"
+      >
+        <div className="space-y-4">
+          <p className="text-gray-700 dark:text-gray-300">
+            {t('mealCheckIn.revokeConfirm')}
+          </p>
+          <div className="flex gap-3">
+            <Button
+              onClick={() => setShowRevokeConfirm(false)}
+              variant="ghost"
+              className="flex-1"
+            >
+              {t('common.cancel')}
+            </Button>
+            <Button
+              onClick={handleRevokeToken}
+              variant="danger"
+              className="flex-1"
+            >
+              {t('mealCheckIn.revokeLink')}
             </Button>
           </div>
         </div>

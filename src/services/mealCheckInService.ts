@@ -15,6 +15,7 @@ import {
   set,
   get,
   remove,
+  update,
   query,
   orderByChild,
   equalTo,
@@ -29,6 +30,7 @@ import type {
 /** @internal Realtime Database collection name for meal check-ins. */
 const COLLECTION_NAME = 'mealCheckIns';
 const CONFIG_COLLECTION_NAME = 'mealCheckInConfigs';
+const SHARE_TOKENS_COLLECTION = 'mealCheckInShareTokens';
 
 export const mealCheckInService = {
   /**
@@ -295,6 +297,75 @@ export const mealCheckInService = {
     } catch (error) {
       console.error('Error getting all check-ins:', error);
       throw error;
+    }
+  },
+
+  /**
+   * Generate a random share token for a user's meal check-in page.
+   * Saves the token on the cycle config and creates a reverse-lookup entry.
+   */
+  async generateShareToken(userId: string): Promise<string> {
+    try {
+      const token = crypto.randomUUID();
+
+      // Save token on cycle config
+      const configRef = dbRef(database, `${CONFIG_COLLECTION_NAME}/${userId}`);
+      await update(configRef, { shareToken: token });
+
+      // Reverse-lookup: token → userId
+      const tokenRef = dbRef(
+        database,
+        `${SHARE_TOKENS_COLLECTION}/${token}`
+      );
+      await set(tokenRef, { userId });
+
+      return token;
+    } catch (error) {
+      console.error('Error generating share token:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Revoke a share token. Removes lookup entry and clears token from config.
+   */
+  async revokeShareToken(userId: string, token: string): Promise<void> {
+    try {
+      // Remove reverse-lookup entry
+      const tokenRef = dbRef(
+        database,
+        `${SHARE_TOKENS_COLLECTION}/${token}`
+      );
+      await remove(tokenRef);
+
+      // Clear token from cycle config
+      const configRef = dbRef(database, `${CONFIG_COLLECTION_NAME}/${userId}`);
+      await update(configRef, { shareToken: null });
+    } catch (error) {
+      console.error('Error revoking share token:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Resolve a share token to its owner's userId.
+   * Returns null if the token does not exist.
+   */
+  async getUserIdByShareToken(token: string): Promise<string | null> {
+    try {
+      const tokenRef = dbRef(
+        database,
+        `${SHARE_TOKENS_COLLECTION}/${token}`
+      );
+      const snapshot = await get(tokenRef);
+      if (snapshot.exists()) {
+        const data = snapshot.val() as { userId: string };
+        return data.userId;
+      }
+      return null;
+    } catch (error) {
+      console.error('Error resolving share token:', error);
+      return null;
     }
   },
 };
