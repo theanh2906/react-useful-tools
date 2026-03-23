@@ -16,7 +16,8 @@ import {
   GripVertical
 } from 'lucide-react';
 import { Card, Button, Badge } from '@/components/ui';
-import { useSettingsStore, DEFAULT_DASHBOARD_LAYOUT, DashboardLayoutItem } from '@/stores/settingsStore';
+import { useSettingsStore, DEFAULT_DASHBOARD_LAYOUT } from '@/stores/settingsStore';
+import { DashboardLayoutItem } from '@/services/settingsService';
 import { useAppStore } from '@/stores/appStore';
 import { useAuthStore } from '@/stores/authStore';
 import { toast } from '@/components/ui/Toast';
@@ -305,7 +306,7 @@ export function Settings() {
                 className="hidden"
               />
               <Button 
-                variant="outline" 
+                variant="secondary" 
                 onClick={() => fileInputRef.current?.click()}
                 className="w-full flex items-center justify-center gap-2"
               >

@@ -19,8 +19,6 @@ import {
 } from 'lucide-react';
 import {
   Card,
-  CardContent,
-  Progress,
   CircularProgress,
   Badge,
   DatePicker,
@@ -31,7 +29,6 @@ import { useNotesStore } from '@/stores/notesStore';
 import { useAuthStore } from '@/stores/authStore';
 import { listenUltrasounds } from '@/services/ultrasoundService';
 import { listenPeanutRecords, listenSoyaRecords } from '@/services/babyService';
-import { useCountdown } from '@/hooks';
 import { cn } from '@/lib/utils';
 import { useEffect, useMemo, useState } from 'react';
 import { SHOW_PREGNANCY_UI } from '@/config/constants';
@@ -77,9 +74,6 @@ export function Dashboard() {
 
   const dashboardLayout = useSettingsStore((state) => state.settings.dashboardLayout) || [];
   const sortedLayout = [...dashboardLayout].sort((a, b) => a.order - b.order);
-
-  const dueDate = pregnancyInfo?.dueDate || new Date();
-  const countdown = useCountdown(dueDate);
 
   useEffect(() => {
     subscribeEvents();
@@ -213,27 +207,6 @@ export function Dashboard() {
     ];
     return all.filter((a) => SHOW_PREGNANCY_UI || !a.pregnancyOnly);
   }, []);
-
-  const trimesterInfo = [
-    {
-      trimester: 1,
-      label: 'First Trimester',
-      weeks: '1-12',
-      description: 'Baby is forming',
-    },
-    {
-      trimester: 2,
-      label: 'Second Trimester',
-      weeks: '13-27',
-      description: 'Baby is growing',
-    },
-    {
-      trimester: 3,
-      label: 'Third Trimester',
-      weeks: '28-40',
-      description: 'Almost there!',
-    },
-  ];
 
   const renderSection = (id: string) => {
     switch (id) {
