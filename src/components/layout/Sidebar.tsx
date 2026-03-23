@@ -9,7 +9,11 @@ import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
 import { useAppStore } from '@/stores/appStore';
 import { useAuthStore } from '@/stores/authStore';
-import { NAV_ITEMS, NAV_CATEGORIES } from '@/config/constants';
+import {
+  NAV_ITEMS,
+  NAV_CATEGORIES,
+  SHOW_PREGNANCY_UI,
+} from '@/config/constants';
 import { useIsMobile } from '@/hooks';
 import * as Icons from 'lucide-react';
 import { X, ChevronLeft, Sparkles } from 'lucide-react';
@@ -58,9 +62,13 @@ export function Sidebar() {
     },
   };
 
+  const visibleNavItems = NAV_ITEMS.filter(
+    (item) => SHOW_PREGNANCY_UI || !item.pregnancyUiOnly
+  );
+
   const groupedItems = NAV_CATEGORIES.map((category) => ({
     ...category,
-    items: NAV_ITEMS.filter((item) => item.category === category.id),
+    items: visibleNavItems.filter((item) => item.category === category.id),
   })).filter((group) => group.items.length > 0);
 
   return (
@@ -106,7 +114,11 @@ export function Sidebar() {
               <h1 className="font-display font-bold text-white text-lg">
                 Useful Tools
               </h1>
-              <p className="text-xs text-slate-500">Pregnancy & Productivity</p>
+              <p className="text-xs text-slate-500">
+                {SHOW_PREGNANCY_UI
+                  ? t('navigation.sidebarTaglinePregnancy')
+                  : t('navigation.sidebarTaglineFamily')}
+              </p>
             </div>
           </Link>
           <button

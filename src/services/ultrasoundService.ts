@@ -5,7 +5,7 @@
  */
 
 import { createItem, deleteItem, listenCollection } from './realtimeDb';
-import { deleteFile, uploadFile } from './storageService';
+import { deleteFile, uploadFile, resolveStoragePath } from './storageService';
 
 /** An ultrasound scan record with image and metadata. */
 export type UltrasoundRecord = {
@@ -49,7 +49,7 @@ export const uploadUltrasound = async (
   date: string,
   notes?: string
 ) => {
-  const uploaded = await uploadFile('ultrasounds', file);
+  const uploaded = await uploadFile(resolveStoragePath('ultrasounds'), file);
   const record: UltrasoundRecord = {
     url: uploaded.url || '',
     date,

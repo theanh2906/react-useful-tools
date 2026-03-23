@@ -30,6 +30,8 @@
     "signup": "Đăng ký"
   },
   "navigation": {
+    "sidebarTaglinePregnancy": "Thai kỳ & Năng suất",
+    "sidebarTaglineFamily": "Gia đình & Năng suất",
     "dashboard": "Tổng quan",
     "calendar": "Lịch",
     "notes": "Ghi chú",
@@ -353,5 +355,30 @@
     "readOnlyDescription": "Bạn đang xem trang check-in bữa ăn được chia sẻ.",
     "invalidShareLink": "Link chia sẻ không hợp lệ hoặc đã bị thu hồi.",
     "generating": "Đang tạo..."
+  },
+  "settings": {
+    "subtitle": "Tùy chỉnh trải nghiệm của bạn",
+    "appearance": "Giao diện",
+    "theme": "Chủ đề",
+    "light": "Sáng",
+    "dark": "Tối",
+    "language": "Ngôn ngữ",
+    "dashboardLayout": "Bố cục Tổng quan",
+    "customize": "Tùy chỉnh",
+    "dataManagement": "Quản lý Dữ liệu",
+    "backupSettings": "Sao lưu Cài đặt",
+    "backupDesc": "Xuất cài đặt của bạn ra file JSON để lưu trữ.",
+    "exportJson": "Xuất JSON",
+    "restoreSettings": "Khôi phục Cài đặt",
+    "restoreDesc": "Nhập cài đặt từ file JSON đã lưu trước đó.",
+    "importJson": "Nhập JSON",
+    "layoutNames": {
+      "quickSetup": "Thiết lập Nhanh",
+      "statsGrid": "Lưới Thống kê",
+      "quickActions": "Thao tác Nhanh",
+      "babyAge": "Tuổi Bé",
+      "recentActivity": "Hoạt động Gần đây",
+      "todaysTip": "Mẹo Hôm nay"
+    }
   }
 }

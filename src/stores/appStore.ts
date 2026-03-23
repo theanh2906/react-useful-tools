@@ -3,7 +3,7 @@
  * @description Global application state store.
  * Manages theme, language, sidebar, pregnancy info, baby birth date,
  * profile sync with Firebase, and global loading state.
- * Persisted to session storage.
+ * Persisted to local storage.
  */
 
 import { create } from 'zustand';
@@ -169,7 +169,7 @@ export const useAppStore = create<AppState>()(
         conceptionDate: state.conceptionDate,
         babyBirthDate: state.babyBirthDate,
       }),
-      storage: createJSONStorage(() => sessionStorage),
+      storage: createJSONStorage(() => localStorage),
     }
   )
 );

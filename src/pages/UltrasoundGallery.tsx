@@ -39,6 +39,7 @@ export function UltrasoundGalleryPage() {
   const [items, setItems] = useState<UltrasoundRecord[]>([]);
   const [selected, setSelected] = useState<UltrasoundRecord | null>(null);
   const userId = useAuthStore((state) => state.user?.id);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const [notes, setNotes] = useState('');
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -54,9 +55,19 @@ export function UltrasoundGalleryPage() {
   }, [userId]);
 
   const handleUpload = async (file: File) => {
-    await uploadUltrasound(file, date, notes);
-    setNotes('');
-    toast.success('Ultrasound added');
+    if (!isAuthenticated) {
+      toast.error('Sign in to upload images to your personal gallery.');
+      return;
+    }
+    try {
+      await uploadUltrasound(file, date, notes);
+      setNotes('');
+      toast.success('Ultrasound added');
+    } catch (e) {
+      toast.error(
+        e instanceof Error ? e.message : 'Upload failed. Try signing in again.'
+      );
+    }
   };
 
   const handleDelete = async (record: UltrasoundRecord) => {
@@ -79,7 +90,13 @@ export function UltrasoundGalleryPage() {
             Save and revisit precious moments
           </p>
         </div>
-        <Button onClick={() => fileInputRef.current?.click()}>
+        <Button
+          disabled={!isAuthenticated}
+          onClick={() => fileInputRef.current?.click()}
+          title={
+            !isAuthenticated ? 'Sign in to upload' : undefined
+          }
+        >
           <Upload className="w-4 h-4" />
           Upload
         </Button>

@@ -113,12 +113,19 @@ export const ANIMATION_DURATION = {
   slow: 500,
 };
 
+/**
+ * When false, pregnancy-oriented sidebar items, dashboard blocks, and Baby Tracker
+ * pregnancy tab are hidden. Routes and page code remain available.
+ */
+export const SHOW_PREGNANCY_UI = false;
+
 // ─── Navigation ─────────────────────────────────────────────────────────────
 
 /**
  * Sidebar navigation items configuration.
  * Each item defines a route, icon, i18n key, and category grouping.
  * Items with `protected: true` require authentication.
+ * Items with `pregnancyUiOnly: true` are omitted when {@link SHOW_PREGNANCY_UI} is false.
  */
 export const NAV_ITEMS = [
   {
@@ -169,6 +176,7 @@ export const NAV_ITEMS = [
     path: '/ultrasounds',
     icon: 'Image',
     category: 'family',
+    pregnancyUiOnly: true,
   },
   {
     id: 'timeline',
@@ -177,6 +185,7 @@ export const NAV_ITEMS = [
     path: '/timeline',
     icon: 'GitBranch',
     category: 'family',
+    pregnancyUiOnly: true,
   },
   {
     id: 'meal-checkin',

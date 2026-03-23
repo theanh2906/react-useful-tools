@@ -2,9 +2,10 @@
  * @module services/storageService
  * @description Firebase Cloud Storage file management service.
  * Provides file listing, upload, and deletion operations.
+ * Authenticated paths are scoped under `users/{uid}/...`.
  */
 
-import { storage } from '@/config/firebase';
+import { auth, storage } from '@/config/firebase';
 import {
   ref,
   uploadBytes,
@@ -15,6 +16,33 @@ import {
 } from 'firebase/storage';
 import type { FileInfo } from '@/types';
 import { getFileType } from '@/lib/utils';
+
+/**
+ * Returns Storage path `users/{uid}/{relativePath}` (no leading/trailing slashes on segments).
+ * @param relativePath - Path relative to the user root; empty string = user root folder.
+ * @throws If no user is signed in.
+ */
+export const resolveStoragePath = (relativePath: string): string => {
+  const uid = auth.currentUser?.uid;
+  if (!uid) {
+    throw new Error('You must be signed in to use cloud storage.');
+  }
+  const trimmed = relativePath.replace(/^\/+|\/+$/g, '');
+  return trimmed ? `users/${uid}/${trimmed}` : `users/${uid}`;
+};
+
+/**
+ * When signed in: `users/{uid}/{relativePath}`.
+ * When anonymous: `relativePath` only (e.g. `live-share/{roomId}` for temporary rooms).
+ */
+export const resolveStoragePathOrLegacy = (relativePath: string): string => {
+  const uid = auth.currentUser?.uid;
+  const trimmed = relativePath.replace(/^\/+|\/+$/g, '');
+  if (!uid) {
+    return trimmed;
+  }
+  return trimmed ? `users/${uid}/${trimmed}` : `users/${uid}`;
+};
 
 /**
  * Lists all files from Firebase Storage at a given path.

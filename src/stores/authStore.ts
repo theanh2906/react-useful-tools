@@ -2,7 +2,7 @@
  * @module stores/authStore
  * @description Authentication state store.
  * Manages user session, login/logout, token expiration, and Firebase auth listener.
- * Persisted to session storage.
+ * Persisted to local storage.
  */
 
 import { create } from 'zustand';
@@ -76,6 +76,15 @@ export const useAuthStore = create<AuthState>()(
 
       setUserFromFirebase: async (firebaseUser) => {
         if (!firebaseUser) {
+          // Check if current user is admin and token is still valid
+          const currentUser = get().user;
+          if (currentUser?.role === 'Administrator') {
+            if (get().checkTokenExpiration()) {
+              set({ isLoading: false });
+              return;
+            }
+          }
+
           clearResolvedPathCache();
           set({ user: null, isAuthenticated: false, isLoading: false });
           return;
@@ -113,7 +122,7 @@ export const useAuthStore = create<AuthState>()(
         user: state.user,
         isAuthenticated: state.isAuthenticated,
       }),
-      storage: createJSONStorage(() => sessionStorage),
+      storage: createJSONStorage(() => localStorage),
     }
   )
 );

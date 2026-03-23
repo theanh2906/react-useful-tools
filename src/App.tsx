@@ -26,9 +26,11 @@ import {
   ZipToolPage,
   MealCheckInPage,
   MealCheckInSharePage,
+  Settings,
 } from '@/pages';
 import { useAuthStore } from '@/stores/authStore';
 import { useAppStore } from '@/stores/appStore';
+import { useSettingsStore } from '@/stores/settingsStore';
 import { useEffect } from 'react';
 
 /**
@@ -41,6 +43,21 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 
   if (!isAuthenticated) {
     return <Navigate to="/auth" replace />;
+  }
+
+  return <>{children}</>;
+}
+
+/**
+ * Route guard that redirects authenticated users away from public-only pages (like login).
+ *
+ * @param children - The guest page content.
+ */
+function GuestRoute({ children }: { children: React.ReactNode }) {
+  const { isAuthenticated } = useAuthStore();
+
+  if (isAuthenticated) {
+    return <Navigate to="/" replace />;
   }
 
   return <>{children}</>;
@@ -62,6 +79,7 @@ export default function App() {
     isLoading: authLoading,
   } = useAuthStore();
   const { initProfileListener, isGlobalLoading } = useAppStore();
+  const { initSettingsListener } = useSettingsStore();
   const userId = useAuthStore((state) => state.user?.id);
 
   // Check token expiration on mount
@@ -80,20 +98,35 @@ export default function App() {
 
   useEffect(() => {
     let unsubscribeProfile: (() => void) | null = null;
+    let unsubscribeSettings: (() => void) | null = null;
+
     initProfileListener().then((unsub) => {
       unsubscribeProfile = unsub;
     });
+
+    initSettingsListener().then((unsub) => {
+      unsubscribeSettings = unsub;
+    });
+
     return () => {
       if (unsubscribeProfile) unsubscribeProfile();
+      if (unsubscribeSettings) unsubscribeSettings();
     };
-  }, [initProfileListener, userId]);
+  }, [initProfileListener, initSettingsListener, userId]);
 
   return (
     <>
       <GlobalLoading isLoading={isGlobalLoading || authLoading} />
 
       <Routes>
-        <Route path="/auth" element={<AuthPage />} />
+        <Route
+          path="/auth"
+          element={
+            <GuestRoute>
+              <AuthPage />
+            </GuestRoute>
+          }
+        />
         <Route
           path="/meal-checkin/share/:shareToken"
           element={<MealCheckInSharePage />}
@@ -132,6 +165,15 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <MealCheckInPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <Settings />
               </ProtectedRoute>
             }
           />

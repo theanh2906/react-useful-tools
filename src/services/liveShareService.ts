@@ -5,7 +5,7 @@
  */
 
 import { createItem, listenCollection, setValue } from './realtimeDb';
-import { uploadFile } from './storageService';
+import { uploadFile, resolveStoragePathOrLegacy } from './storageService';
 
 /** A text message sent in a Live Share room. */
 export type RoomMessage = {
@@ -103,7 +103,10 @@ export const addMessage = async (roomId: string, message: RoomMessage) => {
  */
 export const uploadRoomFile = async (roomId: string, file: File) => {
   // Upload to matching storage path
-  const uploaded = await uploadFile(`live-share/${roomId}`, file);
+  const uploaded = await uploadFile(
+    resolveStoragePathOrLegacy(`live-share/${roomId}`),
+    file
+  );
   const meta: RoomFile = {
     name: uploaded.name,
     url: uploaded.url || '',

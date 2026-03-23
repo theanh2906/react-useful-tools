@@ -3,12 +3,16 @@
  * @description Generic Firebase Realtime Database abstraction layer.
  * Provides path-resolved CRUD operations with automatic user-scoping.
  *
- * Path Resolution Strategy:
- * 1. Check root path for shared/legacy data
- * 2. Check `users/{uid}/{path}` for user-scoped data
- * 3. Default to user-scoped path for new data
+ * Path resolution:
+ * - **Authenticated:** `users/{uid}/{logicalPath}` for private app data.
+ * - **Exception:** paths starting with `liveShare` stay at the database root so
+ *   share rooms work for both signed-in and guest participants.
+ * - **Anonymous:** logical path as-is (e.g. public or legacy reads).
  *
- * Results are cached to avoid redundant lookups.
+ * Legacy data that still lives at the database root is **not** merged automatically;
+ * migrate via Firebase Console or a one-off script to `users/{uid}/...` if needed.
+ *
+ * Cache keys include the current uid so switching accounts does not reuse wrong paths.
  */
 
 import { auth, database } from '@/config/firebase';
@@ -23,12 +27,21 @@ import {
   off,
   DataSnapshot,
 } from 'firebase/database';
+import { toast } from '@/components/ui/Toast';
 
 /** Callback type for collection listeners. */
 type Listener<T> = (items: T[]) => void;
 
 /** @internal Cache of resolved database paths to avoid repeated lookups. */
 const resolvedPathCache = new Map<string, string>();
+
+/** @internal Tracks the last time a local write occurred to suppress local update toasts. */
+let lastLocalWriteTime = 0;
+
+/** @internal Records a local write to prevent immediate toasts for self-made changes. */
+const recordLocalWrite = () => {
+  lastLocalWriteTime = Date.now();
+};
 
 /** @internal Returns the current authenticated user's UID, or `null`. */
 const getUserId = () => auth.currentUser?.uid || null;
@@ -62,60 +75,37 @@ const mapSnapshotToArray = <T extends { id?: string }>(
 
 /**
  * Resolves a logical path to a concrete database path.
- * Checks root, then user-scoped path, and caches the result.
  * @internal
  */
 const resolvePath = async (path: string) => {
-  if (resolvedPathCache.has(path)) {
+  const uid = getUserId();
+  const cacheKey = `${uid ?? '__anon__'}:${path}`;
+
+  if (resolvedPathCache.has(cacheKey)) {
     console.log(
-      `[RealtimeDB] Using cached path for "${path}":`,
-      resolvedPathCache.get(path)
+      `[RealtimeDB] Using cached path for "${path}" (${cacheKey}):`,
+      resolvedPathCache.get(cacheKey)
     );
-    return resolvedPathCache.get(path)!;
+    return resolvedPathCache.get(cacheKey)!;
   }
 
-  const uid = getUserId();
   console.log(`[RealtimeDB] Resolving path "${path}" for user:`, uid);
 
   if (!uid) {
     console.log(`[RealtimeDB] No user, using root path: "${path}"`);
-    resolvedPathCache.set(path, path);
+    resolvedPathCache.set(cacheKey, path);
     return path;
   }
 
-  // First check root path (for shared/legacy data)
-  try {
-    const rootSnap = await get(ref(database, path));
-    console.log(`[RealtimeDB] Root path "${path}" exists:`, rootSnap.exists());
-    if (rootSnap.exists()) {
-      resolvedPathCache.set(path, path);
-      return path;
-    }
-  } catch (e) {
-    console.log(`[RealtimeDB] Error checking root path "${path}":`, e);
+  if (path === 'liveShare' || path.startsWith('liveShare/')) {
+    console.log(`[RealtimeDB] Live Share root path (shared): "${path}"`);
+    resolvedPathCache.set(cacheKey, path);
+    return path;
   }
 
-  // Then check user-scoped path
   const scopedPath = `users/${uid}/${path}`;
-  try {
-    const scopedSnap = await get(ref(database, scopedPath));
-    console.log(
-      `[RealtimeDB] Scoped path "${scopedPath}" exists:`,
-      scopedSnap.exists()
-    );
-    if (scopedSnap.exists()) {
-      resolvedPathCache.set(path, scopedPath);
-      return scopedPath;
-    }
-  } catch (e) {
-    console.log(`[RealtimeDB] Error checking scoped path "${scopedPath}":`, e);
-  }
-
-  // Default to scoped path for new data
-  console.log(
-    `[RealtimeDB] No data found, defaulting to scoped path: "${scopedPath}"`
-  );
-  resolvedPathCache.set(path, scopedPath);
+  console.log(`[RealtimeDB] Using user-scoped path: "${scopedPath}"`);
+  resolvedPathCache.set(cacheKey, scopedPath);
   return scopedPath;
 };
 
@@ -134,6 +124,8 @@ export const listenCollection = async <T extends { id?: string }>(
   const resolved = await resolvePath(path);
   console.log(`[RealtimeDB] Listening to collection at: "${resolved}"`);
   const dbRef = ref(database, resolved);
+  let isInitialLoad = true;
+
   const handler = (snapshot: DataSnapshot) => {
     const data = mapSnapshotToArray<T>(snapshot);
     console.log(
@@ -142,6 +134,11 @@ export const listenCollection = async <T extends { id?: string }>(
       'items'
     );
     onChange(data);
+
+    if (!isInitialLoad && Date.now() - lastLocalWriteTime > 1500) {
+      toast.info('Data synced', `Background updates received for ${path}`);
+    }
+    isInitialLoad = false;
   };
   onValue(dbRef, handler);
   return () => off(dbRef, 'value', handler);
@@ -174,6 +171,7 @@ export const createItem = async <T extends Record<string, any>>(
   path: string,
   data: T
 ) => {
+  recordLocalWrite();
   const resolved = await resolvePath(path);
   const collectionRef = ref(database, resolved);
   const newRef = push(collectionRef);
@@ -194,6 +192,7 @@ export const updateItem = async <T extends Record<string, any>>(
   id: string,
   data: T
 ) => {
+  recordLocalWrite();
   const resolved = await resolvePath(path);
   const itemRef = ref(database, `${resolved}/${id}`);
   await update(itemRef, data);
@@ -206,6 +205,7 @@ export const updateItem = async <T extends Record<string, any>>(
  * @param id - Item ID to delete.
  */
 export const deleteItem = async (path: string, id: string) => {
+  recordLocalWrite();
   const resolved = await resolvePath(path);
   const itemRef = ref(database, `${resolved}/${id}`);
   await remove(itemRef);
@@ -219,6 +219,7 @@ export const deleteItem = async (path: string, id: string) => {
  * @param data - Data to write (or `null` to delete).
  */
 export const setValue = async <T>(path: string, data: T) => {
+  recordLocalWrite();
   const resolved = await resolvePath(path);
   await set(ref(database, resolved), data);
 };
@@ -250,8 +251,16 @@ export const listenValue = async <T>(
 ) => {
   const resolved = await resolvePath(path);
   const dbRef = ref(database, resolved);
-  const handler = (snapshot: DataSnapshot) =>
+  let isInitialLoad = true;
+
+  const handler = (snapshot: DataSnapshot) => {
     onChange(snapshot.exists() ? (snapshot.val() as T) : null);
+    
+    if (!isInitialLoad && Date.now() - lastLocalWriteTime > 1500) {
+      toast.info('Data synced', `Background updates received for ${path}`);
+    }
+    isInitialLoad = false;
+  };
   onValue(dbRef, handler);
   return () => off(dbRef, 'value', handler);
 };

@@ -63,7 +63,7 @@ export function AuthPage() {
           email: 'admin@useful-tools.local',
           displayName: 'Administrator',
           token: 'admin-session-' + Math.random().toString(36).substring(7),
-          tokenExpirationIn: Date.now() + 8 * 60 * 60 * 1000, // 8 hours
+          tokenExpirationIn: Date.now() + 1 * 60 * 60 * 1000, // 1 hour
           role: 'Administrator',
         };
 

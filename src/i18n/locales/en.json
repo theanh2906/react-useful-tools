@@ -30,6 +30,8 @@
     "signup": "Sign Up"
   },
   "navigation": {
+    "sidebarTaglinePregnancy": "Pregnancy & Productivity",
+    "sidebarTaglineFamily": "Family & Productivity",
     "dashboard": "Dashboard",
     "calendar": "Calendar",
     "notes": "Notes",
@@ -353,5 +355,30 @@
     "readOnlyDescription": "You are viewing a shared meal check-in page.",
     "invalidShareLink": "This share link is invalid or has been revoked.",
     "generating": "Generating..."
+  },
+  "settings": {
+    "subtitle": "Customize your experience",
+    "appearance": "Appearance",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "language": "Language",
+    "dashboardLayout": "Dashboard Layout",
+    "customize": "Customize",
+    "dataManagement": "Data Management",
+    "backupSettings": "Backup Settings",
+    "backupDesc": "Export your settings to a JSON file for safekeeping.",
+    "exportJson": "Export JSON",
+    "restoreSettings": "Restore Settings",
+    "restoreDesc": "Import settings from a previously saved JSON file.",
+    "importJson": "Import JSON",
+    "layoutNames": {
+      "quickSetup": "Quick Setup",
+      "statsGrid": "Stats Grid",
+      "quickActions": "Quick Actions",
+      "babyAge": "Baby Age",
+      "recentActivity": "Recent Activity",
+      "todaysTip": "Today's Tip"
+    }
   }
 }

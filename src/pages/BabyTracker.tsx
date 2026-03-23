@@ -40,6 +40,7 @@ import {
 import type { BabyData, SoyaData } from '@/types';
 import { Baby } from '@/types';
 import { toast } from '@/components/ui/Toast';
+import { SHOW_PREGNANCY_UI } from '@/config/constants';
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -83,7 +84,9 @@ export function BabyTrackerPage() {
   const pregnancyInfo = getPregnancyInfo();
   const babyAge = getBabyAge();
 
-  const [activeTab, setActiveTab] = useState<Baby>(Baby.Soya);
+  const [activeTab, setActiveTab] = useState<Baby>(
+    SHOW_PREGNANCY_UI ? Baby.Soya : Baby.Peanut
+  );
   const [showAddModal, setShowAddModal] = useState(false);
   const [showSetupModal, setShowSetupModal] = useState(false);
   const [peanutRecords, setPeanutRecords] = useState<BabyData[]>([]);
@@ -201,7 +204,7 @@ export function BabyTrackerPage() {
   };
 
   const handleSetupSave = async () => {
-    if (setupData.conceptionDate) {
+    if (SHOW_PREGNANCY_UI && setupData.conceptionDate) {
       setConceptionDate(setupData.conceptionDate);
     }
     if (setupData.babyBirthDate) {
@@ -218,9 +221,13 @@ export function BabyTrackerPage() {
     listenPeanutRecords((data) => setPeanutRecords(data)).then((unsub) => {
       unsubPeanut = unsub;
     });
-    listenSoyaRecords((data) => setSoyaRecords(data)).then((unsub) => {
-      unsubSoya = unsub;
-    });
+    if (SHOW_PREGNANCY_UI) {
+      listenSoyaRecords((data) => setSoyaRecords(data)).then((unsub) => {
+        unsubSoya = unsub;
+      });
+    } else {
+      setSoyaRecords([]);
+    }
     return () => {
       if (unsubPeanut) unsubPeanut();
       if (unsubSoya) unsubSoya();
@@ -289,8 +296,9 @@ export function BabyTrackerPage() {
       (d) => d.week >= (pregnancyInfo?.currentWeek || 0)
     ) || weeklyDevelopment[0];
 
-  // Check if setup is needed
-  const needsSetup = !conceptionDate && !babyBirthDate;
+  const needsSetup = SHOW_PREGNANCY_UI
+    ? !conceptionDate && !babyBirthDate
+    : !babyBirthDate;
 
   return (
     <motion.div
@@ -328,8 +336,9 @@ export function BabyTrackerPage() {
             Welcome to Baby Tracker!
           </h2>
           <p className="text-slate-400 max-w-md mx-auto mb-6">
-            Let's set up your pregnancy or baby information to start tracking
-            growth and milestones.
+            {SHOW_PREGNANCY_UI
+              ? "Let's set up your pregnancy or baby information to start tracking growth and milestones."
+              : "Add your baby's birth date to track age, growth, and milestones."}
           </p>
           <Button onClick={() => setShowSetupModal(true)} className="px-8">
             <Settings className="w-4 h-4" />
@@ -339,35 +348,37 @@ export function BabyTrackerPage() {
       )}
 
       {/* Tabs */}
-      <div className="flex gap-2 p-1 bg-white/5 rounded-xl w-fit">
-        <button
-          onClick={() => setActiveTab(Baby.Soya)}
-          className={cn(
-            'px-6 py-2.5 rounded-lg font-medium transition-all flex items-center gap-2',
-            activeTab === Baby.Soya
-              ? 'bg-gradient-to-r from-primary-500 to-pink-500 text-white shadow-lg'
-              : 'text-slate-400 hover:text-white hover:bg-white/10'
-          )}
-        >
-          <Heart className="w-4 h-4" />
-          Soya (Pregnancy)
-        </button>
-        <button
-          onClick={() => setActiveTab(Baby.Peanut)}
-          className={cn(
-            'px-6 py-2.5 rounded-lg font-medium transition-all flex items-center gap-2',
-            activeTab === Baby.Peanut
-              ? 'bg-gradient-to-r from-primary-500 to-pink-500 text-white shadow-lg'
-              : 'text-slate-400 hover:text-white hover:bg-white/10'
-          )}
-        >
-          <BabyIcon className="w-4 h-4" />
-          Peanut (Baby)
-        </button>
-      </div>
+      {SHOW_PREGNANCY_UI && (
+        <div className="flex gap-2 p-1 bg-white/5 rounded-xl w-fit">
+          <button
+            onClick={() => setActiveTab(Baby.Soya)}
+            className={cn(
+              'px-6 py-2.5 rounded-lg font-medium transition-all flex items-center gap-2',
+              activeTab === Baby.Soya
+                ? 'bg-gradient-to-r from-primary-500 to-pink-500 text-white shadow-lg'
+                : 'text-slate-400 hover:text-white hover:bg-white/10'
+            )}
+          >
+            <Heart className="w-4 h-4" />
+            Soya (Pregnancy)
+          </button>
+          <button
+            onClick={() => setActiveTab(Baby.Peanut)}
+            className={cn(
+              'px-6 py-2.5 rounded-lg font-medium transition-all flex items-center gap-2',
+              activeTab === Baby.Peanut
+                ? 'bg-gradient-to-r from-primary-500 to-pink-500 text-white shadow-lg'
+                : 'text-slate-400 hover:text-white hover:bg-white/10'
+            )}
+          >
+            <BabyIcon className="w-4 h-4" />
+            Peanut (Baby)
+          </button>
+        </div>
+      )}
 
       {/* Soya (Pregnancy) View */}
-      {activeTab === Baby.Soya && (
+      {SHOW_PREGNANCY_UI && activeTab === Baby.Soya && (
         <div className="space-y-6">
           {/* Pregnancy Overview - only show if dates are configured */}
           {pregnancyInfo && (
@@ -552,7 +563,7 @@ export function BabyTrackerPage() {
       )}
 
       {/* Peanut (Baby) View */}
-      {activeTab === Baby.Peanut && (
+      {(!SHOW_PREGNANCY_UI || activeTab === Baby.Peanut) && (
         <div className="space-y-6">
           {/* Baby Overview - only show if birth date is configured */}
           {babyAge && (
@@ -741,7 +752,7 @@ export function BabyTrackerPage() {
       <Modal
         isOpen={showAddModal}
         onClose={() => setShowAddModal(false)}
-        title={`Add ${activeTab === Baby.Soya ? 'Pregnancy' : 'Baby'} Record`}
+        title={`Add ${SHOW_PREGNANCY_UI && activeTab === Baby.Soya ? 'Pregnancy' : 'Baby'} Record`}
         size="lg"
       >
         <div className="space-y-4">
@@ -753,7 +764,7 @@ export function BabyTrackerPage() {
             maxDate={new Date().toISOString().split('T')[0]}
           />
 
-          {activeTab === Baby.Soya ? (
+          {SHOW_PREGNANCY_UI && activeTab === Baby.Soya ? (
             <>
               <Input
                 label="Gestational Age (e.g., 16 weeks)"
@@ -870,27 +881,29 @@ export function BabyTrackerPage() {
         size="md"
       >
         <div className="space-y-6">
-          <div className="p-4 rounded-xl bg-pink-500/10 border border-pink-500/20">
-            <div className="flex items-center gap-3 mb-2">
-              <Heart className="w-5 h-5 text-pink-400" />
-              <h4 className="font-medium text-white">
-                Pregnancy Tracking (Soya)
-              </h4>
+          {SHOW_PREGNANCY_UI && (
+            <div className="p-4 rounded-xl bg-pink-500/10 border border-pink-500/20">
+              <div className="flex items-center gap-3 mb-2">
+                <Heart className="w-5 h-5 text-pink-400" />
+                <h4 className="font-medium text-white">
+                  Pregnancy Tracking (Soya)
+                </h4>
+              </div>
+              <p className="text-sm text-slate-400 mb-4">
+                Set the conception date to track pregnancy progress
+              </p>
+              <DatePicker
+                label="Conception Date"
+                value={setupData.conceptionDate}
+                onChange={(date) =>
+                  setSetupData({ ...setupData, conceptionDate: date })
+                }
+                placeholder="Select conception date"
+                maxDate={new Date().toISOString().split('T')[0]}
+                centered
+              />
             </div>
-            <p className="text-sm text-slate-400 mb-4">
-              Set the conception date to track pregnancy progress
-            </p>
-            <DatePicker
-              label="Conception Date"
-              value={setupData.conceptionDate}
-              onChange={(date) =>
-                setSetupData({ ...setupData, conceptionDate: date })
-              }
-              placeholder="Select conception date"
-              maxDate={new Date().toISOString().split('T')[0]}
-              centered
-            />
-          </div>
+          )}
 
           <div className="p-4 rounded-xl bg-purple-500/10 border border-purple-500/20">
             <div className="flex items-center gap-3 mb-2">

@@ -4,6 +4,7 @@
  * file upload/download and preview capabilities.
  */
 import { useState, useCallback, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Upload,
@@ -25,9 +26,15 @@ import {
 import { Card, Button, Modal, ModalFooter } from '@/components/ui';
 import { cn } from '@/lib/utils';
 import { formatFileSize } from '@/lib/utils';
-import { listFiles, uploadFile, deleteFile } from '@/services/storageService';
+import {
+  listFiles,
+  uploadFile,
+  deleteFile,
+  resolveStoragePath,
+} from '@/services/storageService';
 import type { FileInfo } from '@/types';
 import { toast } from '@/components/ui/Toast';
+import { useAuthStore } from '@/stores/authStore';
 
 /** Root-level folders exposed from Firebase Storage. */
 const FOLDERS = [
@@ -41,6 +48,7 @@ const FOLDERS = [
  * preview and delete operations.
  */
 export function StoragePage() {
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const [files, setFiles] = useState<FileInfo[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [showUploadModal, setShowUploadModal] = useState(false);
@@ -59,16 +67,20 @@ export function StoragePage() {
   const totalSize = files.reduce((acc, f) => acc + f.size, 0);
 
   const loadFiles = useCallback(async () => {
+    if (!isAuthenticated) {
+      setFiles([]);
+      return;
+    }
     setIsLoading(true);
     try {
-      const data = await listFiles(currentPath);
+      const data = await listFiles(resolveStoragePath(currentPath));
       setFiles(data);
     } catch (error) {
       toast.error((error as Error).message || 'Failed to load files');
     } finally {
       setIsLoading(false);
     }
-  }, [currentPath]);
+  }, [currentPath, isAuthenticated]);
 
   useEffect(() => {
     loadFiles();
@@ -126,7 +138,9 @@ export function StoragePage() {
     setIsUploading(true);
     try {
       const selected = Array.from(fileList);
-      await Promise.all(selected.map((file) => uploadFile(currentPath, file)));
+      await Promise.all(
+        selected.map((file) => uploadFile(resolveStoragePath(currentPath), file))
+      );
       toast.success(`${selected.length} file(s) uploaded successfully!`);
       setShowUploadModal(false);
       loadFiles();
@@ -164,6 +178,38 @@ export function StoragePage() {
       year: 'numeric',
     });
   };
+
+  if (!isAuthenticated) {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="space-y-4"
+      >
+        <div>
+          <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">
+            Storage
+          </h1>
+          <p className="text-slate-400 mt-1">
+            Sign in to manage your personal cloud files
+          </p>
+        </div>
+        <Card className="p-8 text-center">
+          <HardDrive className="w-12 h-12 text-slate-500 mx-auto mb-4" />
+          <p className="text-white font-medium mb-2">Sign in required</p>
+          <p className="text-sm text-slate-400 mb-6">
+            Storage is scoped to your account. Please sign in to continue.
+          </p>
+          <Link
+            to="/auth?redirect=/storage"
+            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-primary-500 text-white font-medium rounded-xl hover:bg-primary-600 transition-all"
+          >
+            Sign in
+          </Link>
+        </Card>
+      </motion.div>
+    );
+  }
 
   return (
     <motion.div
