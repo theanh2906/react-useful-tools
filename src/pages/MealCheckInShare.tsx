@@ -6,7 +6,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { addDays, eachDayOfInterval, format, isWithinInterval } from 'date-fns';
+import { eachDayOfInterval, format } from 'date-fns';
 import { CheckCircle, Calendar as CalendarIcon, Eye, AlertTriangle } from 'lucide-react';
 
 import { Card } from '../components/ui/Card';
@@ -54,10 +54,7 @@ export default function MealCheckInShare() {
         }
         setCycleConfig(config);
 
-        const endDate = format(
-          addDays(new Date(config.startDate + 'T00:00:00'), config.cycleDays - 1),
-          'yyyy-MM-dd'
-        );
+        const endDate = '2099-12-31';
 
         const [records, stats] = await Promise.all([
           mealCheckInService.getCheckInsByDateRange(userId, config.startDate, endDate),
@@ -86,10 +83,14 @@ export default function MealCheckInShare() {
     format(date, 'yyyy-MM-dd') > format(new Date(), 'yyyy-MM-dd');
 
   const isOutsideCycleDate = (date: Date): boolean => {
-    if (!cycleConfig) return true;
-    const cycleStart = new Date(cycleConfig.startDate + 'T00:00:00');
-    const cycleEnd = addDays(cycleStart, cycleConfig.cycleDays - 1);
-    return !isWithinInterval(date, { start: cycleStart, end: cycleEnd });
+    if (!cycleConfig || !cycleStats) return true;
+    const dateStr = format(date, 'yyyy-MM-dd');
+    const checked = hasCheckIn(dateStr);
+    if (checked) return false;
+    const cycleStartStr = cycleConfig.startDate;
+    if (dateStr < cycleStartStr) return true;
+    if (cycleStats.checkedInDays >= cycleConfig.cycleDays) return true;
+    return false;
   };
 
   const currentMonthDates = useMemo(() => {
@@ -192,19 +193,11 @@ export default function MealCheckInShare() {
               <CalendarIcon className="w-6 h-6" />
               {cycleConfig && (
                 <>
-                  Current Cycle:{' '}
-                  {format(
-                    new Date(cycleConfig.startDate + 'T00:00:00'),
-                    'MMM d, yyyy'
-                  )}{' '}
-                  -{' '}
-                  {format(
-                    addDays(
-                      new Date(cycleConfig.startDate + 'T00:00:00'),
-                      cycleConfig.cycleDays - 1
-                    ),
-                    'MMM d, yyyy'
-                  )}
+                Cycle Started:{' '}
+                {format(
+                  new Date(cycleConfig.startDate + 'T00:00:00'),
+                  'MMM d, yyyy'
+                )}
                 </>
               )}
             </h2>

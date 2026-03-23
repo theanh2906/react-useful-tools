@@ -32,6 +32,8 @@ export interface User {
   token: string;
   /** Token expiration timestamp in milliseconds. */
   tokenExpirationIn: number;
+  /** User's role in the application (e.g., 'Administrator'). */
+  role?: string;
 }
 
 /** Represents the authentication state of the application. */

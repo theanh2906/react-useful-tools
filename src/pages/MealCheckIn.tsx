@@ -13,7 +13,7 @@ import { Modal } from '../components/ui/Modal';
 import { Spinner } from '../components/ui/Spinner';
 import { Input } from '../components/ui/Input';
 import { DatePicker } from '../components/ui/DatePicker';
-import { addDays, eachDayOfInterval, format, isWithinInterval } from 'date-fns';
+import { eachDayOfInterval, format } from 'date-fns';
 import { mealCheckInService } from '../services/mealCheckInService';
 
 import {
@@ -26,7 +26,9 @@ import {
   Copy,
   Check,
   LinkIcon,
+  Download,
 } from 'lucide-react';
+import { exportCalendarToHTML } from '../utils/exportHtml';
 
 /**
  * Meal check-in page.
@@ -59,6 +61,7 @@ export const MealCheckIn: React.FC = () => {
   const [isGeneratingToken, setIsGeneratingToken] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
   const [showRevokeConfirm, setShowRevokeConfirm] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
 
   const [newCycleStartDate, setNewCycleStartDate] = useState('');
   const [newCycleDays, setNewCycleDays] = useState(30);
@@ -104,6 +107,18 @@ export const MealCheckIn: React.FC = () => {
       setShowRevokeConfirm(false);
     } catch (error) {
       console.error('Error revoking share token:', error);
+    }
+  };
+
+  const handleExportHtml = async () => {
+    if (!cycleConfig || !cycleStats) return;
+    setIsExporting(true);
+    try {
+      await exportCalendarToHTML(cycleConfig, cycleStats, checkIns);
+    } catch (error) {
+      console.error('Error exporting HTML:', error);
+    } finally {
+      setIsExporting(false);
     }
   };
 
@@ -230,12 +245,18 @@ export const MealCheckIn: React.FC = () => {
   }, [currentMonthDates]);
 
   const isOutsideCycleDate = (date: Date): boolean => {
-    if (!cycleConfig) return true;
+    if (!cycleConfig || !cycleStats) return true;
 
-    const cycleStart = new Date(cycleConfig.startDate + 'T00:00:00');
-    const cycleEnd = addDays(cycleStart, cycleConfig.cycleDays - 1);
+    const dateStr = format(date, 'yyyy-MM-dd');
+    const checked = hasCheckIn(dateStr);
+    if (checked) return false;
 
-    return !isWithinInterval(date, { start: cycleStart, end: cycleEnd });
+    const cycleStartStr = cycleConfig.startDate;
+    if (dateStr < cycleStartStr) return true;
+
+    if (cycleStats.checkedInDays >= cycleConfig.cycleDays) return true;
+
+    return false;
   };
 
   if (!user) {
@@ -295,17 +316,9 @@ export const MealCheckIn: React.FC = () => {
             <CalendarIcon className="w-6 h-6" />
             {cycleConfig && (
               <>
-                Current Cycle:{' '}
+                Cycle Started:{' '}
                 {format(
                   new Date(cycleConfig.startDate + 'T00:00:00'),
-                  'MMM d, yyyy'
-                )}{' '}
-                -{' '}
-                {format(
-                  addDays(
-                    new Date(cycleConfig.startDate + 'T00:00:00'),
-                    cycleConfig.cycleDays - 1
-                  ),
                   'MMM d, yyyy'
                 )}
               </>
@@ -314,6 +327,15 @@ export const MealCheckIn: React.FC = () => {
           </h2>
 
           <div className="flex gap-2">
+            <Button
+              onClick={handleExportHtml}
+              variant="ghost"
+              className="flex items-center gap-2"
+              disabled={isExporting}
+            >
+              {isExporting ? <Spinner size="sm" /> : <Download className="w-4 h-4" />}
+              Export HTML
+            </Button>
             <Button
               onClick={() => setShowShareModal(true)}
               variant="ghost"

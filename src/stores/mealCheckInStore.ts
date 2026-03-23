@@ -5,7 +5,7 @@
  */
 
 import { create } from 'zustand';
-import { addDays, format } from 'date-fns';
+import { format } from 'date-fns';
 import type {
   MealCheckIn,
   MealCheckInCycleConfig,
@@ -70,10 +70,7 @@ export const useMealCheckInStore = create<MealCheckInState>((set, get) => ({
         };
       }
 
-      const endDate = format(
-        addDays(new Date(config.startDate + 'T00:00:00'), config.cycleDays - 1),
-        'yyyy-MM-dd'
-      );
+      const endDate = '2099-12-31';
 
       const [checkIns, stats] = await Promise.all([
         mealCheckInService.getCheckInsByDateRange(
@@ -161,13 +158,7 @@ export const useMealCheckInStore = create<MealCheckInState>((set, get) => ({
       // Recalculate stats
       const config = get().cycleConfig;
       if (config) {
-        const endDate = format(
-          addDays(
-            new Date(config.startDate + 'T00:00:00'),
-            config.cycleDays - 1
-          ),
-          'yyyy-MM-dd'
-        );
+        const endDate = '2099-12-31';
         const stats = await mealCheckInService.getCycleStats(
           userId,
           config.startDate,
@@ -201,13 +192,7 @@ export const useMealCheckInStore = create<MealCheckInState>((set, get) => ({
       // Recalculate stats
       const config = get().cycleConfig;
       if (config) {
-        const endDate = format(
-          addDays(
-            new Date(config.startDate + 'T00:00:00'),
-            config.cycleDays - 1
-          ),
-          'yyyy-MM-dd'
-        );
+        const endDate = '2099-12-31';
         const stats = await mealCheckInService.getCycleStats(
           checkIn.userId,
           config.startDate,

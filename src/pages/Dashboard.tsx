@@ -221,7 +221,7 @@ export function Dashboard() {
         </motion.div>
       )}
       {/* Hero Section */}
-      <motion.div variants={itemVariants} className="relative">
+      <motion.div variants={itemVariants} className="relative" hidden={true}>
         <Card variant="gradient" className="overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-primary-500/20 via-pink-500/10 to-accent-500/20" />
           <div className="absolute top-0 right-0 w-64 h-64 bg-primary-500/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
@@ -358,7 +358,7 @@ export function Dashboard() {
 
       {/* Stats Grid */}
       <motion.div variants={itemVariants}>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+        <div className="grid grid-cols-3 gap-4 lg:gap-6">
           {[
             {
               icon: Activity,
