@@ -13,7 +13,15 @@ import { Modal } from '../components/ui/Modal';
 import { Spinner } from '../components/ui/Spinner';
 import { Input } from '../components/ui/Input';
 import { DatePicker } from '../components/ui/DatePicker';
-import { eachDayOfInterval, format } from 'date-fns';
+import {
+  eachDayOfInterval,
+  format,
+  addMonths,
+  subMonths,
+  startOfMonth,
+  endOfMonth,
+  isSameMonth,
+} from 'date-fns';
 import { mealCheckInService } from '../services/mealCheckInService';
 
 import {
@@ -27,6 +35,9 @@ import {
   Check,
   LinkIcon,
   Download,
+  ChevronLeft,
+  ChevronRight,
+  RotateCcw,
 } from 'lucide-react';
 import { exportCalendarToHTML } from '../utils/exportHtml';
 
@@ -51,6 +62,7 @@ export const MealCheckIn: React.FC = () => {
     setSelectedCheckIn,
   } = useMealCheckInStore();
 
+  const [viewDate, setViewDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [showImageModal, setShowImageModal] = useState(false);
@@ -151,6 +163,18 @@ export const MealCheckIn: React.FC = () => {
     }
   };
 
+  const handlePrevMonth = () => {
+    setViewDate((prev) => subMonths(prev, 1));
+  };
+
+  const handleNextMonth = () => {
+    setViewDate((prev) => addMonths(prev, 1));
+  };
+
+  const handleGoToToday = () => {
+    setViewDate(new Date());
+  };
+
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -218,12 +242,15 @@ export const MealCheckIn: React.FC = () => {
   };
 
   const currentMonthDates = useMemo(() => {
-    const now = new Date();
-    const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-    const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    const monthStart = startOfMonth(viewDate);
+    const monthEnd = endOfMonth(viewDate);
 
     return eachDayOfInterval({ start: monthStart, end: monthEnd });
-  }, []);
+  }, [viewDate]);
+
+  const isCurrentMonth = useMemo(() => {
+    return isSameMonth(viewDate, new Date());
+  }, [viewDate]);
 
   const weekdayLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -311,44 +338,84 @@ export const MealCheckIn: React.FC = () => {
       {/* Calendar */}
       <Card className="p-6">
         {/* Calendar Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-            <CalendarIcon className="w-6 h-6" />
-            {cycleConfig && (
-              <>
-                Cycle Started:{' '}
-                {format(
-                  new Date(cycleConfig.startDate + 'T00:00:00'),
-                  'MMM d, yyyy'
-                )}
-              </>
-            )}
-            {!cycleConfig && 'Loading Cycle...'}
-          </h2>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
+            <div className="flex flex-col gap-1">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                <CalendarIcon className="w-6 h-6" />
+                {format(viewDate, 'MMMM yyyy')}
+              </h2>
+              {cycleConfig && (
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  Cycle Started:{' '}
+                  {format(
+                    new Date(cycleConfig.startDate + 'T00:00:00'),
+                    'MMM d, yyyy'
+                  )}
+                </p>
+              )}
+            </div>
 
-          <div className="flex gap-2">
-            <Button
-              onClick={handleExportHtml}
-              variant="ghost"
-              className="flex items-center gap-2"
-              disabled={isExporting}
-            >
-              {isExporting ? <Spinner size="sm" /> : <Download className="w-4 h-4" />}
-              Export HTML
-            </Button>
-            <Button
-              onClick={() => setShowShareModal(true)}
-              variant="ghost"
-              className="flex items-center gap-2"
-            >
-              <Share2 className="w-4 h-4" />
-              {t('mealCheckIn.share')}
-            </Button>
-            <Button onClick={() => setShowNewCycleModal(true)}>
-              Add new cycle
-            </Button>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center bg-gray-100 dark:bg-gray-800 rounded-lg p-1 mr-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handlePrevMonth}
+                  className="h-8 w-8 p-0"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </Button>
+                {!isCurrentMonth && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleGoToToday}
+                    className="h-8 px-2 text-xs"
+                  >
+                    <RotateCcw className="w-3 h-3 mr-1" />
+                    Today
+                  </Button>
+                )}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleNextMonth}
+                  className="h-8 w-8 p-0"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </Button>
+              </div>
+
+              <div className="flex gap-2">
+                <Button
+                  onClick={handleExportHtml}
+                  variant="ghost"
+                  size="sm"
+                  className="flex items-center gap-2"
+                  disabled={isExporting}
+                >
+                  {isExporting ? (
+                    <Spinner size="sm" />
+                  ) : (
+                    <Download className="w-4 h-4" />
+                  )}
+                  <span className="hidden sm:inline">Export</span>
+                </Button>
+                <Button
+                  onClick={() => setShowShareModal(true)}
+                  variant="ghost"
+                  size="sm"
+                  className="flex items-center gap-2"
+                >
+                  <Share2 className="w-4 h-4" />
+                  <span className="hidden sm:inline">{t('mealCheckIn.share')}</span>
+                </Button>
+                <Button size="sm" onClick={() => setShowNewCycleModal(true)}>
+                  New cycle
+                </Button>
+              </div>
+            </div>
           </div>
-        </div>
 
         {/* Calendar Grid */}
         <div className="grid grid-cols-7 gap-2 mb-2">

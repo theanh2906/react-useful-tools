@@ -14,7 +14,9 @@ export interface UserSettings {
 
 const SETTINGS_PATH = 'settings';
 
-export const listenSettings = async (onChange: (settings: UserSettings | null) => void) => {
+export const listenSettings = async (
+  onChange: (settings: UserSettings | null) => void
+) => {
   return listenValue<UserSettings>(SETTINGS_PATH, onChange);
 };
 
