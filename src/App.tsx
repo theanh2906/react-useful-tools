@@ -27,6 +27,7 @@ import {
   MealCheckInPage,
   MealCheckInSharePage,
   Settings,
+  PeriodTrackerPage,
 } from '@/pages';
 import { useAuthStore } from '@/stores/authStore';
 import { useAppStore } from '@/stores/appStore';
@@ -136,6 +137,14 @@ export default function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/calendar" element={<CalendarPage />} />
+          <Route
+            path="/calendar/period-tracker"
+            element={
+              <ProtectedRoute>
+                <PeriodTrackerPage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/weather" element={<WeatherPage />} />
           <Route path="/baby" element={<BabyTrackerPage />} />
           <Route path="/storage" element={<StoragePage />} />

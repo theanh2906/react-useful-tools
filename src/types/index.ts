@@ -470,6 +470,48 @@ export interface ApiResponse<T> {
 /** Theme mode options for the application. */
 export type ThemeMode = 'light' | 'dark' | 'system';
 
+// ─── Period Tracker Types ────────────────────────────────────────────────────
+
+/** Menstrual flow intensity levels. */
+export enum FlowIntensity {
+  SPOTTING = 'SPOTTING',
+  LIGHT = 'LIGHT',
+  MEDIUM = 'MEDIUM',
+  HEAVY = 'HEAVY',
+}
+
+/** A logged menstrual period entry. */
+export interface PeriodLog {
+  /** Unique record identifier. */
+  id: string;
+  /** Period start date (YYYY-MM-DD). */
+  startDate: string;
+  /** Period end date (YYYY-MM-DD). Absent if period is ongoing. */
+  endDate?: string;
+  /** Overall flow intensity for this period. */
+  flowIntensity?: FlowIntensity;
+  /** Optional free-text notes. */
+  notes?: string;
+  /** ISO timestamp of when the log was created. */
+  createdAt?: string;
+}
+
+/** User-configurable cycle defaults used when insufficient history exists. */
+export interface CycleSettings {
+  /** Average cycle length in days (default 28). */
+  averageCycleLength: number;
+  /** Average period duration in days (default 5). */
+  averagePeriodLength: number;
+}
+
+/** Predicted dates for the next menstrual period. */
+export interface CyclePrediction {
+  /** Predicted start of next period (YYYY-MM-DD). */
+  nextPeriodStart: string;
+  /** Predicted end of next period (YYYY-MM-DD). */
+  nextPeriodEnd: string;
+}
+
 /** Global application settings. */
 export interface AppSettings {
   /** Current theme mode. */

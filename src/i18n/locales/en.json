@@ -48,7 +48,8 @@
     "zipTool": "Zip Tool",
     "liveShare": "Live Share",
     "monitor": "System Monitor",
-    "mealCheckIn": "Meal Check-In"
+    "mealCheckIn": "Meal Check-In",
+    "periodTracker": "Period Tracker"
   },
   "categories": {
     "main": "Main",
@@ -379,6 +380,41 @@
       "babyAge": "Baby Age",
       "recentActivity": "Recent Activity",
       "todaysTip": "Today's Tip"
+    }
+  },
+  "periodTracker": {
+    "title": "Period Tracker",
+    "subtitle": "Track your cycle and predictions",
+    "logPeriod": "Log Period",
+    "cycleDay": "Cycle Day",
+    "day": "Day",
+    "avgCycle": "Avg. Cycle",
+    "days": "days",
+    "nextPeriod": "Next Period",
+    "history": "History",
+    "noLogs": "No period logs yet. Tap + to add your first.",
+    "newLog": "Log Period",
+    "editLog": "Edit Period Log",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "flowIntensity": "Flow Intensity",
+    "notes": "Notes",
+    "notesPlaceholder": "How are you feeling?",
+    "logSaved": "Period logged successfully",
+    "logUpdated": "Period log updated",
+    "logDeleted": "Period log deleted",
+    "error": "Something went wrong",
+    "settings": "Cycle Settings",
+    "settingsSaved": "Settings saved",
+    "avgCycleLength": "Average Cycle Length (days)",
+    "avgPeriodLength": "Average Period Length (days)",
+    "period": "Period",
+    "predicted": "Predicted",
+    "flow": {
+      "SPOTTING": "Spotting",
+      "LIGHT": "Light",
+      "MEDIUM": "Medium",
+      "HEAVY": "Heavy"
     }
   }
 }

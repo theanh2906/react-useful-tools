@@ -48,7 +48,8 @@
     "zipTool": "Nén file",
     "liveShare": "Chia sẻ",
     "monitor": "Giám sát",
-    "mealCheckIn": "Check-in ăn uống"
+    "mealCheckIn": "Check-in ăn uống",
+    "periodTracker": "Theo dõi kinh nguyệt"
   },
   "categories": {
     "main": "Chính",
@@ -379,6 +380,41 @@
       "babyAge": "Tuổi Bé",
       "recentActivity": "Hoạt động Gần đây",
       "todaysTip": "Mẹo Hôm nay"
+    }
+  },
+  "periodTracker": {
+    "title": "Theo dõi kinh nguyệt",
+    "subtitle": "Theo dõi chu kỳ và dự đoán",
+    "logPeriod": "Ghi nhận",
+    "cycleDay": "Ngày chu kỳ",
+    "day": "Ngày",
+    "avgCycle": "Chu kỳ TB",
+    "days": "ngày",
+    "nextPeriod": "Kỳ tiếp theo",
+    "history": "Lịch sử",
+    "noLogs": "Chưa có bản ghi nào. Nhấn + để thêm.",
+    "newLog": "Ghi nhận kinh nguyệt",
+    "editLog": "Chỉnh sửa bản ghi",
+    "startDate": "Ngày bắt đầu",
+    "endDate": "Ngày kết thúc",
+    "flowIntensity": "Mức độ",
+    "notes": "Ghi chú",
+    "notesPlaceholder": "Bạn cảm thấy thế nào?",
+    "logSaved": "Đã ghi nhận thành công",
+    "logUpdated": "Đã cập nhật bản ghi",
+    "logDeleted": "Đã xóa bản ghi",
+    "error": "Đã xảy ra lỗi",
+    "settings": "Cài đặt chu kỳ",
+    "settingsSaved": "Đã lưu cài đặt",
+    "avgCycleLength": "Độ dài chu kỳ trung bình (ngày)",
+    "avgPeriodLength": "Độ dài kinh nguyệt trung bình (ngày)",
+    "period": "Kinh nguyệt",
+    "predicted": "Dự đoán",
+    "flow": {
+      "SPOTTING": "Rỉ máu",
+      "LIGHT": "Nhẹ",
+      "MEDIUM": "Trung bình",
+      "HEAVY": "Nhiều"
     }
   }
 }

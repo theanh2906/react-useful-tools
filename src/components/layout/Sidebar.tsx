@@ -16,7 +16,8 @@ import {
 } from '@/config/constants';
 import { useIsMobile } from '@/hooks';
 import * as Icons from 'lucide-react';
-import { X, ChevronLeft, Sparkles } from 'lucide-react';
+import { useState } from 'react';
+import { X, ChevronLeft, ChevronDown, Sparkles } from 'lucide-react';
 
 /** Lucide icon name key type alias. */
 type IconName = keyof typeof Icons;
@@ -50,6 +51,13 @@ export function Sidebar() {
 
   const isOpen = isMobile ? mobileMenuOpen : sidebarOpen;
   const setIsOpen = isMobile ? setMobileMenuOpen : setSidebarOpen;
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
+
+  const toggleExpanded = (id: string) => {
+    setExpandedItems((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    );
+  };
 
   const sidebarVariants = {
     open: {
@@ -145,38 +153,111 @@ export function Sidebar() {
                   const Icon = getIcon(item.icon);
                   const isActive = location.pathname === item.path;
                   const isProtected = item.protected && !isAuthenticated;
+                  const hasChildren = item.children && item.children.length > 0;
+                  const isExpanded = expandedItems.includes(item.id);
+                  const isChildActive = hasChildren && item.children!.some(
+                    (child: { path: string }) => location.pathname === child.path
+                  );
 
                   return (
                     <li key={item.id}>
-                      <Link
-                        to={
-                          isProtected
-                            ? `/auth?redirect=${item.path}`
-                            : item.path
-                        }
-                        onClick={() => isMobile && setMobileMenuOpen(false)}
-                        className={cn(
-                          'flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group',
-                          isActive
-                            ? 'bg-gradient-to-r from-primary-500/20 to-transparent text-white border-l-2 border-primary-500'
-                            : 'text-slate-400 hover:text-white hover:bg-white/5'
-                        )}
-                      >
-                        <Icon
+                      <div className="flex items-center">
+                        <Link
+                          to={
+                            isProtected
+                              ? `/auth?redirect=${item.path}`
+                              : item.path
+                          }
+                          onClick={() => isMobile && setMobileMenuOpen(false)}
                           className={cn(
-                            'w-5 h-5 transition-colors',
-                            isActive
-                              ? 'text-primary-400'
-                              : 'text-slate-500 group-hover:text-slate-300'
+                            'flex-1 flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group',
+                            isActive || isChildActive
+                              ? 'bg-gradient-to-r from-primary-500/20 to-transparent text-white border-l-2 border-primary-500'
+                              : 'text-slate-400 hover:text-white hover:bg-white/5'
                           )}
-                        />
-                        <span className="font-medium">
-                          {item.labelKey ? t(item.labelKey) : item.label}
-                        </span>
-                        {isProtected && (
-                          <Icons.Lock className="w-3.5 h-3.5 ml-auto text-slate-600" />
+                        >
+                          <Icon
+                            className={cn(
+                              'w-5 h-5 transition-colors',
+                              isActive || isChildActive
+                                ? 'text-primary-400'
+                                : 'text-slate-500 group-hover:text-slate-300'
+                            )}
+                          />
+                          <span className="font-medium">
+                            {item.labelKey ? t(item.labelKey) : item.label}
+                          </span>
+                          {isProtected && !hasChildren && (
+                            <Icons.Lock className="w-3.5 h-3.5 ml-auto text-slate-600" />
+                          )}
+                        </Link>
+                        {hasChildren && (
+                          <button
+                            onClick={() => toggleExpanded(item.id)}
+                            className="p-2 mr-1 text-slate-500 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                          >
+                            <motion.div
+                              animate={{ rotate: isExpanded ? 180 : 0 }}
+                              transition={{ duration: 0.2 }}
+                            >
+                              <ChevronDown className="w-4 h-4" />
+                            </motion.div>
+                          </button>
                         )}
-                      </Link>
+                      </div>
+
+                      {/* Children sub-menu */}
+                      <AnimatePresence>
+                        {hasChildren && isExpanded && (
+                          <motion.ul
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="overflow-hidden ml-4 mt-1 space-y-1 border-l border-white/5 pl-2"
+                          >
+                            {item.children!.map((child: { id: string; label: string; labelKey?: string; path: string; icon: string; protected?: boolean }) => {
+                              const ChildIcon = getIcon(child.icon);
+                              const isChildItemActive = location.pathname === child.path;
+                              const isChildProtected = child.protected && !isAuthenticated;
+
+                              return (
+                                <li key={child.id}>
+                                  <Link
+                                    to={
+                                      isChildProtected
+                                        ? `/auth?redirect=${child.path}`
+                                        : child.path
+                                    }
+                                    onClick={() => isMobile && setMobileMenuOpen(false)}
+                                    className={cn(
+                                      'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group text-sm',
+                                      isChildItemActive
+                                        ? 'bg-primary-500/15 text-white'
+                                        : 'text-slate-500 hover:text-white hover:bg-white/5'
+                                    )}
+                                  >
+                                    <ChildIcon
+                                      className={cn(
+                                        'w-4 h-4 transition-colors',
+                                        isChildItemActive
+                                          ? 'text-primary-400'
+                                          : 'text-slate-600 group-hover:text-slate-400'
+                                      )}
+                                    />
+                                    <span className="font-medium">
+                                      {child.labelKey ? t(child.labelKey) : child.label}
+                                    </span>
+                                    {isChildProtected && (
+                                      <Icons.Lock className="w-3 h-3 ml-auto text-slate-600" />
+                                    )}
+                                  </Link>
+                                </li>
+                              );
+                            })}
+                          </motion.ul>
+                        )}
+                      </AnimatePresence>
                     </li>
                   );
                 })}

@@ -264,7 +264,12 @@ export const DatePicker = ({
             error && 'border-red-500/50'
           )}
         >
-          <span className={cn(value ? 'text-white' : 'text-slate-400')}>
+          <span
+            className={cn(
+              'text-sm whitespace-nowrap',
+              value ? 'text-white' : 'text-slate-400'
+            )}
+          >
             {value ? formatDisplayDate(value) : placeholder}
           </span>
           <div className="flex items-center gap-2">

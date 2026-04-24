@@ -1,0 +1,279 @@
+# Cursor Rules for Useful Tools React
+
+You are an expert React/TypeScript developer working on **Useful Tools React** — a dark-themed pregnancy tracking and productivity web app. Always follow these rules precisely when generating or modifying code.
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | React 18.3 + TypeScript 5.5 (strict mode) |
+| Build | Vite 5.4 — env files in `environments/` directory |
+| Styling | TailwindCSS 3.4 (dark-first, glass morphism, mobile-first) |
+| Animation | Framer Motion 11 |
+| State | Zustand 5 with `persist` middleware |
+| Routing | React Router DOM v6 |
+| Backend | Firebase 11 (Auth + **Realtime Database** + Storage) |
+| Auth | Firebase Auth + Azure AD via `@azure/msal-react` |
+| Data fetching | `@tanstack/react-query` v5 |
+| Real-time | Socket.io client v4 (live share) |
+| i18n | react-i18next — EN + VI locales |
+| Forms | react-hook-form v7 |
+| Icons | lucide-react |
+| Toast | `toast` from `@/components/ui/Toast` (not sonner directly) |
+| Dates | date-fns v4 |
+| Charts | chart.js + react-chartjs-2 |
+| Class util | `cn()` from `@/lib/utils` (clsx + tailwind-merge) |
+
+---
+
+## Design System
+
+- **Background**: `bg-slate-950` with gradient orbs (`primary-500/20`, `accent-500/15`)
+- **Glass cards**: `bg-white/10 backdrop-blur-sm border border-white/10 rounded-xl`
+- **Primary**: purple — `primary-500` (#d946ef), `primary-600` (#c026d3)
+- **Accent**: orange — `accent-500` (#f97316)
+- **Baby palette**: `baby-pink`, `baby-blue`, `baby-mint`, `baby-lavender`, `baby-peach`
+- **Dark mode**: class-based; set via `document.documentElement.classList.toggle('dark', ...)`
+- **Fonts**: `font-sans` (DM Sans), `font-display` (Playfair Display), `font-mono` (JetBrains Mono)
+
+---
+
+## File & Project Conventions
+
+- **Naming**: kebab-case for all files — `baby-tracker.tsx`, `use-countdown.ts`
+- **File size**: Max ~200 lines; split larger files into focused modules
+- **Imports**: Always use `@/` alias — never relative `../../`
+- **Types**: All shared types/interfaces in `src/types/index.ts`; use enums for domain constants
+- **Services**: All Firebase/API calls in `src/services/`; never in components or stores
+- **Primary DB**: Firebase Realtime Database via `src/services/realtimeDb.ts` helpers
+- **Firestore**: Used only for file upload metadata in `storageService.ts`
+- **UI Primitives**: Always use existing components from `src/components/ui/` — never raw HTML elements:
+  - `Button` — all clickable actions
+  - `Input` — text, number, password inputs (supports `label`, `error`)
+  - `DatePicker` — date selection (`label`, `value`, `onChange`, `minDate`, `maxDate`, `centered` for modals)
+  - `Card`, `Modal`, `Badge`, `Progress`, `Spinner`, `Toast`
+
+### Project Structure
+
+```
+src/
++-- components/layout/   # Sidebar, Header, Layout
++-- components/ui/       # Button, Card, Modal, Input, Badge, Progress, etc.
++-- config/              # firebase.ts, authConfig.ts, constants.ts
++-- hooks/               # Custom React hooks
++-- i18n/locales/        # en.json, vi.json
++-- lib/utils.ts         # cn(), calculateBMI, etc.
++-- pages/               # Route-level components
++-- services/            # Firebase / API service layer
++-- stores/              # Zustand stores
++-- types/index.ts       # All shared types
+```
+
+---
+
+## Code Patterns
+
+### Page Component
+
+```typescript
+// src/pages/new-feature.tsx
+import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
+import { Card } from "@/components/ui";
+import { useAuthStore } from "@/stores/authStore";
+
+export const NewFeaturePage: React.FC = () => {
+  const { t } = useTranslation();
+  const { user } = useAuthStore();
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="container mx-auto p-4"
+    >
+      <h1 className="font-display text-2xl font-bold text-white mb-6">
+        {t("newFeature.title")}
+      </h1>
+      <Card>{/* content */}</Card>
+    </motion.div>
+  );
+};
+```
+
+### Zustand Store
+
+```typescript
+// src/stores/example-store.ts
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
+import type { Item } from "@/types";
+
+interface ExampleState {
+  items: Item[];
+  isLoading: boolean;
+  setItems: (items: Item[]) => void;
+  setLoading: (loading: boolean) => void;
+}
+
+export const useExampleStore = create<ExampleState>()(
+  persist(
+    (set) => ({
+      items: [],
+      isLoading: false,
+      setItems: (items) => set({ items }),
+      setLoading: (isLoading) => set({ isLoading }),
+    }),
+    { name: "example-storage", storage: createJSONStorage(() => localStorage) }
+  )
+);
+```
+
+### Realtime DB Service
+
+```typescript
+// src/services/example-service.ts
+import type { Item } from "@/types";
+import { createItem, deleteItem, listenCollection, updateItem } from "./realtimeDb";
+
+const PATH = "items";
+
+export const listenItems = (onChange: (items: Item[]) => void) =>
+  listenCollection<Item>(PATH, onChange);
+
+export const createItemEntry = async (item: Item) => {
+  const { id, ...payload } = item;
+  return createItem(PATH, payload);
+};
+
+export const updateItemEntry = (id: string, item: Partial<Item>) =>
+  updateItem(PATH, id, item);
+
+export const deleteItemEntry = (id: string) => deleteItem(PATH, id);
+```
+
+### Custom Hook with Firebase Listener
+
+```typescript
+// src/hooks/use-items.ts
+import { useState, useEffect } from "react";
+import type { Item } from "@/types";
+import { listenItems } from "@/services/example-service";
+
+export const useItems = () => {
+  const [items, setItems] = useState<Item[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = listenItems((data) => {
+      setItems(data);
+      setIsLoading(false);
+    });
+    return () => unsubscribe(); // Always clean up listeners
+  }, []);
+
+  return { items, isLoading };
+};
+```
+
+### Form with react-hook-form
+
+```typescript
+import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { toast } from "@/components/ui/Toast";
+import { Input, Button } from "@/components/ui";
+
+interface FormData { name: string; }
+
+export const ExampleForm: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
+  const { t } = useTranslation();
+  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } =
+    useForm<FormData>();
+
+  const onSubmit = async (data: FormData) => {
+    try {
+      await myService.save(data);
+      toast.success(t("form.saved"));
+      reset();
+      onSuccess();
+    } catch {
+      toast.error(t("form.error"));
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <Input
+        {...register("name", { required: t("form.required") })}
+        error={errors.name?.message}
+      />
+      <Button type="submit" isLoading={isSubmitting}>{t("common.save")}</Button>
+    </form>
+  );
+};
+```
+
+---
+
+## i18n Rules
+
+- Every user-facing string uses `t("key.subkey")` — no hardcoded text
+- Add to **both** `src/i18n/locales/en.json` and `vi.json` together
+- Keys describe context: `babyTracker.addKickButton`, not `btn1`
+
+---
+
+## Security Rules
+
+- Env vars in `environments/` — never commit `.env.local`
+- Validate/sanitize all user inputs before Firebase writes
+- Check `isAuthenticated` from `useAuthStore()` before protected content
+- Prevent XSS in any user-generated HTML
+
+---
+
+## Anti-patterns ❌
+
+- Don't use `any` in TypeScript
+- Don't hardcode user-facing text — always `t()`
+- Don't commit credentials or env files
+- Don't create "enhanced" duplicate files — edit originals
+- Don't use inline styles — TailwindCSS only
+- Don't skip try/catch in async operations
+- Don't bypass auth checks
+- Don't write files over 200 lines without splitting
+- Don't ignore TS or ESLint errors
+- Don't write raw Firebase calls outside `src/services/`
+- Don't use relative imports — always `@/`
+- Don't use class components
+- Don't use raw HTML `<input>`, `<button>`, `<select>` — use `Input`, `Button`, `DatePicker` from `@/components/ui`
+
+---
+
+## Environment Variables (in `environments/`)
+
+```
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_STORAGE_BUCKET=
+VITE_FIREBASE_MESSAGING_SENDER_ID=
+VITE_FIREBASE_APP_ID=
+VITE_FIREBASE_DATABASE_URL=
+VITE_WEATHER_API_KEY=
+VITE_SECRET_KEY=
+```
+
+---
+
+## Commands
+
+```bash
+npm run dev      # Dev server on port 4200
+npm run build    # tsc + vite build
+npm run lint     # ESLint
+npm run preview  # Preview production build
+```

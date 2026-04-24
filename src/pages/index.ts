@@ -22,3 +22,4 @@ export { default as ZipToolPage } from './ZipTool';
 export { MealCheckIn as MealCheckInPage } from './MealCheckIn';
 export { default as MealCheckInSharePage } from './MealCheckInShare';
 export { default as Settings } from './Settings';
+export { default as PeriodTrackerPage } from './PeriodTracker';

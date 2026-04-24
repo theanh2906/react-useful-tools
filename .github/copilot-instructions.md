@@ -4,9 +4,11 @@ This file provides guidance to GitHub Copilot when working with code in this rep
 
 ## Project Overview
 
-Useful Tools React is a modern React application for pregnancy tracking and productivity tools built with React 18, TypeScript, Vite, TailwindCSS, and Firebase.
+**Useful Tools React** is a beautiful, dark-themed web application combining pregnancy tracking (baby growth, ultrasound gallery, timeline, countdown) with productivity tools (notes, calendar, live share, file storage, crypto tools, QR, weather). Users authenticate via Firebase Auth or Azure AD (Microsoft).
 
 **IMPORTANT:** Always read `../README.md` first to understand project context before making changes.
+
+---
 
 ## Core Principles
 
@@ -18,222 +20,395 @@ Follow these fundamental principles at all times:
 - **SOLID** principles - Write maintainable, extensible code
 - **Clean Code** - Prioritize readability and maintainability
 
+---
+
+## Design System
+
+The app has a **consistent dark glass-morphism aesthetic**. All new UI must respect it:
+
+- **Background**: `bg-slate-950` root with animated gradient orbs
+- **Glass cards**: `bg-white/10 backdrop-blur-sm border border-white/10 rounded-xl`
+- **Primary color**: purple (`primary-500` = `#d946ef`, `primary-600` = `#c026d3`)
+- **Accent color**: orange (`accent-500` = `#f97316`)
+- **Baby palette**: `baby-pink`, `baby-blue`, `baby-mint`, `baby-lavender`, `baby-peach`
+- **Dark mode**: class-based (`darkMode: 'class'`); toggled on `document.documentElement.classList`
+- **Fonts**: `font-sans` (DM Sans body), `font-display` (Playfair Display headings), `font-mono` (JetBrains Mono)
+- **Animations**: Use `framer-motion` `motion.*` with `whileHover`, `whileTap`, `initial/animate/exit`
+- **Class composition**: Always use `cn()` from `@/lib/utils` for conditional/merged Tailwind classes
+
+---
+
+## Tech Stack
+
+| Layer | Technology | Version |
+|-------|-----------|---------|
+| Framework | React + TypeScript | 18.3 / 5.5 |
+| Build | Vite | 5.4 |
+| Styling | TailwindCSS (dark-first, glass morphism) | 3.4 |
+| Animation | Framer Motion | 11 |
+| State | Zustand (with `persist` middleware) | 5 |
+| Routing | React Router DOM | v6 |
+| Backend | Firebase (Auth + **Realtime DB** + Storage) | 11 |
+| Auth | Firebase Auth + Azure AD via `@azure/msal-react` | — |
+| Data fetching | React Query (`@tanstack/react-query`) | v5 |
+| Real-time comms | Socket.io client (live share) | 4 |
+| i18n | react-i18next | EN + VI |
+| Forms | react-hook-form | 7 |
+| Icons | lucide-react | — |
+| Toast | Custom `toast` from `@/components/ui/Toast` | — |
+| Dates | date-fns | 4 |
+| Charts | chart.js + react-chartjs-2 | — |
+| Class util | `cn()` from `@/lib/utils` (clsx + tailwind-merge) | — |
+
+---
+
 ## Development Guidelines
 
 ### File Organization
 
-- **Naming Convention**: Use kebab-case for file names with descriptive names
-  - Example: `baby-tracker.tsx`, `use-countdown.ts`, `food-service.ts`
+- **Naming Convention**: Use kebab-case for all file names
+  - Example: `baby-tracker.tsx`, `use-countdown.ts`, `notes-service.ts`
   - Make names self-documenting so purpose is clear without reading content
 - **File Size**: Keep files under 200 lines for better maintainability
   - Split large files into smaller, focused components
   - Extract utility functions into separate modules
   - Create dedicated service classes for business logic
-  - Use composition over inheritance
+- **Path alias**: Always use `@/` for internal imports (maps to `./src/`)
+  - Correct: `import { Button } from "@/components/ui"`
+  - Wrong: `import { Button } from "../../components/ui"`
 
 ### Project Structure
 
 ```
 src/
-├── components/
-│   ├── layout/          # Layout components (Sidebar, Header)
-│   └── ui/              # Reusable UI components
-├── config/              # App configuration
-├── hooks/               # Custom React hooks
-├── i18n/                # Internationalization
-├── lib/                 # Utility functions
-├── pages/               # Page components
-├── services/            # API & Firebase services
-├── stores/              # Zustand state stores
-└── types/               # TypeScript type definitions
++-- components/
+|   +-- layout/          # Sidebar, Header, Layout (app shell)
+|   +-- ui/              # Reusable primitives: Button, Card, Modal, Input, Badge, Progress, etc.
++-- config/              # firebase.ts, authConfig.ts, constants.ts
++-- hooks/               # Custom React hooks (useCountdown, useMediaQuery, etc.)
++-- i18n/
+|   +-- locales/         # en.json, vi.json - both required for every new key
++-- lib/
+|   +-- utils.ts         # cn(), calculateBMI, getBMICategory, etc.
++-- pages/               # Route-level page components (one file per route)
++-- services/            # All Firebase / API calls
+|   +-- realtimeDb.ts    # Generic Realtime DB abstraction - primary data layer
++-- stores/              # Zustand state stores
++-- types/
+    +-- index.ts         # All shared interfaces, enums, type aliases
+```
+
+### Environment Files
+
+Env files live in `environments/` directory (not the project root):
+
+```
+environments/
++-- .env.local       # Local development (git-ignored)
++-- .env.production  # Production values (git-ignored)
 ```
 
 ### Code Quality Standards
 
 #### TypeScript
 
-- Use strict TypeScript types - avoid `any`
-- Define interfaces in `src/types/index.ts`
-- Use type inference when obvious
-- Create meaningful type aliases for complex types
+- `strict: true` is enforced - no `any`, unused vars/params will error
+- All shared types and interfaces go in `src/types/index.ts`
+- Use `import type { Foo }` for type-only imports
+- Use enums for domain-specific constants (see `LoginMethod`, `RecurrenceCycle` in types)
 
 #### React Best Practices
 
-- Use functional components with hooks
-- Prefer composition over prop drilling
+- Use functional components with hooks only - no class components
+- Destructure props at function signature level
+- Extract repeated logic into custom hooks in `src/hooks/`
 - Keep components focused and single-purpose
-- Use custom hooks for reusable logic
-- Implement proper error boundaries
+- Use `React.FC` type annotation for exported components
+- **Always use existing UI primitives** from `src/components/ui/` — never use raw HTML `<input>`, `<button>`, `<select>`, or `<textarea>` elements directly. Available components:
+  - `Button` — all clickable actions
+  - `Input` — text, number, password, email inputs (supports `label`, `error`)
+  - `DatePicker` — date selection (supports `label`, `value`, `onChange`, `minDate`, `maxDate`, `centered` for modals)
+  - `Card` — content containers
+  - `Modal` — dialog overlays
+  - `Badge` — status labels
+  - `Progress` — progress bars
+  - `Spinner` — loading indicators
+  - `Toast` — notifications via `toast.success()` / `toast.error()`
 
 #### State Management
 
 - Use Zustand for global state (`src/stores/`)
-- Keep state close to where it's used
-- Use React hooks for local component state
-- Follow immutable update patterns
+- Use `persist` middleware for state that survives page refresh
+- Keep local/ephemeral state with `useState`
+- Follow immutable update patterns in `set()` calls
 
 #### Styling
 
-- Use TailwindCSS utility classes
-- Follow mobile-first responsive design
-- Keep consistent spacing and colors
-- Use theme tokens from tailwind.config.js
+- Use TailwindCSS utility classes - no inline styles
+- Follow mobile-first responsive design (`sm:`, `md:`, `lg:`)
+- Use `cn()` from `@/lib/utils` for all conditional class merging
+- Reference custom tokens from `tailwind.config.js` (`primary-*`, `accent-*`, `baby-*`, `glass-*`)
 
-#### Firebase Integration
+#### Firebase & Data Layer
 
-- All Firebase operations go through services (`src/services/`)
-- Handle authentication states properly
-- Implement proper error handling for async operations
-- Use Firestore real-time listeners appropriately
+- Primary database: **Firebase Realtime Database** via `src/services/realtimeDb.ts`
+- **Do NOT** write raw Firebase calls in page components or stores - always go through `src/services/`
+- Firestore is used only for file upload metadata (`storageService.ts`)
+- Unsubscribe all real-time listeners in `useEffect` cleanup functions
+
+#### Animation
+
+Use `framer-motion` for all UI interactions:
+
+```typescript
+import { motion, AnimatePresence } from "framer-motion";
+
+// Page entry
+<motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+
+// Micro-interactions
+<motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+
+// Exit animations
+<AnimatePresence>
+  {isVisible && <motion.div exit={{ opacity: 0, scale: 0.95 }} />}
+</AnimatePresence>
+```
 
 ### Code Implementation
 
 - Write clean, readable, and maintainable code
-- Follow established architectural patterns
-- Implement features according to specifications
+- Follow established architectural patterns in existing pages
 - Handle edge cases and error scenarios properly
 - **DO NOT** create new "enhanced" files - update existing files directly
-- Use try-catch for error handling
-- Cover security standards (input validation, XSS prevention, etc.)
+- Use try-catch for error handling in all async operations
+- Cover security standards (input validation, XSS prevention, auth checks)
 
 ### Testing & Quality
 
-- Write comprehensive unit tests for utilities and services
-- Test error scenarios and edge cases
-- Ensure proper TypeScript compilation
-- Run `npm run lint` before committing
+- Run `npm run lint` before committing - fix all ESLint errors
+- Ensure TypeScript compiles cleanly: `tsc --noEmit`
 - **DO NOT** use fake data, mocks, or temporary solutions just to pass builds
 
 ### Git & Version Control
 
-- Create clean, professional commit messages using conventional commits:
-  - `feat:` new feature
-  - `fix:` bug fix
-  - `docs:` documentation changes
-  - `style:` formatting changes
-  - `refactor:` code restructuring
-  - `test:` adding tests
-  - `chore:` maintenance tasks
-- Keep commits focused on actual code changes
-- **DO NOT** commit confidential information (API keys, credentials, .env files)
-- Run linting before commit
-- Run tests before push
+Use Conventional Commits:
+
+- `feat:` new feature
+- `fix:` bug fix
+- `docs:` documentation only
+- `style:` formatting, no logic change
+- `refactor:` code restructuring
+- `test:` adding/fixing tests
+- `chore:` build, tooling, deps
+
+**Never** commit `environments/*.local`, API keys, or credentials.
 
 ### Security Guidelines
 
-- Never expose API keys or credentials in code
-- Use environment variables for sensitive data
-- Validate and sanitize user inputs
-- Implement proper authentication checks
-- Use Firebase security rules properly
-- Prevent XSS attacks in user-generated content
+- Never expose API keys - use `VITE_` prefixed env vars in `environments/`
+- Validate and sanitize all user inputs before writing to Firebase
+- Always check `isAuthenticated` from `useAuthStore()` before rendering protected content
+- Use Firebase Security Rules for server-side data access control
+- Prevent XSS in user-generated content rendered as HTML
 
 ### Performance Best Practices
 
-- Lazy load routes and heavy components
-- Optimize images and assets
-- Use proper React memoization (useMemo, useCallback) when needed
-- Avoid unnecessary re-renders
-- Implement proper loading states
+- Lazy load heavy page components with `React.lazy` + `<Suspense>`
+- Use `useMemo` / `useCallback` for expensive computations and stable callbacks
+- Unsubscribe all Firebase real-time listeners in `useEffect` cleanup
+- Register Chart.js components individually (tree-shaking) - no global `Chart.register(...)`
+- Use `AnimatePresence` from framer-motion for exit animations
 
 ### Internationalization (i18n)
 
-- All user-facing text must use i18n keys
-- Add translations to both `src/i18n/locales/en.json` and `vi.json`
-- Use descriptive i18n keys that indicate context
-- Format dates and numbers according to locale
+- All user-facing text must use `t("key.subkey")` - no hardcoded strings
+- Add translations to **both** `src/i18n/locales/en.json` **and** `vi.json`
+- Use descriptive, context-scoped keys: `babyTracker.addKickButton`, not `btn1`
+- Format dates and numbers per locale using `date-fns` locale utilities
 
 ### API & Services
 
-- All API calls go through service files in `src/services/`
-- Use consistent error handling patterns
-- Implement proper loading and error states
-- Use TypeScript interfaces for API responses
+- All Firebase / API calls go through service files in `src/services/`
+- Use `realtimeDb.ts` helpers (`createItem`, `updateItem`, `deleteItem`, `listenCollection`) for Realtime DB
+- Use consistent error handling: `try/catch` + `toast.error()`
+- Implement proper loading states in stores or local state
 
-### Common Patterns
+---
 
-#### Creating a New Page
+## Common Patterns
+
+### Creating a Zustand Store
 
 ```typescript
-// src/pages/NewPage.tsx
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+// src/stores/example-store.ts
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
+import type { Item } from "@/types";
 
-export const NewPage: React.FC = () => {
+interface ExampleState {
+  items: Item[];
+  isLoading: boolean;
+  setItems: (items: Item[]) => void;
+  setLoading: (loading: boolean) => void;
+}
+
+export const useExampleStore = create<ExampleState>()(
+  persist(
+    (set) => ({
+      items: [],
+      isLoading: false,
+      setItems: (items) => set({ items }),
+      setLoading: (isLoading) => set({ isLoading }),
+    }),
+    { name: "example-storage", storage: createJSONStorage(() => localStorage) }
+  )
+);
+```
+
+### Creating a New Page
+
+```typescript
+// src/pages/new-feature.tsx
+import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
+import { Card } from "@/components/ui";
+import { useAuthStore } from "@/stores/authStore";
+
+export const NewFeaturePage: React.FC = () => {
   const { t } = useTranslation();
+  const { user } = useAuthStore();
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold">{t('newPage.title')}</h1>
-      {/* Content */}
-    </div>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="container mx-auto p-4"
+    >
+      <h1 className="font-display text-2xl font-bold text-white mb-6">
+        {t("newFeature.title")}
+      </h1>
+      <Card>{/* content */}</Card>
+    </motion.div>
   );
 };
 ```
 
-#### Creating a Custom Hook
+### Creating a Custom Hook
 
 ```typescript
-// src/hooks/useCustomHook.ts
-import { useState, useEffect } from 'react';
+// src/hooks/use-items.ts
+import { useState, useEffect } from "react";
+import type { Item } from "@/types";
+import { listenItems } from "@/services/example-service";
 
-export const useCustomHook = () => {
-  const [data, setData] = useState(null);
+export const useItems = () => {
+  const [items, setItems] = useState<Item[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Logic here
+    const unsubscribe = listenItems((data) => {
+      setItems(data);
+      setIsLoading(false);
+    });
+    return () => unsubscribe();
   }, []);
 
-  return { data };
+  return { items, isLoading };
 };
 ```
 
-#### Creating a Service
+### Using react-hook-form
 
 ```typescript
-// src/services/newService.ts
-import { db } from '../config/firebase';
-import { collection, getDocs } from 'firebase/firestore';
+import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { toast } from "@/components/ui/Toast";
+import { Input, Button } from "@/components/ui";
 
-export const newService = {
-  async getData() {
+interface FormData { name: string; value: string; }
+
+export const ExampleForm: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
+  const { t } = useTranslation();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<FormData>();
+
+  const onSubmit = async (data: FormData) => {
     try {
-      const snapshot = await getDocs(collection(db, 'collection'));
-      return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      throw error;
+      await myService.save(data);
+      toast.success(t("form.saved"));
+      reset();
+      onSuccess();
+    } catch {
+      toast.error(t("form.error"));
     }
-  },
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <Input
+        {...register("name", { required: t("form.required") })}
+        placeholder={t("form.namePlaceholder")}
+        error={errors.name?.message}
+      />
+      <Button type="submit" isLoading={isSubmitting}>
+        {t("common.save")}
+      </Button>
+    </form>
+  );
 };
 ```
 
-### What NOT to Do
+### Creating a Realtime DB Service
 
-❌ Don't create duplicate or "enhanced" versions of existing files
-❌ Don't use `any` type in TypeScript
-❌ Don't hardcode user-facing text - use i18n
-❌ Don't commit .env files or API keys
-❌ Don't ignore TypeScript or linting errors
-❌ Don't skip error handling
-❌ Don't create files over 200 lines without good reason
-❌ Don't bypass authentication checks
-❌ Don't use inline styles - use TailwindCSS classes
+```typescript
+// src/services/example-service.ts
+import type { Item } from "@/types";
+import { createItem, deleteItem, listenCollection, updateItem } from "./realtimeDb";
 
-## Tech Stack
+const PATH = "items";
 
-- **Frontend**: React 18.3, TypeScript 5.5
-- **Build Tool**: Vite 5.4
-- **Styling**: TailwindCSS 3.4
-- **State**: Zustand
-- **Backend**: Firebase (Auth, Firestore, Storage, Realtime DB)
-- **i18n**: react-i18next
-- **Routing**: React Router
-- **UI Components**: Custom components + FullCalendar, QR Scanner, etc.
+export const listenItems = (onChange: (items: Item[]) => void) =>
+  listenCollection<Item>(PATH, onChange);
+
+export const createItemEntry = async (item: Item) => {
+  const { id, ...payload } = item;
+  return createItem(PATH, payload);
+};
+
+export const updateItemEntry = async (id: string, item: Partial<Item>) =>
+  updateItem(PATH, id, item);
+
+export const deleteItemEntry = async (id: string) => deleteItem(PATH, id);
+```
+
+---
+
+## What NOT to Do
+
+- Don't use `any` type in TypeScript - use proper types or `unknown`
+- Don't hardcode user-facing text - always use `t()` from react-i18next
+- Don't commit `environments/.env.local` or API keys
+- Don't create duplicate or "enhanced" versions of existing files - edit them
+- Don't use inline styles - use TailwindCSS utility classes
+- Don't skip error handling in async operations
+- Don't bypass authentication checks
+- Don't create files over 200 lines without splitting them
+- Don't ignore TypeScript or ESLint errors
+- Don't write raw Firebase calls outside `src/services/`
+- Don't use relative imports like `../../` - always use `@/`
+- Don't use class components or `React.Component`
+- Don't use raw HTML `<input>`, `<button>`, `<select>` — always use `Input`, `Button`, `DatePicker` from `@/components/ui`
+
+---
 
 ## Environment Variables
 
-Required environment variables (never commit these):
+Files live in `environments/` directory. Required variables (never commit values):
 
 ```
 VITE_FIREBASE_API_KEY=
@@ -242,34 +417,40 @@ VITE_FIREBASE_PROJECT_ID=
 VITE_FIREBASE_STORAGE_BUCKET=
 VITE_FIREBASE_MESSAGING_SENDER_ID=
 VITE_FIREBASE_APP_ID=
+VITE_FIREBASE_DATABASE_URL=
 VITE_WEATHER_API_KEY=
+VITE_SECRET_KEY=
 ```
+
+---
 
 ## Quick Reference
 
 ### Run Commands
 
 ```bash
-npm run dev      # Start development server
-npm run build    # Build for production
+npm run dev      # Start development server (http://localhost:4200)
+npm run build    # Type-check + production build
 npm run preview  # Preview production build
 npm run lint     # Run ESLint
 ```
 
 ### Adding a New Feature
 
-When receiving a new feature request, first analyze requirements, then brainstorm solutions and scenarios, ask user to select (A,B,C or D) before implementation. Then follow these steps:
+When receiving a new feature request, analyze requirements, brainstorm A/B/C solutions, ask user to choose — then implement:
 
-1. Create types in `src/types/index.ts`
-2. Create service in `src/services/`
-3. If the feature requires database, add necessary Realtime Database or Firestore collections (for files upload management) and methods to modify data (CRUD) in the service.
-4. Create store if needed in `src/stores/`
-5. Create page component in `src/pages/`
-6. Add route in `src/App.tsx`
-7. Add i18n translations in `src/i18n/locales/`
-8. Test thoroughly before committing
-   **NOTE:** All the component styles must adapt current project TailwindCSS theme. If new feature has some components that can be reused later, create them in `src/components/ui/` with generic and reusable design.
+1. **Types**: Add interfaces/enums to `src/types/index.ts`
+2. **Service**: Create `src/services/feature-service.ts` using `realtimeDb.ts` helpers
+3. **Store** *(if needed)*: Create `src/stores/feature-store.ts` with Zustand
+4. **Page**: Create `src/pages/feature-name.tsx` — export named component
+5. **Export**: Add to `src/pages/index.ts`
+6. **Route**: Register in `src/App.tsx` under `<ProtectedRoute>`
+7. **i18n**: Add keys to both `src/i18n/locales/en.json` and `vi.json`
+8. **Reusable UI**: Place reusable components in `src/components/ui/` with generic design
+9. **Validate**: `npm run lint` then `tsc --noEmit`
+
+**NOTE:** All component styles must match the dark glass-morphism TailwindCSS theme. Look at `BabyTracker.tsx` or `Notes.tsx` for reference.
 
 ---
 
-**Remember**: Write code that is clean, maintainable, and follows established patterns. When in doubt, prioritize simplicity and readability over cleverness.
+**Remember**: Write code that is clean, maintainable, and follows the dark glass-morphism aesthetic. When in doubt, look at an existing page for the established pattern.

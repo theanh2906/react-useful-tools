@@ -143,6 +143,16 @@ export const NAV_ITEMS = [
     path: '/calendar',
     icon: 'Calendar',
     category: 'main',
+    children: [
+      {
+        id: 'period-tracker',
+        label: 'Period Tracker',
+        labelKey: 'navigation.periodTracker',
+        path: '/calendar/period-tracker',
+        icon: 'Heart',
+        protected: true,
+      },
+    ],
   },
   {
     id: 'notes',
