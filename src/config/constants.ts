@@ -6,28 +6,30 @@
 
 // ─── API URLs ────────────────────────────────────────────────────────────────
 
+const isProd = process.env.NODE_ENV === 'production';
+
 /** @internal Default API URL — production uses relative path, development uses localhost. */
-const DEFAULT_API_URL = import.meta.env.PROD
+const DEFAULT_API_URL = isProd
   ? `${typeof window !== 'undefined' ? window.location.origin : ''}/api`
   : 'http://localhost:3000/api';
 
 /** @internal Default WebSocket endpoint — production uses relative path, development uses localhost. */
-const DEFAULT_WS_ENDPOINT = import.meta.env.PROD
+const DEFAULT_WS_ENDPOINT = isProd
   ? `${typeof window !== 'undefined' ? window.location.origin : ''}`
   : 'http://localhost:3000';
 
-/** Base URL for REST API requests. Overridable via `VITE_API_URL` env var. */
-export const API_URL = import.meta.env.VITE_API_URL || DEFAULT_API_URL;
+/** Base URL for REST API requests. Overridable via `NEXT_PUBLIC_API_URL` env var. */
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || DEFAULT_API_URL;
 
-/** WebSocket endpoint for real-time connections. Overridable via `VITE_WS_ENDPOINT` env var. */
+/** WebSocket endpoint for real-time connections. Overridable via `NEXT_PUBLIC_WS_ENDPOINT` env var. */
 export const WS_ENDPOINT =
-  import.meta.env.VITE_WS_ENDPOINT || DEFAULT_WS_ENDPOINT;
+  process.env.NEXT_PUBLIC_WS_ENDPOINT || DEFAULT_WS_ENDPOINT;
 
 // ─── Weather API ─────────────────────────────────────────────────────────────
 
-/** Visual Crossing Weather API key. Overridable via `VITE_WEATHER_API_KEY` env var. */
+/** Visual Crossing Weather API key. Overridable via `NEXT_PUBLIC_WEATHER_API_KEY` env var. */
 export const WEATHER_API_KEY =
-  import.meta.env.VITE_WEATHER_API_KEY || 'W9ZMQH9J9C95VMW3EFA7XLNXB';
+  process.env.NEXT_PUBLIC_WEATHER_API_KEY || 'W9ZMQH9J9C95VMW3EFA7XLNXB';
 
 /** Visual Crossing Weather API base URL for timeline requests. */
 export const WEATHER_API_URL =

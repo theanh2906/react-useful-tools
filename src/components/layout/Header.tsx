@@ -3,7 +3,9 @@
  * @description Top navigation bar with hamburger toggle, language/theme switcher,
  * notifications and user profile menu.
  */
-import { Link } from 'react-router-dom';
+'use client';
+
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Menu, Bell, User, LogOut, Settings, Sun, Moon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -105,7 +107,7 @@ export function Header() {
                 </div>
                 <div className="p-1">
                   <Link
-                    to="/settings"
+                    href="/settings"
                     onClick={() => setShowUserMenu(false)}
                     className="flex items-center gap-2 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
                   >
@@ -128,7 +130,7 @@ export function Header() {
           </div>
         ) : (
           <Link
-            to="/auth"
+            href="/auth"
             className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white text-sm font-medium rounded-lg hover:shadow-lg hover:shadow-primary-500/25 transition-all"
           >
             <User className="w-4 h-4" />

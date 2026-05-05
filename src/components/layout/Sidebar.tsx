@@ -3,7 +3,10 @@
  * @description Animated sidebar navigation categorised by feature group.
  * Supports both desktop (collapsible) and mobile (overlay) modes.
  */
-import { Link, useLocation } from 'react-router-dom';
+'use client';
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
@@ -43,7 +46,7 @@ function getIcon(name: string) {
  */
 export function Sidebar() {
   const { t } = useTranslation();
-  const location = useLocation();
+  const pathname = usePathname();
   const isMobile = useIsMobile();
   const { sidebarOpen, setSidebarOpen, mobileMenuOpen, setMobileMenuOpen } =
     useAppStore();
@@ -108,7 +111,7 @@ export function Sidebar() {
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-white/5">
           <Link
-            to="/"
+            href="/"
             className="flex items-center gap-3"
             onClick={() => isMobile && setMobileMenuOpen(false)}
           >
@@ -151,19 +154,19 @@ export function Sidebar() {
               <ul className="space-y-1">
                 {group.items.map((item) => {
                   const Icon = getIcon(item.icon);
-                  const isActive = location.pathname === item.path;
+                  const isActive = pathname === item.path;
                   const isProtected = item.protected && !isAuthenticated;
                   const hasChildren = item.children && item.children.length > 0;
                   const isExpanded = expandedItems.includes(item.id);
                   const isChildActive = hasChildren && item.children!.some(
-                    (child: { path: string }) => location.pathname === child.path
+                    (child: { path: string }) => pathname === child.path
                   );
 
                   return (
                     <li key={item.id}>
                       <div className="flex items-center">
                         <Link
-                          to={
+                          href={
                             isProtected
                               ? `/auth?redirect=${item.path}`
                               : item.path
@@ -218,13 +221,13 @@ export function Sidebar() {
                           >
                             {item.children!.map((child: { id: string; label: string; labelKey?: string; path: string; icon: string; protected?: boolean }) => {
                               const ChildIcon = getIcon(child.icon);
-                              const isChildItemActive = location.pathname === child.path;
+                              const isChildItemActive = pathname === child.path;
                               const isChildProtected = child.protected && !isAuthenticated;
 
                               return (
                                 <li key={child.id}>
                                   <Link
-                                    to={
+                                    href={
                                       isChildProtected
                                         ? `/auth?redirect=${child.path}`
                                         : child.path

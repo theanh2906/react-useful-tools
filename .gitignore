@@ -3,7 +3,7 @@ node_modules
 .env.local
 # ClaudeKit
 .claude
-dist/
+.next/
 build/
 .cache/
 .vscode/

@@ -286,7 +286,7 @@ export const DatePicker = ({
           </div>
         </button>
 
-        {createPortal(
+        {typeof document !== 'undefined' && createPortal(
           <AnimatePresence>
             {isOpen && (
               <>
@@ -334,9 +334,9 @@ export const DatePicker = ({
                             ? 'auto'
                             : `${calendarPosition.top + 8}px`,
                           bottom: dropUp
-                            ? `${document.documentElement.scrollHeight - calendarPosition.top + 8}px`
+                            ? `${(typeof document !== 'undefined' ? document.documentElement.scrollHeight : 0) - calendarPosition.top + 8}px`
                             : 'auto',
-                          left: `${Math.min(calendarPosition.left, window.innerWidth - 310)}px`,
+                          left: `${Math.min(calendarPosition.left, (typeof window !== 'undefined' ? window.innerWidth : 1024) - 310)}px`,
                           minWidth: Math.max(calendarPosition.width, 300),
                           zIndex: 9999,
                         }

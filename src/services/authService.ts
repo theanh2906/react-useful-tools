@@ -91,7 +91,7 @@ export const signInWithAzure = async () => {
     // METHOD A: Firebase Microsoft Provider (Preferred for Firebase Apps)
     const provider = new OAuthProvider('microsoft.com');
     provider.setCustomParameters({
-      tenant: import.meta.env.VITE_AZURE_TENANT_ID || 'common',
+      tenant: process.env.NEXT_PUBLIC_AZURE_TENANT_ID || 'common',
     });
 
     return signInWithPopup(auth, provider);
