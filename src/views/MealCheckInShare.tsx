@@ -278,11 +278,13 @@ export default function MealCheckInShare() {
                 <span className="font-semibold">{selectedCheckIn.date}</span>
               </p>
 
-              <img
-                src={selectedCheckIn.imageUrl}
-                alt="Check-in"
-                className="w-full rounded-lg"
-              />
+              {selectedCheckIn.imageUrl && (
+                <img
+                  src={selectedCheckIn.imageUrl}
+                  alt="Check-in"
+                  className="w-full rounded-lg"
+                />
+              )}
 
               {selectedCheckIn.notes && (
                 <div>

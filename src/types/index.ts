@@ -358,7 +358,7 @@ export interface MealCheckInCycleConfig {
   shareToken?: string;
 }
 
-/** A daily meal check-in record with photo proof. */
+/** A daily meal check-in record with optional photo proof. */
 export interface MealCheckIn {
   /** Unique check-in identifier (format: `{userId}_{date}`). */
   id: string;
@@ -367,9 +367,9 @@ export interface MealCheckIn {
   /** Check-in date in `YYYY-MM-DD` format. */
   date: string;
   /** Download URL of the meal photo. */
-  imageUrl: string;
+  imageUrl?: string;
   /** Firebase Storage path of the meal photo. */
-  imageStoragePath: string;
+  imageStoragePath?: string;
   /** Optional notes about the meal. */
   notes?: string;
   /** Creation timestamp in milliseconds. */

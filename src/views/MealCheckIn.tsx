@@ -1,6 +1,6 @@
 /**
  * @module MealCheckIn
- * @description Meal check-in page with photo capture, daily calendar view
+ * @description Meal check-in page with optional photo capture, daily calendar view
  * and Firestore-backed meal logging.
  */
 import React, { useState, useEffect, useMemo, useRef } from 'react';
@@ -43,7 +43,7 @@ import { exportCalendarToHTML } from '../utils/exportHtml';
 
 /**
  * Meal check-in page.
- * Allows users to capture or upload meal photos, log meals for breakfast/lunch/dinner,
+ * Allows users to describe meals, optionally upload meal photos,
  * and browse past check-ins on a calendar strip.
  */
 export const MealCheckIn: React.FC = () => {
@@ -188,10 +188,11 @@ export const MealCheckIn: React.FC = () => {
   };
 
   const handleSubmitCheckIn = async () => {
-    if (!user || !selectedDate || !selectedImage) return;
+    const trimmedNotes = notes.trim();
+    if (!user || !selectedDate || (!selectedImage && !trimmedNotes)) return;
 
     try {
-      await createCheckIn(user.id, selectedDate, selectedImage, notes);
+      await createCheckIn(user.id, selectedDate, selectedImage, trimmedNotes);
       setShowUploadModal(false);
       resetUploadForm();
     } catch (error) {
@@ -578,7 +579,7 @@ export const MealCheckIn: React.FC = () => {
           {/* Notes */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              {t('mealCheckIn.notes')} ({t('mealCheckIn.optional')})
+              {t('mealCheckIn.notes')}
             </label>
             <textarea
               value={notes}
@@ -603,7 +604,7 @@ export const MealCheckIn: React.FC = () => {
             </Button>
             <Button
               onClick={handleSubmitCheckIn}
-              disabled={!selectedImage || isLoading}
+              disabled={(!selectedImage && !notes.trim()) || isLoading}
               className="flex-1"
             >
               {isLoading ? <Spinner size="sm" /> : t('mealCheckIn.submit')}
@@ -630,11 +631,13 @@ export const MealCheckIn: React.FC = () => {
               </p>
             </div>
 
-            <img
-              src={selectedCheckIn.imageUrl}
-              alt="Check-in"
-              className="w-full rounded-lg"
-            />
+            {selectedCheckIn.imageUrl && (
+              <img
+                src={selectedCheckIn.imageUrl}
+                alt="Check-in"
+                className="w-full rounded-lg"
+              />
+            )}
 
             {selectedCheckIn.notes && (
               <div>

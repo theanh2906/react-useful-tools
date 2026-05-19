@@ -34,7 +34,9 @@ export const exportCalendarToHTML = async (
   const checkInsWithBase64 = await Promise.all(
     checkIns.map(async (c) => ({
       ...c,
-      base64Image: await compressImageToBase64(c.imageUrl),
+      base64Image: c.imageUrl
+        ? await compressImageToBase64(c.imageUrl)
+        : undefined,
     }))
   );
 
@@ -177,7 +179,7 @@ export const exportCalendarToHTML = async (
       </div>
       <div class="p-4 space-y-4">
         <p class="text-sm text-gray-600">Date: <span class="font-semibold" id="modalDate"></span></p>
-        <img id="modalImage" src="" alt="Check-in" class="w-full rounded-lg" />
+        <img id="modalImage" src="" alt="Check-in" class="w-full rounded-lg hidden" />
         <div id="modalNotesContainer" class="hidden">
            <h4 class="font-semibold mb-2">Notes:</h4>
            <p id="modalNotes" class="text-gray-700 bg-gray-50 p-3 rounded-lg"></p>
@@ -203,7 +205,13 @@ export const exportCalendarToHTML = async (
       if (!data) return;
 
       modalDate.textContent = data.date;
-      modalImage.src = data.imageUrl;
+      if (data.imageUrl) {
+        modalImage.src = data.imageUrl;
+        modalImage.classList.remove('hidden');
+      } else {
+        modalImage.src = '';
+        modalImage.classList.add('hidden');
+      }
       
       if (data.notes) {
         modalNotes.textContent = data.notes;

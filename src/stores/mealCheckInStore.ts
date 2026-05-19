@@ -1,7 +1,7 @@
 /**
  * @module stores/mealCheckInStore
  * @description Meal check-in state store.
- * Manages daily meal check-ins, monthly statistics, and CRUD operations.
+ * Manages daily meal check-ins, cycle statistics, and CRUD operations.
  */
 
 import { create } from 'zustand';
@@ -32,7 +32,7 @@ interface MealCheckInState {
   createCheckIn: (
     userId: string,
     date: string,
-    imageFile: File,
+    imageFile?: File | null,
     notes?: string
   ) => Promise<void>;
   deleteCheckIn: (checkIn: MealCheckIn) => Promise<void>;
@@ -128,7 +128,7 @@ export const useMealCheckInStore = create<MealCheckInState>((set, get) => ({
   createCheckIn: async (
     userId: string,
     date: string,
-    imageFile: File,
+    imageFile?: File | null,
     notes?: string
   ) => {
     set({ isLoading: true, error: null });

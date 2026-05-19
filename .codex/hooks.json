@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node 'C:\\Personal\\React Projects\\useful-tools\\useful-tools-react\\.codex\\hooks\\scout-block.js'"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node 'C:\\Personal\\React Projects\\useful-tools\\useful-tools-react\\.codex\\hooks\\modularization-hook.js'"
+          }
+        ]
+      }
+    ]
+  }
+}

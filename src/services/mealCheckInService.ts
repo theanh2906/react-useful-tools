@@ -1,7 +1,7 @@
 /**
  * @module services/mealCheckInService
- * @description Meal check-in service for daily meal photo tracking.
- * Handles image upload, CRUD operations, and monthly statistics.
+ * @description Meal check-in service for daily meal tracking.
+ * Handles optional image upload, CRUD operations, and monthly statistics.
  */
 
 import {
@@ -39,18 +39,22 @@ export const mealCheckInService = {
   async createCheckIn(
     userId: string,
     date: string,
-    imageFile: File,
+    imageFile?: File | null,
     notes?: string
   ): Promise<MealCheckIn> {
     try {
-      // Create storage reference
       const timestamp = Date.now();
-      const storagePath = `meal-check-ins/${userId}/${date}_${timestamp}.${imageFile.name.split('.').pop()}`;
-      const storageReference = ref(storage, storagePath);
+      let imageUrl: string | undefined;
+      let imageStoragePath: string | undefined;
 
-      // Upload image
-      await uploadBytes(storageReference, imageFile);
-      const imageUrl = await getDownloadURL(storageReference);
+      if (imageFile) {
+        const extension = imageFile.name.split('.').pop();
+        imageStoragePath = `meal-check-ins/${userId}/${date}_${timestamp}.${extension}`;
+        const storageReference = ref(storage, imageStoragePath);
+
+        await uploadBytes(storageReference, imageFile);
+        imageUrl = await getDownloadURL(storageReference);
+      }
 
       // Create check-in document
       const checkInId = `${userId}_${date}`;
@@ -58,9 +62,9 @@ export const mealCheckInService = {
         id: checkInId,
         userId,
         date,
-        imageUrl,
-        imageStoragePath: storagePath,
-        notes,
+        ...(imageUrl ? { imageUrl } : {}),
+        ...(imageStoragePath ? { imageStoragePath } : {}),
+        ...(notes ? { notes } : {}),
         createdAt: timestamp,
         updatedAt: timestamp,
       };
@@ -186,9 +190,10 @@ export const mealCheckInService = {
    */
   async deleteCheckIn(checkIn: MealCheckIn): Promise<void> {
     try {
-      // Delete image from storage
-      const imageReference = ref(storage, checkIn.imageStoragePath);
-      await deleteObject(imageReference);
+      if (checkIn.imageStoragePath) {
+        const imageReference = ref(storage, checkIn.imageStoragePath);
+        await deleteObject(imageReference);
+      }
 
       // Delete document
       const checkInRef = dbRef(database, `${COLLECTION_NAME}/${checkIn.id}`);
