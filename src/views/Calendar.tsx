@@ -27,6 +27,7 @@ import { cn } from '@/lib/utils';
 import { generateId } from '@/lib/utils';
 import type { EventData } from '@/types';
 import { toast } from '@/components/ui/Toast';
+import { CalendarAiAssistant } from '@/components/calendar/CalendarAiAssistant';
 
 /**
  * Calendar page with day/week/month views, drag-and-drop event management
@@ -189,167 +190,186 @@ export function CalendarPage() {
         </Button>
       </div>
 
-      {/* Category Filters */}
-      <Card className="p-4">
-        <div className="flex flex-wrap items-center gap-2">
-          <Filter className="w-4 h-4 text-slate-400" />
-          <button
-            onClick={() => setFilterCategory(null)}
-            className={cn(
-              'px-3 py-1.5 rounded-full text-sm font-medium transition-all',
-              !filterCategory
-                ? 'bg-white/20 text-white'
-                : 'bg-white/5 text-slate-400 hover:bg-white/10'
-            )}
-          >
-            All
-          </button>
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() =>
-                setFilterCategory(cat.id === filterCategory ? null : cat.id)
-              }
-              className={cn(
-                'px-3 py-1.5 rounded-full text-sm font-medium transition-all flex items-center gap-2',
-                filterCategory === cat.id
-                  ? 'bg-white/20 text-white'
-                  : 'bg-white/5 text-slate-400 hover:bg-white/10'
-              )}
-            >
-              <span
-                className="w-2 h-2 rounded-full"
-                style={{ backgroundColor: cat.color }}
-              />
-              {cat.name}
-            </button>
-          ))}
+      {/* Grid Layout: Responsive on mobile/desktop */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        {/* Mobile AI Assistant: Visible only on mobile screens at the top */}
+        <div className="lg:hidden col-span-1">
+          <CalendarAiAssistant />
         </div>
-      </Card>
 
-      {/* Calendar */}
-      <Card className="p-4 lg:p-6">
-        <div className="calendar-wrapper">
-          <FullCalendar
-            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-            initialView="dayGridMonth"
-            headerToolbar={{
-              left: 'prev,next today',
-              center: 'title',
-              right: 'dayGridMonth,timeGridWeek,timeGridDay',
-            }}
-            events={calendarEvents}
-            dateClick={handleDateClick}
-            eventClick={handleEventClick}
-            eventDrop={async (info) => {
-              try {
-                const data = info.event.extendedProps as EventData;
-                await updateEvent({
-                  ...data,
-                  id: info.event.id,
-                  start: info.event.start?.toISOString() || data.start,
-                  end: info.event.end?.toISOString(),
-                });
-                toast.success('Event updated');
-              } catch (error) {
-                toast.error((error as Error).message || 'Update failed');
-                info.revert();
-              }
-            }}
-            eventResize={async (info) => {
-              try {
-                const data = info.event.extendedProps as EventData;
-                await updateEvent({
-                  ...data,
-                  id: info.event.id,
-                  start: info.event.start?.toISOString() || data.start,
-                  end: info.event.end?.toISOString(),
-                });
-                toast.success('Event updated');
-              } catch (error) {
-                toast.error((error as Error).message || 'Update failed');
-                info.revert();
-              }
-            }}
-            editable={true}
-            selectable={true}
-            selectMirror={true}
-            dayMaxEvents={3}
-            weekends={true}
-            height="auto"
-            eventDisplay="block"
-            eventTimeFormat={{
-              hour: '2-digit',
-              minute: '2-digit',
-              meridiem: false,
-            }}
-          />
-        </div>
-      </Card>
-
-      {/* Upcoming Events */}
-      <Card className="p-6">
-        <h3 className="text-lg font-display font-semibold text-white mb-4">
-          Upcoming Events
-        </h3>
-        <div className="space-y-3">
-          {events.length === 0 ? (
-            <p className="text-slate-400 text-center py-8">
-              No events scheduled yet
-            </p>
-          ) : (
-            events.slice(0, 5).map((event) => {
-              const category = EVENT_CATEGORIES.find(
-                (c) => c.id === event.categories?.[0]
-              );
-              return (
-                <motion.div
-                  key={event.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  className="flex items-center gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer"
-                  onClick={() => {
-                    setSelectedEvent(event);
-                    setFormData({
-                      title: event.title,
-                      date: event.start.split('T')[0],
-                      time: event.start.includes('T')
-                        ? event.start.split('T')[1]?.substring(0, 5)
-                        : '',
-                      category: event.categories?.[0] || 'appointment',
-                      location: event.location || '',
-                      notes: event.notes || '',
-                      isImportant: event.isImportant || false,
+        {/* Left Column: Calendar view */}
+        <div className="lg:col-span-8 xl:col-span-9 space-y-6">
+          <Card className="p-4 lg:p-6">
+            <div className="calendar-wrapper">
+              <FullCalendar
+                plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                initialView="dayGridMonth"
+                headerToolbar={{
+                  left: 'prev,next today',
+                  center: 'title',
+                  right: 'dayGridMonth,timeGridWeek,timeGridDay',
+                }}
+                events={calendarEvents}
+                dateClick={handleDateClick}
+                eventClick={handleEventClick}
+                eventDrop={async (info) => {
+                  try {
+                    const data = info.event.extendedProps as EventData;
+                    await updateEvent({
+                      ...data,
+                      id: info.event.id,
+                      start: info.event.start?.toISOString() || data.start,
+                      end: info.event.end?.toISOString(),
                     });
-                    setShowEventModal(true);
-                  }}
-                >
-                  <div
-                    className="w-1 h-12 rounded-full"
-                    style={{ backgroundColor: category?.color }}
-                  />
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-white truncate">
-                      {event.title}
-                    </p>
-                    <p className="text-sm text-slate-400">
-                      {new Date(event.start).toLocaleDateString('en-US', {
-                        weekday: 'short',
-                        month: 'short',
-                        day: 'numeric',
-                      })}
-                      {event.location && ` • ${event.location}`}
-                    </p>
-                  </div>
-                  {event.isImportant && (
-                    <Badge variant="warning">Important</Badge>
-                  )}
-                </motion.div>
-              );
-            })
-          )}
+                    toast.success('Event updated');
+                  } catch (error) {
+                    toast.error((error as Error).message || 'Update failed');
+                    info.revert();
+                  }
+                }}
+                eventResize={async (info) => {
+                  try {
+                    const data = info.event.extendedProps as EventData;
+                    await updateEvent({
+                      ...data,
+                      id: info.event.id,
+                      start: info.event.start?.toISOString() || data.start,
+                      end: info.event.end?.toISOString(),
+                    });
+                    toast.success('Event updated');
+                  } catch (error) {
+                    toast.error((error as Error).message || 'Update failed');
+                    info.revert();
+                  }
+                }}
+                editable={true}
+                selectable={true}
+                selectMirror={true}
+                dayMaxEvents={3}
+                weekends={true}
+                height="auto"
+                eventDisplay="block"
+                eventTimeFormat={{
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  meridiem: false,
+                }}
+              />
+            </div>
+          </Card>
         </div>
-      </Card>
+
+        {/* Right Column: AI Assistant (Desktop) + Filters + Upcoming Events */}
+        <div className="lg:col-span-4 xl:col-span-3 space-y-6">
+          {/* Desktop AI Assistant: Hidden on mobile screens */}
+          <div className="hidden lg:block">
+            <CalendarAiAssistant />
+          </div>
+
+          {/* Category Filters */}
+          <Card className="p-4">
+            <div className="flex flex-wrap items-center gap-2">
+              <Filter className="w-4 h-4 text-slate-400" />
+              <button
+                onClick={() => setFilterCategory(null)}
+                className={cn(
+                  'px-3 py-1.5 rounded-full text-sm font-medium transition-all',
+                  !filterCategory
+                    ? 'bg-white/20 text-white'
+                    : 'bg-white/5 text-slate-400 hover:bg-white/10'
+                )}
+              >
+                All
+              </button>
+              {categories.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() =>
+                    setFilterCategory(cat.id === filterCategory ? null : cat.id)
+                  }
+                  className={cn(
+                    'px-3 py-1.5 rounded-full text-sm font-medium transition-all flex items-center gap-2',
+                    filterCategory === cat.id
+                      ? 'bg-white/20 text-white'
+                      : 'bg-white/5 text-slate-400 hover:bg-white/10'
+                  )}
+                >
+                  <span
+                    className="w-2 h-2 rounded-full"
+                    style={{ backgroundColor: cat.color }}
+                  />
+                  {cat.name}
+                </button>
+              ))}
+            </div>
+          </Card>
+
+          {/* Upcoming Events */}
+          <Card className="p-6">
+            <h3 className="text-lg font-display font-semibold text-white mb-4">
+              Upcoming Events
+            </h3>
+            <div className="space-y-3">
+              {events.length === 0 ? (
+                <p className="text-slate-400 text-center py-8">
+                  No events scheduled yet
+                </p>
+              ) : (
+                events.slice(0, 5).map((event) => {
+                  const category = EVENT_CATEGORIES.find(
+                    (c) => c.id === event.categories?.[0]
+                  );
+                  return (
+                    <motion.div
+                      key={event.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className="flex items-center gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer"
+                      onClick={() => {
+                        setSelectedEvent(event);
+                        setFormData({
+                          title: event.title,
+                          date: event.start.split('T')[0],
+                          time: event.start.includes('T')
+                            ? event.start.split('T')[1]?.substring(0, 5)
+                            : '',
+                          category: event.categories?.[0] || 'appointment',
+                          location: event.location || '',
+                          notes: event.notes || '',
+                          isImportant: event.isImportant || false,
+                        });
+                        setShowEventModal(true);
+                      }}
+                    >
+                      <div
+                        className="w-1 h-12 rounded-full"
+                        style={{ backgroundColor: category?.color }}
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-white truncate">
+                          {event.title}
+                        </p>
+                        <p className="text-sm text-slate-400">
+                          {new Date(event.start).toLocaleDateString('en-US', {
+                            weekday: 'short',
+                            month: 'short',
+                            day: 'numeric',
+                          })}
+                          {event.location && ` • ${event.location}`}
+                        </p>
+                      </div>
+                      {event.isImportant && (
+                        <Badge variant="warning">Important</Badge>
+                      )}
+                    </motion.div>
+                  );
+                })
+              )}
+            </div>
+          </Card>
+        </div>
+      </div>
+
 
       {/* Event Modal */}
       <Modal

@@ -1,0 +1,9 @@
+name: "morning-report"
+version: "1.0.0"
+description: "A description for automation morning-report"
+trigger:
+  type: "cron"
+  schedule: "0 9 * * *" # Every day at 9:00 AM
+action:
+  type: "run-workflow"
+  workflow: "some-workflow"

@@ -1,0 +1,10 @@
+name: "article-creator"
+version: "1.0.0"
+description: "A description for workflow article-creator"
+steps:
+  - name: "step1"
+    description: "Describe what this step does"
+    action: "agent-run" # or skill-run
+    target: "agent-name"
+    input:
+      prompt: "Analyze {{input.text}}"

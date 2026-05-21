@@ -1,0 +1,8 @@
+name: "writer"
+version: "1.0.0"
+description: "A description for agent writer"
+model: "gemini-1.5-flash"
+temperature: 0.7
+system_instruction: |
+  You are a helpful assistant specialized in writer.
+skills: []
