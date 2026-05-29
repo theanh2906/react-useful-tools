@@ -28,7 +28,8 @@ const updateCalendarEvent = async (event: EventData) => {
 // Define Gemini tool declarations.
 const getEventsDeclaration = {
   name: 'getEvents',
-  description: 'Retrieve all calendar events. Use this to find existing events before deleting or modifying them, or to inspect current events.',
+  description:
+    'Retrieve all calendar events. Use this to find existing events before deleting or modifying them, or to inspect current events.',
   parameters: {
     type: SchemaType.OBJECT,
     properties: {},
@@ -47,19 +48,23 @@ const createEventDeclaration = {
       },
       start: {
         type: SchemaType.STRING,
-        description: 'The start date and optional time in ISO 8601 format (YYYY-MM-DD or YYYY-MM-DDTHH:mm:ss). For yearly events, use the current or upcoming year (e.g. 2026-10-23).',
+        description:
+          'The start date and optional time in ISO 8601 format (YYYY-MM-DD or YYYY-MM-DDTHH:mm:ss). For yearly events, use the current or upcoming year (e.g. 2026-10-23).',
       },
       end: {
         type: SchemaType.STRING,
-        description: 'The end date and optional time in ISO 8601 format (optional).',
+        description:
+          'The end date and optional time in ISO 8601 format (optional).',
       },
       allDay: {
         type: SchemaType.BOOLEAN,
-        description: 'Whether the event spans the entire day (true if no specific time is provided).',
+        description:
+          'Whether the event spans the entire day (true if no specific time is provided).',
       },
       category: {
         type: SchemaType.STRING,
-        description: 'The category of the event. Must be one of: appointment, personal, family, work. (default is appointment).',
+        description:
+          'The category of the event. Must be one of: appointment, personal, family, work. (default is appointment).',
       },
       location: {
         type: SchemaType.STRING,
@@ -79,8 +84,9 @@ const createEventDeclaration = {
       },
       recurrenceCycle: {
         type: SchemaType.STRING,
-        description: 'The recurrence frequency. Must be one of: NONE, MONTHLY, QUARTERLY, YEARLY, BIENNIAL, CUSTOM.',
-      }
+        description:
+          'The recurrence frequency. Must be one of: NONE, MONTHLY, QUARTERLY, YEARLY, BIENNIAL, CUSTOM.',
+      },
     },
     required: ['title', 'start'],
   },
@@ -129,7 +135,8 @@ const updateEventDeclaration = {
       },
       category: {
         type: SchemaType.STRING,
-        description: 'The category of the event: appointment, personal, family, work.',
+        description:
+          'The category of the event: appointment, personal, family, work.',
       },
       location: {
         type: SchemaType.STRING,
@@ -149,8 +156,9 @@ const updateEventDeclaration = {
       },
       recurrenceCycle: {
         type: SchemaType.STRING,
-        description: 'The new recurrence cycle (NONE, MONTHLY, QUARTERLY, YEARLY, BIENNIAL, CUSTOM).',
-      }
+        description:
+          'The new recurrence cycle (NONE, MONTHLY, QUARTERLY, YEARLY, BIENNIAL, CUSTOM).',
+      },
     },
     required: ['id'],
   },
@@ -213,7 +221,7 @@ Hướng dẫn sử dụng Tools:
 Hãy trả lời bằng tiếng Việt một cách tự nhiên, lịch sự, thân thiện và tóm tắt ngắn gọn các hành động bạn đã thực hiện.`;
 
     const model = genAI.getGenerativeModel({
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-flash-latest',
       systemInstruction,
       tools: [
         {
@@ -232,7 +240,7 @@ Hãy trả lời bằng tiếng Việt một cách tự nhiên, lịch sự, th�
     let result = await chat.sendMessage(prompt);
 
     let functionCalls = result.response.functionCalls();
-    
+
     // Process function calls sequentially
     while (functionCalls && functionCalls.length > 0) {
       const functionResponses = [];
@@ -240,7 +248,7 @@ Hãy trả lời bằng tiếng Việt một cách tự nhiên, lịch sự, th�
       for (const call of functionCalls) {
         const { name, args } = call;
         addLog('call', `AI yêu cầu gọi công cụ: ${name}`);
-        
+
         let functionResult: any;
 
         try {
@@ -264,17 +272,21 @@ Hãy trả lời bằng tiếng Việt một cách tự nhiên, lịch sự, th�
           } else if (name === 'createEvent') {
             const rawArgs = args as any;
             addLog('info', `Đang tạo sự kiện mới: "${rawArgs.title}"...`);
-            
+
             const category = rawArgs.category || 'appointment';
             const isRecurring = !!rawArgs.isRecurring;
-            const cycle = (rawArgs.recurrenceCycle || 'NONE') as RecurrenceCycle;
+            const cycle = (rawArgs.recurrenceCycle ||
+              'NONE') as RecurrenceCycle;
 
             const eventData: EventData = {
               id: generateId(),
               title: rawArgs.title,
               start: rawArgs.start,
               end: rawArgs.end || undefined,
-              allDay: rawArgs.allDay !== undefined ? !!rawArgs.allDay : !rawArgs.start.includes('T'),
+              allDay:
+                rawArgs.allDay !== undefined
+                  ? !!rawArgs.allDay
+                  : !rawArgs.start.includes('T'),
               categories: [category],
               location: rawArgs.location || '',
               notes: rawArgs.notes || '',
@@ -285,48 +297,90 @@ Hãy trả lời bằng tiếng Việt một cách tự nhiên, lịch sự, th�
             };
 
             await createCalendarEvent(eventData);
-            functionResult = { success: true, message: `Sự kiện "${rawArgs.title}" đã được tạo thành công.` };
+            functionResult = {
+              success: true,
+              message: `Sự kiện "${rawArgs.title}" đã được tạo thành công.`,
+            };
             addLog('success', `Đã tạo sự kiện "${rawArgs.title}".`);
           } else if (name === 'deleteEvent') {
             const rawArgs = args as any;
             addLog('info', `Đang xóa sự kiện (ID: ${rawArgs.id})...`);
             await deleteCalendarEvent(rawArgs.id);
-            functionResult = { success: true, message: `Sự kiện có ID "${rawArgs.id}" đã được xóa.` };
+            functionResult = {
+              success: true,
+              message: `Sự kiện có ID "${rawArgs.id}" đã được xóa.`,
+            };
             addLog('success', `Đã xóa thành công sự kiện.`);
           } else if (name === 'updateEvent') {
             const rawArgs = args as any;
             addLog('info', `Đang cập nhật sự kiện (ID: ${rawArgs.id})...`);
-            
+
             const existingEvents = getEventsList();
-            const currentEvent = existingEvents.find((e) => e.id === rawArgs.id);
+            const currentEvent = existingEvents.find(
+              (e) => e.id === rawArgs.id
+            );
 
             if (!currentEvent) {
-              functionResult = { success: false, error: 'Không tìm thấy sự kiện cần cập nhật.' };
+              functionResult = {
+                success: false,
+                error: 'Không tìm thấy sự kiện cần cập nhật.',
+              };
               addLog('error', `Không tìm thấy sự kiện có ID "${rawArgs.id}".`);
             } else {
               const updatedEvent: EventData = {
                 ...currentEvent,
-                title: rawArgs.title !== undefined ? rawArgs.title : currentEvent.title,
-                start: rawArgs.start !== undefined ? rawArgs.start : currentEvent.start,
+                title:
+                  rawArgs.title !== undefined
+                    ? rawArgs.title
+                    : currentEvent.title,
+                start:
+                  rawArgs.start !== undefined
+                    ? rawArgs.start
+                    : currentEvent.start,
                 end: rawArgs.end !== undefined ? rawArgs.end : currentEvent.end,
-                allDay: rawArgs.allDay !== undefined ? !!rawArgs.allDay : currentEvent.allDay,
-                categories: rawArgs.category ? [rawArgs.category] : currentEvent.categories,
-                location: rawArgs.location !== undefined ? rawArgs.location : currentEvent.location,
-                notes: rawArgs.notes !== undefined ? rawArgs.notes : currentEvent.notes,
-                isImportant: rawArgs.isImportant !== undefined ? !!rawArgs.isImportant : currentEvent.isImportant,
-                isRecurring: rawArgs.isRecurring !== undefined ? !!rawArgs.isRecurring : currentEvent.isRecurring,
+                allDay:
+                  rawArgs.allDay !== undefined
+                    ? !!rawArgs.allDay
+                    : currentEvent.allDay,
+                categories: rawArgs.category
+                  ? [rawArgs.category]
+                  : currentEvent.categories,
+                location:
+                  rawArgs.location !== undefined
+                    ? rawArgs.location
+                    : currentEvent.location,
+                notes:
+                  rawArgs.notes !== undefined
+                    ? rawArgs.notes
+                    : currentEvent.notes,
+                isImportant:
+                  rawArgs.isImportant !== undefined
+                    ? !!rawArgs.isImportant
+                    : currentEvent.isImportant,
+                isRecurring:
+                  rawArgs.isRecurring !== undefined
+                    ? !!rawArgs.isRecurring
+                    : currentEvent.isRecurring,
                 recurringPattern: rawArgs.isRecurring
-                  ? { cycle: (rawArgs.recurrenceCycle || currentEvent.recurringPattern?.cycle || 'NONE') as RecurrenceCycle }
+                  ? {
+                      cycle: (rawArgs.recurrenceCycle ||
+                        currentEvent.recurringPattern?.cycle ||
+                        'NONE') as RecurrenceCycle,
+                    }
                   : undefined,
               };
 
               await updateCalendarEvent(updatedEvent);
-              functionResult = { success: true, message: `Sự kiện "${updatedEvent.title}" đã được cập nhật.` };
+              functionResult = {
+                success: true,
+                message: `Sự kiện "${updatedEvent.title}" đã được cập nhật.`,
+              };
               addLog('success', `Đã cập nhật sự kiện "${updatedEvent.title}".`);
             }
           }
         } catch (error) {
-          const errMsg = (error as Error).message || 'Có lỗi xảy ra khi gọi tool.';
+          const errMsg =
+            (error as Error).message || 'Có lỗi xảy ra khi gọi tool.';
           functionResult = { success: false, error: errMsg };
           addLog('error', `Lỗi khi chạy công cụ ${name}: ${errMsg}`);
         }
@@ -348,7 +402,8 @@ Hãy trả lời bằng tiếng Việt một cách tự nhiên, lịch sự, th�
     addLog('success', 'Hoàn thành yêu cầu!');
     return finalReply;
   } catch (error) {
-    const errMsg = (error as Error).message || 'Có lỗi xảy ra trong quá trình xử lý.';
+    const errMsg =
+      (error as Error).message || 'Có lỗi xảy ra trong quá trình xử lý.';
     addLog('error', `Lỗi hệ thống: ${errMsg}`);
     throw error;
   }

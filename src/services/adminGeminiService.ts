@@ -30,13 +30,15 @@ interface ProcessAdminAiPromptParams {
 // Admin Database tools declaration
 const readDatabaseDeclaration: any = {
   name: 'readDatabase',
-  description: 'Read data from a specific Firebase Realtime Database path. Highly recommended to read a path to inspect its structure/content before editing or deleting it.',
+  description:
+    'Read data from a specific Firebase Realtime Database path. Highly recommended to read a path to inspect its structure/content before editing or deleting it.',
   parameters: {
     type: SchemaType.OBJECT,
     properties: {
       path: {
         type: SchemaType.STRING,
-        description: 'The logical path in the database to read (e.g., "users", "users/some-uid/notes", "mealCheckIns", "periodShareTokens").',
+        description:
+          'The logical path in the database to read (e.g., "users", "users/some-uid/notes", "mealCheckIns", "periodShareTokens").',
       },
     },
     required: ['path'],
@@ -45,7 +47,8 @@ const readDatabaseDeclaration: any = {
 
 const writeDatabaseDeclaration: any = {
   name: 'writeDatabase',
-  description: 'Overwrites data at a specific Firebase Realtime Database path. Be extremely careful as this completely replaces existing data at the path.',
+  description:
+    'Overwrites data at a specific Firebase Realtime Database path. Be extremely careful as this completely replaces existing data at the path.',
   parameters: {
     type: SchemaType.OBJECT,
     properties: {
@@ -64,7 +67,8 @@ const writeDatabaseDeclaration: any = {
 
 const updateDatabaseDeclaration: any = {
   name: 'updateDatabase',
-  description: 'Updates (merges) properties at a specific Firebase Realtime Database path without overwriting other existing sibling fields.',
+  description:
+    'Updates (merges) properties at a specific Firebase Realtime Database path without overwriting other existing sibling fields.',
   parameters: {
     type: SchemaType.OBJECT,
     properties: {
@@ -74,7 +78,8 @@ const updateDatabaseDeclaration: any = {
       },
       dataJson: {
         type: SchemaType.STRING,
-        description: 'A JSON-serialized string containing the key-value pairs to update.',
+        description:
+          'A JSON-serialized string containing the key-value pairs to update.',
       },
     },
     required: ['path', 'dataJson'],
@@ -83,7 +88,8 @@ const updateDatabaseDeclaration: any = {
 
 const deleteDatabaseDeclaration: any = {
   name: 'deleteDatabase',
-  description: 'Deletes data at a specific Firebase Realtime Database path. Cannot be undone.',
+  description:
+    'Deletes data at a specific Firebase Realtime Database path. Cannot be undone.',
   parameters: {
     type: SchemaType.OBJECT,
     properties: {
@@ -111,7 +117,7 @@ export async function processAdminAiPrompt({
       timestamp: new Date().toLocaleTimeString(),
       type,
       message,
-      });
+    });
   };
 
   addLog('info', 'Khởi tạo trợ lý quản trị Gemini...');
@@ -141,7 +147,7 @@ Hướng dẫn sử dụng công cụ:
 Hãy trả lời bằng tiếng Việt thân thiện, lịch sự nhưng ngắn gọn và rõ ràng. Hãy tóm tắt những thao tác bạn đã thực hiện trên cơ sở dữ liệu để quản trị viên nắm rõ.`;
 
     const model = genAI.getGenerativeModel({
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-flash-latest',
       systemInstruction,
       tools: [
         {
@@ -156,14 +162,15 @@ Hãy trả lời bằng tiếng Việt thân thiện, lịch sự nhưng ngắn 
     });
 
     addLog('info', 'Bắt đầu kết nối hội thoại với AI...');
-    
+
     // Gemini startChat history must start with a 'user' message
-    const firstUserIndex = history.findIndex(msg => msg.role === 'user');
-    const validHistory = firstUserIndex !== -1 ? history.slice(firstUserIndex) : [];
+    const firstUserIndex = history.findIndex((msg) => msg.role === 'user');
+    const validHistory =
+      firstUserIndex !== -1 ? history.slice(firstUserIndex) : [];
 
     // Initialize the chat session with past history
     const chat = model.startChat({
-      history: validHistory.map(msg => ({
+      history: validHistory.map((msg) => ({
         role: msg.role,
         parts: msg.parts,
       })),
@@ -185,37 +192,73 @@ Hãy trả lời bằng tiếng Việt thân thiện, lịch sự nhưng ngắn 
         try {
           const rawArgs = args as any;
           if (name === 'readDatabase') {
-            addLog('info', `Đang đọc cơ sở dữ liệu tại đường dẫn: "${rawArgs.path}"...`);
+            addLog(
+              'info',
+              `Đang đọc cơ sở dữ liệu tại đường dẫn: "${rawArgs.path}"...`
+            );
             const pathRef = dbRef(database, rawArgs.path);
             const snapshot = await get(pathRef);
             if (snapshot.exists()) {
               const val = snapshot.val();
               functionResult = { exists: true, data: val };
-              addLog('success', `Đã đọc thành công dữ liệu từ "${rawArgs.path}".`);
+              addLog(
+                'success',
+                `Đã đọc thành công dữ liệu từ "${rawArgs.path}".`
+              );
             } else {
-              functionResult = { exists: false, message: 'No data exists at this path' };
+              functionResult = {
+                exists: false,
+                message: 'No data exists at this path',
+              };
               addLog('info', `Không tìm thấy dữ liệu tại "${rawArgs.path}".`);
             }
           } else if (name === 'writeDatabase') {
-            addLog('info', `Đang ghi đè dữ liệu tại đường dẫn: "${rawArgs.path}"...`);
+            addLog(
+              'info',
+              `Đang ghi đè dữ liệu tại đường dẫn: "${rawArgs.path}"...`
+            );
             const pathRef = dbRef(database, rawArgs.path);
             const parsedData = JSON.parse(rawArgs.dataJson);
             await set(pathRef, parsedData);
-            functionResult = { success: true, message: `Dữ liệu đã được ghi đè tại "${rawArgs.path}".` };
-            addLog('success', `Đã ghi đè thành công dữ liệu tại "${rawArgs.path}".`);
+            functionResult = {
+              success: true,
+              message: `Dữ liệu đã được ghi đè tại "${rawArgs.path}".`,
+            };
+            addLog(
+              'success',
+              `Đã ghi đè thành công dữ liệu tại "${rawArgs.path}".`
+            );
           } else if (name === 'updateDatabase') {
-            addLog('info', `Đang cập nhật dữ liệu tại đường dẫn: "${rawArgs.path}"...`);
+            addLog(
+              'info',
+              `Đang cập nhật dữ liệu tại đường dẫn: "${rawArgs.path}"...`
+            );
             const pathRef = dbRef(database, rawArgs.path);
             const parsedData = JSON.parse(rawArgs.dataJson);
             await update(pathRef, parsedData);
-            functionResult = { success: true, message: `Dữ liệu đã được cập nhật tại "${rawArgs.path}".` };
-            addLog('success', `Đã cập nhật thành công dữ liệu tại "${rawArgs.path}".`);
+            functionResult = {
+              success: true,
+              message: `Dữ liệu đã được cập nhật tại "${rawArgs.path}".`,
+            };
+            addLog(
+              'success',
+              `Đã cập nhật thành công dữ liệu tại "${rawArgs.path}".`
+            );
           } else if (name === 'deleteDatabase') {
-            addLog('info', `Đang xóa dữ liệu tại đường dẫn: "${rawArgs.path}"...`);
+            addLog(
+              'info',
+              `Đang xóa dữ liệu tại đường dẫn: "${rawArgs.path}"...`
+            );
             const pathRef = dbRef(database, rawArgs.path);
             await remove(pathRef);
-            functionResult = { success: true, message: `Dữ liệu đã được xóa tại "${rawArgs.path}".` };
-            addLog('success', `Đã xóa thành công dữ liệu tại "${rawArgs.path}".`);
+            functionResult = {
+              success: true,
+              message: `Dữ liệu đã được xóa tại "${rawArgs.path}".`,
+            };
+            addLog(
+              'success',
+              `Đã xóa thành công dữ liệu tại "${rawArgs.path}".`
+            );
           }
         } catch (error) {
           const errMsg = (error as Error).message || 'Lỗi xử lý công cụ.';
