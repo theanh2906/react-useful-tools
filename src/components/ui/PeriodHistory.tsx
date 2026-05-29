@@ -12,14 +12,16 @@ import { Settings, Trash2 } from 'lucide-react';
 
 interface PeriodHistoryProps {
   periodLogs: PeriodLog[];
-  onEdit: (log: PeriodLog) => void;
-  onDelete: (id: string) => void;
+  onEdit?: (log: PeriodLog) => void;
+  onDelete?: (id: string) => void;
+  readOnly?: boolean;
 }
 
 const PeriodHistory: React.FC<PeriodHistoryProps> = ({
   periodLogs,
   onEdit,
   onDelete,
+  readOnly = false,
 }) => {
   const { t } = useTranslation();
 
@@ -52,20 +54,22 @@ const PeriodHistory: React.FC<PeriodHistoryProps> = ({
                   )}
                 </div>
               </div>
-              <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                <button
-                  onClick={() => onEdit(log)}
-                  className="p-1.5 text-slate-500 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
-                >
-                  <Settings className="w-3.5 h-3.5" />
-                </button>
-                <button
-                  onClick={() => onDelete(log.id)}
-                  className="p-1.5 text-slate-500 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
-                >
-                  <Trash2 className="w-3.5 h-3.5" />
-                </button>
-              </div>
+              {!readOnly && (
+                <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button
+                    onClick={() => onEdit?.(log)}
+                    className="p-1.5 text-slate-500 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                  >
+                    <Settings className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    onClick={() => onDelete?.(log.id)}
+                    className="p-1.5 text-slate-500 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              )}
             </motion.li>
           ))}
         </ul>

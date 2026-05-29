@@ -502,6 +502,8 @@ export interface CycleSettings {
   averageCycleLength: number;
   /** Average period duration in days (default 5). */
   averagePeriodLength: number;
+  /** Optional share token for public read-only access. */
+  shareToken?: string;
 }
 
 /** Predicted dates for the next menstrual period. */

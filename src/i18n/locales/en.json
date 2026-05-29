@@ -415,6 +415,18 @@
       "LIGHT": "Light",
       "MEDIUM": "Medium",
       "HEAVY": "Heavy"
-    }
+    },
+    "share": "Share",
+    "shareTitle": "Share Period Tracker",
+    "shareDescription": "Share this link with family or your partner so they can view your cycle and predictions.",
+    "generateLink": "Generate share link",
+    "copyLink": "Copy Link",
+    "linkCopied": "Copied!",
+    "revokeLink": "Revoke Link",
+    "revokeConfirm": "Revoke this link? Anyone with the old link will lose access.",
+    "readOnlyView": "Read-only view",
+    "readOnlyDescription": "You are viewing a shared period tracker page.",
+    "invalidShareLink": "This share link is invalid or has been revoked.",
+    "generating": "Generating..."
   }
 }

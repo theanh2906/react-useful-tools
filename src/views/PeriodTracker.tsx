@@ -24,7 +24,13 @@ import {
   Activity,
   Calendar as CalendarIcon,
   Droplets,
+  Share2,
+  Copy,
+  Check,
+  Link as LinkIcon,
 } from 'lucide-react';
+import { useAuthStore } from '@/stores/authStore';
+import { generateShareToken, revokeShareToken } from '@/services/periodService';
 
 const PeriodTracker: React.FC = () => {
   const { t } = useTranslation();
@@ -44,12 +50,64 @@ const PeriodTracker: React.FC = () => {
   } = usePeriodStore();
 
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const { user } = useAuthStore();
   const [showLogModal, setShowLogModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [editingLog, setEditingLog] = useState<PeriodLog | null>(null);
   const [logStartDate, setLogStartDate] = useState(format(new Date(), 'yyyy-MM-dd'));
   const [settingsCycle, setSettingsCycle] = useState(28);
   const [settingsPeriod, setSettingsPeriod] = useState(5);
+
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [shareToken, setShareToken] = useState<string | null>(null);
+  const [isGeneratingToken, setIsGeneratingToken] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
+  const [showRevokeConfirm, setShowRevokeConfirm] = useState(false);
+
+  useEffect(() => {
+    if (cycleSettings?.shareToken) {
+      setShareToken(cycleSettings.shareToken);
+    } else {
+      setShareToken(null);
+    }
+  }, [cycleSettings]);
+
+  const handleGenerateToken = async () => {
+    if (!user) return;
+    setIsGeneratingToken(true);
+    try {
+      const token = await generateShareToken(user.id);
+      setShareToken(token);
+      toast.success(t('success.created'));
+    } catch (error) {
+      console.error('Error generating share token:', error);
+      toast.error(t('periodTracker.error'));
+    } finally {
+      setIsGeneratingToken(false);
+    }
+  };
+
+  const handleRevokeToken = async () => {
+    if (!user || !shareToken) return;
+    try {
+      await revokeShareToken(user.id, shareToken);
+      setShareToken(null);
+      setShowRevokeConfirm(false);
+      toast.success(t('success.updated'));
+    } catch (error) {
+      console.error('Error revoking share token:', error);
+      toast.error(t('periodTracker.error'));
+    }
+  };
+
+  const handleCopyLink = async () => {
+    if (!shareToken) return;
+    const url = `${window.location.origin}/calendar/period-tracker/share/${shareToken}`;
+    await navigator.clipboard.writeText(url);
+    setLinkCopied(true);
+    toast.success(t('success.copied'));
+    setTimeout(() => setLinkCopied(false), 2000);
+  };
 
   useEffect(() => {
     subscribePeriodLogs();
@@ -136,6 +194,9 @@ const PeriodTracker: React.FC = () => {
           </div>
         </div>
         <div className="flex gap-2 shrink-0">
+          <Button variant="ghost" onClick={() => setShowShareModal(true)}>
+            <Share2 className="w-4 h-4" />
+          </Button>
           <Button variant="ghost" onClick={() => setShowSettingsModal(true)}>
             <Settings className="w-4 h-4" />
           </Button>
@@ -249,6 +310,88 @@ const PeriodTracker: React.FC = () => {
             </Button>
             <Button onClick={handleSaveSettings}>
               {t('common.save')}
+            </Button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Share Modal */}
+      <Modal
+        isOpen={showShareModal}
+        onClose={() => setShowShareModal(false)}
+        title={t('periodTracker.shareTitle')}
+        size="sm"
+      >
+        <div className="space-y-4">
+          <p className="text-sm text-slate-400">
+            {t('periodTracker.shareDescription')}
+          </p>
+
+          {!shareToken ? (
+            <Button
+              onClick={handleGenerateToken}
+              disabled={isGeneratingToken}
+              className="w-full"
+            >
+              {isGeneratingToken ? (
+                <><Spinner size="sm" />&nbsp;{t('periodTracker.generating')}</>
+              ) : (
+                <><LinkIcon className="w-4 h-4 mr-2" />{t('periodTracker.generateLink')}</>
+              )}
+            </Button>
+          ) : (
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-lg p-3">
+                <span className="text-xs text-slate-300 flex-1 break-all select-all">
+                  {`${window.location.origin}/calendar/period-tracker/share/${shareToken}`}
+                </span>
+              </div>
+              <div className="flex gap-2">
+                <Button onClick={handleCopyLink} className="flex-1 flex items-center justify-center gap-2">
+                  {linkCopied ? (
+                    <><Check className="w-4 h-4" />{t('periodTracker.linkCopied')}</>
+                  ) : (
+                    <><Copy className="w-4 h-4" />{t('periodTracker.copyLink')}</>
+                  )}
+                </Button>
+                <Button
+                  onClick={() => setShowRevokeConfirm(true)}
+                  variant="danger"
+                  className="flex-1"
+                >
+                  {t('periodTracker.revokeLink')}
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+      </Modal>
+
+      {/* Revoke Confirmation Modal */}
+      <Modal
+        isOpen={showRevokeConfirm}
+        onClose={() => setShowRevokeConfirm(false)}
+        title={t('periodTracker.revokeLink')}
+        size="sm"
+      >
+        <div className="space-y-4">
+          <p className="text-slate-300 text-sm">
+            {t('periodTracker.revokeConfirm')}
+          </p>
+          <div className="flex gap-3">
+            <Button
+              onClick={() => setShowRevokeConfirm(false)}
+              variant="ghost"
+              className="flex-1"
+            >
+              {t('common.cancel')}
+            </Button>
+            <Button
+              onClick={handleRevokeToken}
+              variant="danger"
+              className="flex-1"
+            >
+              {t('periodTracker.revokeLink')}
             </Button>
           </div>
         </div>
