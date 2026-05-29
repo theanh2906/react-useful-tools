@@ -324,16 +324,16 @@ export default function AdminAiAssistant() {
 
                 <div className="space-y-1">
                   {/* Chat Content Bubble */}
-                  <div
+                  <pre
                     className={cn(
-                      'p-3.5 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap',
+                      'p-3.5 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap break-words',
                       isUser
-                        ? 'bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-tr-none shadow-md'
-                        : 'bg-white/5 border border-white/10 text-slate-100 rounded-tl-none'
+                        ? 'bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-tr-none shadow-md font-sans'
+                        : 'bg-white/5 border border-white/10 text-slate-100 rounded-tl-none font-mono text-xs'
                     )}
                   >
                     {msg.content}
-                  </div>
+                  </pre>
 
                   {/* Execution Step Logs (Collapsible) */}
                   {!isUser && msg.logs && msg.logs.length > 0 && (
