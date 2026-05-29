@@ -92,16 +92,19 @@ export const useAuthStore = create<AuthState>()(
 
         const tokenResult = await firebaseUser.getIdTokenResult();
         const expiration = new Date(tokenResult.expirationTime).getTime();
+        const email = firebaseUser.email || '';
+        const role = email.toLowerCase() === 'theanh2906@gmail.com' ? 'Administrator' : undefined;
 
         clearResolvedPathCache();
         set({
           user: {
             id: firebaseUser.uid,
-            email: firebaseUser.email || '',
+            email,
             displayName: firebaseUser.displayName || undefined,
             photoURL: firebaseUser.photoURL || undefined,
             token: tokenResult.token,
             tokenExpirationIn: expiration,
+            role,
           },
           isAuthenticated: true,
           isLoading: false,
