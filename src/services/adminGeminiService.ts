@@ -156,9 +156,14 @@ Hãy trả lời bằng tiếng Việt thân thiện, lịch sự nhưng ngắn 
     });
 
     addLog('info', 'Bắt đầu kết nối hội thoại với AI...');
+    
+    // Gemini startChat history must start with a 'user' message
+    const firstUserIndex = history.findIndex(msg => msg.role === 'user');
+    const validHistory = firstUserIndex !== -1 ? history.slice(firstUserIndex) : [];
+
     // Initialize the chat session with past history
     const chat = model.startChat({
-      history: history.map(msg => ({
+      history: validHistory.map(msg => ({
         role: msg.role,
         parts: msg.parts,
       })),
