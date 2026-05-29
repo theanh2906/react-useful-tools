@@ -50,7 +50,7 @@ export function Sidebar() {
   const isMobile = useIsMobile();
   const { sidebarOpen, setSidebarOpen, mobileMenuOpen, setMobileMenuOpen } =
     useAppStore();
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, user } = useAuthStore();
 
   const isOpen = isMobile ? mobileMenuOpen : sidebarOpen;
   const setIsOpen = isMobile ? setMobileMenuOpen : setSidebarOpen;
@@ -73,9 +73,11 @@ export function Sidebar() {
     },
   };
 
-  const visibleNavItems = NAV_ITEMS.filter(
-    (item) => SHOW_PREGNANCY_UI || !item.pregnancyUiOnly
-  );
+  const visibleNavItems = NAV_ITEMS.filter((item) => {
+    if (item.pregnancyUiOnly && !SHOW_PREGNANCY_UI) return false;
+    if (item.isAdminOnly && user?.role !== 'Administrator') return false;
+    return true;
+  });
 
   const groupedItems = NAV_CATEGORIES.map((category) => ({
     ...category,

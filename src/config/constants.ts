@@ -280,6 +280,16 @@ export const NAV_ITEMS = [
     icon: 'Activity',
     category: 'development',
   },
+  {
+    id: 'admin-ai',
+    label: 'Admin AI Assistant',
+    labelKey: 'navigation.adminAi',
+    path: '/admin-ai',
+    icon: 'Terminal',
+    category: 'development',
+    protected: true,
+    isAdminOnly: true,
+  },
 ];
 
 /**

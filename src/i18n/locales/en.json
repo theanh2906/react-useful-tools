@@ -48,6 +48,7 @@
     "zipTool": "Zip Tool",
     "liveShare": "Live Share",
     "monitor": "System Monitor",
+    "adminAi": "Admin AI Assistant",
     "mealCheckIn": "Meal Check-In",
     "periodTracker": "Period Tracker"
   },
@@ -428,5 +429,18 @@
     "readOnlyDescription": "You are viewing a shared period tracker page.",
     "invalidShareLink": "This share link is invalid or has been revoked.",
     "generating": "Generating..."
+  },
+  "adminAi": {
+    "title": "Admin AI Assistant",
+    "subtitle": "Direct Firebase Realtime Database controller & assistant",
+    "placeholder": "Enter request (e.g. 'Read users/Soya/notes', 'Check who is logged in')...",
+    "generating": "Connecting with Gemini...",
+    "linkCopied": "Copied!",
+    "copyLink": "Copy",
+    "chatIntro": "Welcome, Administrator! You have direct read/write access to the database using natural language. Try exploring some paths, reading users, or asking general questions.",
+    "clearChat": "Clear Conversation",
+    "error": "Error processing request",
+    "suggestedPrompts": "Suggested Prompts",
+    "processingLogs": "Execution Steps"
   }
 }

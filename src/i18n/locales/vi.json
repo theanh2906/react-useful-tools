@@ -48,6 +48,7 @@
     "zipTool": "Nén file",
     "liveShare": "Chia sẻ",
     "monitor": "Giám sát",
+    "adminAi": "Trợ lý AI Admin",
     "mealCheckIn": "Check-in ăn uống",
     "periodTracker": "Theo dõi kinh nguyệt"
   },
@@ -428,5 +429,18 @@
     "readOnlyDescription": "Bạn đang xem trang theo dõi chu kỳ kinh nguyệt được chia sẻ.",
     "invalidShareLink": "Link chia sẻ không hợp lệ hoặc đã bị thu hồi.",
     "generating": "Đang tạo..."
+  },
+  "adminAi": {
+    "title": "Trợ lý AI Admin",
+    "subtitle": "Hệ thống điều khiển & trợ lý trực tiếp cho cơ sở dữ liệu Firebase",
+    "placeholder": "Nhập yêu cầu (Ví dụ: 'Đọc đường dẫn users/Soya/notes', 'Kiểm tra danh sách user')...",
+    "generating": "Đang kết nối với Gemini...",
+    "linkCopied": "Đã sao chép!",
+    "copyLink": "Sao chép",
+    "chatIntro": "Chào mừng Quản trị viên! Bạn có quyền đọc/ghi trực tiếp vào cơ sở dữ liệu bằng ngôn ngữ tự nhiên. Hãy thử khám phá một số đường dẫn, đọc dữ liệu người dùng, hoặc đặt các câu hỏi chung.",
+    "clearChat": "Xóa cuộc trò chuyện",
+    "error": "Lỗi khi xử lý yêu cầu",
+    "suggestedPrompts": "Gợi ý yêu cầu",
+    "processingLogs": "Nhật ký xử lý"
   }
 }
