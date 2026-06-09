@@ -356,7 +356,15 @@
     "readOnlyView": "Read-only view",
     "readOnlyDescription": "You are viewing a shared meal check-in page.",
     "invalidShareLink": "This share link is invalid or has been revoked.",
-    "generating": "Generating..."
+    "generating": "Generating...",
+    "quickUpload": "Quick Upload",
+    "quickUploadTitle": "Multi-Image Quick Check-In",
+    "dragDropMulti": "Drag & drop multiple images here or click to browse",
+    "processingMetadata": "Processing image metadata...",
+    "confirmMultipleCheckIn": "Confirm Check-In ({{count}} meals)",
+    "duplicateDateWarning": "Multiple images have the same date (The latest one will overwrite others).",
+    "photoDate": "Photo Date",
+    "photoNotes": "Description for this photo"
   },
   "settings": {
     "subtitle": "Customize your experience",

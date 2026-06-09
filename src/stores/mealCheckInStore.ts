@@ -35,6 +35,10 @@ interface MealCheckInState {
     imageFile?: File | null,
     notes?: string
   ) => Promise<void>;
+  createMultipleCheckIns: (
+    userId: string,
+    items: Array<{ date: string; imageFile: File | null; notes?: string }>
+  ) => Promise<void>;
   deleteCheckIn: (checkIn: MealCheckIn) => Promise<void>;
   updateNotes: (userId: string, date: string, notes: string) => Promise<void>;
   setSelectedCheckIn: (checkIn: MealCheckIn | null) => void;
@@ -176,6 +180,60 @@ export const useMealCheckInStore = create<MealCheckInState>((set, get) => ({
       set({
         error:
           error instanceof Error ? error.message : 'Failed to create check-in',
+        isLoading: false,
+      });
+      throw error;
+    }
+  },
+
+  createMultipleCheckIns: async (
+    userId: string,
+    items: Array<{ date: string; imageFile: File | null; notes?: string }>
+  ) => {
+    set({ isLoading: true, error: null });
+    try {
+      const updatedCheckIns = [...get().checkIns];
+
+      for (const item of items) {
+        const newCheckIn = await mealCheckInService.createCheckIn(
+          userId,
+          item.date,
+          item.imageFile,
+          item.notes
+        );
+
+        const existingIndex = updatedCheckIns.findIndex((c) => c.date === item.date);
+        if (existingIndex >= 0) {
+          updatedCheckIns[existingIndex] = newCheckIn;
+        } else {
+          updatedCheckIns.push(newCheckIn);
+        }
+      }
+
+      updatedCheckIns.sort((a, b) => a.date.localeCompare(b.date));
+
+      const config = get().cycleConfig;
+      if (config) {
+        const endDate = '2099-12-31';
+        const stats = await mealCheckInService.getCycleStats(
+          userId,
+          config.startDate,
+          endDate,
+          config.cycleDays
+        );
+        set({ cycleStats: stats });
+      }
+
+      set({
+        checkIns: updatedCheckIns,
+        isLoading: false,
+      });
+    } catch (error) {
+      set({
+        error:
+          error instanceof Error
+            ? error.message
+            : 'Failed to create multiple check-ins',
         isLoading: false,
       });
       throw error;

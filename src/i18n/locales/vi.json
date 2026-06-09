@@ -356,7 +356,15 @@
     "readOnlyView": "Chế độ xem",
     "readOnlyDescription": "Bạn đang xem trang check-in bữa ăn được chia sẻ.",
     "invalidShareLink": "Link chia sẻ không hợp lệ hoặc đã bị thu hồi.",
-    "generating": "Đang tạo..."
+    "generating": "Đang tạo...",
+    "quickUpload": "Tải lên nhanh",
+    "quickUploadTitle": "Check-in nhanh nhiều ảnh",
+    "dragDropMulti": "Kéo thả nhiều ảnh vào đây hoặc click để chọn",
+    "processingMetadata": "Đang xử lý dữ liệu ảnh...",
+    "confirmMultipleCheckIn": "Xác nhận Check-in ({{count}} bữa)",
+    "duplicateDateWarning": "Có nhiều ảnh trùng ngày (Ảnh sau sẽ ghi đè ảnh trước).",
+    "photoDate": "Ngày của ảnh",
+    "photoNotes": "Mô tả cho ảnh này"
   },
   "settings": {
     "subtitle": "Tùy chỉnh trải nghiệm của bạn",
