@@ -1,5 +1,10 @@
 import { format, eachDayOfInterval } from 'date-fns';
-import type { MealCheckIn, MealCheckInCycleConfig, MealCheckInCycleStats } from '../types';
+import type {
+  MealCheckIn,
+  MealCheckInCycleConfig,
+  MealCheckInCycleStats,
+} from '../types';
+import { getMealCheckInCycleForDate } from './mealCheckInCycles';
 
 const compressImageToBase64 = async (url: string): Promise<string> => {
    return new Promise((resolve) => {
@@ -27,7 +32,7 @@ const compressImageToBase64 = async (url: string): Promise<string> => {
 };
 
 export const exportCalendarToHTML = async (
-  cycleConfig: MealCheckInCycleConfig,
+  cycleConfigs: MealCheckInCycleConfig[],
   cycleStats: MealCheckInCycleStats,
   checkIns: MealCheckIn[]
 ): Promise<void> => {
@@ -57,9 +62,7 @@ export const exportCalendarToHTML = async (
   const isOutsideCycleDate = (date: Date): boolean => {
     const dateStr = format(date, 'yyyy-MM-dd');
     if (hasCheckIn(dateStr)) return false;
-    if (dateStr < cycleConfig.startDate) return true;
-    if (cycleStats.checkedInDays >= cycleConfig.cycleDays) return true;
-    return false;
+    return getMealCheckInCycleForDate(dateStr, cycleConfigs) === null;
   };
   
   const isTodayDate = (date: Date): boolean => format(date, 'yyyy-MM-dd') === format(new Date(), 'yyyy-MM-dd');
@@ -154,7 +157,7 @@ export const exportCalendarToHTML = async (
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
         <h2 class="text-xl font-bold flex items-center gap-2">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-          Cycle Started: ${format(new Date(cycleConfig.startDate + 'T00:00:00'), 'MMM d, yyyy')}
+          Cycles: ${cycleConfigs.length}
         </h2>
       </div>
 

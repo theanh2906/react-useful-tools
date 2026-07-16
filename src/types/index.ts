@@ -346,6 +346,14 @@ export interface Room {
 
 // ─── Meal Check-in Types ─────────────────────────────────────────────────────
 
+/** Minimal definition of a meal check-in cycle stored in config history. */
+export interface MealCheckInCycleDefinition {
+  /** The cycle start date in YYYY-MM-DD format. */
+  startDate: string;
+  /** The total number of days in the cycle. */
+  cycleDays: number;
+}
+
 /** Configuration for a meal check-in cycle. */
 export interface MealCheckInCycleConfig {
   /** User ID inheriting this config. */
@@ -356,6 +364,8 @@ export interface MealCheckInCycleConfig {
   cycleDays: number;
   /** Optional share token for public read-only access. */
   shareToken?: string;
+  /** Historical cycles for rendering all past check-in cycles. */
+  cycleHistory?: MealCheckInCycleDefinition[];
 }
 
 /** A daily meal check-in record with optional photo proof. */
@@ -386,38 +396,6 @@ export interface MealCheckInCycleStats {
   checkedInDays: number;
   /** Check-in completion percentage (0-100). */
   percentage: number;
-}
-
-// ─── Device Monitoring Types ─────────────────────────────────────────────────
-
-/** Raw device monitoring data from system agents. */
-export interface DeviceData {
-  /** Used memory percentage (optional). */
-  used_memory?: number;
-  /** CPU usage percentage (optional). */
-  cpu_usage?: number;
-  /** Disk usage percentage (optional). */
-  disk_usage?: number;
-  /** Network upload/download speeds (optional). */
-  network_stats?: { upload: number; download: number };
-  /** Additional system information (optional). */
-  system_info?: Record<string, unknown>;
-  /** Data collection timestamp (optional). */
-  timestamp?: number;
-}
-
-/** A monitored device with its current status and metrics. */
-export interface Device {
-  /** Device display name. */
-  device_name: string;
-  /** Current device status. */
-  status: 'up' | 'down';
-  /** Last update timestamp in milliseconds. */
-  last_update: number;
-  /** Memory usage percentage. */
-  memory_percentage: number;
-  /** Full raw monitoring data. */
-  raw_data: DeviceData;
 }
 
 // ─── Dashboard Types ─────────────────────────────────────────────────────────

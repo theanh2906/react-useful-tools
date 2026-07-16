@@ -47,7 +47,6 @@
     "changeCase": "Đổi chữ",
     "zipTool": "Nén file",
     "liveShare": "Chia sẻ",
-    "monitor": "Giám sát",
     "adminAi": "Trợ lý AI Admin",
     "mealCheckIn": "Check-in ăn uống",
     "periodTracker": "Theo dõi kinh nguyệt"
@@ -275,19 +274,6 @@
     "uploadFile": "Tải file lên",
     "clearHistory": "Xóa lịch sử",
     "leaveRoom": "Rời phòng"
-  },
-  "monitor": {
-    "title": "Giám sát hệ thống",
-    "devices": "Thiết bị",
-    "jenkins": "Jenkins",
-    "kafka": "Kafka",
-    "status": "Trạng thái",
-    "online": "Hoạt động",
-    "offline": "Ngưng hoạt động",
-    "memory": "Bộ nhớ",
-    "cpu": "CPU",
-    "disk": "Ổ đĩa",
-    "lastUpdate": "Cập nhật lần cuối"
   },
   "timeline": {
     "title": "Dòng thời gian",

@@ -273,14 +273,6 @@ export const NAV_ITEMS = [
     category: 'collaboration',
   },
   {
-    id: 'monitor',
-    label: 'System Monitor',
-    labelKey: 'navigation.monitor',
-    path: '/monitor',
-    icon: 'Activity',
-    category: 'development',
-  },
-  {
     id: 'admin-ai',
     label: 'Admin AI Assistant',
     labelKey: 'navigation.adminAi',

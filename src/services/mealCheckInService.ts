@@ -23,14 +23,31 @@ import {
 import { database, storage } from '../config/firebase';
 import type {
   MealCheckIn,
+  MealCheckInCycleDefinition,
   MealCheckInCycleConfig,
   MealCheckInCycleStats,
 } from '../types';
+import { normalizeMealCheckInCycles } from '../utils/mealCheckInCycles';
 
 /** @internal Realtime Database collection name for meal check-ins. */
 const COLLECTION_NAME = 'mealCheckIns';
 const CONFIG_COLLECTION_NAME = 'mealCheckInConfigs';
 const SHARE_TOKENS_COLLECTION = 'mealCheckInShareTokens';
+
+const normalizeCycleHistory = (
+  cycles: MealCheckInCycleDefinition[]
+): MealCheckInCycleDefinition[] => {
+  const byStartDate = new Map<string, MealCheckInCycleDefinition>();
+
+  cycles.forEach((cycle) => {
+    if (!cycle.startDate || cycle.cycleDays < 1) return;
+    byStartDate.set(cycle.startDate, cycle);
+  });
+
+  return Array.from(byStartDate.values()).sort((a, b) =>
+    a.startDate.localeCompare(b.startDate)
+  );
+};
 
 export const mealCheckInService = {
   /**
@@ -157,11 +174,32 @@ export const mealCheckInService = {
    */
   async saveCycleConfig(config: MealCheckInCycleConfig): Promise<void> {
     try {
+      const existingConfig = await this.getCycleConfig(config.userId);
+      const cycleHistory = normalizeCycleHistory([
+        ...(existingConfig?.cycleHistory ?? []),
+        ...(existingConfig
+          ? [
+              {
+                startDate: existingConfig.startDate,
+                cycleDays: existingConfig.cycleDays,
+              },
+            ]
+          : []),
+        {
+          startDate: config.startDate,
+          cycleDays: config.cycleDays,
+        },
+      ]);
+      const configToSave: MealCheckInCycleConfig = {
+        ...config,
+        shareToken: config.shareToken ?? existingConfig?.shareToken,
+        cycleHistory,
+      };
       const configRef = dbRef(
         database,
         `${CONFIG_COLLECTION_NAME}/${config.userId}`
       );
-      await set(configRef, config);
+      await set(configRef, configToSave);
     } catch (error) {
       console.error('Error saving cycle config:', error);
       throw error;
@@ -181,6 +219,33 @@ export const mealCheckInService = {
       return null;
     } catch (error) {
       console.error('Error getting cycle config:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Get all cycle configs for a user.
+   * Merges the legacy single config with the cycle history for backward compatibility.
+   */
+  async getCycleConfigs(userId: string): Promise<MealCheckInCycleConfig[]> {
+    try {
+      const legacyConfig = await this.getCycleConfig(userId);
+      const configs: MealCheckInCycleConfig[] = [];
+
+      if (legacyConfig) {
+        configs.push(legacyConfig);
+        configs.push(
+          ...(legacyConfig.cycleHistory ?? []).map((cycle) => ({
+            userId,
+            startDate: cycle.startDate,
+            cycleDays: cycle.cycleDays,
+          }))
+        );
+      }
+
+      return normalizeMealCheckInCycles(configs);
+    } catch (error) {
+      console.error('Error getting cycle configs:', error);
       throw error;
     }
   },

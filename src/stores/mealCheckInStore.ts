@@ -12,12 +12,17 @@ import type {
   MealCheckInCycleStats,
 } from '../types';
 import { mealCheckInService } from '../services/mealCheckInService';
+import {
+  calculateMealCheckInCycleStats,
+  normalizeMealCheckInCycles,
+} from '../utils/mealCheckInCycles';
 
 /** Meal check-in state shape and actions. */
 interface MealCheckInState {
   checkIns: MealCheckIn[];
   cycleStats: MealCheckInCycleStats | null;
   cycleConfig: MealCheckInCycleConfig | null;
+  cycleConfigs: MealCheckInCycleConfig[];
   isLoading: boolean;
   error: string | null;
   selectedCheckIn: MealCheckIn | null;
@@ -49,6 +54,7 @@ export const useMealCheckInStore = create<MealCheckInState>((set, get) => ({
   checkIns: [],
   cycleStats: null,
   cycleConfig: null,
+  cycleConfigs: [],
   isLoading: false,
   error: null,
   selectedCheckIn: null,
@@ -56,9 +62,9 @@ export const useMealCheckInStore = create<MealCheckInState>((set, get) => ({
   loadCycleData: async (userId: string) => {
     set({ isLoading: true, error: null });
     try {
-      let config = await mealCheckInService.getCycleConfig(userId);
+      let configs = await mealCheckInService.getCycleConfigs(userId);
 
-      if (!config) {
+      if (configs.length === 0) {
         // Fallback to current month if no config
         const now = new Date();
         const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
@@ -67,33 +73,31 @@ export const useMealCheckInStore = create<MealCheckInState>((set, get) => ({
           now.getMonth() + 1,
           0
         ).getDate();
-        config = {
-          userId,
-          startDate: format(startOfMonth, 'yyyy-MM-dd'),
-          cycleDays,
-        };
+        configs = [
+          {
+            userId,
+            startDate: format(startOfMonth, 'yyyy-MM-dd'),
+            cycleDays,
+          },
+        ];
       }
 
-      const endDate = '2099-12-31';
+      const normalizedConfigs = normalizeMealCheckInCycles(configs);
+      const latestConfig =
+        normalizedConfigs[normalizedConfigs.length - 1] ?? null;
 
-      const [checkIns, stats] = await Promise.all([
-        mealCheckInService.getCheckInsByDateRange(
-          userId,
-          config.startDate,
-          endDate
-        ),
-        mealCheckInService.getCycleStats(
-          userId,
-          config.startDate,
-          endDate,
-          config.cycleDays
-        ),
-      ]);
+      const checkIns = await mealCheckInService.getCheckInsByDateRange(
+        userId,
+        '0000-01-01',
+        '9999-12-31'
+      );
+      const stats = calculateMealCheckInCycleStats(normalizedConfigs, checkIns);
 
       set({
         checkIns,
         cycleStats: stats,
-        cycleConfig: config,
+        cycleConfig: latestConfig,
+        cycleConfigs: normalizedConfigs,
         isLoading: false,
       });
     } catch (error) {
@@ -112,7 +116,13 @@ export const useMealCheckInStore = create<MealCheckInState>((set, get) => ({
   ) => {
     set({ isLoading: true, error: null });
     try {
-      const config: MealCheckInCycleConfig = { userId, startDate, cycleDays };
+      const shareToken = get().cycleConfig?.shareToken;
+      const config: MealCheckInCycleConfig = {
+        userId,
+        startDate,
+        cycleDays,
+        ...(shareToken ? { shareToken } : {}),
+      };
       await mealCheckInService.saveCycleConfig(config);
 
       // Reload cycle data after saving config
@@ -160,15 +170,9 @@ export const useMealCheckInStore = create<MealCheckInState>((set, get) => ({
       }
 
       // Recalculate stats
-      const config = get().cycleConfig;
-      if (config) {
-        const endDate = '2099-12-31';
-        const stats = await mealCheckInService.getCycleStats(
-          userId,
-          config.startDate,
-          endDate,
-          config.cycleDays
-        );
+      const configs = get().cycleConfigs;
+      if (configs.length > 0) {
+        const stats = calculateMealCheckInCycleStats(configs, updatedCheckIns);
         set({ cycleStats: stats });
       }
 
@@ -212,15 +216,9 @@ export const useMealCheckInStore = create<MealCheckInState>((set, get) => ({
 
       updatedCheckIns.sort((a, b) => a.date.localeCompare(b.date));
 
-      const config = get().cycleConfig;
-      if (config) {
-        const endDate = '2099-12-31';
-        const stats = await mealCheckInService.getCycleStats(
-          userId,
-          config.startDate,
-          endDate,
-          config.cycleDays
-        );
+      const configs = get().cycleConfigs;
+      if (configs.length > 0) {
+        const stats = calculateMealCheckInCycleStats(configs, updatedCheckIns);
         set({ cycleStats: stats });
       }
 
@@ -248,15 +246,9 @@ export const useMealCheckInStore = create<MealCheckInState>((set, get) => ({
       const updatedCheckIns = get().checkIns.filter((c) => c.id !== checkIn.id);
 
       // Recalculate stats
-      const config = get().cycleConfig;
-      if (config) {
-        const endDate = '2099-12-31';
-        const stats = await mealCheckInService.getCycleStats(
-          checkIn.userId,
-          config.startDate,
-          endDate,
-          config.cycleDays
-        );
+      const configs = get().cycleConfigs;
+      if (configs.length > 0) {
+        const stats = calculateMealCheckInCycleStats(configs, updatedCheckIns);
         set({ cycleStats: stats });
       }
 

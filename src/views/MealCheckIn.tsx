@@ -23,6 +23,7 @@ import {
   isSameMonth,
 } from 'date-fns';
 import { mealCheckInService } from '../services/mealCheckInService';
+import { getMealCheckInCycleForDate } from '../utils/mealCheckInCycles';
 
 import {
   Camera,
@@ -38,6 +39,7 @@ import {
   ChevronLeft,
   ChevronRight,
   RotateCcw,
+  Plus,
   AlertTriangle,
   UploadCloud,
   Image as ImageIcon,
@@ -65,7 +67,9 @@ export const MealCheckIn: React.FC = () => {
     checkIns,
     cycleStats,
     cycleConfig,
+    cycleConfigs,
     isLoading,
+    error,
     selectedCheckIn,
     loadCycleData,
     saveCycleConfig,
@@ -143,10 +147,10 @@ export const MealCheckIn: React.FC = () => {
   };
 
   const handleExportHtml = async () => {
-    if (!cycleConfig || !cycleStats) return;
+    if (cycleConfigs.length === 0 || !cycleStats) return;
     setIsExporting(true);
     try {
-      await exportCalendarToHTML(cycleConfig, cycleStats, checkIns);
+      await exportCalendarToHTML(cycleConfigs, cycleStats, checkIns);
     } catch (error) {
       console.error('Error exporting HTML:', error);
     } finally {
@@ -401,18 +405,13 @@ export const MealCheckIn: React.FC = () => {
   }, [currentMonthDates]);
 
   const isOutsideCycleDate = (date: Date): boolean => {
-    if (!cycleConfig || !cycleStats) return true;
+    if (cycleConfigs.length === 0) return true;
 
     const dateStr = format(date, 'yyyy-MM-dd');
     const checked = hasCheckIn(dateStr);
     if (checked) return false;
 
-    const cycleStartStr = cycleConfig.startDate;
-    if (dateStr < cycleStartStr) return true;
-
-    if (cycleStats.checkedInDays >= cycleConfig.cycleDays) return true;
-
-    return false;
+    return getMealCheckInCycleForDate(dateStr, cycleConfigs) === null;
   };
 
   if (!user) {
@@ -436,13 +435,19 @@ export const MealCheckIn: React.FC = () => {
         </p>
       </div>
 
+      {error && (
+        <Card className="p-4 mb-6 border-red-500/40 bg-red-500/10">
+          <p className="text-sm text-red-200">{error}</p>
+        </Card>
+      )}
+
       {/* Stats Card */}
       {cycleStats && (
         <Card className="p-6 mb-6 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border-green-200 dark:border-green-800">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
-                Cycle Progress
+                All Cycles Progress
               </h3>
               <p className="text-3xl font-bold text-green-600 dark:text-green-400">
                 {cycleStats.checkedInDays} / {cycleStats.totalCycleDays}
@@ -465,17 +470,17 @@ export const MealCheckIn: React.FC = () => {
       )}
 
       {/* Calendar */}
-      <Card className="p-6">
+      <Card className="p-4 sm:p-6 overflow-hidden">
         {/* Calendar Header */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-6 gap-4">
             <div className="flex flex-col gap-1">
               <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
                 <CalendarIcon className="w-6 h-6" />
                 {format(viewDate, 'MMMM yyyy')}
               </h2>
-              {cycleConfig && (
+              {cycleConfigs.length > 0 && cycleConfig && (
                 <p className="text-xs text-gray-500 dark:text-gray-400">
-                  Cycle Started:{' '}
+                  Cycles: {cycleConfigs.length} · Latest started:{' '}
                   {format(
                     new Date(cycleConfig.startDate + 'T00:00:00'),
                     'MMM d, yyyy'
@@ -484,13 +489,13 @@ export const MealCheckIn: React.FC = () => {
               )}
             </div>
 
-            <div className="flex items-center gap-2">
-              <div className="flex items-center bg-gray-100 dark:bg-gray-800 rounded-lg p-1 mr-2">
+            <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center lg:w-auto">
+              <div className="flex w-full items-center justify-between bg-gray-100 dark:bg-gray-800 rounded-lg p-1 sm:w-auto sm:justify-start">
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={handlePrevMonth}
-                  className="h-8 w-8 p-0"
+                  className="h-10 w-10 p-0 sm:h-8 sm:w-8"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </Button>
@@ -499,7 +504,7 @@ export const MealCheckIn: React.FC = () => {
                     variant="ghost"
                     size="sm"
                     onClick={handleGoToToday}
-                    className="h-8 px-2 text-xs"
+                    className="h-10 px-3 text-xs sm:h-8 sm:px-2"
                   >
                     <RotateCcw className="w-3 h-3 mr-1" />
                     Today
@@ -509,18 +514,18 @@ export const MealCheckIn: React.FC = () => {
                   variant="ghost"
                   size="sm"
                   onClick={handleNextMonth}
-                  className="h-8 w-8 p-0"
+                  className="h-10 w-10 p-0 sm:h-8 sm:w-8"
                 >
                   <ChevronRight className="w-4 h-4" />
                 </Button>
               </div>
 
-              <div className="flex gap-2">
+              <div className="grid w-full grid-cols-4 gap-2 sm:flex sm:w-auto">
                 <Button
                   onClick={handleExportHtml}
                   variant="ghost"
                   size="sm"
-                  className="flex items-center gap-2"
+                  className="h-10 min-w-0 px-2 sm:h-8 sm:px-3 flex items-center gap-2"
                   disabled={isExporting}
                 >
                   {isExporting ? (
@@ -534,7 +539,7 @@ export const MealCheckIn: React.FC = () => {
                   onClick={() => setShowShareModal(true)}
                   variant="ghost"
                   size="sm"
-                  className="flex items-center gap-2"
+                  className="h-10 min-w-0 px-2 sm:h-8 sm:px-3 flex items-center gap-2"
                 >
                   <Share2 className="w-4 h-4" />
                   <span className="hidden sm:inline">{t('mealCheckIn.share')}</span>
@@ -543,13 +548,18 @@ export const MealCheckIn: React.FC = () => {
                   onClick={() => setShowQuickUploadModal(true)}
                   variant="secondary"
                   size="sm"
-                  className="flex items-center gap-2"
+                  className="h-10 min-w-0 px-2 sm:h-8 sm:px-3 flex items-center gap-2"
                 >
                   <UploadCloud className="w-4 h-4" />
-                  <span>{t('mealCheckIn.quickUpload')}</span>
+                  <span className="hidden sm:inline">{t('mealCheckIn.quickUpload')}</span>
                 </Button>
-                <Button size="sm" onClick={() => setShowNewCycleModal(true)}>
-                  New cycle
+                <Button
+                  size="sm"
+                  onClick={() => setShowNewCycleModal(true)}
+                  className="h-10 min-w-0 px-2 sm:h-8 sm:px-3"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span className="hidden sm:inline">New cycle</span>
                 </Button>
               </div>
             </div>
@@ -569,7 +579,7 @@ export const MealCheckIn: React.FC = () => {
 
         <div className="grid grid-cols-7 gap-2">
           {/* Calendar days */}
-          {cycleConfig &&
+          {cycleConfigs.length > 0 &&
             calendarCells.map((dateObj, index) => {
               if (!dateObj) {
                 return (

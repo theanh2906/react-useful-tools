@@ -6,8 +6,24 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
-import { eachDayOfInterval, format } from 'date-fns';
-import { CheckCircle, Calendar as CalendarIcon, Eye, AlertTriangle } from 'lucide-react';
+import {
+  addMonths,
+  eachDayOfInterval,
+  endOfMonth,
+  format,
+  isSameMonth,
+  startOfMonth,
+  subMonths,
+} from 'date-fns';
+import {
+  CheckCircle,
+  Calendar as CalendarIcon,
+  Eye,
+  AlertTriangle,
+  ChevronLeft,
+  ChevronRight,
+  RotateCcw,
+} from 'lucide-react';
 
 import { Card } from '../components/ui/Card';
 import { Modal } from '../components/ui/Modal';
@@ -19,6 +35,10 @@ import type {
   MealCheckInCycleConfig,
   MealCheckInCycleStats,
 } from '../types';
+import {
+  calculateMealCheckInCycleStats,
+  getMealCheckInCycleForDate,
+} from '../utils/mealCheckInCycles';
 
 export default function MealCheckInShare() {
   const params = useParams();
@@ -27,10 +47,15 @@ export default function MealCheckInShare() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [isInvalid, setIsInvalid] = useState(false);
+  const [viewDate, setViewDate] = useState(new Date());
   const [checkIns, setCheckIns] = useState<MealCheckIn[]>([]);
-  const [cycleConfig, setCycleConfig] = useState<MealCheckInCycleConfig | null>(null);
-  const [cycleStats, setCycleStats] = useState<MealCheckInCycleStats | null>(null);
-  const [selectedCheckIn, setSelectedCheckIn] = useState<MealCheckIn | null>(null);
+  const [cycleConfig, setCycleConfig] =
+    useState<MealCheckInCycleConfig | null>(null);
+  const [cycleConfigs, setCycleConfigs] = useState<MealCheckInCycleConfig[]>([]);
+  const [cycleStats, setCycleStats] =
+    useState<MealCheckInCycleStats | null>(null);
+  const [selectedCheckIn, setSelectedCheckIn] =
+    useState<MealCheckIn | null>(null);
   const [showImageModal, setShowImageModal] = useState(false);
 
   useEffect(() => {
@@ -42,25 +67,28 @@ export default function MealCheckInShare() {
 
     const load = async () => {
       try {
-        const userId = await mealCheckInService.getUserIdByShareToken(shareToken);
+        const userId =
+          await mealCheckInService.getUserIdByShareToken(shareToken);
         if (!userId) {
           setIsInvalid(true);
           return;
         }
 
-        const config = await mealCheckInService.getCycleConfig(userId);
-        if (!config) {
+        const configs = await mealCheckInService.getCycleConfigs(userId);
+        if (configs.length === 0) {
           setIsInvalid(true);
           return;
         }
-        setCycleConfig(config);
+        const latestConfig = configs[configs.length - 1];
+        setCycleConfig(latestConfig);
+        setCycleConfigs(configs);
 
-        const endDate = '2099-12-31';
-
-        const [records, stats] = await Promise.all([
-          mealCheckInService.getCheckInsByDateRange(userId, config.startDate, endDate),
-          mealCheckInService.getCycleStats(userId, config.startDate, endDate, config.cycleDays),
-        ]);
+        const records = await mealCheckInService.getCheckInsByDateRange(
+          userId,
+          '0000-01-01',
+          '9999-12-31'
+        );
+        const stats = calculateMealCheckInCycleStats(configs, records);
 
         setCheckIns(records);
         setCycleStats(stats);
@@ -84,22 +112,34 @@ export default function MealCheckInShare() {
     format(date, 'yyyy-MM-dd') > format(new Date(), 'yyyy-MM-dd');
 
   const isOutsideCycleDate = (date: Date): boolean => {
-    if (!cycleConfig || !cycleStats) return true;
+    if (cycleConfigs.length === 0) return true;
     const dateStr = format(date, 'yyyy-MM-dd');
     const checked = hasCheckIn(dateStr);
     if (checked) return false;
-    const cycleStartStr = cycleConfig.startDate;
-    if (dateStr < cycleStartStr) return true;
-    if (cycleStats.checkedInDays >= cycleConfig.cycleDays) return true;
-    return false;
+    return getMealCheckInCycleForDate(dateStr, cycleConfigs) === null;
   };
 
   const currentMonthDates = useMemo(() => {
-    const now = new Date();
-    const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-    const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    const monthStart = startOfMonth(viewDate);
+    const monthEnd = endOfMonth(viewDate);
     return eachDayOfInterval({ start: monthStart, end: monthEnd });
-  }, []);
+  }, [viewDate]);
+
+  const isCurrentMonth = useMemo(() => {
+    return isSameMonth(viewDate, new Date());
+  }, [viewDate]);
+
+  const handlePrevMonth = () => {
+    setViewDate((prev) => subMonths(prev, 1));
+  };
+
+  const handleNextMonth = () => {
+    setViewDate((prev) => addMonths(prev, 1));
+  };
+
+  const handleGoToToday = () => {
+    setViewDate(new Date());
+  };
 
   const weekdayLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -165,7 +205,7 @@ export default function MealCheckInShare() {
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
-                  Cycle Progress
+                  All Cycles Progress
                 </h3>
                 <p className="text-3xl font-bold text-green-600 dark:text-green-400">
                   {cycleStats.checkedInDays} / {cycleStats.totalCycleDays}
@@ -190,18 +230,51 @@ export default function MealCheckInShare() {
         {/* Calendar */}
         <Card className="p-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-              <CalendarIcon className="w-6 h-6" />
+            <div className="flex flex-col gap-1">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                <CalendarIcon className="w-6 h-6" />
+                {format(viewDate, 'MMMM yyyy')}
+              </h2>
               {cycleConfig && (
-                <>
-                Cycle Started:{' '}
-                {format(
-                  new Date(cycleConfig.startDate + 'T00:00:00'),
-                  'MMM d, yyyy'
-                )}
-                </>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  Cycles: {cycleConfigs.length} · Latest started:{' '}
+                  {format(
+                    new Date(cycleConfig.startDate + 'T00:00:00'),
+                    'MMM d, yyyy'
+                  )}
+                </p>
               )}
-            </h2>
+            </div>
+
+            <div className="flex items-center bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handlePrevMonth}
+                className="h-8 w-8 p-0"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </Button>
+              {!isCurrentMonth && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleGoToToday}
+                  className="h-8 px-2 text-xs"
+                >
+                  <RotateCcw className="w-3 h-3 mr-1" />
+                  Today
+                </Button>
+              )}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleNextMonth}
+                className="h-8 w-8 p-0"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </Button>
+            </div>
           </div>
 
           {/* Weekday labels */}
@@ -218,7 +291,7 @@ export default function MealCheckInShare() {
 
           {/* Calendar cells */}
           <div className="grid grid-cols-7 gap-2">
-            {cycleConfig &&
+            {cycleConfigs.length > 0 &&
               calendarCells.map((dateObj, index) => {
                 if (!dateObj) {
                   return (

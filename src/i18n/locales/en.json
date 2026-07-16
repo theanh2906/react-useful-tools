@@ -47,7 +47,6 @@
     "changeCase": "Change Case",
     "zipTool": "Zip Tool",
     "liveShare": "Live Share",
-    "monitor": "System Monitor",
     "adminAi": "Admin AI Assistant",
     "mealCheckIn": "Meal Check-In",
     "periodTracker": "Period Tracker"
@@ -275,19 +274,6 @@
     "uploadFile": "Upload File",
     "clearHistory": "Clear History",
     "leaveRoom": "Leave Room"
-  },
-  "monitor": {
-    "title": "System Monitor",
-    "devices": "Devices",
-    "jenkins": "Jenkins",
-    "kafka": "Kafka",
-    "status": "Status",
-    "online": "Online",
-    "offline": "Offline",
-    "memory": "Memory",
-    "cpu": "CPU",
-    "disk": "Disk",
-    "lastUpdate": "Last Update"
   },
   "timeline": {
     "title": "Timeline",
