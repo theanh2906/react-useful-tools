@@ -171,26 +171,6 @@
   .safe-top { padding-top: env(safe-area-inset-top); }
 }
 
-.fc {
-  @apply font-sans text-foreground;
-  --fc-border-color: rgb(var(--color-border));
-  --fc-page-bg-color: transparent;
-  --fc-neutral-bg-color: rgb(var(--color-surface));
-  --fc-list-event-hover-bg-color: rgb(var(--color-surface));
-  --fc-today-bg-color: rgba(23, 104, 229, 0.08);
-}
-
-.fc-theme-standard .fc-scrollgrid,
-.fc-theme-standard td,
-.fc-theme-standard th { border-color: var(--fc-border-color) !important; }
-.fc .fc-col-header-cell-cushion,
-.fc .fc-daygrid-day-number { color: rgb(var(--color-foreground)) !important; text-decoration: none !important; }
-.fc .fc-toolbar-title { @apply font-display text-xl font-semibold text-foreground; }
-.fc .fc-button { @apply border-line bg-elevated text-foreground hover:bg-surface; }
-.fc .fc-button-primary:not(:disabled).fc-button-active { @apply border-accent-500 bg-accent-500 text-white; }
-.fc .fc-daygrid-day:hover { @apply bg-surface; }
-.fc .fc-event { @apply rounded-md border-0 shadow-sm; }
-
 .ql-toolbar { @apply rounded-t-md border-line bg-surface; }
 .ql-container { @apply min-h-[200px] rounded-b-md border-line bg-elevated text-foreground; }
 .ql-editor { @apply text-foreground; }

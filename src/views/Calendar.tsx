@@ -1,19 +1,16 @@
 /**
  * @module CalendarPage
- * @description Full-featured calendar page built on FullCalendar with event CRUD,
- * category filtering and recurrence support.
+ * @description Custom family calendar with event CRUD, category filtering,
+ * month/week/day views, and AI-assisted scheduling.
  */
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import { Plus, Filter } from 'lucide-react';
+import dynamic from 'next/dynamic';
+import { format, startOfMonth } from 'date-fns';
+import { ChevronDown, Filter, Sparkles } from 'lucide-react';
 import {
   Card,
   Button,
-  Badge,
   Modal,
   ModalFooter,
   Input,
@@ -27,11 +24,28 @@ import { cn } from '@/lib/utils';
 import { generateId } from '@/lib/utils';
 import type { EventData } from '@/types';
 import { toast } from '@/components/ui/Toast';
-import { CalendarAiAssistant } from '@/components/calendar/CalendarAiAssistant';
+import {
+  FamilyCalendar,
+  type CalendarView,
+} from '@/components/calendar/FamilyCalendar';
+
+const CalendarAiAssistant = dynamic(
+  () =>
+    import('@/components/calendar/CalendarAiAssistant').then(
+      (module) => module.CalendarAiAssistant
+    ),
+  { ssr: false }
+);
+
+const CATEGORY_LABELS: Record<string, string> = {
+  appointment: 'Cuộc hẹn',
+  ultrasound: 'Siêu âm',
+  checkup: 'Khám sức khỏe',
+  other: 'Khác',
+};
 
 /**
- * Calendar page with day/week/month views, drag-and-drop event management
- * and real-time sync via Firestore.
+ * Calendar page with custom day/week/month views and real-time sync.
  */
 export function CalendarPage() {
   const {
@@ -45,8 +59,11 @@ export function CalendarPage() {
   const userId = useAuthStore((state) => state.user?.id);
   const [showEventModal, setShowEventModal] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<EventData | null>(null);
-
   const [filterCategory, setFilterCategory] = useState<string | null>(null);
+  const [selectedDate, setSelectedDate] = useState(() => new Date());
+  const [visibleMonth, setVisibleMonth] = useState(() => startOfMonth(new Date()));
+  const [calendarView, setCalendarView] = useState<CalendarView>('month');
+  const [showAiAssistant, setShowAiAssistant] = useState(false);
 
   // Form state
   const [formData, setFormData] = useState({
@@ -67,25 +84,11 @@ export function CalendarPage() {
     subscribeEvents();
   }, [subscribeEvents, userId]);
 
-  const calendarEvents = filteredEvents.map((event) => ({
-    id: event.id,
-    title: event.title,
-    start: event.start,
-    end: event.end,
-    allDay: event.allDay ?? true,
-    backgroundColor:
-      EVENT_CATEGORIES.find((c) => c.id === event.categories?.[0])?.color ||
-      '#FFD1DC',
-    borderColor: 'transparent',
-    extendedProps: event,
-  }));
-
-  const handleDateClick = useCallback((arg: { dateStr: string }) => {
+  const openNewEvent = (date: Date) => {
     setSelectedEvent(null);
-    // setSelectedDate(arg.dateStr);
     setFormData({
       title: '',
-      date: arg.dateStr,
+      date: format(date, 'yyyy-MM-dd'),
       time: '',
       category: 'appointment',
       location: '',
@@ -93,10 +96,9 @@ export function CalendarPage() {
       isImportant: false,
     });
     setShowEventModal(true);
-  }, []);
+  };
 
-  const handleEventClick = useCallback((arg: any) => {
-    const event = arg.event.extendedProps;
+  const openEvent = (event: EventData) => {
     setSelectedEvent(event);
     setFormData({
       title: event.title,
@@ -110,11 +112,11 @@ export function CalendarPage() {
       isImportant: event.isImportant || false,
     });
     setShowEventModal(true);
-  }, []);
+  };
 
   const handleSaveEvent = async () => {
     if (!formData.title.trim()) {
-      toast.error('Please enter an event title');
+      toast.error('Vui lòng nhập tên sự kiện');
       return;
     }
 
@@ -134,10 +136,10 @@ export function CalendarPage() {
 
     if (selectedEvent) {
       await updateEvent(eventData);
-      toast.success('Event updated successfully');
+      toast.success('Đã cập nhật sự kiện');
     } else {
       await addEvent(eventData);
-      toast.success('Event created successfully');
+      toast.success('Đã tạo sự kiện');
     }
 
     setShowEventModal(false);
@@ -147,7 +149,7 @@ export function CalendarPage() {
   const handleDeleteEvent = async () => {
     if (selectedEvent) {
       await deleteEvent(selectedEvent.id);
-      toast.success('Event deleted');
+      toast.success('Đã xóa sự kiện');
       setShowEventModal(false);
       setSelectedEvent(null);
     }
@@ -159,215 +161,92 @@ export function CalendarPage() {
       animate={{ opacity: 1 }}
       className="space-y-6"
     >
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="font-display text-2xl font-bold text-foreground lg:text-3xl">
-            Calendar
-          </h1>
-          <p className="mt-1 text-muted">
-            Manage your appointments and events
-          </p>
-        </div>
-        <Button
-          onClick={() => {
-            setSelectedEvent(null);
-            // setSelectedDate(new Date().toISOString().split('T')[0]);
-            setFormData({
-              title: '',
-              date: new Date().toISOString().split('T')[0],
-              time: '',
-              category: 'appointment',
-              location: '',
-              notes: '',
-              isImportant: false,
-            });
-            setShowEventModal(true);
-          }}
-        >
-          <Plus className="w-4 h-4" />
-          New Event
-        </Button>
-      </div>
+      <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
+        <FamilyCalendar
+          events={filteredEvents}
+          selectedDate={selectedDate}
+          visibleMonth={visibleMonth}
+          view={calendarView}
+          onSelectedDateChange={setSelectedDate}
+          onVisibleMonthChange={setVisibleMonth}
+          onViewChange={setCalendarView}
+          onCreateEvent={openNewEvent}
+          onEditEvent={openEvent}
+        />
 
-      {/* Grid Layout: Responsive on mobile/desktop */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Mobile AI Assistant: Visible only on mobile screens at the top */}
-        <div className="lg:hidden col-span-1">
-          <CalendarAiAssistant />
-        </div>
+        <aside className="space-y-4">
+          <button
+            type="button"
+            onClick={() => setShowAiAssistant((open) => !open)}
+            className="flex min-h-12 w-full items-center justify-between rounded-lg border border-line bg-elevated px-4 text-left shadow-sm transition-colors hover:bg-surface"
+            aria-expanded={showAiAssistant}
+          >
+            <span className="flex items-center gap-3">
+              <Sparkles className="size-5 text-accent-600" />
+              <span>
+                <span className="block text-sm font-semibold text-foreground">Trợ lý Lịch</span>
+                <span className="block text-xs text-muted">Tạo lịch bằng AI</span>
+              </span>
+            </span>
+            <ChevronDown
+              className={cn(
+                'size-5 text-muted transition-transform',
+                showAiAssistant && 'rotate-180'
+              )}
+            />
+          </button>
 
-        {/* Left Column: Calendar view */}
-        <div className="lg:col-span-8 xl:col-span-9 space-y-6">
-          <Card className="p-4 lg:p-6">
-            <div className="calendar-wrapper">
-              <FullCalendar
-                plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                initialView="dayGridMonth"
-                headerToolbar={{
-                  left: 'prev,next today',
-                  center: 'title',
-                  right: 'dayGridMonth,timeGridWeek,timeGridDay',
-                }}
-                events={calendarEvents}
-                dateClick={handleDateClick}
-                eventClick={handleEventClick}
-                eventDrop={async (info) => {
-                  try {
-                    const data = info.event.extendedProps as EventData;
-                    await updateEvent({
-                      ...data,
-                      id: info.event.id,
-                      start: info.event.start?.toISOString() || data.start,
-                      end: info.event.end?.toISOString(),
-                    });
-                    toast.success('Event updated');
-                  } catch (error) {
-                    toast.error((error as Error).message || 'Update failed');
-                    info.revert();
-                  }
-                }}
-                eventResize={async (info) => {
-                  try {
-                    const data = info.event.extendedProps as EventData;
-                    await updateEvent({
-                      ...data,
-                      id: info.event.id,
-                      start: info.event.start?.toISOString() || data.start,
-                      end: info.event.end?.toISOString(),
-                    });
-                    toast.success('Event updated');
-                  } catch (error) {
-                    toast.error((error as Error).message || 'Update failed');
-                    info.revert();
-                  }
-                }}
-                editable={true}
-                selectable={true}
-                selectMirror={true}
-                dayMaxEvents={3}
-                weekends={true}
-                height="auto"
-                eventDisplay="block"
-                eventTimeFormat={{
-                  hour: '2-digit',
-                  minute: '2-digit',
-                  meridiem: false,
-                }}
-              />
-            </div>
-          </Card>
-        </div>
+          {showAiAssistant && (
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <CalendarAiAssistant />
+            </motion.div>
+          )}
 
-        {/* Right Column: AI Assistant (Desktop) + Filters + Upcoming Events */}
-        <div className="lg:col-span-4 xl:col-span-3 space-y-6">
-          {/* Desktop AI Assistant: Hidden on mobile screens */}
-          <div className="hidden lg:block">
-            <CalendarAiAssistant />
-          </div>
-
-          {/* Category Filters */}
           <Card className="p-4">
-            <div className="flex flex-wrap items-center gap-2">
-              <Filter className="h-4 w-4 text-accent-500" />
+            <div className="mb-3 flex items-center gap-2">
+              <Filter className="size-4 text-accent-600" />
+              <h2 className="text-sm font-semibold text-foreground">Lọc lịch</h2>
+            </div>
+            <div className="flex flex-wrap gap-2">
               <button
+                type="button"
                 onClick={() => setFilterCategory(null)}
                 className={cn(
-                  'rounded-md px-3 py-1.5 text-sm font-medium transition-colors',
+                  'min-h-9 rounded-md px-3 text-sm font-medium transition-colors',
                   !filterCategory
                     ? 'bg-accent-500 text-white'
                     : 'bg-surface text-muted hover:bg-accent-50 hover:text-accent-600'
                 )}
               >
-                All
+                Tất cả
               </button>
               {categories.map((cat) => (
                 <button
                   key={cat.id}
+                  type="button"
                   onClick={() =>
                     setFilterCategory(cat.id === filterCategory ? null : cat.id)
                   }
                   className={cn(
-                    'flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium transition-colors',
+                    'flex min-h-9 items-center gap-2 rounded-md px-3 text-sm font-medium transition-colors',
                     filterCategory === cat.id
                       ? 'bg-accent-500 text-white'
                       : 'bg-surface text-muted hover:bg-accent-50 hover:text-accent-600'
                   )}
                 >
                   <span
-                    className="w-2 h-2 rounded-full"
+                    className="size-2 rounded-full border border-black/10"
                     style={{ backgroundColor: cat.color }}
                   />
-                  {cat.name}
+                  {CATEGORY_LABELS[cat.id] || cat.name}
                 </button>
               ))}
             </div>
           </Card>
-
-          {/* Upcoming Events */}
-          <Card className="p-6">
-            <h3 className="mb-4 font-display text-lg font-semibold text-foreground">
-              Upcoming Events
-            </h3>
-            <div className="space-y-3">
-              {events.length === 0 ? (
-                <p className="py-8 text-center text-muted">
-                  No events scheduled yet
-                </p>
-              ) : (
-                events.slice(0, 5).map((event) => {
-                  const category = EVENT_CATEGORIES.find(
-                    (c) => c.id === event.categories?.[0]
-                  );
-                  return (
-                    <motion.div
-                      key={event.id}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      className="flex cursor-pointer items-center gap-4 rounded-lg border border-line bg-surface p-4 transition-colors hover:border-accent-200 hover:bg-accent-50/50"
-                      onClick={() => {
-                        setSelectedEvent(event);
-                        setFormData({
-                          title: event.title,
-                          date: event.start.split('T')[0],
-                          time: event.start.includes('T')
-                            ? event.start.split('T')[1]?.substring(0, 5)
-                            : '',
-                          category: event.categories?.[0] || 'appointment',
-                          location: event.location || '',
-                          notes: event.notes || '',
-                          isImportant: event.isImportant || false,
-                        });
-                        setShowEventModal(true);
-                      }}
-                    >
-                      <div
-                        className="w-1 h-12 rounded-full"
-                        style={{ backgroundColor: category?.color }}
-                      />
-                      <div className="flex-1 min-w-0">
-                        <p className="truncate font-medium text-foreground">
-                          {event.title}
-                        </p>
-                        <p className="text-sm text-muted">
-                          {new Date(event.start).toLocaleDateString('en-US', {
-                            weekday: 'short',
-                            month: 'short',
-                            day: 'numeric',
-                          })}
-                          {event.location && ` • ${event.location}`}
-                        </p>
-                      </div>
-                      {event.isImportant && (
-                        <Badge variant="warning">Important</Badge>
-                      )}
-                    </motion.div>
-                  );
-                })
-              )}
-            </div>
-          </Card>
-        </div>
+        </aside>
       </div>
 
 
@@ -378,28 +257,28 @@ export function CalendarPage() {
           setShowEventModal(false);
           setSelectedEvent(null);
         }}
-        title={selectedEvent ? 'Edit Event' : 'New Event'}
+        title={selectedEvent ? 'Chỉnh sửa sự kiện' : 'Tạo sự kiện'}
         size="lg"
       >
         <div className="space-y-4">
           <Input
-            label="Event Title"
-            placeholder="e.g., Doctor appointment"
+            label="Tên sự kiện"
+            placeholder="Ví dụ: Khám sức khỏe"
             value={formData.title}
             onChange={(e) =>
               setFormData({ ...formData, title: e.target.value })
             }
           />
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <DatePicker
-              label="Date"
+              label="Ngày"
               value={formData.date}
               onChange={(date) => setFormData({ ...formData, date })}
-              placeholder="Select date"
+              placeholder="Chọn ngày"
             />
             <Input
-              label="Time (optional)"
+              label="Giờ (không bắt buộc)"
               type="time"
               value={formData.time}
               onChange={(e) =>
@@ -410,7 +289,7 @@ export function CalendarPage() {
 
           <div>
             <label className="mb-2 block text-sm font-medium text-foreground">
-              Category
+              Danh mục
             </label>
             <div className="flex flex-wrap gap-2">
               {EVENT_CATEGORIES.map((cat) => (
@@ -428,15 +307,15 @@ export function CalendarPage() {
                     className="w-3 h-3 rounded-full"
                     style={{ backgroundColor: cat.color }}
                   />
-                  {cat.name}
+                  {CATEGORY_LABELS[cat.id] || cat.name}
                 </button>
               ))}
             </div>
           </div>
 
           <Input
-            label="Location (optional)"
-            placeholder="e.g., City Hospital"
+            label="Địa điểm (không bắt buộc)"
+            placeholder="Ví dụ: Bệnh viện thành phố"
             value={formData.location}
             onChange={(e) =>
               setFormData({ ...formData, location: e.target.value })
@@ -444,8 +323,8 @@ export function CalendarPage() {
           />
 
           <TextArea
-            label="Notes (optional)"
-            placeholder="Add any additional notes..."
+            label="Ghi chú (không bắt buộc)"
+            placeholder="Thêm ghi chú cho sự kiện..."
             value={formData.notes}
             onChange={(e) =>
               setFormData({ ...formData, notes: e.target.value })
@@ -461,21 +340,21 @@ export function CalendarPage() {
               }
               className="h-4 w-4 rounded border-line bg-elevated text-primary-500 focus:ring-primary-500"
             />
-            <span className="text-sm text-foreground">Mark as important</span>
+            <span className="text-sm text-foreground">Đánh dấu quan trọng</span>
           </label>
         </div>
 
         <ModalFooter>
           {selectedEvent && (
             <Button variant="danger" onClick={handleDeleteEvent}>
-              Delete
+              Xóa
             </Button>
           )}
           <Button variant="secondary" onClick={() => setShowEventModal(false)}>
-            Cancel
+            Hủy
           </Button>
           <Button onClick={handleSaveEvent}>
-            {selectedEvent ? 'Update' : 'Create'} Event
+            {selectedEvent ? 'Cập nhật' : 'Tạo sự kiện'}
           </Button>
         </ModalFooter>
       </Modal>
