@@ -209,22 +209,22 @@ export default function AdminAiAssistant() {
   const shouldShowChatPanel = Boolean(apiKey.trim()) || messages.length > 1 || isLoading;
 
   return (
-    <div className="flex flex-col h-[81vh] sm:h-[85vh] max-w-5xl mx-auto px-1 py-2 sm:p-4 gap-3 sm:gap-4 min-w-0">
+    <div className="mx-auto flex h-[81vh] min-w-0 max-w-5xl flex-col gap-3 px-1 py-2 sm:h-[85vh] sm:gap-4 sm:p-4">
       {/* Header Panel */}
-      <Card className="flex flex-col gap-2 p-4 bg-slate-950/40 backdrop-blur-xl border-white/10 shrink-0 overflow-hidden">
+      <Card className="flex shrink-0 flex-col gap-2 overflow-hidden bg-elevated p-4">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex min-w-0 items-start gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white border border-indigo-400/20 shrink-0">
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-lg border border-accent-200 bg-accent-50 text-accent-600">
               <Terminal className="w-5 h-5 shrink-0" />
             </div>
             <div className="min-w-0 flex-1">
-              <h2 className="font-display font-bold text-white text-lg sm:text-xl flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-2">
+              <h2 className="flex flex-col gap-1 font-display text-lg font-bold text-foreground sm:flex-row sm:items-center sm:gap-2 sm:text-xl">
                 {t('adminAi.title')}
-                <span className="w-fit text-[10px] uppercase font-bold px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/25">
+                <span className="w-fit rounded-md border border-accent-200 bg-accent-50 px-2 py-0.5 text-[10px] font-bold uppercase text-accent-700">
                   Admin Security
                 </span>
               </h2>
-              <p className="text-xs text-slate-400 break-words">{t('adminAi.subtitle')}</p>
+              <p className="break-words text-xs text-muted">{t('adminAi.subtitle')}</p>
             </div>
           </div>
 
@@ -233,7 +233,7 @@ export default function AdminAiAssistant() {
               variant="ghost"
               size="sm"
               onClick={handleClearChat}
-              className="h-10 min-w-0 px-3 text-slate-400 hover:text-white"
+              className="h-10 min-w-0 px-3 text-muted hover:text-foreground"
               title={t('adminAi.clearChat')}
             >
               <Trash2 className="w-4 h-4" />
@@ -243,8 +243,8 @@ export default function AdminAiAssistant() {
             <button
               onClick={() => setShowSettings(!showSettings)}
               className={cn(
-                'h-10 min-w-0 rounded-lg border text-slate-400 hover:text-white transition-all flex items-center justify-center',
-                showSettings ? 'bg-white/10 border-white/20' : 'bg-white/5 border-white/10 hover:bg-white/10'
+                'flex h-10 min-w-0 items-center justify-center rounded-md border text-muted transition-colors hover:text-foreground',
+                showSettings ? 'border-accent-300 bg-accent-50 text-accent-700' : 'border-line bg-elevated hover:bg-surface'
               )}
               title="Configure API Key"
             >
@@ -260,16 +260,16 @@ export default function AdminAiAssistant() {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              className="overflow-hidden border-t border-white/5 pt-3 mt-1"
+              className="mt-1 overflow-hidden border-t border-line pt-3"
             >
-              <div className="bg-white/5 p-4 rounded-xl border border-white/5 space-y-3">
+              <div className="space-y-3 py-1">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
-                    <Key className="w-3.5 h-3.5 text-indigo-400" />
+                  <span className="flex items-center gap-1.5 text-xs font-semibold text-foreground">
+                    <Key className="size-3.5 text-accent-600" />
                     Gemini API Key
                   </span>
                   {hasEnvKey && (
-                    <span className="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/25">
+                    <span className="rounded-md border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">
                       System Env
                     </span>
                   )}
@@ -280,7 +280,7 @@ export default function AdminAiAssistant() {
                   disabled={hasEnvKey}
                   value={apiKey}
                   onChange={(e) => setApiKey(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-950/60 border border-white/10 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50"
+                  className="w-full rounded-md border border-line bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted focus:border-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-100 disabled:bg-surface"
                 />
                 {!hasEnvKey && (
                   <div className="flex gap-2 justify-end">
@@ -301,7 +301,7 @@ export default function AdminAiAssistant() {
       </Card>
 
       {shouldShowChatPanel && (
-        <Card className="flex-1 flex flex-col min-h-0 bg-slate-950/20 border-white/10 p-2 sm:p-4 overflow-hidden relative">
+        <Card className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-elevated p-2 sm:p-4">
           <div className="flex-1 overflow-y-auto space-y-4 pr-1 sm:pr-2 custom-scrollbar">
             {messages.map((msg) => {
               const isUser = msg.role === 'user';
@@ -315,8 +315,8 @@ export default function AdminAiAssistant() {
                     className={cn(
                       'w-8 h-8 rounded-full shrink-0 flex items-center justify-center border',
                       isUser
-                        ? 'bg-indigo-500/10 border-indigo-500/30 text-indigo-400'
-                        : 'bg-purple-500/10 border-purple-500/30 text-purple-400'
+                        ? 'border-accent-200 bg-accent-50 text-accent-600'
+                        : 'border-line bg-surface text-foreground'
                     )}
                   >
                     {isUser ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
@@ -326,10 +326,10 @@ export default function AdminAiAssistant() {
                     {/* Chat Content Bubble */}
                     <pre
                       className={cn(
-                        'p-3.5 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap break-words',
+                        'whitespace-pre-wrap break-words rounded-lg p-3.5 text-sm leading-relaxed',
                         isUser
-                          ? 'bg-gradient-to-br from-indigo-500 to-purple-600 text-white rounded-tr-none shadow-md font-sans'
-                          : 'bg-white/5 border border-white/10 text-slate-100 rounded-tl-none font-mono text-xs'
+                          ? 'rounded-tr-none bg-accent-500 font-sans text-white'
+                          : 'rounded-tl-none border border-line bg-surface font-mono text-xs text-foreground'
                       )}
                     >
                       {msg.content}
@@ -337,13 +337,13 @@ export default function AdminAiAssistant() {
 
                     {/* Execution Step Logs (Collapsible) */}
                     {!isUser && msg.logs && msg.logs.length > 0 && (
-                      <div className="mt-2 bg-slate-950/40 border border-white/5 rounded-xl overflow-hidden max-w-full">
+                      <div className="mt-2 max-w-full overflow-hidden rounded-md border border-line bg-background">
                         <button
                           onClick={() => toggleLogs(msg.id)}
-                          className="w-full flex items-center justify-between px-3 py-2 text-[10px] font-semibold text-slate-400 hover:text-white transition-colors"
+                          className="flex w-full items-center justify-between px-3 py-2 text-[10px] font-semibold text-muted transition-colors hover:bg-surface hover:text-foreground"
                         >
                           <span className="flex items-center gap-1.5 uppercase tracking-wider">
-                            <Terminal className="w-3.5 h-3.5 text-indigo-400" />
+                            <Terminal className="size-3.5 text-accent-600" />
                             {t('adminAi.processingLogs')} ({msg.logs.length})
                           </span>
                           {expandedLogs[msg.id] ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
@@ -355,22 +355,22 @@ export default function AdminAiAssistant() {
                               initial={{ height: 0, opacity: 0 }}
                               animate={{ height: 'auto', opacity: 1 }}
                               exit={{ height: 0, opacity: 0 }}
-                              className="px-3 pb-3 border-t border-white/5 pt-2 text-[11px] font-mono space-y-2.5 max-h-[160px] overflow-y-auto scrollbar-hide"
+                              className="max-h-[160px] space-y-2.5 overflow-y-auto border-t border-line px-3 pb-3 pt-2 font-mono text-[11px] scrollbar-hide"
                             >
                               {msg.logs.map((log) => (
                                 <div key={log.id} className="flex gap-2 items-start">
-                                  {log.type === 'info' && <Info className="w-3.5 h-3.5 text-blue-400 shrink-0" />}
-                                  {log.type === 'call' && <RefreshCw className="w-3.5 h-3.5 text-purple-400 shrink-0 animate-spin" style={{ animationDuration: '3s' }} />}
-                                  {log.type === 'success' && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />}
-                                  {log.type === 'error' && <AlertCircle className="w-3.5 h-3.5 text-rose-400 shrink-0" />}
+                                  {log.type === 'info' && <Info className="size-3.5 shrink-0 text-accent-600" />}
+                                  {log.type === 'call' && <RefreshCw className="size-3.5 shrink-0 animate-spin text-accent-600" style={{ animationDuration: '3s' }} />}
+                                  {log.type === 'success' && <CheckCircle2 className="size-3.5 shrink-0 text-emerald-600" />}
+                                  {log.type === 'error' && <AlertCircle className="size-3.5 shrink-0 text-rose-600" />}
 
                                   <div className="flex-1 min-w-0">
-                                    <span className="text-slate-500 mr-1.5">{log.timestamp}</span>
+                                    <span className="mr-1.5 text-muted">{log.timestamp}</span>
                                     <span
                                       className={cn(
-                                        log.type === 'success' ? 'text-emerald-400' :
-                                        log.type === 'error' ? 'text-rose-400' :
-                                        log.type === 'call' ? 'text-purple-300' : 'text-slate-400'
+                                        log.type === 'success' ? 'text-emerald-700' :
+                                        log.type === 'error' ? 'text-rose-700' :
+                                        log.type === 'call' ? 'text-accent-700' : 'text-muted'
                                       )}
                                     >
                                       {log.message}
@@ -391,28 +391,28 @@ export default function AdminAiAssistant() {
             {/* Real-time processing logs for active/running request */}
             {isLoading && (
               <div className="flex gap-3 max-w-[90%] sm:max-w-[80%]">
-                <div className="w-8 h-8 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 flex items-center justify-center shrink-0">
+                <div className="flex size-8 shrink-0 items-center justify-center rounded-full border border-line bg-surface text-foreground">
                   <Bot className="w-4 h-4" />
                 </div>
                 <div className="space-y-2 w-full">
                   {/* Typing status bubble */}
-                  <div className="inline-flex items-center gap-2 px-4 py-3 bg-white/5 border border-white/10 rounded-2xl rounded-tl-none">
-                    <Loader2 className="w-3.5 h-3.5 text-purple-400 animate-spin" />
-                    <span className="text-xs text-slate-300 font-medium">{t('adminAi.generating')}</span>
+                  <div className="inline-flex items-center gap-2 rounded-lg rounded-tl-none border border-line bg-surface px-4 py-3">
+                    <Loader2 className="size-3.5 animate-spin text-accent-600" />
+                    <span className="text-xs font-medium text-foreground">{t('adminAi.generating')}</span>
                   </div>
 
                   {/* Incremental active log updates */}
                   {currentStepLogs.length > 0 && (
-                    <div className="bg-slate-950/40 border border-white/5 rounded-xl p-3 text-[11px] font-mono space-y-2 max-h-[140px] overflow-y-auto">
+                    <div className="max-h-[140px] space-y-2 overflow-y-auto rounded-md border border-line bg-background p-3 font-mono text-[11px]">
                       {currentStepLogs.map((log) => (
                         <div key={log.id} className="flex gap-2 items-start">
-                          {log.type === 'info' && <Info className="w-3.5 h-3.5 text-blue-400 shrink-0" />}
-                          {log.type === 'call' && <RefreshCw className="w-3.5 h-3.5 text-purple-400 shrink-0 animate-spin" style={{ animationDuration: '3s' }} />}
-                          {log.type === 'success' && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />}
-                          {log.type === 'error' && <AlertCircle className="w-3.5 h-3.5 text-rose-400 shrink-0" />}
+                          {log.type === 'info' && <Info className="size-3.5 shrink-0 text-accent-600" />}
+                          {log.type === 'call' && <RefreshCw className="size-3.5 shrink-0 animate-spin text-accent-600" style={{ animationDuration: '3s' }} />}
+                          {log.type === 'success' && <CheckCircle2 className="size-3.5 shrink-0 text-emerald-600" />}
+                          {log.type === 'error' && <AlertCircle className="size-3.5 shrink-0 text-rose-600" />}
                           <div className="flex-1 min-w-0">
-                            <span className="text-slate-500 mr-1.5">{log.timestamp}</span>
-                            <span className={log.type === 'success' ? 'text-emerald-400' : log.type === 'error' ? 'text-rose-400' : 'text-slate-400'}>
+                            <span className="mr-1.5 text-muted">{log.timestamp}</span>
+                            <span className={log.type === 'success' ? 'text-emerald-700' : log.type === 'error' ? 'text-rose-700' : 'text-muted'}>
                               {log.message}
                             </span>
                           </div>
@@ -428,11 +428,11 @@ export default function AdminAiAssistant() {
 
           {/* Warning if API key is missing */}
           {!apiKey.trim() && !showSettings && (
-            <div className="absolute inset-0 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 text-center z-10">
+            <div className="absolute inset-0 z-10 flex items-center justify-center bg-elevated/95 p-4 text-center sm:p-6">
               <div className="max-w-sm space-y-3">
                 <AlertCircle className="w-12 h-12 text-amber-500 mx-auto" />
-                <h3 className="text-lg font-bold text-white">Gemini API Key Required</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">
+                <h3 className="text-lg font-bold text-foreground">Gemini API Key Required</h3>
+                <p className="text-xs leading-relaxed text-muted">
                   To activate the Admin AI assistant, configure <code>NEXT_PUBLIC_GEMINI_API_KEY</code> in your environment or enter it manually in the settings drawer.
                 </p>
                 <Button onClick={() => setShowSettings(true)} size="sm">
@@ -453,7 +453,7 @@ export default function AdminAiAssistant() {
               <button
                 key={index}
                 onClick={() => handleSendPrompt(item.text)}
-                className="min-w-0 px-3 py-2 rounded-lg text-xs bg-white/5 border border-white/5 text-slate-300 hover:bg-white/10 hover:text-white transition-all text-left font-medium sm:shrink-0 sm:py-1.5"
+                className="min-w-0 rounded-md border border-line bg-elevated px-3 py-2 text-left text-xs font-medium text-muted transition-colors hover:border-accent-200 hover:bg-accent-50 hover:text-accent-700 sm:shrink-0 sm:py-1.5"
               >
                 {item.label}
               </button>
@@ -469,16 +469,16 @@ export default function AdminAiAssistant() {
             onChange={(e) => setPrompt(e.target.value)}
             onKeyDown={handleKeyDown}
             disabled={isLoading || !apiKey}
-            className="pr-12 text-sm bg-slate-950/40 border-white/10 text-white min-h-[70px] max-h-[140px] focus:border-indigo-500/50 resize-y"
+            className="min-h-[70px] max-h-[140px] resize-y bg-elevated pr-14 text-sm text-foreground"
           />
           <button
             onClick={() => handleSendPrompt()}
             disabled={isLoading || !prompt.trim() || !apiKey}
             className={cn(
-              'absolute right-3 bottom-3 p-2.5 rounded-xl transition-all',
+              'absolute bottom-3 right-3 rounded-md p-2.5 transition-colors',
               prompt.trim() && !isLoading && apiKey
-                ? 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-md'
-                : 'bg-white/5 text-slate-500 cursor-not-allowed'
+                ? 'bg-primary-500 text-white shadow-sm hover:bg-primary-600'
+                : 'cursor-not-allowed bg-surface text-muted'
             )}
           >
             {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}

@@ -83,10 +83,10 @@ export function UltrasoundGalleryPage() {
     >
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">
+          <h1 className="font-display text-2xl font-bold text-foreground lg:text-3xl">
             Ultrasound Gallery
           </h1>
-          <p className="text-slate-400 mt-1">
+          <p className="mt-1 text-muted">
             Save and revisit precious moments
           </p>
         </div>
@@ -127,18 +127,18 @@ export function UltrasoundGalleryPage() {
             onChange={(e) => setNotes(e.target.value)}
           />
         </div>
-        <div className="text-sm text-slate-400">
+        <div className="text-sm text-muted">
           Upload an ultrasound image to add it to your gallery.
         </div>
       </Card>
 
       {items.length === 0 ? (
         <Card className="p-12 text-center">
-          <ImageIcon className="w-12 h-12 text-slate-600 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-white mb-2">
+          <ImageIcon className="mx-auto mb-4 h-12 w-12 text-accent-300" />
+          <h3 className="mb-2 text-lg font-medium text-foreground">
             No ultrasounds yet
           </h3>
-          <p className="text-slate-400">Upload your first ultrasound image</p>
+          <p className="text-muted">Upload your first ultrasound image</p>
         </Card>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -155,10 +155,10 @@ export function UltrasoundGalleryPage() {
                   <img
                     src={item.url}
                     alt="ultrasound"
-                    className="rounded-xl w-full h-48 object-cover"
+                    className="h-48 w-full rounded-lg object-cover"
                   />
                   <div className="flex items-center justify-between mt-3">
-                    <div className="flex items-center gap-2 text-xs text-slate-400">
+                    <div className="flex items-center gap-2 text-xs text-muted">
                       <Calendar className="w-3.5 h-3.5" />
                       {item.date}
                     </div>
@@ -175,12 +175,12 @@ export function UltrasoundGalleryPage() {
                         size="sm"
                         onClick={() => handleDelete(item)}
                       >
-                        <Trash2 className="w-4 h-4 text-red-400" />
+                        <Trash2 className="h-4 w-4 text-red-600" />
                       </Button>
                     </div>
                   </div>
                   {item.notes && (
-                    <p className="text-xs text-slate-500 mt-2">{item.notes}</p>
+                    <p className="mt-2 text-xs text-muted">{item.notes}</p>
                   )}
                 </Card>
               </motion.div>
@@ -200,7 +200,7 @@ export function UltrasoundGalleryPage() {
             <img
               src={selected.url}
               alt="ultrasound"
-              className="rounded-xl w-full object-contain max-h-[480px]"
+              className="max-h-[480px] w-full rounded-lg object-contain"
             />
             <div className="flex items-center gap-2">
               <Badge variant="primary">{selected.date}</Badge>

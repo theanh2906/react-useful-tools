@@ -220,10 +220,10 @@ export default function ChangeCase() {
         className="flex items-center justify-between"
       >
         <div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-violet-400 to-purple-400 bg-clip-text text-transparent">
+          <h1 className="font-display text-3xl font-bold text-foreground">
             Change Case
           </h1>
-          <p className="text-white/60 mt-1">
+          <p className="mt-1 text-muted">
             Transform text between different cases
           </p>
         </div>
@@ -238,11 +238,11 @@ export default function ChangeCase() {
         >
           <Card className="h-full p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-white flex items-center gap-2">
-                <Type className="w-5 h-5 text-violet-400" />
+              <h2 className="flex items-center gap-2 text-lg font-semibold text-foreground">
+                <Type className="h-5 w-5 text-accent-500" />
                 Input Text
               </h2>
-              <div className="flex items-center gap-2 text-sm text-white/50">
+              <div className="flex items-center gap-2 text-sm text-muted">
                 <span>{stats.characters} chars</span>
                 <span>•</span>
                 <span>{stats.words} words</span>
@@ -255,10 +255,7 @@ export default function ChangeCase() {
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               placeholder="Enter or paste your text here..."
-              className="w-full h-64 bg-white/5 border border-white/10 rounded-xl p-4 
-                       text-white placeholder-white/30 resize-none
-                       focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/50
-                       transition-all"
+              className="h-64 w-full resize-none rounded-lg border border-line bg-elevated p-4 text-foreground placeholder:text-muted transition-colors focus:border-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-100"
             />
 
             <div className="flex gap-2 mt-4">
@@ -292,11 +289,11 @@ export default function ChangeCase() {
         >
           <Card className="h-full p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-white flex items-center gap-2">
-                <ArrowRight className="w-5 h-5 text-emerald-400" />
+              <h2 className="flex items-center gap-2 text-lg font-semibold text-foreground">
+                <ArrowRight className="h-5 w-5 text-emerald-600" />
                 Output
                 {selectedCase && (
-                  <span className="text-sm font-normal text-white/50">
+                  <span className="text-sm font-normal text-muted">
                     ({caseOptions.find((o) => o.id === selectedCase)?.label})
                   </span>
                 )}
@@ -309,7 +306,7 @@ export default function ChangeCase() {
               >
                 {copied ? (
                   <>
-                    <Check className="w-4 h-4 mr-2 text-emerald-400" />
+                    <Check className="mr-2 h-4 w-4 text-emerald-600" />
                     Copied!
                   </>
                 ) : (
@@ -321,12 +318,9 @@ export default function ChangeCase() {
               </Button>
             </div>
 
-            <div
-              className="w-full h-64 bg-white/5 border border-white/10 rounded-xl p-4 
-                          text-white overflow-auto whitespace-pre-wrap break-words"
-            >
+            <div className="h-64 w-full overflow-auto whitespace-pre-wrap break-words rounded-lg border border-line bg-surface p-4 text-foreground">
               {outputText || (
-                <span className="text-white/30">
+                <span className="text-muted">
                   Transformed text will appear here...
                 </span>
               )}
@@ -342,7 +336,7 @@ export default function ChangeCase() {
         transition={{ delay: 0.3 }}
       >
         <Card className="p-6">
-          <h2 className="text-lg font-semibold text-white mb-4">
+          <h2 className="mb-4 text-lg font-semibold text-foreground">
             Select Case Type
           </h2>
 
@@ -356,19 +350,19 @@ export default function ChangeCase() {
                 onClick={() => handleTransform(option.id)}
                 disabled={!inputText.trim()}
                 className={`
-                  p-4 rounded-xl border transition-all text-left
+                  rounded-lg border p-4 text-left transition-colors
                   ${
                     selectedCase === option.id
-                      ? 'bg-violet-500/20 border-violet-500/50 ring-2 ring-violet-500/30'
-                      : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
+                      ? 'border-accent-300 bg-accent-50 ring-2 ring-accent-100'
+                      : 'border-line bg-elevated hover:border-accent-200 hover:bg-surface'
                   }
                   ${!inputText.trim() ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
                 `}
               >
-                <div className="font-mono text-sm text-violet-400 mb-1">
+                <div className="mb-1 font-mono text-sm text-accent-700">
                   {option.label}
                 </div>
-                <div className="text-xs text-white/40 truncate">
+                <div className="truncate text-xs text-muted">
                   {option.example}
                 </div>
               </motion.button>
@@ -384,7 +378,7 @@ export default function ChangeCase() {
         transition={{ delay: 0.4 }}
       >
         <Card className="p-6">
-          <h2 className="text-lg font-semibold text-white mb-4">
+          <h2 className="mb-4 text-lg font-semibold text-foreground">
             Quick Reference
           </h2>
 
@@ -392,14 +386,12 @@ export default function ChangeCase() {
             {caseOptions.slice(0, 6).map((option) => (
               <div
                 key={option.id}
-                className="p-3 bg-white/5 rounded-lg border border-white/10"
+                className="rounded-lg border border-line bg-surface p-3"
               >
-                <div className="font-mono text-violet-400 text-sm mb-1">
+                <div className="mb-1 font-mono text-sm text-accent-700">
                   {option.label}
                 </div>
-                <div className="text-white/60 text-xs">
-                  {option.description}
-                </div>
+                <div className="text-xs text-muted">{option.description}</div>
               </div>
             ))}
           </div>

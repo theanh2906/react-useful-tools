@@ -35,22 +35,22 @@ const typeConfig = {
   checkup: {
     label: 'Checkup',
     icon: Activity,
-    color: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
+    color: 'border-emerald-200 bg-emerald-50 text-emerald-700',
   },
   milestone: {
     label: 'Milestone',
     icon: Baby,
-    color: 'bg-pink-500/20 text-pink-300 border-pink-500/30',
+    color: 'border-primary-200 bg-primary-50 text-primary-700',
   },
   ultrasound: {
     label: 'Ultrasound',
     icon: ImageIcon,
-    color: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
+    color: 'border-accent-200 bg-accent-50 text-accent-700',
   },
   note: {
     label: 'Note',
     icon: Heart,
-    color: 'bg-purple-500/20 text-purple-300 border-purple-500/30',
+    color: 'border-amber-200 bg-amber-50 text-amber-700',
   },
 };
 
@@ -98,10 +98,10 @@ export function TimelinePage() {
     >
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">
+          <h1 className="font-display text-2xl font-bold text-foreground lg:text-3xl">
             Timeline
           </h1>
-          <p className="text-slate-400 mt-1">
+          <p className="mt-1 text-muted">
             Your pregnancy journey, beautifully captured
           </p>
         </div>
@@ -114,7 +114,7 @@ export function TimelinePage() {
       <Card className="p-6">
         <div className="space-y-6">
           {events.length === 0 && (
-            <p className="text-sm text-slate-500">No timeline events yet.</p>
+            <p className="text-sm text-muted">No timeline events yet.</p>
           )}
           {events.map((event, index) => {
             const config = typeConfig[event.type];
@@ -122,21 +122,21 @@ export function TimelinePage() {
             return (
               <div key={event.id} className="relative pl-8">
                 {index !== events.length - 1 && (
-                  <div className="absolute left-3 top-8 bottom-0 w-px bg-white/10" />
+                  <div className="absolute bottom-0 left-3 top-8 w-px bg-line" />
                 )}
-                <div className="absolute left-0 top-1 w-6 h-6 rounded-full bg-slate-800 border border-white/10 flex items-center justify-center">
-                  <Icon className="w-3.5 h-3.5 text-slate-300" />
+                <div className="absolute left-0 top-1 flex h-6 w-6 items-center justify-center rounded-full border border-accent-200 bg-accent-50">
+                  <Icon className="h-3.5 w-3.5 text-accent-600" />
                 </div>
-                <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+                <div className="rounded-lg border border-line bg-surface p-4">
                   <div className="flex items-center justify-between gap-2">
-                    <h3 className="font-medium text-white">{event.title}</h3>
+                    <h3 className="font-medium text-foreground">{event.title}</h3>
                     <Badge className={config.color}>{config.label}</Badge>
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-slate-500 mt-1">
+                  <div className="mt-1 flex items-center gap-2 text-xs text-muted">
                     <Calendar className="w-3.5 h-3.5" />
                     {event.date}
                   </div>
-                  <p className="text-sm text-slate-400 mt-2">
+                  <p className="mt-2 text-sm text-muted">
                     {event.description}
                   </p>
                 </div>
@@ -170,7 +170,7 @@ export function TimelinePage() {
             onChange={(e) => setForm({ ...form, description: e.target.value })}
           />
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-2">
+            <label className="mb-2 block text-sm font-medium text-foreground">
               Type
             </label>
             <div className="flex flex-wrap gap-2">
@@ -180,10 +180,10 @@ export function TimelinePage() {
                   onClick={() =>
                     setForm({ ...form, type: key as TimelineEvent['type'] })
                   }
-                  className={`px-3 py-2 rounded-xl text-sm font-medium transition-all ${
+                  className={`rounded-md border px-3 py-2 text-sm font-medium transition-colors ${
                     form.type === key
-                      ? 'bg-white/20 text-white'
-                      : 'bg-white/5 text-slate-400 hover:bg-white/10'
+                      ? 'border-accent-500 bg-accent-50 text-accent-700'
+                      : 'border-line bg-elevated text-muted hover:bg-surface hover:text-foreground'
                   }`}
                 >
                   {cfg.label}

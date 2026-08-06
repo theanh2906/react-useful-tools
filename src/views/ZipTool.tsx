@@ -176,10 +176,10 @@ export default function ZipTool() {
         className="flex items-center justify-between"
       >
         <div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">
+          <h1 className="font-display text-3xl font-bold text-foreground">
             Zip Tool
           </h1>
-          <p className="text-white/60 mt-1">
+          <p className="mt-1 text-muted">
             Create ZIP archives from multiple files
           </p>
         </div>
@@ -201,12 +201,12 @@ export default function ZipTool() {
               onDragLeave={handleDragLeave}
               onClick={() => fileInputRef.current?.click()}
               className={`
-                relative border-2 border-dashed rounded-xl p-8 text-center cursor-pointer
-                transition-all duration-300
+                relative cursor-pointer rounded-lg border-2 border-dashed p-8 text-center
+                transition-colors duration-300
                 ${
                   isDragging
-                    ? 'border-amber-500 bg-amber-500/10'
-                    : 'border-white/20 hover:border-white/40 hover:bg-white/5'
+                    ? 'border-accent-500 bg-accent-50'
+                    : 'border-line bg-surface hover:border-accent-300'
                 }
               `}
             >
@@ -223,21 +223,21 @@ export default function ZipTool() {
                 transition={{ type: 'spring', stiffness: 300 }}
               >
                 <Upload
-                  className={`w-12 h-12 mx-auto mb-4 ${isDragging ? 'text-amber-400' : 'text-white/40'}`}
+                  className={`mx-auto mb-4 h-12 w-12 ${isDragging ? 'text-accent-600' : 'text-muted'}`}
                 />
               </motion.div>
 
-              <p className="text-white/70 mb-2">
+              <p className="mb-2 font-medium text-foreground">
                 {isDragging ? 'Drop files here...' : 'Drag & drop files here'}
               </p>
-              <p className="text-white/40 text-sm">or click to browse</p>
+              <p className="text-sm text-muted">or click to browse</p>
             </div>
 
             {/* File List */}
             {files.length > 0 && (
               <div className="mt-6">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-white font-medium">
+                  <h3 className="font-medium text-foreground">
                     Selected Files ({files.length})
                   </h3>
                   <Button variant="ghost" size="sm" onClick={clearAll}>
@@ -255,17 +255,16 @@ export default function ZipTool() {
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: 20 }}
                         transition={{ delay: index * 0.05 }}
-                        className="flex items-center gap-3 p-3 bg-white/5 rounded-lg border border-white/10
-                                 hover:bg-white/10 transition-colors group"
+                        className="group flex items-center gap-3 rounded-lg border border-line bg-surface p-3 transition-colors hover:border-accent-200 hover:bg-accent-50/40"
                       >
                         <span className="text-2xl">
                           {getFileIcon(file.type)}
                         </span>
                         <div className="flex-1 min-w-0">
-                          <p className="text-white text-sm truncate">
+                          <p className="truncate text-sm font-medium text-foreground">
                             {file.name}
                           </p>
-                          <p className="text-white/40 text-xs">
+                          <p className="text-xs text-muted">
                             {formatFileSize(file.size)}
                           </p>
                         </div>
@@ -274,8 +273,7 @@ export default function ZipTool() {
                             e.stopPropagation();
                             removeFile(file.id);
                           }}
-                          className="p-1 rounded-lg opacity-0 group-hover:opacity-100 
-                                   hover:bg-red-500/20 text-red-400 transition-all"
+                          className="rounded-md p-1 text-red-600 opacity-0 transition-colors hover:bg-red-50 group-hover:opacity-100"
                         >
                           <X className="w-4 h-4" />
                         </button>
@@ -296,24 +294,24 @@ export default function ZipTool() {
         >
           <Card className="sticky top-6 p-6">
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-3 bg-amber-500/20 rounded-xl">
-                <FolderArchive className="w-6 h-6 text-amber-400" />
+              <div className="rounded-lg bg-accent-50 p-3">
+                <FolderArchive className="h-6 w-6 text-accent-600" />
               </div>
               <div>
-                <h3 className="text-white font-medium">Create ZIP</h3>
-                <p className="text-white/40 text-sm">Configure your archive</p>
+                <h3 className="font-medium text-foreground">Create ZIP</h3>
+                <p className="text-sm text-muted">Configure your archive</p>
               </div>
             </div>
 
             {/* Stats */}
             <div className="grid grid-cols-2 gap-4 mb-6">
-              <div className="p-3 bg-white/5 rounded-lg border border-white/10">
-                <p className="text-white/40 text-xs mb-1">Files</p>
-                <p className="text-white font-semibold">{files.length}</p>
+              <div className="rounded-lg border border-line bg-surface p-3">
+                <p className="mb-1 text-xs text-muted">Files</p>
+                <p className="font-semibold text-foreground">{files.length}</p>
               </div>
-              <div className="p-3 bg-white/5 rounded-lg border border-white/10">
-                <p className="text-white/40 text-xs mb-1">Total Size</p>
-                <p className="text-white font-semibold">
+              <div className="rounded-lg border border-line bg-surface p-3">
+                <p className="mb-1 text-xs text-muted">Total Size</p>
+                <p className="font-semibold text-foreground">
                   {formatFileSize(totalSize)}
                 </p>
               </div>
@@ -321,7 +319,7 @@ export default function ZipTool() {
 
             {/* Zip Name */}
             <div className="mb-6">
-              <label className="block text-white/60 text-sm mb-2">
+              <label className="mb-2 block text-sm text-foreground">
                 Archive Name
               </label>
               <div className="flex items-center gap-2">
@@ -331,7 +329,7 @@ export default function ZipTool() {
                   placeholder="archive"
                   className="flex-1"
                 />
-                <span className="text-white/40">.zip</span>
+                <span className="text-muted">.zip</span>
               </div>
             </div>
 
@@ -339,12 +337,12 @@ export default function ZipTool() {
             {isCreating && (
               <div className="mb-6">
                 <div className="flex items-center justify-between text-sm mb-2">
-                  <span className="text-white/60">Creating archive...</span>
-                  <span className="text-amber-400">{progress}%</span>
+                  <span className="text-muted">Creating archive...</span>
+                  <span className="text-accent-600">{progress}%</span>
                 </div>
-                <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                <div className="h-2 overflow-hidden rounded-full bg-surface">
                   <motion.div
-                    className="h-full bg-gradient-to-r from-amber-500 to-orange-500"
+                    className="h-full bg-accent-500"
                     initial={{ width: 0 }}
                     animate={{ width: `${progress}%` }}
                     transition={{ duration: 0.3 }}
@@ -360,8 +358,7 @@ export default function ZipTool() {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="mb-6 p-3 bg-emerald-500/20 border border-emerald-500/30 rounded-lg
-                           flex items-center gap-2 text-emerald-400"
+                  className="mb-6 flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 p-3 text-emerald-700"
                 >
                   <CheckCircle className="w-5 h-5" />
                   <span className="text-sm">ZIP created successfully!</span>
@@ -373,7 +370,7 @@ export default function ZipTool() {
             <Button
               onClick={createZip}
               disabled={files.length === 0 || isCreating}
-              className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600"
+              className="w-full"
             >
               {isCreating ? (
                 <>
@@ -389,7 +386,7 @@ export default function ZipTool() {
             </Button>
 
             {/* Info */}
-            <p className="text-white/40 text-xs text-center mt-4">
+            <p className="mt-4 text-center text-xs text-muted">
               Files are compressed locally in your browser
             </p>
           </Card>
@@ -403,7 +400,9 @@ export default function ZipTool() {
         transition={{ delay: 0.3 }}
       >
         <Card className="p-6">
-          <h2 className="text-lg font-semibold text-white mb-4">Features</h2>
+          <h2 className="mb-4 text-lg font-semibold text-foreground">
+            Features
+          </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               {
@@ -429,11 +428,13 @@ export default function ZipTool() {
             ].map((feature, index) => (
               <div
                 key={index}
-                className="p-4 bg-white/5 rounded-lg border border-white/10"
+                className="rounded-lg border border-line bg-surface p-4"
               >
                 <span className="text-2xl mb-2 block">{feature.icon}</span>
-                <h3 className="text-white font-medium mb-1">{feature.title}</h3>
-                <p className="text-white/50 text-sm">{feature.desc}</p>
+                <h3 className="mb-1 font-medium text-foreground">
+                  {feature.title}
+                </h3>
+                <p className="text-sm text-muted">{feature.desc}</p>
               </div>
             ))}
           </div>

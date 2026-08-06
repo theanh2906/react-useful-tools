@@ -32,12 +32,12 @@ export function useMediaQuery(query: string): boolean {
 }
 
 /**
- * Convenience hook that returns `true` on mobile viewports (width ≤ 768px).
+ * Convenience hook that returns `true` below the shared desktop breakpoint.
  *
  * @returns `true` if the viewport is mobile-sized.
  */
 export function useIsMobile(): boolean {
-  return useMediaQuery('(max-width: 768px)');
+  return useMediaQuery('(max-width: 1023px)');
 }
 
 /**
@@ -46,7 +46,7 @@ export function useIsMobile(): boolean {
  * @returns `true` if the viewport is tablet-sized.
  */
 export function useIsTablet(): boolean {
-  return useMediaQuery('(min-width: 769px) and (max-width: 1024px)');
+  return useMediaQuery('(min-width: 768px) and (max-width: 1023px)');
 }
 
 /**
@@ -55,5 +55,5 @@ export function useIsTablet(): boolean {
  * @returns `true` if the viewport is desktop-sized.
  */
 export function useIsDesktop(): boolean {
-  return useMediaQuery('(min-width: 1025px)');
+  return useMediaQuery('(min-width: 1024px)');
 }

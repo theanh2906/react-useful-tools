@@ -163,7 +163,7 @@ export default function MealCheckInShare() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+      <div className="flex min-h-screen items-center justify-center bg-background">
         <Spinner />
       </div>
     );
@@ -171,9 +171,9 @@ export default function MealCheckInShare() {
 
   if (isInvalid) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-gray-50 dark:bg-gray-900 p-8 text-center">
+      <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-background p-8 text-center">
         <AlertTriangle className="w-12 h-12 text-yellow-500" />
-        <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
+        <h2 className="text-xl font-semibold text-foreground">
           {t('mealCheckIn.invalidShareLink')}
         </h2>
       </div>
@@ -181,46 +181,46 @@ export default function MealCheckInShare() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-background">
       <div className="container mx-auto p-4 max-w-4xl">
         {/* Read-only banner */}
-        <div className="mb-4 flex items-center gap-2 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 rounded-lg px-4 py-2 text-sm">
+        <div className="mb-4 flex items-center gap-2 rounded-lg border border-accent-200 bg-accent-50 px-4 py-2 text-sm text-accent-700">
           <Eye className="w-4 h-4 shrink-0" />
           <span>{t('mealCheckIn.readOnlyDescription')}</span>
         </div>
 
         {/* Page header */}
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+          <h1 className="mb-2 text-3xl font-bold text-foreground">
             {t('mealCheckIn.title')}
           </h1>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-muted">
             {t('mealCheckIn.description')}
           </p>
         </div>
 
         {/* Stats Card */}
         {cycleStats && (
-          <Card className="p-6 mb-6 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border-green-200 dark:border-green-800">
+          <Card className="mb-6 border-emerald-200 bg-emerald-50 p-6">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
+                <h3 className="mb-1 text-lg font-semibold text-foreground">
                   All Cycles Progress
                 </h3>
-                <p className="text-3xl font-bold text-green-600 dark:text-green-400">
+                <p className="text-3xl font-bold text-emerald-600">
                   {cycleStats.checkedInDays} / {cycleStats.totalCycleDays}
                 </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                <p className="mt-1 text-sm text-muted">
                   {cycleStats.percentage}% {t('mealCheckIn.complete')}
                 </p>
               </div>
-              <div className="h-20 w-20 rounded-full border-4 border-green-600 dark:border-green-400 flex items-center justify-center">
-                <CheckCircle className="w-10 h-10 text-green-600 dark:text-green-400" />
+              <div className="flex h-20 w-20 items-center justify-center rounded-full border-4 border-emerald-500 bg-elevated">
+                <CheckCircle className="h-10 w-10 text-emerald-600" />
               </div>
             </div>
-            <div className="mt-4 bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+            <div className="mt-4 h-3 overflow-hidden rounded-full bg-emerald-100">
               <div
-                className="bg-green-600 dark:bg-green-400 h-full transition-all duration-500"
+                className="h-full bg-emerald-500 transition-all duration-500"
                 style={{ width: `${cycleStats.percentage}%` }}
               />
             </div>
@@ -231,12 +231,12 @@ export default function MealCheckInShare() {
         <Card className="p-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
             <div className="flex flex-col gap-1">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                <CalendarIcon className="w-6 h-6" />
+              <h2 className="flex items-center gap-2 text-xl font-bold text-foreground">
+                <CalendarIcon className="h-6 w-6 text-accent-500" />
                 {format(viewDate, 'MMMM yyyy')}
               </h2>
               {cycleConfig && (
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <p className="text-xs text-muted">
                   Cycles: {cycleConfigs.length} · Latest started:{' '}
                   {format(
                     new Date(cycleConfig.startDate + 'T00:00:00'),
@@ -246,7 +246,7 @@ export default function MealCheckInShare() {
               )}
             </div>
 
-            <div className="flex items-center bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
+            <div className="flex items-center rounded-lg border border-line bg-surface p-1">
               <Button
                 variant="ghost"
                 size="sm"
@@ -282,7 +282,7 @@ export default function MealCheckInShare() {
             {weekdayLabels.map((label) => (
               <div
                 key={label}
-                className="text-center text-xs sm:text-sm font-semibold text-gray-500 dark:text-gray-400 py-1"
+                className="py-1 text-center text-xs font-semibold text-muted sm:text-sm"
               >
                 {label}
               </div>
@@ -318,10 +318,10 @@ export default function MealCheckInShare() {
                     disabled={!clickable}
                     className={`
                       aspect-square rounded-lg border-2 transition-all duration-200
-                      ${today ? 'border-blue-500 dark:border-blue-400' : 'border-gray-200 dark:border-gray-700'}
-                      ${checked ? 'bg-green-500 dark:bg-green-600 text-white' : 'bg-white dark:bg-gray-800'}
+                      ${today ? 'border-accent-500' : 'border-line'}
+                      ${checked ? 'bg-emerald-500 text-white' : 'bg-elevated text-foreground'}
                       ${disabled ? 'opacity-40 cursor-not-allowed' : ''}
-                      ${clickable ? 'hover:shadow-md cursor-pointer hover:border-blue-400 dark:hover:border-blue-500' : 'cursor-default'}
+                      ${clickable ? 'cursor-pointer hover:border-accent-400 hover:bg-accent-50 hover:shadow-md' : 'cursor-default'}
                       relative flex items-center justify-center p-2
                     `}
                   >
@@ -346,7 +346,7 @@ export default function MealCheckInShare() {
         >
           {selectedCheckIn && (
             <div className="space-y-4">
-              <p className="text-sm text-gray-600 dark:text-gray-400">
+              <p className="text-sm text-muted">
                 {t('mealCheckIn.date')}:{' '}
                 <span className="font-semibold">{selectedCheckIn.date}</span>
               </p>
@@ -361,10 +361,10 @@ export default function MealCheckInShare() {
 
               {selectedCheckIn.notes && (
                 <div>
-                  <h4 className="font-semibold text-gray-900 dark:text-white mb-2">
+                  <h4 className="mb-2 font-semibold text-foreground">
                     {t('mealCheckIn.notes')}:
                   </h4>
-                  <p className="text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800 p-3 rounded-lg">
+                  <p className="rounded-lg bg-surface p-3 text-foreground">
                     {selectedCheckIn.notes}
                   </p>
                 </div>

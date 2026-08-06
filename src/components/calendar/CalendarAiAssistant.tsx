@@ -1,6 +1,6 @@
 /**
  * @module components/calendar/CalendarAiAssistant
- * @description Glassmorphic, premium AI Assistant panel for managing calendar events using Gemini.
+ * @description AI Assistant panel for managing calendar events using Gemini.
  */
 
 import { useState, useEffect, useRef } from 'react';
@@ -135,47 +135,39 @@ export function CalendarAiAssistant() {
   return (
     <Card
       className={cn(
-        'relative overflow-hidden transition-all duration-500 border bg-slate-950/40 backdrop-blur-xl p-5 flex flex-col gap-4',
+        'relative flex flex-col gap-4 overflow-hidden border bg-elevated p-5 transition-colors duration-200',
         isLoading
-          ? 'border-indigo-500/50 shadow-[0_0_25px_-5px_rgba(99,102,241,0.2)]'
-          : 'border-white/10 shadow-lg'
+          ? 'border-accent-300'
+          : 'border-line'
       )}
     >
-      {/* Glow Effect */}
-      <div
-        className={cn(
-          'absolute -right-24 -top-24 w-48 h-48 rounded-full filter blur-[80px] pointer-events-none transition-all duration-1000',
-          isLoading ? 'bg-indigo-500/20' : 'bg-primary-500/10'
-        )}
-      />
-
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-white/5 pb-3">
+      <div className="flex items-center justify-between border-b border-line pb-3">
         <div className="flex items-center gap-2">
-          <div className="p-1.5 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
+          <div className="rounded-md border border-accent-200 bg-accent-50 p-1.5 text-accent-600">
             <Sparkles className={cn('w-4 h-4', isLoading && 'animate-pulse')} />
           </div>
           <div>
-            <h3 className="font-display font-semibold text-white text-base flex items-center gap-2">
+            <h3 className="flex items-center gap-2 font-display text-base font-semibold text-foreground">
               Trợ Lý Lịch AI
               {isLoading && (
                 <span className="flex h-2 w-2 relative">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-400 opacity-75"></span>
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-accent-500"></span>
                 </span>
               )}
             </h3>
-            <p className="text-xs text-slate-400">Quản lý lịch bằng ngôn ngữ tự nhiên</p>
+            <p className="text-xs text-muted">Quản lý lịch bằng ngôn ngữ tự nhiên</p>
           </div>
         </div>
 
         <button
           onClick={() => setShowSettings(!showSettings)}
           className={cn(
-            'p-1.5 rounded-lg border text-slate-400 hover:text-white transition-all',
+            'rounded-md border p-1.5 text-muted transition-colors hover:text-foreground',
             showSettings
-              ? 'bg-white/10 border-white/20'
-              : 'bg-white/5 border-white/10 hover:bg-white/10'
+              ? 'border-accent-300 bg-accent-50 text-accent-600'
+              : 'border-line bg-elevated hover:bg-surface'
           )}
           title="Cấu hình API Key"
         >
@@ -190,16 +182,16 @@ export function CalendarAiAssistant() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="overflow-hidden border-b border-white/5 pb-4"
+            className="overflow-hidden border-b border-line pb-4"
           >
-            <div className="bg-white/5 p-4 rounded-xl border border-white/5 space-y-3">
+            <div className="space-y-3 rounded-lg border border-line bg-surface p-4">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
-                  <Key className="w-3.5 h-3.5 text-indigo-400" />
+                <span className="flex items-center gap-1.5 text-xs font-semibold text-foreground">
+                  <Key className="h-3.5 w-3.5 text-accent-500" />
                   Gemini API Key
                 </span>
                 {hasEnvKey && (
-                  <span className="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/25">
+                  <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[10px] text-emerald-700">
                     Môi trường
                   </span>
                 )}
@@ -210,7 +202,7 @@ export function CalendarAiAssistant() {
                 disabled={hasEnvKey}
                 value={apiKey}
                 onChange={(e) => setApiKey(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-950/60 border border-white/10 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50"
+                className="w-full rounded-md border border-line bg-elevated px-3 py-2 text-sm text-foreground placeholder:text-muted focus:border-accent-500 focus:outline-none"
               />
               {!hasEnvKey && (
                 <div className="flex gap-2 justify-end">
@@ -231,17 +223,17 @@ export function CalendarAiAssistant() {
 
       {/* Main interface */}
       {!apiKey && !showSettings && (
-        <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4 flex gap-3 items-start">
-          <AlertCircle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+        <div className="flex items-start gap-3 rounded-lg border border-amber-200 bg-amber-50 p-4">
+          <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" />
           <div className="space-y-1">
-            <h4 className="text-xs font-semibold text-amber-200">Chưa cấu hình API Key</h4>
-            <p className="text-xs text-amber-300/80 leading-relaxed">
+            <h4 className="text-xs font-semibold text-amber-900">Chưa cấu hình API Key</h4>
+            <p className="text-xs leading-relaxed text-amber-800">
               Bạn cần thêm Gemini API Key vào file <code>.env.local</code> dưới dạng{' '}
               <code>NEXT_PUBLIC_GEMINI_API_KEY</code> hoặc cấu hình trực tiếp trong phần Cài đặt.
             </p>
             <button
               onClick={() => setShowSettings(true)}
-              className="text-xs font-medium text-amber-400 underline hover:text-amber-300 transition-colors"
+              className="text-xs font-medium text-amber-700 underline transition-colors hover:text-amber-900"
             >
               Cấu hình ngay
             </button>
@@ -252,13 +244,13 @@ export function CalendarAiAssistant() {
       {/* Suggested Prompts */}
       {!isLoading && logs.length === 0 && (
         <div className="space-y-2">
-          <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">Gợi ý yêu cầu</span>
+          <span className="block text-[11px] font-semibold uppercase text-muted">Gợi ý yêu cầu</span>
           <div className="flex flex-wrap gap-1.5">
             {SUGGESTED_PROMPTS.map((item, index) => (
               <button
                 key={index}
                 onClick={() => setPrompt(item.text)}
-                className="px-2.5 py-1.5 rounded-lg text-xs bg-white/5 border border-white/5 text-slate-300 hover:bg-white/10 hover:text-white transition-all text-left"
+                className="rounded-md border border-line bg-surface px-2.5 py-1.5 text-left text-xs text-foreground transition-colors hover:border-accent-200 hover:bg-accent-50"
               >
                 {item.label}
               </button>
@@ -275,16 +267,16 @@ export function CalendarAiAssistant() {
           onChange={(e) => setPrompt(e.target.value)}
           onKeyDown={handleKeyDown}
           disabled={isLoading}
-          className="pr-12 text-sm bg-slate-950/40 border-white/10 text-white min-h-[90px] focus:border-indigo-500/50"
+          className="min-h-[90px] border-line bg-elevated pr-12 text-sm text-foreground focus:border-accent-500"
         />
         <button
           onClick={handleSendPrompt}
           disabled={isLoading || !prompt.trim()}
           className={cn(
-            'absolute right-3 bottom-3 p-2 rounded-xl transition-all',
+            'absolute bottom-3 right-3 rounded-md p-2 transition-colors',
             prompt.trim() && !isLoading
-              ? 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-md'
-              : 'bg-white/5 text-slate-500 cursor-not-allowed'
+              ? 'bg-primary-500 text-white shadow-sm hover:bg-primary-600'
+              : 'cursor-not-allowed bg-surface text-muted'
           )}
         >
           {isLoading ? (
@@ -297,13 +289,13 @@ export function CalendarAiAssistant() {
 
       {/* Progress logs & Final response */}
       {logs.length > 0 && (
-        <div className="bg-slate-950/50 border border-white/5 rounded-xl p-4 flex flex-col gap-3 max-h-[220px] overflow-y-auto custom-scrollbar">
-          <div className="flex items-center justify-between border-b border-white/5 pb-2 mb-1">
-            <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Hành trình xử lý</span>
+        <div className="custom-scrollbar flex max-h-[220px] flex-col gap-3 overflow-y-auto rounded-lg border border-line bg-surface p-4">
+          <div className="mb-1 flex items-center justify-between border-b border-line pb-2">
+            <span className="text-[10px] font-semibold uppercase text-muted">Hành trình xử lý</span>
             {logs.length > 0 && !isLoading && (
               <button
                 onClick={() => setLogs([])}
-                className="text-[10px] text-slate-400 hover:text-white transition-colors"
+                className="text-[10px] text-muted transition-colors hover:text-foreground"
               >
                 Xóa nhật ký
               </button>
@@ -313,11 +305,11 @@ export function CalendarAiAssistant() {
             {logs.map((log) => {
               if (log.id === 'final-reply') {
                 return (
-                  <div key={log.id} className="mt-2 bg-indigo-500/10 border border-indigo-500/25 p-3 rounded-lg flex gap-2.5 items-start">
-                    <Sparkles className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
+                  <div key={log.id} className="mt-2 flex items-start gap-2.5 rounded-md border border-accent-200 bg-accent-50 p-3">
+                    <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-accent-600" />
                     <div className="space-y-1">
-                      <span className="text-[10px] font-semibold text-indigo-300 block">AI phản hồi:</span>
-                      <p className="text-xs text-slate-200 leading-relaxed whitespace-pre-line">{log.message}</p>
+                      <span className="block text-[10px] font-semibold text-accent-700">AI phản hồi:</span>
+                      <p className="whitespace-pre-line text-xs leading-relaxed text-foreground">{log.message}</p>
                     </div>
                   </div>
                 );
@@ -325,18 +317,18 @@ export function CalendarAiAssistant() {
 
               return (
                 <div key={log.id} className="flex gap-2 items-start text-xs">
-                  {log.type === 'info' && <Info className="w-3.5 h-3.5 text-blue-400 shrink-0 mt-0.5" />}
-                  {log.type === 'call' && <RefreshCw className="w-3.5 h-3.5 text-purple-400 shrink-0 mt-0.5 animate-spin" style={{ animationDuration: '3s' }} />}
-                  {log.type === 'success' && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />}
-                  {log.type === 'error' && <AlertCircle className="w-3.5 h-3.5 text-rose-400 shrink-0 mt-0.5" />}
+                  {log.type === 'info' && <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-accent-500" />}
+                  {log.type === 'call' && <RefreshCw className="mt-0.5 h-3.5 w-3.5 shrink-0 animate-spin text-accent-600" style={{ animationDuration: '3s' }} />}
+                  {log.type === 'success' && <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-600" />}
+                  {log.type === 'error' && <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-red-600" />}
                   
                   <div className="flex-1 min-w-0">
-                    <span className="text-[10px] text-slate-500 font-mono mr-1.5">{log.timestamp}</span>
+                    <span className="mr-1.5 font-mono text-[10px] text-muted">{log.timestamp}</span>
                     <span className={cn(
                       'leading-relaxed font-medium',
-                      log.type === 'success' ? 'text-emerald-300' :
-                      log.type === 'error' ? 'text-rose-300' :
-                      log.type === 'call' ? 'text-purple-300 font-mono' : 'text-slate-300'
+                      log.type === 'success' ? 'text-emerald-700' :
+                      log.type === 'error' ? 'text-red-700' :
+                      log.type === 'call' ? 'font-mono text-accent-700' : 'text-foreground'
                     )}>
                       {log.message}
                     </span>

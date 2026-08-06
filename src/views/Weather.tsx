@@ -135,10 +135,10 @@ export function WeatherPage() {
     >
       {/* Header */}
       <div>
-        <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">
+        <h1 className="font-display text-2xl font-bold text-foreground lg:text-3xl">
           Weather
         </h1>
-        <p className="text-slate-400 mt-1">Check weather conditions anywhere</p>
+        <p className="mt-1 text-muted">Check weather conditions anywhere</p>
       </div>
 
       {/* Search */}
@@ -148,13 +148,13 @@ export function WeatherPage() {
           className="flex flex-col sm:flex-row gap-4"
         >
           <div className="flex-1 relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+            <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted" />
             <input
               type="text"
               placeholder="Search city or country..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-primary-500/50"
+              className="w-full rounded-md border border-line bg-elevated py-3 pl-12 pr-4 text-foreground placeholder:text-muted focus:border-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-100"
             />
           </div>
           <Button type="submit" isLoading={isLoading}>
@@ -173,7 +173,7 @@ export function WeatherPage() {
 
         {/* Popular destinations */}
         <div className="mt-6">
-          <p className="text-sm text-slate-400 mb-3">Popular destinations:</p>
+          <p className="mb-3 text-sm text-muted">Popular destinations:</p>
           <div className="flex flex-wrap gap-2">
             {POPULAR_DESTINATIONS.slice(0, 8).map((dest) => (
               <button
@@ -182,7 +182,7 @@ export function WeatherPage() {
                   setSearchQuery(`${dest.name}, ${dest.country}`);
                   fetchWeather(`${dest.name}, ${dest.country}`);
                 }}
-                className="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-sm text-slate-300 hover:text-white transition-colors"
+                className="rounded-md border border-line bg-elevated px-3 py-1.5 text-sm text-muted transition-colors hover:border-accent-200 hover:bg-accent-50 hover:text-accent-700"
               >
                 {dest.name}
               </button>
@@ -199,15 +199,14 @@ export function WeatherPage() {
           className="space-y-6"
         >
           {/* Current Weather */}
-          <Card variant="gradient" className="overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-cyan-500/10 to-teal-500/20" />
-            <CardContent className="relative z-10 py-8">
+          <Card className="overflow-hidden border-accent-200">
+            <CardContent className="py-8">
               <div className="grid lg:grid-cols-2 gap-8">
                 {/* Main Info */}
                 <div>
                   <div className="flex items-center gap-2 mb-4">
-                    <MapPin className="w-5 h-5 text-primary-400" />
-                    <span className="text-lg text-white font-medium">
+                    <MapPin className="h-5 w-5 text-accent-500" />
+                    <span className="text-lg font-medium text-foreground">
                       {displayAddress || weather.resolvedAddress}
                     </span>
                   </div>
@@ -217,56 +216,56 @@ export function WeatherPage() {
                       {getWeatherIcon(currentConditions.icon)}
                     </span>
                     <div>
-                      <p className="text-6xl font-display font-bold text-white">
+                      <p className="font-display text-6xl font-bold text-foreground">
                         {Math.round(currentConditions.temp)}°
                       </p>
-                      <p className="text-xl text-slate-300">
+                      <p className="text-xl text-muted">
                         {currentConditions.conditions}
                       </p>
                     </div>
                   </div>
 
-                  <p className="text-slate-400">{weather.description}</p>
+                  <p className="text-muted">{weather.description}</p>
                 </div>
 
                 {/* Weather Details */}
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="p-4 rounded-xl bg-white/5">
-                    <div className="flex items-center gap-2 text-slate-400 mb-2">
+                  <div className="border-b border-r border-line p-4">
+                    <div className="mb-2 flex items-center gap-2 text-muted">
                       <Thermometer className="w-4 h-4" />
                       <span className="text-sm">Feels Like</span>
                     </div>
-                    <p className="text-2xl font-bold text-white">
+                    <p className="text-2xl font-bold text-foreground">
                       {Math.round(currentConditions.feelslike)}°C
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-white/5">
-                    <div className="flex items-center gap-2 text-slate-400 mb-2">
+                  <div className="border-b border-line p-4">
+                    <div className="mb-2 flex items-center gap-2 text-muted">
                       <Droplets className="w-4 h-4" />
                       <span className="text-sm">Humidity</span>
                     </div>
-                    <p className="text-2xl font-bold text-white">
+                    <p className="text-2xl font-bold text-foreground">
                       {currentConditions.humidity}%
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-white/5">
-                    <div className="flex items-center gap-2 text-slate-400 mb-2">
+                  <div className="border-r border-line p-4">
+                    <div className="mb-2 flex items-center gap-2 text-muted">
                       <Wind className="w-4 h-4" />
                       <span className="text-sm">Wind Speed</span>
                     </div>
-                    <p className="text-2xl font-bold text-white">
+                    <p className="text-2xl font-bold text-foreground">
                       {currentConditions.windspeed} km/h
                     </p>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-white/5">
-                    <div className="flex items-center gap-2 text-slate-400 mb-2">
+                  <div className="p-4">
+                    <div className="mb-2 flex items-center gap-2 text-muted">
                       <Eye className="w-4 h-4" />
                       <span className="text-sm">Conditions</span>
                     </div>
-                    <p className="text-lg font-bold text-white truncate">
+                    <p className="truncate text-lg font-bold text-foreground">
                       {currentConditions.conditions}
                     </p>
                   </div>
@@ -274,25 +273,25 @@ export function WeatherPage() {
               </div>
 
               {/* Sunrise & Sunset */}
-              <div className="flex items-center justify-center gap-8 mt-8 pt-6 border-t border-white/10">
+              <div className="mt-8 flex items-center justify-center gap-8 border-t border-line pt-6">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center">
-                    <Sunrise className="w-5 h-5 text-amber-400" />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-50">
+                    <Sunrise className="h-5 w-5 text-primary-500" />
                   </div>
                   <div>
-                    <p className="text-xs text-slate-500">Sunrise</p>
-                    <p className="text-white font-medium">
+                    <p className="text-xs text-muted">Sunrise</p>
+                    <p className="font-medium text-foreground">
                       {currentConditions.sunrise}
                     </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-orange-500/20 flex items-center justify-center">
-                    <Sunset className="w-5 h-5 text-orange-400" />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-50">
+                    <Sunset className="h-5 w-5 text-primary-600" />
                   </div>
                   <div>
-                    <p className="text-xs text-slate-500">Sunset</p>
-                    <p className="text-white font-medium">
+                    <p className="text-xs text-muted">Sunset</p>
+                    <p className="font-medium text-foreground">
                       {currentConditions.sunset}
                     </p>
                   </div>
@@ -303,7 +302,7 @@ export function WeatherPage() {
 
           {/* 7-Day Forecast */}
           <Card className="p-6">
-            <h3 className="text-lg font-display font-semibold text-white mb-4">
+            <h3 className="mb-4 font-display text-lg font-semibold text-foreground">
               7-Day Forecast
             </h3>
             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
@@ -314,13 +313,13 @@ export function WeatherPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.05 }}
                   className={cn(
-                    'p-4 rounded-xl text-center',
+                    'rounded-lg p-4 text-center',
                     i === 0
-                      ? 'bg-primary-500/20 border border-primary-500/30'
-                      : 'bg-white/5'
+                      ? 'border border-accent-200 bg-accent-50'
+                      : 'border border-line bg-surface'
                   )}
                 >
-                  <p className="text-sm text-slate-400 mb-2">
+                  <p className="mb-2 text-sm text-muted">
                     {i === 0
                       ? 'Today'
                       : new Date(day.datetime).toLocaleDateString('en-US', {
@@ -331,14 +330,14 @@ export function WeatherPage() {
                     {getWeatherIcon(day.icon)}
                   </span>
                   <div className="flex items-center justify-center gap-2">
-                    <span className="text-white font-medium">
+                    <span className="font-medium text-foreground">
                       {Math.round(day.tempmax)}°
                     </span>
-                    <span className="text-slate-500">
+                    <span className="text-muted">
                       {Math.round(day.tempmin)}°
                     </span>
                   </div>
-                  <p className="text-xs text-slate-500 mt-1 line-clamp-1">
+                  <p className="mt-1 line-clamp-1 text-xs text-muted">
                     {day.conditions}
                   </p>
                 </motion.div>
@@ -351,13 +350,13 @@ export function WeatherPage() {
       {/* Empty State */}
       {!weather && !isLoading && (
         <Card className="p-12 text-center">
-          <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center">
-            <Cloud className="w-10 h-10 text-blue-400" />
+          <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-lg bg-accent-50">
+            <Cloud className="h-10 w-10 text-accent-500" />
           </div>
-          <h3 className="text-lg font-medium text-white mb-2">
+          <h3 className="mb-2 text-lg font-semibold text-foreground">
             Check the Weather
           </h3>
-          <p className="text-slate-400 max-w-md mx-auto">
+          <p className="mx-auto max-w-md text-muted">
             Search for a city or use your current location to see weather
             conditions
           </p>

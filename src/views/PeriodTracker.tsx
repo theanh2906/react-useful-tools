@@ -183,14 +183,14 @@ const PeriodTracker: React.FC = () => {
       {/* Header */}
       <div className="flex items-start sm:items-center justify-between gap-3">
         <div className="flex items-center gap-3 min-w-0">
-          <div className="w-10 h-10 shrink-0 rounded-xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary-500">
             <Heart className="w-5 h-5 text-white" />
           </div>
           <div className="min-w-0">
-            <h1 className="font-display text-xl sm:text-2xl font-bold text-white truncate">
+            <h1 className="truncate font-display text-xl font-bold text-foreground sm:text-2xl">
               {t('periodTracker.title')}
             </h1>
-            <p className="text-xs sm:text-sm text-slate-400 truncate">{t('periodTracker.subtitle')}</p>
+            <p className="truncate text-xs text-muted sm:text-sm">{t('periodTracker.subtitle')}</p>
           </div>
         </div>
         <div className="flex gap-2 shrink-0">
@@ -209,34 +209,34 @@ const PeriodTracker: React.FC = () => {
 
       {/* Status Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <Card className="bg-white/10 backdrop-blur-sm border border-white/10 p-4">
+        <Card className="border border-line bg-elevated p-4">
           <div className="flex items-center gap-3">
-            <CalendarIcon className="w-5 h-5 text-pink-400" />
+            <CalendarIcon className="h-5 w-5 text-primary-500" />
             <div>
-              <p className="text-xs text-slate-400">{t('periodTracker.cycleDay')}</p>
-              <p className="text-xl font-bold text-white">
+              <p className="text-xs text-muted">{t('periodTracker.cycleDay')}</p>
+              <p className="text-xl font-bold text-foreground">
                 {cycleDay ? `${t('periodTracker.day')} ${cycleDay}` : '—'}
               </p>
             </div>
           </div>
         </Card>
-        <Card className="bg-white/10 backdrop-blur-sm border border-white/10 p-4">
+        <Card className="border border-line bg-elevated p-4">
           <div className="flex items-center gap-3">
-            <Activity className="w-5 h-5 text-emerald-400" />
+            <Activity className="h-5 w-5 text-emerald-600" />
             <div>
-              <p className="text-xs text-slate-400">{t('periodTracker.avgCycle')}</p>
-              <p className="text-xl font-bold text-white">
+              <p className="text-xs text-muted">{t('periodTracker.avgCycle')}</p>
+              <p className="text-xl font-bold text-foreground">
                 {avgCycle} {t('periodTracker.days')}
               </p>
             </div>
           </div>
         </Card>
-        <Card className="bg-white/10 backdrop-blur-sm border border-white/10 p-4">
+        <Card className="border border-line bg-elevated p-4">
           <div className="flex items-center gap-3">
-            <Droplets className="w-5 h-5 text-blue-400" />
+            <Droplets className="h-5 w-5 text-accent-500" />
             <div>
-              <p className="text-xs text-slate-400">{t('periodTracker.nextPeriod')}</p>
-              <p className="text-lg font-bold text-white">
+              <p className="text-xs text-muted">{t('periodTracker.nextPeriod')}</p>
+              <p className="text-lg font-bold text-foreground">
                 {prediction
                   ? format(parseISO(prediction.nextPeriodStart), 'MMM d')
                   : '—'}
@@ -248,7 +248,7 @@ const PeriodTracker: React.FC = () => {
 
       {/* Calendar + History */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="bg-white/10 backdrop-blur-sm border border-white/10 p-5">
+        <Card className="border border-line bg-elevated p-5">
           <PeriodCalendar
             currentMonth={currentMonth}
             onMonthChange={setCurrentMonth}
@@ -323,7 +323,7 @@ const PeriodTracker: React.FC = () => {
         size="sm"
       >
         <div className="space-y-4">
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-muted">
             {t('periodTracker.shareDescription')}
           </p>
 
@@ -341,8 +341,8 @@ const PeriodTracker: React.FC = () => {
             </Button>
           ) : (
             <div className="space-y-3">
-              <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-lg p-3">
-                <span className="text-xs text-slate-300 flex-1 break-all select-all">
+              <div className="flex items-center gap-2 rounded-lg border border-line bg-surface p-3">
+                <span className="flex-1 select-all break-all text-xs text-foreground">
                   {`${window.location.origin}/calendar/period-tracker/share/${shareToken}`}
                 </span>
               </div>
@@ -375,7 +375,7 @@ const PeriodTracker: React.FC = () => {
         size="sm"
       >
         <div className="space-y-4">
-          <p className="text-slate-300 text-sm">
+          <p className="text-sm text-foreground">
             {t('periodTracker.revokeConfirm')}
           </p>
           <div className="flex gap-3">

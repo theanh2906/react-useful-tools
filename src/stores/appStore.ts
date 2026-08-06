@@ -59,7 +59,7 @@ export const useAppStore = create<AppState>()(
   persist(
     (set, get) => ({
       // Theme
-      theme: 'dark',
+      theme: 'light',
       setTheme: (theme) => {
         set({ theme });
         document.documentElement.classList.toggle('dark', theme === 'dark');
@@ -163,6 +163,11 @@ export const useAppStore = create<AppState>()(
     }),
     {
       name: 'app-storage',
+      version: 2,
+      migrate: (persistedState, version) => {
+        const state = persistedState as Partial<AppState>;
+        return version < 2 ? { ...state, theme: 'light' } : state;
+      },
       partialize: (state) => ({
         theme: state.theme,
         language: state.language,
@@ -170,6 +175,7 @@ export const useAppStore = create<AppState>()(
         babyBirthDate: state.babyBirthDate,
       }),
       storage: createJSONStorage(() => localStorage),
+      skipHydration: true,
     }
   )
 );

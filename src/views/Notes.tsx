@@ -142,10 +142,10 @@ export function NotesPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">
+          <h1 className="font-display text-2xl font-bold text-foreground lg:text-3xl">
             Notes
           </h1>
-          <p className="text-slate-400 mt-1">Capture your thoughts and ideas</p>
+          <p className="mt-1 text-muted">Capture your thoughts and ideas</p>
         </div>
         <Button
           onClick={() => {
@@ -162,23 +162,23 @@ export function NotesPage() {
       <Card className="p-4">
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
             <input
               type="text"
               placeholder="Search notes..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-primary-500/50"
+              className="w-full rounded-md border border-line bg-elevated py-2.5 pl-10 pr-4 text-foreground placeholder:text-muted focus:border-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-100"
             />
           </div>
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setSelectedCategory(null)}
               className={cn(
-                'px-3 py-2 rounded-xl text-sm font-medium transition-all',
+                'rounded-md px-3 py-2 text-sm font-medium transition-colors',
                 !selectedCategory
-                  ? 'bg-primary-500/20 text-primary-300'
-                  : 'bg-white/5 text-slate-400 hover:bg-white/10'
+                  ? 'bg-accent-50 text-accent-700'
+                  : 'border border-line bg-elevated text-muted hover:bg-surface hover:text-foreground'
               )}
             >
               All
@@ -190,10 +190,10 @@ export function NotesPage() {
                   setSelectedCategory(cat === selectedCategory ? null : cat)
                 }
                 className={cn(
-                  'px-3 py-2 rounded-xl text-sm font-medium transition-all',
+                  'rounded-md px-3 py-2 text-sm font-medium transition-colors',
                   selectedCategory === cat
-                    ? 'bg-primary-500/20 text-primary-300'
-                    : 'bg-white/5 text-slate-400 hover:bg-white/10'
+                    ? 'bg-accent-50 text-accent-700'
+                    : 'border border-line bg-elevated text-muted hover:bg-surface hover:text-foreground'
                 )}
               >
                 {cat}
@@ -213,13 +213,13 @@ export function NotesPage() {
               className="col-span-full"
             >
               <Card className="p-12 text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/5 flex items-center justify-center">
-                  <Edit className="w-8 h-8 text-slate-500" />
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-lg bg-accent-50">
+                  <Edit className="h-8 w-8 text-accent-500" />
                 </div>
-                <h3 className="text-lg font-medium text-white mb-2">
+                <h3 className="mb-2 text-lg font-semibold text-foreground">
                   No notes yet
                 </h3>
-                <p className="text-slate-400 mb-4">
+                <p className="mb-4 text-muted">
                   Start capturing your thoughts and ideas
                 </p>
                 <Button onClick={() => setShowEditor(true)}>
@@ -242,7 +242,7 @@ export function NotesPage() {
                   hover
                   className={cn(
                     'p-5 h-full flex flex-col cursor-pointer group',
-                    note.isPinned && 'ring-1 ring-primary-500/50'
+                    note.isPinned && 'border-accent-300 bg-accent-50/40'
                   )}
                   onClick={() => {
                     setEditingNote(note);
@@ -250,7 +250,7 @@ export function NotesPage() {
                   }}
                 >
                   <div className="flex items-start justify-between mb-3">
-                    <h3 className="font-medium text-white line-clamp-1 flex-1">
+                    <h3 className="line-clamp-1 flex-1 font-semibold text-foreground">
                       {note.title}
                     </h3>
                     <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -262,8 +262,8 @@ export function NotesPage() {
                         className={cn(
                           'p-1.5 rounded-lg transition-colors',
                           note.isPinned
-                            ? 'text-primary-400 bg-primary-500/20'
-                            : 'text-slate-400 hover:text-white hover:bg-white/10'
+                            ? 'bg-accent-50 text-accent-600'
+                            : 'text-muted hover:bg-surface hover:text-foreground'
                         )}
                       >
                         <Pin className="w-4 h-4" />
@@ -273,19 +273,19 @@ export function NotesPage() {
                           e.stopPropagation();
                           handleDelete(note);
                         }}
-                        className="p-1.5 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                        className="rounded-md p-1.5 text-muted transition-colors hover:bg-red-50 hover:text-red-600"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
                   </div>
 
-                  <p className="text-sm text-slate-400 line-clamp-3 flex-1 mb-4">
+                  <p className="mb-4 line-clamp-3 flex-1 text-sm text-muted">
                     {truncateText(stripHtml(note.content), 150) || 'No content'}
                   </p>
 
-                  <div className="flex items-center justify-between pt-3 border-t border-white/5">
-                    <div className="flex items-center gap-1 text-xs text-slate-500">
+                  <div className="flex items-center justify-between border-t border-line pt-3">
+                    <div className="flex items-center gap-1 text-xs text-muted">
                       <Clock className="w-3.5 h-3.5" />
                       {formatRelativeTime(
                         note.modifiedDate || note.createdDate
@@ -333,7 +333,7 @@ export function NotesPage() {
 
           {/* Categories */}
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-2">
+            <label className="mb-2 block text-sm font-medium text-foreground">
               Categories
             </label>
             <div className="flex flex-wrap gap-2 mb-2">
@@ -346,7 +346,7 @@ export function NotesPage() {
                   {cat}
                   <button
                     onClick={() => handleRemoveCategory(cat)}
-                    className="ml-1 hover:text-white"
+                    className="ml-1 hover:text-foreground"
                   >
                     <X className="w-3 h-3" />
                   </button>
@@ -360,7 +360,7 @@ export function NotesPage() {
                 value={newCategory}
                 onChange={(e) => setNewCategory(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleAddCategory()}
-                className="flex-1 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:border-primary-500/50"
+                className="flex-1 rounded-md border border-line bg-elevated px-3 py-2 text-sm text-foreground placeholder:text-muted focus:border-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-100"
               />
               <Button variant="secondary" size="sm" onClick={handleAddCategory}>
                 <Tag className="w-4 h-4" />
@@ -370,14 +370,14 @@ export function NotesPage() {
 
           {/* Rich Text Editor */}
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-2">
+            <label className="mb-2 block text-sm font-medium text-foreground">
               Content
             </label>
-            <div className="quill-dark">
+            <div>
               <Suspense
                 fallback={
-                  <div className="h-64 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center">
-                    <Type className="w-8 h-8 text-slate-500 animate-pulse" />
+                  <div className="flex h-64 items-center justify-center rounded-lg border border-line bg-surface">
+                    <Type className="h-8 w-8 animate-pulse text-accent-500" />
                   </div>
                 }
               >
@@ -396,7 +396,7 @@ export function NotesPage() {
                       ['clean'],
                     ],
                   }}
-                  className="rounded-xl overflow-hidden"
+                  className="overflow-hidden rounded-lg bg-elevated text-foreground"
                 />
               </Suspense>
             </div>

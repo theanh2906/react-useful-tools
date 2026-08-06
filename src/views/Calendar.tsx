@@ -162,10 +162,10 @@ export function CalendarPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">
+          <h1 className="font-display text-2xl font-bold text-foreground lg:text-3xl">
             Calendar
           </h1>
-          <p className="text-slate-400 mt-1">
+          <p className="mt-1 text-muted">
             Manage your appointments and events
           </p>
         </div>
@@ -269,14 +269,14 @@ export function CalendarPage() {
           {/* Category Filters */}
           <Card className="p-4">
             <div className="flex flex-wrap items-center gap-2">
-              <Filter className="w-4 h-4 text-slate-400" />
+              <Filter className="h-4 w-4 text-accent-500" />
               <button
                 onClick={() => setFilterCategory(null)}
                 className={cn(
-                  'px-3 py-1.5 rounded-full text-sm font-medium transition-all',
+                  'rounded-md px-3 py-1.5 text-sm font-medium transition-colors',
                   !filterCategory
-                    ? 'bg-white/20 text-white'
-                    : 'bg-white/5 text-slate-400 hover:bg-white/10'
+                    ? 'bg-accent-500 text-white'
+                    : 'bg-surface text-muted hover:bg-accent-50 hover:text-accent-600'
                 )}
               >
                 All
@@ -288,10 +288,10 @@ export function CalendarPage() {
                     setFilterCategory(cat.id === filterCategory ? null : cat.id)
                   }
                   className={cn(
-                    'px-3 py-1.5 rounded-full text-sm font-medium transition-all flex items-center gap-2',
+                    'flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium transition-colors',
                     filterCategory === cat.id
-                      ? 'bg-white/20 text-white'
-                      : 'bg-white/5 text-slate-400 hover:bg-white/10'
+                      ? 'bg-accent-500 text-white'
+                      : 'bg-surface text-muted hover:bg-accent-50 hover:text-accent-600'
                   )}
                 >
                   <span
@@ -306,12 +306,12 @@ export function CalendarPage() {
 
           {/* Upcoming Events */}
           <Card className="p-6">
-            <h3 className="text-lg font-display font-semibold text-white mb-4">
+            <h3 className="mb-4 font-display text-lg font-semibold text-foreground">
               Upcoming Events
             </h3>
             <div className="space-y-3">
               {events.length === 0 ? (
-                <p className="text-slate-400 text-center py-8">
+                <p className="py-8 text-center text-muted">
                   No events scheduled yet
                 </p>
               ) : (
@@ -324,7 +324,7 @@ export function CalendarPage() {
                       key={event.id}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
-                      className="flex items-center gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors cursor-pointer"
+                      className="flex cursor-pointer items-center gap-4 rounded-lg border border-line bg-surface p-4 transition-colors hover:border-accent-200 hover:bg-accent-50/50"
                       onClick={() => {
                         setSelectedEvent(event);
                         setFormData({
@@ -346,10 +346,10 @@ export function CalendarPage() {
                         style={{ backgroundColor: category?.color }}
                       />
                       <div className="flex-1 min-w-0">
-                        <p className="font-medium text-white truncate">
+                        <p className="truncate font-medium text-foreground">
                           {event.title}
                         </p>
-                        <p className="text-sm text-slate-400">
+                        <p className="text-sm text-muted">
                           {new Date(event.start).toLocaleDateString('en-US', {
                             weekday: 'short',
                             month: 'short',
@@ -409,7 +409,7 @@ export function CalendarPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-300 mb-2">
+            <label className="mb-2 block text-sm font-medium text-foreground">
               Category
             </label>
             <div className="flex flex-wrap gap-2">
@@ -418,10 +418,10 @@ export function CalendarPage() {
                   key={cat.id}
                   onClick={() => setFormData({ ...formData, category: cat.id })}
                   className={cn(
-                    'px-4 py-2 rounded-xl text-sm font-medium transition-all flex items-center gap-2',
+                    'flex items-center gap-2 rounded-md border px-4 py-2 text-sm font-medium transition-colors',
                     formData.category === cat.id
-                      ? 'bg-white/20 text-white ring-2 ring-primary-500'
-                      : 'bg-white/5 text-slate-400 hover:bg-white/10'
+                      ? 'border-accent-500 bg-accent-50 text-accent-700 ring-1 ring-accent-500'
+                      : 'border-line bg-elevated text-muted hover:bg-surface hover:text-foreground'
                   )}
                 >
                   <span
@@ -459,9 +459,9 @@ export function CalendarPage() {
               onChange={(e) =>
                 setFormData({ ...formData, isImportant: e.target.checked })
               }
-              className="w-4 h-4 rounded border-white/20 bg-white/5 text-primary-500 focus:ring-primary-500/50"
+              className="h-4 w-4 rounded border-line bg-elevated text-primary-500 focus:ring-primary-500"
             />
-            <span className="text-sm text-slate-300">Mark as important</span>
+            <span className="text-sm text-foreground">Mark as important</span>
           </label>
         </div>
 

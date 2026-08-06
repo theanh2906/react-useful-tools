@@ -122,7 +122,7 @@ export default function PeriodTrackerShare() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-950">
+      <div className="flex min-h-screen items-center justify-center bg-background">
         <Spinner />
       </div>
     );
@@ -130,9 +130,9 @@ export default function PeriodTrackerShare() {
 
   if (isInvalid || !cycleSettings) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-slate-950 p-8 text-center">
-        <AlertTriangle className="w-12 h-12 text-yellow-500" />
-        <h2 className="text-xl font-semibold text-white">
+      <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-background p-8 text-center">
+        <AlertTriangle className="h-12 w-12 text-amber-500" />
+        <h2 className="text-xl font-semibold text-foreground">
           {t('periodTracker.invalidShareLink')}
         </h2>
       </div>
@@ -144,61 +144,61 @@ export default function PeriodTrackerShare() {
   const cycleDay = getCurrentCycleDay();
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white">
+    <div className="min-h-screen bg-background text-foreground">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="container mx-auto p-4 max-w-4xl space-y-6"
       >
         {/* Read-only banner */}
-        <div className="flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 text-blue-300 rounded-lg px-4 py-2 text-sm">
+        <div className="flex items-center gap-2 rounded-lg border border-accent-200 bg-accent-50 px-4 py-2 text-sm text-accent-700">
           <Eye className="w-4 h-4 shrink-0" />
           <span>{t('periodTracker.readOnlyDescription')}</span>
         </div>
 
         {/* Header */}
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 shrink-0 rounded-xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary-500">
             <Heart className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h1 className="font-display text-xl sm:text-2xl font-bold text-white">
+            <h1 className="font-display text-xl font-bold text-foreground sm:text-2xl">
               {t('periodTracker.title')}
             </h1>
-            <p className="text-xs sm:text-sm text-slate-400">{t('periodTracker.subtitle')}</p>
+            <p className="text-xs text-muted sm:text-sm">{t('periodTracker.subtitle')}</p>
           </div>
         </div>
 
         {/* Status Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <Card className="bg-white/10 backdrop-blur-sm border border-white/10 p-4">
+          <Card className="border border-line bg-elevated p-4">
             <div className="flex items-center gap-3">
-              <CalendarIcon className="w-5 h-5 text-pink-400" />
+              <CalendarIcon className="h-5 w-5 text-primary-500" />
               <div>
-                <p className="text-xs text-slate-400">{t('periodTracker.cycleDay')}</p>
-                <p className="text-xl font-bold text-white">
+                <p className="text-xs text-muted">{t('periodTracker.cycleDay')}</p>
+                <p className="text-xl font-bold text-foreground">
                   {cycleDay ? `${t('periodTracker.day')} ${cycleDay}` : '—'}
                 </p>
               </div>
             </div>
           </Card>
-          <Card className="bg-white/10 backdrop-blur-sm border border-white/10 p-4">
+          <Card className="border border-line bg-elevated p-4">
             <div className="flex items-center gap-3">
-              <Activity className="w-5 h-5 text-emerald-400" />
+              <Activity className="h-5 w-5 text-emerald-600" />
               <div>
-                <p className="text-xs text-slate-400">{t('periodTracker.avgCycle')}</p>
-                <p className="text-xl font-bold text-white">
+                <p className="text-xs text-muted">{t('periodTracker.avgCycle')}</p>
+                <p className="text-xl font-bold text-foreground">
                   {avgCycle} {t('periodTracker.days')}
                 </p>
               </div>
             </div>
           </Card>
-          <Card className="bg-white/10 backdrop-blur-sm border border-white/10 p-4">
+          <Card className="border border-line bg-elevated p-4">
             <div className="flex items-center gap-3">
-              <Droplets className="w-5 h-5 text-blue-400" />
+              <Droplets className="h-5 w-5 text-accent-500" />
               <div>
-                <p className="text-xs text-slate-400">{t('periodTracker.nextPeriod')}</p>
-                <p className="text-lg font-bold text-white">
+                <p className="text-xs text-muted">{t('periodTracker.nextPeriod')}</p>
+                <p className="text-lg font-bold text-foreground">
                   {prediction
                     ? format(parseISO(prediction.nextPeriodStart), 'MMM d')
                     : '—'}
@@ -210,7 +210,7 @@ export default function PeriodTrackerShare() {
 
         {/* Calendar + History */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <Card className="bg-white/10 backdrop-blur-sm border border-white/10 p-5">
+          <Card className="border border-line bg-elevated p-5">
             <PeriodCalendar
               currentMonth={currentMonth}
               onMonthChange={setCurrentMonth}

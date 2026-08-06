@@ -73,13 +73,13 @@ export function GlobalLoading({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/80 backdrop-blur-sm"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/30 backdrop-blur-[2px]"
         >
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
-            className="flex flex-col items-center gap-4 p-8 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl"
+            className="flex flex-col items-center gap-4 rounded-lg border border-line bg-elevated p-8 shadow-xl"
           >
             <div className="relative">
               <motion.div
@@ -93,12 +93,12 @@ export function GlobalLoading({
                 transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
               />
               <motion.div
-                className="absolute inset-2 rounded-full border-4 border-transparent border-t-pink-500"
+                className="absolute inset-2 rounded-full border-4 border-transparent border-t-accent-500"
                 animate={{ rotate: -360 }}
                 transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
               />
             </div>
-            <p className="text-white font-medium">{message}</p>
+            <p className="font-medium text-foreground">{message}</p>
           </motion.div>
         </motion.div>
       )}
@@ -114,7 +114,7 @@ export function PageLoading() {
     <div className="flex items-center justify-center min-h-[400px]">
       <div className="flex flex-col items-center gap-4">
         <Spinner size="xl" />
-        <p className="text-slate-400">Loading...</p>
+        <p className="text-muted">Loading...</p>
       </div>
     </div>
   );
@@ -125,10 +125,10 @@ export function PageLoading() {
  */
 export function SkeletonCard() {
   return (
-    <div className="p-6 rounded-2xl bg-white/5 border border-white/10 animate-pulse">
-      <div className="h-4 bg-white/10 rounded w-3/4 mb-4" />
-      <div className="h-3 bg-white/10 rounded w-full mb-2" />
-      <div className="h-3 bg-white/10 rounded w-2/3" />
+    <div className="animate-pulse rounded-lg border border-line bg-elevated p-6">
+      <div className="mb-4 h-4 w-3/4 rounded bg-slate-200 dark:bg-slate-700" />
+      <div className="mb-2 h-3 w-full rounded bg-slate-200 dark:bg-slate-700" />
+      <div className="h-3 w-2/3 rounded bg-slate-200 dark:bg-slate-700" />
     </div>
   );
 }

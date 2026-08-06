@@ -50,13 +50,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const variants = {
-      primary:
-        'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg shadow-primary-500/25 hover:shadow-xl hover:shadow-primary-500/40',
+      primary: 'bg-primary-500 text-white shadow-sm hover:bg-primary-600',
       secondary:
-        'bg-white/10 text-white border border-white/10 hover:bg-white/20 hover:border-white/20',
-      ghost: 'text-slate-300 hover:text-white hover:bg-white/10',
-      danger:
-        'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg shadow-red-500/25 hover:shadow-xl hover:shadow-red-500/40',
+        'border border-line bg-elevated text-foreground hover:border-accent-200 hover:bg-surface',
+      ghost: 'text-muted hover:bg-surface hover:text-foreground',
+      danger: 'bg-red-600 text-white shadow-sm hover:bg-red-700',
     };
 
     const sizes = {
@@ -68,11 +66,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <motion.button
         ref={ref}
-        whileHover={{ scale: disabled || isLoading ? 1 : 1.02 }}
         whileTap={{ scale: disabled || isLoading ? 1 : 0.98 }}
         className={cn(
-          'relative inline-flex items-center justify-center gap-2 font-medium rounded-xl transition-all duration-300',
-          'focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:ring-offset-2 focus:ring-offset-slate-900',
+          'relative inline-flex min-h-10 items-center justify-center gap-2 rounded-md font-semibold transition-colors duration-200',
+          'focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-2 focus:ring-offset-background',
           'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none',
           variants[variant],
           sizes[size],

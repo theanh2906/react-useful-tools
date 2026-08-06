@@ -15,7 +15,7 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    fallbackLng: 'en',
+    fallbackLng: 'vi',
     supportedLngs: ['en', 'vi'],
 
     detection: {
@@ -38,4 +38,4 @@ export default i18n;
 export const languages = [
   { code: 'en', name: 'English', flag: '🇺🇸' },
   { code: 'vi', name: 'Tiếng Việt', flag: '🇻🇳' },
-];
+] as const;

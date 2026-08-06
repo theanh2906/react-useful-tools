@@ -90,10 +90,10 @@ export function QrScannerPage() {
       className="space-y-6"
     >
       <div>
-        <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">
+        <h1 className="font-display text-2xl font-bold text-foreground lg:text-3xl">
           QR Scanner
         </h1>
-        <p className="text-slate-400 mt-1">Scan QR codes from images</p>
+        <p className="mt-1 text-muted">Scan QR codes from images</p>
       </div>
 
       <Card className="p-6">
@@ -101,19 +101,19 @@ export function QrScannerPage() {
           <div className="flex-1">
             <div
               className={cn(
-                'border-2 border-dashed rounded-2xl p-8 text-center transition-all',
+                'rounded-lg border-2 border-dashed p-8 text-center transition-colors',
                 imageSrc
-                  ? 'border-primary-500/30 bg-primary-500/5'
-                  : 'border-white/10 hover:border-white/20'
+                  ? 'border-accent-300 bg-accent-50'
+                  : 'border-line bg-surface hover:border-accent-200'
               )}
             >
               <div className="flex flex-col items-center gap-3">
-                <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center">
-                  <ImageIcon className="w-6 h-6 text-slate-400" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-elevated">
+                  <ImageIcon className="h-6 w-6 text-accent-500" />
                 </div>
                 <div>
-                  <p className="text-white font-medium">Upload QR image</p>
-                  <p className="text-sm text-slate-400">PNG, JPG, or WEBP</p>
+                  <p className="font-medium text-foreground">Upload QR image</p>
+                  <p className="text-sm text-muted">PNG, JPG, or WEBP</p>
                 </div>
                 <input
                   ref={fileInputRef}
@@ -142,10 +142,10 @@ export function QrScannerPage() {
               {isScanning && <Badge variant="warning">Scanning...</Badge>}
             </div>
 
-            <div className="p-4 rounded-xl bg-white/5 border border-white/10 min-h-[140px]">
+            <div className="min-h-[140px] rounded-lg border border-line bg-surface p-4">
               {result ? (
                 <div className="space-y-3">
-                  <p className="text-sm text-slate-300 break-all">{result}</p>
+                  <p className="break-all text-sm text-foreground">{result}</p>
                   <Button size="sm" onClick={handleCopy}>
                     {copied ? (
                       <Check className="w-4 h-4" />
@@ -156,14 +156,12 @@ export function QrScannerPage() {
                   </Button>
                 </div>
               ) : error ? (
-                <div className="flex items-start gap-2 text-red-400">
+                <div className="flex items-start gap-2 text-red-600">
                   <AlertCircle className="w-4 h-4 mt-0.5" />
                   <span className="text-sm">{error}</span>
                 </div>
               ) : (
-                <p className="text-sm text-slate-500">
-                  Upload an image to scan.
-                </p>
+                <p className="text-sm text-muted">Upload an image to scan.</p>
               )}
             </div>
           </div>
@@ -186,7 +184,7 @@ export function QrScannerPage() {
           <img
             src={imageSrc}
             alt="QR preview"
-            className="max-h-[400px] w-full object-contain rounded-xl"
+            className="max-h-[400px] w-full rounded-lg object-contain"
           />
         </Card>
       )}

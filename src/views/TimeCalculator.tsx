@@ -60,10 +60,10 @@ export function TimeCalculatorPage() {
       className="space-y-6"
     >
       <div>
-        <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">
+        <h1 className="font-display text-2xl font-bold text-foreground lg:text-3xl">
           Time Calculator
         </h1>
-        <p className="text-slate-400 mt-1">
+        <p className="mt-1 text-muted">
           Calculate time differences and add/subtract time
         </p>
       </div>
@@ -87,21 +87,21 @@ export function TimeCalculatorPage() {
             onChange={(e) => setEnd(e.target.value)}
           />
 
-          <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+          <div className="rounded-lg border border-line bg-surface p-4">
             {diff !== null ? (
               <div className="space-y-2">
-                <p className="text-sm text-slate-400">Difference</p>
-                <p className="text-xl font-bold text-white">
+                <p className="text-sm text-muted">Difference</p>
+                <p className="text-xl font-bold text-foreground">
                   {formatDuration(diff).days}d {formatDuration(diff).hours}h{' '}
                   {formatDuration(diff).minutes}m {formatDuration(diff).seconds}
                   s
                 </p>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-muted">
                   {diff >= 0 ? 'End is after start' : 'End is before start'}
                 </p>
               </div>
             ) : (
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-muted">
                 Select both dates to calculate.
               </p>
             )}
@@ -166,16 +166,16 @@ export function TimeCalculatorPage() {
             </Button>
           </div>
 
-          <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+          <div className="rounded-lg border border-line bg-surface p-4">
             {resultDate ? (
               <div>
-                <p className="text-sm text-slate-400">Result</p>
-                <p className="text-xl font-bold text-white">
+                <p className="text-sm text-muted">Result</p>
+                <p className="text-xl font-bold text-foreground">
                   {resultDate.toLocaleString()}
                 </p>
               </div>
             ) : (
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-muted">
                 Choose a base date to compute result.
               </p>
             )}

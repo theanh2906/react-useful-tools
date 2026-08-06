@@ -45,12 +45,10 @@ export function QrGeneratorPage() {
       className="space-y-6"
     >
       <div>
-        <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">
+        <h1 className="font-display text-2xl font-bold text-foreground lg:text-3xl">
           QR Generator
         </h1>
-        <p className="text-slate-400 mt-1">
-          Generate QR codes for links and text
-        </p>
+        <p className="mt-1 text-muted">Generate QR codes for links and text</p>
       </div>
 
       <div className="grid lg:grid-cols-2 gap-6">
@@ -72,11 +70,11 @@ export function QrGeneratorPage() {
               onChange={(e) => setSize(Number(e.target.value || 280))}
             />
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-slate-300">
+              <label className="block text-sm font-medium text-foreground">
                 Colors
               </label>
               <div className="flex gap-3">
-                <label className="flex items-center gap-2 text-sm text-slate-400">
+                <label className="flex items-center gap-2 text-sm text-muted">
                   <input
                     type="color"
                     value={fgColor}
@@ -84,7 +82,7 @@ export function QrGeneratorPage() {
                   />
                   Foreground
                 </label>
-                <label className="flex items-center gap-2 text-sm text-slate-400">
+                <label className="flex items-center gap-2 text-sm text-muted">
                   <input
                     type="color"
                     value={bgColor}
@@ -120,25 +118,23 @@ export function QrGeneratorPage() {
           <Badge variant="primary" className="mb-4">
             Preview
           </Badge>
-          <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
+          <div className="rounded-lg border border-line bg-surface p-4">
             {text ? (
               <img
                 src={qrUrl}
                 alt="QR Code"
                 className={cn(
-                  'rounded-xl',
+                  'rounded-md',
                   size > 360 ? 'w-[360px]' : 'w-[280px]'
                 )}
               />
             ) : (
-              <div className="w-[280px] h-[280px] flex items-center justify-center text-slate-500">
+              <div className="flex h-[280px] w-[280px] items-center justify-center text-muted">
                 <QrCode className="w-12 h-12" />
               </div>
             )}
           </div>
-          <p className="text-xs text-slate-500 mt-4">
-            QR generated via public API
-          </p>
+          <p className="mt-4 text-xs text-muted">QR generated via public API</p>
         </Card>
       </div>
     </motion.div>

@@ -26,12 +26,12 @@ const PeriodHistory: React.FC<PeriodHistoryProps> = ({
   const { t } = useTranslation();
 
   return (
-    <Card className="bg-white/10 backdrop-blur-sm border border-white/10 p-5">
-      <h3 className="font-display font-semibold text-white text-lg mb-4">
+    <Card className="border border-line bg-elevated p-5">
+      <h3 className="mb-4 font-display text-lg font-semibold text-foreground">
         {t('periodTracker.history')}
       </h3>
       {periodLogs.length === 0 ? (
-        <p className="text-slate-500 text-sm">{t('periodTracker.noLogs')}</p>
+        <p className="text-sm text-muted">{t('periodTracker.noLogs')}</p>
       ) : (
         <ul className="space-y-3 max-h-80 overflow-y-auto scrollbar-hide">
           {periodLogs.slice(0, 10).map((log) => (
@@ -39,16 +39,16 @@ const PeriodHistory: React.FC<PeriodHistoryProps> = ({
               key={log.id}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/5 group"
+              className="group flex items-center justify-between rounded-lg border border-line bg-surface p-3"
             >
               <div>
-                <p className="text-sm font-medium text-white">
+                <p className="text-sm font-medium text-foreground">
                   {format(parseISO(log.startDate), 'MMM d, yyyy')}
                   {log.endDate && ` — ${format(parseISO(log.endDate), 'MMM d')}`}
                 </p>
                 <div className="flex items-center gap-2 mt-1">
                   {log.flowIntensity && (
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-pink-500/20 text-pink-300">
+                    <span className="rounded-full bg-primary-50 px-2 py-0.5 text-xs text-primary-700">
                       {t(`periodTracker.flow.${log.flowIntensity}`)}
                     </span>
                   )}
@@ -58,13 +58,13 @@ const PeriodHistory: React.FC<PeriodHistoryProps> = ({
                 <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                   <button
                     onClick={() => onEdit?.(log)}
-                    className="p-1.5 text-slate-500 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                    className="rounded-md p-1.5 text-muted transition-colors hover:bg-elevated hover:text-accent-600"
                   >
                     <Settings className="w-3.5 h-3.5" />
                   </button>
                   <button
                     onClick={() => onDelete?.(log.id)}
-                    className="p-1.5 text-slate-500 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
+                    className="rounded-md p-1.5 text-muted transition-colors hover:bg-red-50 hover:text-red-600"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>

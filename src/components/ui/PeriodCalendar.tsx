@@ -70,8 +70,8 @@ const PeriodCalendar: React.FC<PeriodCalendarProps> = ({
   };
 
   const dayTypeStyles: Record<string, string> = {
-    period: 'bg-pink-500/80 text-white',
-    'predicted-period': 'bg-pink-500/30 text-pink-300 border border-pink-500/40 border-dashed',
+    period: 'bg-primary-500 text-white',
+    'predicted-period': 'border border-dashed border-primary-300 bg-primary-50 text-primary-700',
   };
 
   const weekDays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
@@ -82,16 +82,16 @@ const PeriodCalendar: React.FC<PeriodCalendarProps> = ({
       <div className="flex items-center justify-between mb-4">
         <button
           onClick={() => onMonthChange(subMonths(currentMonth, 1))}
-          className="p-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+          className="rounded-md p-2 text-muted transition-colors hover:bg-surface hover:text-foreground"
         >
           <ChevronLeft className="w-5 h-5" />
         </button>
-        <h3 className="font-display font-semibold text-white text-lg">
+        <h3 className="font-display text-lg font-semibold text-foreground">
           {format(currentMonth, 'MMMM yyyy')}
         </h3>
         <button
           onClick={() => onMonthChange(addMonths(currentMonth, 1))}
-          className="p-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+          className="rounded-md p-2 text-muted transition-colors hover:bg-surface hover:text-foreground"
         >
           <ChevronRight className="w-5 h-5" />
         </button>
@@ -100,7 +100,7 @@ const PeriodCalendar: React.FC<PeriodCalendarProps> = ({
       {/* Weekday headers */}
       <div className="grid grid-cols-7 gap-1 mb-2">
         {weekDays.map((day) => (
-          <div key={day} className="text-center text-xs font-medium text-slate-500 py-1">
+          <div key={day} className="py-1 text-center text-xs font-medium text-muted">
             {day}
           </div>
         ))}
@@ -122,15 +122,15 @@ const PeriodCalendar: React.FC<PeriodCalendarProps> = ({
               whileTap={{ scale: 0.95 }}
               onClick={() => onDateClick?.(date)}
               className={cn(
-                'aspect-square flex items-center justify-center rounded-lg text-sm transition-all relative',
+                'relative flex aspect-square items-center justify-center rounded-md text-sm transition-colors',
                 !isSameMonth(date, currentMonth) && 'opacity-30',
-                isToday && !dayType && 'ring-1 ring-primary-500 text-white',
-                dayType ? dayTypeStyles[dayType] : 'text-slate-400 hover:bg-white/5',
+                isToday && !dayType && 'bg-accent-50 text-accent-700 ring-1 ring-accent-500',
+                dayType ? dayTypeStyles[dayType] : 'text-muted hover:bg-surface hover:text-foreground',
               )}
             >
               {format(date, 'd')}
               {isToday && (
-                <span className="absolute bottom-0.5 w-1 h-1 rounded-full bg-primary-400" />
+                <span className="absolute bottom-0.5 h-1 w-1 rounded-full bg-accent-500" />
               )}
             </motion.button>
           );
@@ -138,13 +138,13 @@ const PeriodCalendar: React.FC<PeriodCalendarProps> = ({
       </div>
 
       {/* Legend */}
-      <div className="flex flex-wrap gap-4 mt-4 pt-3 border-t border-white/5">
-        <div className="flex items-center gap-2 text-xs text-slate-400">
-          <span className="w-3 h-3 rounded-sm bg-pink-500/80" />
+      <div className="mt-4 flex flex-wrap gap-4 border-t border-line pt-3">
+        <div className="flex items-center gap-2 text-xs text-muted">
+          <span className="h-3 w-3 rounded-sm bg-primary-500" />
           {t('periodTracker.period')}
         </div>
-        <div className="flex items-center gap-2 text-xs text-slate-400">
-          <span className="w-3 h-3 rounded-sm bg-pink-500/30 border border-pink-500/40 border-dashed" />
+        <div className="flex items-center gap-2 text-xs text-muted">
+          <span className="h-3 w-3 rounded-sm border border-dashed border-primary-300 bg-primary-50" />
           {t('periodTracker.predicted')}
         </div>
       </div>

@@ -130,16 +130,16 @@ export function BabyTrackerPage() {
               {
                 label: 'Weight (kg)',
                 data: (sortedRecords as BabyData[]).map((r) => r.weight || 0),
-                borderColor: '#ec4899',
-                backgroundColor: 'rgba(236, 72, 153, 0.1)',
+                borderColor: '#ff5a52',
+                backgroundColor: 'rgba(255, 90, 82, 0.1)',
                 fill: true,
                 tension: 0.4,
               },
               {
                 label: 'Height (cm)',
                 data: (sortedRecords as BabyData[]).map((r) => r.height || 0),
-                borderColor: '#8b5cf6',
-                backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                borderColor: '#1768e5',
+                backgroundColor: 'rgba(23, 104, 229, 0.1)',
                 fill: true,
                 tension: 0.4,
                 yAxisID: 'y1',
@@ -151,8 +151,8 @@ export function BabyTrackerPage() {
                 data: (sortedRecords as SoyaData[]).map(
                   (r) => r.measurements?.heartRate || 0
                 ),
-                borderColor: '#f97316',
-                backgroundColor: 'rgba(249, 115, 22, 0.1)',
+                borderColor: '#ff5a52',
+                backgroundColor: 'rgba(255, 90, 82, 0.1)',
                 fill: true,
                 tension: 0.4,
               },
@@ -178,27 +178,27 @@ export function BabyTrackerPage() {
     plugins: {
       legend: {
         position: 'top' as const,
-        labels: { color: '#94a3b8', font: { size: 12 } },
+        labels: { color: '#667085', font: { size: 12 } },
       },
     },
     scales: {
       x: {
-        grid: { color: 'rgba(255,255,255,0.05)' },
-        ticks: { color: '#94a3b8' },
+        grid: { color: '#dce6f2' },
+        ticks: { color: '#667085' },
       },
       y: {
         type: 'linear' as const,
         display: true,
         position: 'left' as const,
-        grid: { color: 'rgba(255,255,255,0.05)' },
-        ticks: { color: '#94a3b8' },
+        grid: { color: '#dce6f2' },
+        ticks: { color: '#667085' },
       },
       y1: {
         type: 'linear' as const,
         display: true,
         position: 'right' as const,
         grid: { drawOnChartArea: false },
-        ticks: { color: '#94a3b8' },
+        ticks: { color: '#667085' },
       },
     },
   };
@@ -309,10 +309,10 @@ export function BabyTrackerPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">
+          <h1 className="font-display text-2xl font-bold text-foreground lg:text-3xl">
             Baby Tracker
           </h1>
-          <p className="text-slate-400 mt-1">Monitor growth and development</p>
+          <p className="mt-1 text-muted">Monitor growth and development</p>
         </div>
         <div className="flex gap-2">
           <Button variant="secondary" onClick={() => setShowSetupModal(true)}>
@@ -328,14 +328,14 @@ export function BabyTrackerPage() {
 
       {/* Setup prompt when no dates configured */}
       {needsSetup && (
-        <Card variant="gradient" className="p-8 text-center">
-          <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-pink-500/20 to-purple-500/20 flex items-center justify-center">
-            <Sparkles className="w-10 h-10 text-pink-400" />
+        <Card className="border-accent-100 bg-accent-50 p-8 text-center">
+          <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-primary-50">
+            <Sparkles className="h-10 w-10 text-primary-500" />
           </div>
-          <h2 className="text-2xl font-display font-bold text-white mb-3">
+          <h2 className="mb-3 font-display text-2xl font-bold text-foreground">
             Welcome to Baby Tracker!
           </h2>
-          <p className="text-slate-400 max-w-md mx-auto mb-6">
+          <p className="mx-auto mb-6 max-w-md text-muted">
             {SHOW_PREGNANCY_UI
               ? "Let's set up your pregnancy or baby information to start tracking growth and milestones."
               : "Add your baby's birth date to track age, growth, and milestones."}
@@ -349,14 +349,14 @@ export function BabyTrackerPage() {
 
       {/* Tabs */}
       {SHOW_PREGNANCY_UI && (
-        <div className="flex gap-2 p-1 bg-white/5 rounded-xl w-fit">
+        <div className="flex w-fit gap-2 rounded-lg border border-line bg-surface p-1">
           <button
             onClick={() => setActiveTab(Baby.Soya)}
             className={cn(
-              'px-6 py-2.5 rounded-lg font-medium transition-all flex items-center gap-2',
+              'flex items-center gap-2 rounded-md px-6 py-2.5 font-medium transition-colors',
               activeTab === Baby.Soya
-                ? 'bg-gradient-to-r from-primary-500 to-pink-500 text-white shadow-lg'
-                : 'text-slate-400 hover:text-white hover:bg-white/10'
+                ? 'bg-primary-500 text-white shadow-sm'
+                : 'text-muted hover:bg-elevated hover:text-foreground'
             )}
           >
             <Heart className="w-4 h-4" />
@@ -365,10 +365,10 @@ export function BabyTrackerPage() {
           <button
             onClick={() => setActiveTab(Baby.Peanut)}
             className={cn(
-              'px-6 py-2.5 rounded-lg font-medium transition-all flex items-center gap-2',
+              'flex items-center gap-2 rounded-md px-6 py-2.5 font-medium transition-colors',
               activeTab === Baby.Peanut
-                ? 'bg-gradient-to-r from-primary-500 to-pink-500 text-white shadow-lg'
-                : 'text-slate-400 hover:text-white hover:bg-white/10'
+                ? 'bg-primary-500 text-white shadow-sm'
+                : 'text-muted hover:bg-elevated hover:text-foreground'
             )}
           >
             <BabyIcon className="w-4 h-4" />
@@ -384,16 +384,16 @@ export function BabyTrackerPage() {
           {pregnancyInfo && (
             <div className="grid lg:grid-cols-3 gap-6">
               {/* Current Development */}
-              <Card variant="gradient" className="lg:col-span-2 p-6">
+              <Card className="border-accent-100 bg-accent-50 p-6 lg:col-span-2">
                 <div className="flex items-start justify-between mb-6">
                   <div>
                     <Badge variant="primary" className="mb-2">
                       Week {pregnancyInfo.currentWeek}
                     </Badge>
-                    <h3 className="text-xl font-display font-bold text-white">
+                    <h3 className="font-display text-xl font-bold text-foreground">
                       Baby's Development
                     </h3>
-                    <p className="text-slate-400">
+                    <p className="text-muted">
                       Your baby is the size of a {currentDev.size.toLowerCase()}
                     </p>
                   </div>
@@ -407,30 +407,30 @@ export function BabyTrackerPage() {
                 </div>
 
                 <div className="grid grid-cols-3 gap-4 mb-6">
-                  <div className="p-4 rounded-xl bg-white/5 text-center">
-                    <Scale className="w-5 h-5 text-emerald-400 mx-auto mb-2" />
-                    <p className="text-xl font-bold text-white">
+                  <div className="rounded-lg bg-surface p-4 text-center">
+                    <Scale className="mx-auto mb-2 h-5 w-5 text-emerald-600" />
+                    <p className="text-xl font-bold text-foreground">
                       {currentDev.weight}
                     </p>
-                    <p className="text-xs text-slate-400">Weight</p>
+                    <p className="text-xs text-muted">Weight</p>
                   </div>
-                  <div className="p-4 rounded-xl bg-white/5 text-center">
-                    <Ruler className="w-5 h-5 text-blue-400 mx-auto mb-2" />
-                    <p className="text-xl font-bold text-white">
+                  <div className="rounded-lg bg-surface p-4 text-center">
+                    <Ruler className="mx-auto mb-2 h-5 w-5 text-accent-500" />
+                    <p className="text-xl font-bold text-foreground">
                       {currentDev.length}
                     </p>
-                    <p className="text-xs text-slate-400">Length</p>
+                    <p className="text-xs text-muted">Length</p>
                   </div>
-                  <div className="p-4 rounded-xl bg-white/5 text-center">
-                    <Activity className="w-5 h-5 text-pink-400 mx-auto mb-2" />
-                    <p className="text-xl font-bold text-white">150-160</p>
-                    <p className="text-xs text-slate-400">Heart Rate</p>
+                  <div className="rounded-lg bg-surface p-4 text-center">
+                    <Activity className="mx-auto mb-2 h-5 w-5 text-primary-500" />
+                    <p className="text-xl font-bold text-foreground">150-160</p>
+                    <p className="text-xs text-muted">Heart Rate</p>
                   </div>
                 </div>
 
                 <Progress
                   value={pregnancyInfo.progress}
-                  variant="gradient"
+                  variant="success"
                   showValue
                   label="Pregnancy Progress"
                 />
@@ -438,26 +438,26 @@ export function BabyTrackerPage() {
 
               {/* Mom's Stats */}
               <Card className="p-6">
-                <h3 className="font-display font-semibold text-white mb-4">
+                <h3 className="mb-4 font-display font-semibold text-foreground">
                   Mom's Stats
                 </h3>
                 <div className="space-y-4">
                   {soyaRecords[0]?.pregnantMom?.weight && (
-                    <div className="p-4 rounded-xl bg-white/5">
-                      <p className="text-sm text-slate-400 mb-1">
+                    <div className="rounded-lg bg-surface p-4">
+                      <p className="mb-1 text-sm text-muted">
                         Current Weight
                       </p>
-                      <p className="text-2xl font-bold text-white">
+                      <p className="text-2xl font-bold text-foreground">
                         {soyaRecords[0].pregnantMom.weight} kg
                       </p>
                     </div>
                   )}
-                  <div className="p-4 rounded-xl bg-white/5">
-                    <p className="text-sm text-slate-400 mb-1">Trimester</p>
-                    <p className="text-xl font-bold text-white">
+                  <div className="rounded-lg bg-surface p-4">
+                    <p className="mb-1 text-sm text-muted">Trimester</p>
+                    <p className="text-xl font-bold text-foreground">
                       {pregnancyInfo.trimester}
                     </p>
-                    <p className="text-xs text-slate-500">
+                    <p className="text-xs text-muted">
                       {pregnancyInfo.trimester === 1
                         ? 'First'
                         : pregnancyInfo.trimester === 2
@@ -466,11 +466,11 @@ export function BabyTrackerPage() {
                       Trimester
                     </p>
                   </div>
-                  <div className="p-4 rounded-xl bg-white/5">
-                    <p className="text-sm text-slate-400 mb-1">
+                  <div className="rounded-lg bg-surface p-4">
+                    <p className="mb-1 text-sm text-muted">
                       Days to Due Date
                     </p>
-                    <p className="text-2xl font-bold gradient-text">
+                    <p className="text-2xl font-bold text-primary-600">
                       {pregnancyInfo.daysRemaining}
                     </p>
                   </div>
@@ -482,11 +482,11 @@ export function BabyTrackerPage() {
           {/* Prompt to set dates if not configured */}
           {!pregnancyInfo && (
             <Card className="p-6 text-center">
-              <Heart className="w-12 h-12 text-pink-400 mx-auto mb-4" />
-              <h3 className="text-lg font-display font-semibold text-white mb-2">
+              <Heart className="mx-auto mb-4 h-12 w-12 text-primary-500" />
+              <h3 className="mb-2 font-display text-lg font-semibold text-foreground">
                 Set Your Conception Date
               </h3>
-              <p className="text-slate-400 mb-4">
+              <p className="mb-4 text-muted">
                 Configure your conception date to see pregnancy progress and
                 development info
               </p>
@@ -500,7 +500,7 @@ export function BabyTrackerPage() {
           {/* Growth Chart */}
           {soyaRecords.length > 1 && (
             <Card className="p-6">
-              <h3 className="font-display font-semibold text-white mb-4">
+              <h3 className="mb-4 font-display font-semibold text-foreground">
                 Growth Trends
               </h3>
               <div className="h-64">
@@ -511,11 +511,11 @@ export function BabyTrackerPage() {
 
           {/* Records */}
           <Card className="p-6">
-            <h3 className="font-display font-semibold text-white mb-4">
+            <h3 className="mb-4 font-display font-semibold text-foreground">
               Checkup Records
             </h3>
             {soyaRecords.length === 0 ? (
-              <div className="text-center py-8 text-slate-500">
+              <div className="py-8 text-center text-muted">
                 <Calendar className="w-12 h-12 mx-auto mb-3 opacity-50" />
                 <p>No records yet. Add your first checkup!</p>
               </div>
@@ -527,10 +527,10 @@ export function BabyTrackerPage() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.1 }}
-                    className="flex items-center gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors"
+                    className="flex items-center gap-4 rounded-lg border border-line bg-surface p-4 transition-colors hover:border-accent-200 hover:bg-accent-50/50"
                   >
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-pink-500/20 to-rose-500/20 flex items-center justify-center">
-                      <Calendar className="w-6 h-6 text-pink-400" />
+                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary-50">
+                      <Calendar className="h-6 w-6 text-primary-500" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
@@ -538,7 +538,7 @@ export function BabyTrackerPage() {
                           {record.gestationalAge}
                         </Badge>
                       </div>
-                      <p className="text-sm text-slate-400">
+                      <p className="text-sm text-muted">
                         {new Date(record.date).toLocaleDateString('en-US', {
                           month: 'long',
                           day: 'numeric',
@@ -548,11 +548,11 @@ export function BabyTrackerPage() {
                     </div>
                     <div className="text-right">
                       {record.measurements?.heartRate && (
-                        <p className="text-white font-medium">
+                        <p className="font-medium text-foreground">
                           {record.measurements.heartRate} BPM
                         </p>
                       )}
-                      <p className="text-xs text-slate-500">Heart Rate</p>
+                      <p className="text-xs text-muted">Heart Rate</p>
                     </div>
                   </motion.div>
                 ))}
@@ -568,34 +568,34 @@ export function BabyTrackerPage() {
           {/* Baby Overview - only show if birth date is configured */}
           {babyAge && (
             <div className="grid lg:grid-cols-3 gap-6">
-              <Card variant="gradient" className="p-6">
+              <Card className="border-primary-100 bg-primary-50 p-6">
                 <div className="text-center">
-                  <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-pink-400 to-rose-500 flex items-center justify-center">
+                  <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-primary-500">
                     <BabyIcon className="w-10 h-10 text-white" />
                   </div>
-                  <h3 className="text-xl font-display font-bold text-white mb-1">
+                  <h3 className="mb-1 font-display text-xl font-bold text-foreground">
                     Peanut
                   </h3>
-                  <p className="text-slate-400">Your little one</p>
+                  <p className="text-muted">Your little one</p>
 
                   <div className="grid grid-cols-3 gap-3 mt-6">
-                    <div className="p-3 rounded-lg bg-white/10">
-                      <p className="text-2xl font-bold text-white">
+                    <div className="rounded-lg bg-surface p-3">
+                      <p className="text-2xl font-bold text-foreground">
                         {babyAge.days}
                       </p>
-                      <p className="text-xs text-slate-400">Days</p>
+                      <p className="text-xs text-muted">Days</p>
                     </div>
-                    <div className="p-3 rounded-lg bg-white/10">
-                      <p className="text-2xl font-bold text-white">
+                    <div className="rounded-lg bg-surface p-3">
+                      <p className="text-2xl font-bold text-foreground">
                         {babyAge.weeks}
                       </p>
-                      <p className="text-xs text-slate-400">Weeks</p>
+                      <p className="text-xs text-muted">Weeks</p>
                     </div>
-                    <div className="p-3 rounded-lg bg-white/10">
-                      <p className="text-2xl font-bold text-white">
+                    <div className="rounded-lg bg-surface p-3">
+                      <p className="text-2xl font-bold text-foreground">
                         {babyAge.months}
                       </p>
-                      <p className="text-xs text-slate-400">Months</p>
+                      <p className="text-xs text-muted">Months</p>
                     </div>
                   </div>
                 </div>
@@ -605,34 +605,34 @@ export function BabyTrackerPage() {
               {peanutRecords[0] && (
                 <>
                   <Card className="p-6">
-                    <h3 className="font-display font-semibold text-white mb-4">
+                    <h3 className="mb-4 font-display font-semibold text-foreground">
                       Latest Measurements
                     </h3>
                     <div className="space-y-4">
-                      <div className="flex items-center justify-between p-4 rounded-xl bg-white/5">
+                      <div className="flex items-center justify-between rounded-lg bg-surface p-4">
                         <div className="flex items-center gap-3">
-                          <Scale className="w-5 h-5 text-emerald-400" />
-                          <span className="text-slate-400">Weight</span>
+                          <Scale className="h-5 w-5 text-emerald-600" />
+                          <span className="text-muted">Weight</span>
                         </div>
-                        <span className="text-xl font-bold text-white">
+                        <span className="text-xl font-bold text-foreground">
                           {peanutRecords[0].weight} kg
                         </span>
                       </div>
-                      <div className="flex items-center justify-between p-4 rounded-xl bg-white/5">
+                      <div className="flex items-center justify-between rounded-lg bg-surface p-4">
                         <div className="flex items-center gap-3">
-                          <Ruler className="w-5 h-5 text-blue-400" />
-                          <span className="text-slate-400">Height</span>
+                          <Ruler className="h-5 w-5 text-accent-500" />
+                          <span className="text-muted">Height</span>
                         </div>
-                        <span className="text-xl font-bold text-white">
+                        <span className="text-xl font-bold text-foreground">
                           {peanutRecords[0].height} cm
                         </span>
                       </div>
-                      <div className="flex items-center justify-between p-4 rounded-xl bg-white/5">
+                      <div className="flex items-center justify-between rounded-lg bg-surface p-4">
                         <div className="flex items-center gap-3">
-                          <Activity className="w-5 h-5 text-pink-400" />
-                          <span className="text-slate-400">Heart Rate</span>
+                          <Activity className="h-5 w-5 text-primary-500" />
+                          <span className="text-muted">Heart Rate</span>
                         </div>
-                        <span className="text-xl font-bold text-white">
+                        <span className="text-xl font-bold text-foreground">
                           {peanutRecords[0].heartRate} bpm
                         </span>
                       </div>
@@ -640,20 +640,20 @@ export function BabyTrackerPage() {
                   </Card>
 
                   <Card className="p-6">
-                    <h3 className="font-display font-semibold text-white mb-4">
+                    <h3 className="mb-4 font-display font-semibold text-foreground">
                       Growth Trend
                     </h3>
                     <div className="flex items-center gap-4">
-                      <TrendingUp className="w-12 h-12 text-emerald-400" />
+                      <TrendingUp className="h-12 w-12 text-emerald-600" />
                       <div>
-                        <p className="text-2xl font-bold text-white">+0.4 kg</p>
-                        <p className="text-sm text-slate-400">
+                        <p className="text-2xl font-bold text-foreground">+0.4 kg</p>
+                        <p className="text-sm text-muted">
                           Since last checkup
                         </p>
                       </div>
                     </div>
-                    <div className="mt-4 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                      <p className="text-sm text-emerald-300">
+                    <div className="mt-4 rounded-lg border border-emerald-200 bg-emerald-50 p-4">
+                      <p className="text-sm text-emerald-700">
                         ✓ Growing at a healthy rate
                       </p>
                     </div>
@@ -666,11 +666,11 @@ export function BabyTrackerPage() {
           {/* Prompt to set dates if not configured */}
           {!babyAge && (
             <Card className="p-6 text-center">
-              <BabyIcon className="w-12 h-12 text-purple-400 mx-auto mb-4" />
-              <h3 className="text-lg font-display font-semibold text-white mb-2">
+              <BabyIcon className="mx-auto mb-4 h-12 w-12 text-accent-500" />
+              <h3 className="mb-2 font-display text-lg font-semibold text-foreground">
                 Set Baby's Birth Date
               </h3>
-              <p className="text-slate-400 mb-4">
+              <p className="mb-4 text-muted">
                 Configure the birth date to see your baby's age and development
                 milestones
               </p>
@@ -684,7 +684,7 @@ export function BabyTrackerPage() {
           {/* Growth Chart */}
           {peanutRecords.length > 1 && (
             <Card className="p-6">
-              <h3 className="font-display font-semibold text-white mb-4">
+              <h3 className="mb-4 font-display font-semibold text-foreground">
                 Growth Chart
               </h3>
               <div className="h-64">
@@ -695,11 +695,11 @@ export function BabyTrackerPage() {
 
           {/* Records */}
           <Card className="p-6">
-            <h3 className="font-display font-semibold text-white mb-4">
+            <h3 className="mb-4 font-display font-semibold text-foreground">
               Development Records
             </h3>
             {peanutRecords.length === 0 ? (
-              <div className="text-center py-8 text-slate-500">
+              <div className="py-8 text-center text-muted">
                 <Calendar className="w-12 h-12 mx-auto mb-3 opacity-50" />
                 <p>No records yet. Add your first checkup!</p>
               </div>
@@ -711,33 +711,33 @@ export function BabyTrackerPage() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.1 }}
-                    className="flex items-center gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors"
+                    className="flex items-center gap-4 rounded-lg border border-line bg-surface p-4 transition-colors hover:border-accent-200 hover:bg-accent-50/50"
                   >
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-violet-500/20 flex items-center justify-center">
-                      <Calendar className="w-6 h-6 text-purple-400" />
+                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-accent-50">
+                      <Calendar className="h-6 w-6 text-accent-500" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium text-white">
+                      <p className="font-medium text-foreground">
                         {new Date(record.date).toLocaleDateString('en-US', {
                           month: 'long',
                           day: 'numeric',
                           year: 'numeric',
                         })}
                       </p>
-                      <p className="text-sm text-slate-400">{record.notes}</p>
+                      <p className="text-sm text-muted">{record.notes}</p>
                     </div>
                     <div className="flex gap-4 text-center">
                       <div>
-                        <p className="text-white font-medium">
+                        <p className="font-medium text-foreground">
                           {record.weight} kg
                         </p>
-                        <p className="text-xs text-slate-500">Weight</p>
+                        <p className="text-xs text-muted">Weight</p>
                       </div>
                       <div>
-                        <p className="text-white font-medium">
+                        <p className="font-medium text-foreground">
                           {record.height} cm
                         </p>
-                        <p className="text-xs text-slate-500">Height</p>
+                        <p className="text-xs text-muted">Height</p>
                       </div>
                     </div>
                   </motion.div>
@@ -802,13 +802,13 @@ export function BabyTrackerPage() {
 
               {bmiCategory && (
                 <div
-                  className="p-4 rounded-xl"
+                  className="rounded-lg border border-line bg-surface p-4"
                   style={{
                     backgroundColor: `${bmiCategory.color}20`,
                     borderColor: `${bmiCategory.color}50`,
                   }}
                 >
-                  <p className="text-sm text-slate-300">
+                  <p className="text-sm text-foreground">
                     BMI:{' '}
                     <span
                       className="font-bold"
@@ -816,7 +816,7 @@ export function BabyTrackerPage() {
                     >
                       {momBMI}
                     </span>
-                    <span className="ml-2 text-slate-400">
+                    <span className="ml-2 text-muted">
                       ({bmiCategory.label})
                     </span>
                   </p>
@@ -882,14 +882,14 @@ export function BabyTrackerPage() {
       >
         <div className="space-y-6">
           {SHOW_PREGNANCY_UI && (
-            <div className="p-4 rounded-xl bg-pink-500/10 border border-pink-500/20">
+            <div className="rounded-lg border border-primary-200 bg-primary-50 p-4">
               <div className="flex items-center gap-3 mb-2">
-                <Heart className="w-5 h-5 text-pink-400" />
-                <h4 className="font-medium text-white">
+                <Heart className="h-5 w-5 text-primary-500" />
+                <h4 className="font-medium text-foreground">
                   Pregnancy Tracking (Soya)
                 </h4>
               </div>
-              <p className="text-sm text-slate-400 mb-4">
+              <p className="mb-4 text-sm text-muted">
                 Set the conception date to track pregnancy progress
               </p>
               <DatePicker
@@ -905,12 +905,12 @@ export function BabyTrackerPage() {
             </div>
           )}
 
-          <div className="p-4 rounded-xl bg-purple-500/10 border border-purple-500/20">
+          <div className="rounded-lg border border-accent-200 bg-accent-50 p-4">
             <div className="flex items-center gap-3 mb-2">
-              <BabyIcon className="w-5 h-5 text-purple-400" />
-              <h4 className="font-medium text-white">Baby Tracking (Peanut)</h4>
+              <BabyIcon className="h-5 w-5 text-accent-500" />
+              <h4 className="font-medium text-foreground">Baby Tracking (Peanut)</h4>
             </div>
-            <p className="text-sm text-slate-400 mb-4">
+            <p className="mb-4 text-sm text-muted">
               Set the birth date to track your baby's growth
             </p>
             <DatePicker

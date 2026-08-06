@@ -163,7 +163,7 @@ export function LiveSharePage() {
       className="space-y-6"
     >
       <div>
-        <h1 className="text-2xl lg:text-3xl font-display font-bold text-white flex items-center gap-3">
+        <h1 className="flex items-center gap-3 font-display text-2xl font-bold text-foreground lg:text-3xl">
           Live Share
           {isAdminRoom && (
             <Badge variant="warning" className="text-sm">
@@ -171,23 +171,23 @@ export function LiveSharePage() {
             </Badge>
           )}
         </h1>
-        <p className="text-slate-400 mt-1">Share text and files in real-time</p>
+        <p className="mt-1 text-muted">Share text and files in real-time</p>
       </div>
 
       <Card className="p-6 space-y-4">
         {user ? (
-          <div className="bg-primary-500/10 border border-primary-500/20 p-4 rounded-xl flex items-center justify-between">
+          <div className="flex items-center justify-between rounded-lg border border-accent-200 bg-accent-50 p-4">
             <div>
-              <h3 className="text-primary-300 font-medium flex items-center gap-2">
+              <h3 className="flex items-center gap-2 font-semibold text-accent-700">
                 <User className="w-4 h-4" /> Personal Admin Room
               </h3>
-              <p className="text-sm text-slate-400 mt-1">
+              <p className="mt-1 text-sm text-muted">
                 You are in your persistent room. Share your Room ID with others
                 to invite them.
               </p>
             </div>
             <div className="text-right">
-              <span className="text-2xl font-mono text-white block">
+              <span className="block font-mono text-2xl text-foreground">
                 {activeRoom}
               </span>
             </div>
@@ -214,11 +214,11 @@ export function LiveSharePage() {
         )}
 
         {activeRoom && (
-          <div className="flex flex-col sm:flex-row sm:items-center gap-2 justify-between bg-white/5 border border-white/10 rounded-xl p-3">
-            <div className="text-sm text-slate-300">
+          <div className="flex flex-col justify-between gap-2 rounded-lg border border-line bg-surface p-3 sm:flex-row sm:items-center">
+            <div className="min-w-0 text-sm text-foreground">
               Sharing Link:{' '}
               <span
-                className="text-blue-400 underline cursor-pointer"
+                className="cursor-pointer break-all text-accent-600 underline"
                 onClick={() => window.open(roomUrl, '_blank')}
               >
                 {roomUrl}
@@ -253,7 +253,7 @@ export function LiveSharePage() {
 
           <div className="flex-1 overflow-y-auto space-y-3 custom-scrollbar pr-2">
             {messages.length === 0 ? (
-              <div className="h-full flex items-center justify-center text-slate-500 text-sm">
+              <div className="flex h-full items-center justify-center text-sm text-muted">
                 No messages yet. Start the conversation!
               </div>
             ) : (
@@ -265,15 +265,15 @@ export function LiveSharePage() {
                     className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}
                   >
                     <div
-                      className={`max-w-[85%] p-3 rounded-xl border ${
+                      className={`max-w-[85%] rounded-lg border p-3 ${
                         msg.isAdmin
-                          ? 'bg-primary-500/20 border-primary-500/30'
-                          : 'bg-white/5 border-white/10'
+                          ? 'border-accent-200 bg-accent-50'
+                          : 'border-line bg-surface'
                       }`}
                     >
-                      <div className="flex items-center justify-between gap-4 text-xs text-slate-500 mb-1">
+                      <div className="mb-1 flex items-center justify-between gap-4 text-xs text-muted">
                         <span
-                          className={`${msg.isAdmin ? 'text-primary-300 font-medium' : ''}`}
+                          className={`${msg.isAdmin ? 'font-medium text-accent-700' : ''}`}
                         >
                           {msg.author}
                         </span>
@@ -284,7 +284,7 @@ export function LiveSharePage() {
                           })}
                         </span>
                       </div>
-                      <p className="text-sm text-slate-200 whitespace-pre-wrap">
+                      <p className="whitespace-pre-wrap text-sm text-foreground">
                         {msg.content}
                       </p>
                     </div>
@@ -294,7 +294,7 @@ export function LiveSharePage() {
             )}
           </div>
 
-          <div className="flex gap-2 pt-2 border-t border-white/10">
+          <div className="flex gap-2 border-t border-line pt-2">
             <Input
               placeholder="Type a message..."
               value={message}
@@ -315,21 +315,23 @@ export function LiveSharePage() {
 
           <div className="flex-1 overflow-y-auto space-y-3 custom-scrollbar pr-2">
             {files.length === 0 ? (
-              <div className="h-full flex items-center justify-center text-slate-500 text-sm">
+              <div className="flex h-full items-center justify-center text-sm text-muted">
                 No files shared yet.
               </div>
             ) : (
               files.map((file) => (
                 <div
                   key={file.id}
-                  className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-center gap-3"
+                  className="flex items-center gap-3 rounded-lg border border-line bg-surface p-3"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">
-                    <FileIcon className="w-5 h-5 text-slate-400" />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-md bg-accent-50">
+                    <FileIcon className="h-5 w-5 text-accent-500" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm text-white truncate">{file.name}</p>
-                    <p className="text-xs text-slate-500">
+                    <p className="truncate text-sm font-medium text-foreground">
+                      {file.name}
+                    </p>
+                    <p className="text-xs text-muted">
                       {formatFileSize(file.size)} •{' '}
                       {new Date(file.timestamp).toLocaleDateString()}
                     </p>
@@ -346,7 +348,7 @@ export function LiveSharePage() {
             )}
           </div>
 
-          <div className="pt-2 border-t border-white/10">
+          <div className="border-t border-line pt-2">
             <input
               type="file"
               id="live-share-file"

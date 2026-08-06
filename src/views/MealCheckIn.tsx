@@ -417,7 +417,7 @@ export const MealCheckIn: React.FC = () => {
   if (!user) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-muted">
           {t('auth.pleaseLogin')}
         </p>
       </div>
@@ -425,44 +425,44 @@ export const MealCheckIn: React.FC = () => {
   }
 
   return (
-    <div className="container mx-auto p-4 max-w-4xl">
+    <div className="container mx-auto max-w-4xl p-4">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+        <h1 className="mb-2 text-3xl font-bold text-foreground">
           {t('mealCheckIn.title')}
         </h1>
-        <p className="text-gray-600 dark:text-gray-400">
+        <p className="text-muted">
           {t('mealCheckIn.description')}
         </p>
       </div>
 
       {error && (
-        <Card className="p-4 mb-6 border-red-500/40 bg-red-500/10">
-          <p className="text-sm text-red-200">{error}</p>
+        <Card className="mb-6 border-red-200 bg-red-50 p-4">
+          <p className="text-sm text-red-700">{error}</p>
         </Card>
       )}
 
       {/* Stats Card */}
       {cycleStats && (
-        <Card className="p-6 mb-6 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border-green-200 dark:border-green-800">
+        <Card className="mb-6 border-emerald-200 bg-emerald-50 p-6">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
+              <h3 className="mb-1 text-lg font-semibold text-foreground">
                 All Cycles Progress
               </h3>
-              <p className="text-3xl font-bold text-green-600 dark:text-green-400">
+              <p className="text-3xl font-bold text-emerald-600">
                 {cycleStats.checkedInDays} / {cycleStats.totalCycleDays}
               </p>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+              <p className="mt-1 text-sm text-muted">
                 {cycleStats.percentage}% {t('mealCheckIn.complete')}
               </p>
             </div>
-            <div className="h-20 w-20 rounded-full border-4 border-green-600 dark:border-green-400 flex items-center justify-center">
-              <CheckCircle className="w-10 h-10 text-green-600 dark:text-green-400" />
+            <div className="flex h-20 w-20 items-center justify-center rounded-full border-4 border-emerald-500 bg-elevated">
+              <CheckCircle className="h-10 w-10 text-emerald-600" />
             </div>
           </div>
-          <div className="mt-4 bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+          <div className="mt-4 h-3 overflow-hidden rounded-full bg-emerald-100">
             <div
-              className="bg-green-600 dark:bg-green-400 h-full transition-all duration-500"
+              className="h-full bg-emerald-500 transition-all duration-500"
               style={{ width: `${cycleStats.percentage}%` }}
             />
           </div>
@@ -474,12 +474,12 @@ export const MealCheckIn: React.FC = () => {
         {/* Calendar Header */}
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-6 gap-4">
             <div className="flex flex-col gap-1">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                <CalendarIcon className="w-6 h-6" />
+              <h2 className="flex items-center gap-2 text-xl font-bold text-foreground">
+                <CalendarIcon className="h-6 w-6 text-accent-500" />
                 {format(viewDate, 'MMMM yyyy')}
               </h2>
               {cycleConfigs.length > 0 && cycleConfig && (
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <p className="text-xs text-muted">
                   Cycles: {cycleConfigs.length} · Latest started:{' '}
                   {format(
                     new Date(cycleConfig.startDate + 'T00:00:00'),
@@ -490,7 +490,7 @@ export const MealCheckIn: React.FC = () => {
             </div>
 
             <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center lg:w-auto">
-              <div className="flex w-full items-center justify-between bg-gray-100 dark:bg-gray-800 rounded-lg p-1 sm:w-auto sm:justify-start">
+              <div className="flex w-full items-center justify-between rounded-lg border border-line bg-surface p-1 sm:w-auto sm:justify-start">
                 <Button
                   variant="ghost"
                   size="sm"
@@ -570,7 +570,7 @@ export const MealCheckIn: React.FC = () => {
           {weekdayLabels.map((label) => (
             <div
               key={label}
-              className="text-center text-xs sm:text-sm font-semibold text-gray-500 dark:text-gray-400 py-1"
+              className="py-1 text-center text-xs font-semibold text-muted sm:text-sm"
             >
               {label}
             </div>
@@ -605,10 +605,10 @@ export const MealCheckIn: React.FC = () => {
                   disabled={disabled}
                   className={`
                   aspect-square rounded-lg border-2 transition-all duration-200
-                  ${today ? 'border-blue-500 dark:border-blue-400' : 'border-gray-200 dark:border-gray-700'}
-                  ${checked ? 'bg-green-500 dark:bg-green-600 text-white' : 'bg-white dark:bg-gray-800'}
+                  ${today ? 'border-accent-500' : 'border-line'}
+                  ${checked ? 'bg-emerald-500 text-white' : 'bg-elevated text-foreground'}
                   ${disabled ? 'opacity-40 cursor-not-allowed' : 'hover:shadow-md cursor-pointer'}
-                  ${!checked && !disabled ? 'hover:border-blue-400 dark:hover:border-blue-500' : ''}
+                  ${!checked && !disabled ? 'hover:border-accent-400 hover:bg-accent-50' : ''}
                   relative flex items-center justify-center p-2
                 `}
                 >
@@ -673,7 +673,7 @@ export const MealCheckIn: React.FC = () => {
       >
         <div className="space-y-4">
           <div>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+            <p className="mb-2 text-sm text-muted">
               {t('mealCheckIn.selectedDate')}:{' '}
               <span className="font-semibold">{selectedDate}</span>
             </p>
@@ -702,7 +702,7 @@ export const MealCheckIn: React.FC = () => {
                     setPreviewUrl(null);
                     if (fileInputRef.current) fileInputRef.current.value = '';
                   }}
-                  className="absolute top-2 right-2 bg-red-500 text-white p-2 rounded-full hover:bg-red-600"
+                  className="absolute right-2 top-2 rounded-md bg-red-600 p-2 text-white hover:bg-red-700"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -710,13 +710,13 @@ export const MealCheckIn: React.FC = () => {
             ) : (
               <button
                 onClick={() => fileInputRef.current?.click()}
-                className="w-full h-64 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg flex flex-col items-center justify-center hover:border-blue-400 dark:hover:border-blue-500 transition-colors"
+                className="flex h-64 w-full flex-col items-center justify-center rounded-lg border-2 border-dashed border-line bg-surface transition-colors hover:border-accent-400 hover:bg-accent-50"
               >
-                <Camera className="w-12 h-12 text-gray-400 mb-2" />
-                <p className="text-gray-600 dark:text-gray-400">
+                <Camera className="mb-2 h-12 w-12 text-accent-400" />
+                <p className="text-muted">
                   {t('mealCheckIn.uploadImage')}
                 </p>
-                <p className="text-sm text-gray-500 dark:text-gray-500 mt-1">
+                <p className="mt-1 text-sm text-muted">
                   {t('mealCheckIn.maxSize')}
                 </p>
               </button>
@@ -725,14 +725,14 @@ export const MealCheckIn: React.FC = () => {
 
           {/* Notes */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="mb-2 block text-sm font-medium text-foreground">
               {t('mealCheckIn.notes')}
             </label>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-md border border-line bg-elevated px-3 py-2 text-foreground placeholder:text-muted focus:border-accent-500 focus:ring-2 focus:ring-accent-100"
               placeholder={t('mealCheckIn.notesPlaceholder')}
             />
           </div>
@@ -772,7 +772,7 @@ export const MealCheckIn: React.FC = () => {
         {selectedCheckIn && (
           <div className="space-y-4">
             <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+              <p className="mb-2 text-sm text-muted">
                 {t('mealCheckIn.date')}:{' '}
                 <span className="font-semibold">{selectedCheckIn.date}</span>
               </p>
@@ -788,10 +788,10 @@ export const MealCheckIn: React.FC = () => {
 
             {selectedCheckIn.notes && (
               <div>
-                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">
+                <h4 className="mb-2 font-semibold text-foreground">
                   {t('mealCheckIn.notes')}:
                 </h4>
-                <p className="text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800 p-3 rounded-lg">
+                <p className="rounded-lg bg-surface p-3 text-foreground">
                   {selectedCheckIn.notes}
                 </p>
               </div>
@@ -829,7 +829,7 @@ export const MealCheckIn: React.FC = () => {
         size="sm"
       >
         <div className="space-y-4">
-          <p className="text-gray-700 dark:text-gray-300">
+          <p className="text-foreground">
             {t('mealCheckIn.deleteWarning')}
           </p>
           <div className="flex gap-3">
@@ -859,7 +859,7 @@ export const MealCheckIn: React.FC = () => {
         size="sm"
       >
         <div className="space-y-4">
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+          <p className="text-sm text-muted">
             {t('mealCheckIn.shareDescription')}
           </p>
 
@@ -877,8 +877,8 @@ export const MealCheckIn: React.FC = () => {
             </Button>
           ) : (
             <div className="space-y-3">
-              <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 rounded-lg p-3">
-                <span className="text-xs text-gray-700 dark:text-gray-300 flex-1 break-all select-all">
+              <div className="flex items-center gap-2 rounded-lg border border-line bg-surface p-3">
+                <span className="flex-1 select-all break-all text-xs text-foreground">
                   {`${window.location.origin}/meal-checkin/share/${shareToken}`}
                 </span>
               </div>
@@ -911,7 +911,7 @@ export const MealCheckIn: React.FC = () => {
         size="sm"
       >
         <div className="space-y-4">
-          <p className="text-gray-700 dark:text-gray-300">
+          <p className="text-foreground">
             {t('mealCheckIn.revokeConfirm')}
           </p>
           <div className="flex gap-3">
@@ -951,8 +951,8 @@ export const MealCheckIn: React.FC = () => {
             onDragLeave={handleQuickDrag}
             onDrop={handleQuickDrop}
             className={`
-              relative w-full border-2 border-dashed rounded-xl p-8 flex flex-col items-center justify-center transition-all duration-200
-              ${dragActive ? 'border-blue-500 bg-blue-500/10' : 'border-gray-300 dark:border-gray-600 hover:border-blue-400 dark:hover:border-blue-500 bg-transparent'}
+              relative flex w-full flex-col items-center justify-center rounded-lg border-2 border-dashed p-8 transition-all duration-200
+              ${dragActive ? 'border-accent-500 bg-accent-50' : 'border-line bg-surface hover:border-accent-400 hover:bg-accent-50'}
             `}
           >
             <input
@@ -967,11 +967,11 @@ export const MealCheckIn: React.FC = () => {
               }}
               className="hidden"
             />
-            <UploadCloud className="w-12 h-12 text-gray-400 mb-3" />
-            <p className="text-gray-700 dark:text-gray-300 font-medium text-center">
+            <UploadCloud className="mb-3 h-12 w-12 text-accent-400" />
+            <p className="text-center font-medium text-foreground">
               {t('mealCheckIn.dragDropMulti')}
             </p>
-            <p className="text-xs text-gray-500 dark:text-gray-500 mt-2">
+            <p className="mt-2 text-xs text-muted">
               {t('mealCheckIn.maxSize')}
             </p>
             <Button
@@ -986,9 +986,9 @@ export const MealCheckIn: React.FC = () => {
 
           {/* Processing State */}
           {isProcessingMetadata && (
-            <div className="flex items-center justify-center gap-3 p-4 bg-gray-50 dark:bg-gray-800 rounded-xl">
+            <div className="flex items-center justify-center gap-3 rounded-lg bg-surface p-4">
               <Spinner size="sm" />
-              <span className="text-sm text-gray-600 dark:text-gray-400">
+              <span className="text-sm text-muted">
                 {t('mealCheckIn.processingMetadata')}
               </span>
             </div>
@@ -996,9 +996,9 @@ export const MealCheckIn: React.FC = () => {
 
           {/* Warnings (Duplicate Dates) */}
           {hasDuplicateDatesInUpload && (
-            <div className="flex items-start gap-3 p-4 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/50 rounded-xl">
+            <div className="flex items-start gap-3 rounded-lg border border-amber-200 bg-amber-50 p-4">
               <AlertTriangle className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-              <span className="text-sm text-amber-800 dark:text-amber-300">
+              <span className="text-sm text-amber-800">
                 {t('mealCheckIn.duplicateDateWarning')}
               </span>
             </div>
@@ -1007,11 +1007,11 @@ export const MealCheckIn: React.FC = () => {
           {/* Preview Grid */}
           {quickUploadItems.length > 0 && (
             <div className="space-y-4">
-              <h4 className="font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+              <h4 className="flex items-center gap-2 font-semibold text-foreground">
                 <ImageIcon className="w-5 h-5" />
                 Selected Meals ({quickUploadItems.length})
               </h4>
-              <div className="max-h-[350px] overflow-y-auto pr-1 space-y-4 divide-y divide-gray-150 dark:divide-gray-800">
+              <div className="max-h-[350px] space-y-4 divide-y divide-line overflow-y-auto pr-1">
                 {quickUploadItems.map((item, index) => {
                   const isDuplicate = duplicateDatesInUpload.includes(item.date);
                   const isExisting = hasCheckIn(item.date);
@@ -1021,11 +1021,11 @@ export const MealCheckIn: React.FC = () => {
                       key={item.id}
                       className={`
                         pt-4 first:pt-0 flex flex-col md:flex-row gap-4 relative group
-                        ${isDuplicate ? 'bg-amber-500/5 -mx-2 px-2 rounded-lg' : ''}
+                        ${isDuplicate ? '-mx-2 rounded-lg bg-amber-50 px-2' : ''}
                       `}
                     >
                       {/* Image Thumbnail */}
-                      <div className="relative w-full md:w-32 h-32 shrink-0 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                      <div className="relative h-32 w-full shrink-0 overflow-hidden rounded-lg border border-line bg-surface md:w-32">
                         <img
                           src={item.previewUrl}
                           alt={`Preview ${index + 1}`}
@@ -1034,7 +1034,7 @@ export const MealCheckIn: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => handleRemoveQuickItem(item.id)}
-                          className="absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white p-1 rounded-full shadow-md"
+                          className="absolute right-1 top-1 rounded-md bg-red-600 p-1 text-white shadow-md hover:bg-red-700"
                         >
                           <X className="w-3 h-3" />
                         </button>
@@ -1044,7 +1044,7 @@ export const MealCheckIn: React.FC = () => {
                       <div className="flex-1 space-y-3">
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                           <div>
-                            <label className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">
+                            <label className="mb-1 block text-xs font-semibold uppercase text-muted">
                               {t('mealCheckIn.photoDate')}
                             </label>
                             <DatePicker
@@ -1058,7 +1058,7 @@ export const MealCheckIn: React.FC = () => {
                               </p>
                             )}
                             {isExisting && !isDuplicate && (
-                              <p className="text-xs text-blue-500 dark:text-blue-400 mt-1">
+                              <p className="mt-1 text-xs text-accent-600">
                                 Will overwrite existing check-in
                               </p>
                             )}
@@ -1066,7 +1066,7 @@ export const MealCheckIn: React.FC = () => {
                         </div>
 
                         <div>
-                          <label className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1">
+                          <label className="mb-1 block text-xs font-semibold uppercase text-muted">
                             {t('mealCheckIn.photoNotes')}
                           </label>
                           <input
@@ -1074,7 +1074,7 @@ export const MealCheckIn: React.FC = () => {
                             value={item.notes}
                             onChange={(e) => handleQuickItemNotesChange(item.id, e.target.value)}
                             placeholder={t('mealCheckIn.notesPlaceholder')}
-                            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                            className="w-full rounded-md border border-line bg-elevated px-3 py-2 text-sm text-foreground outline-none placeholder:text-muted focus:border-accent-500 focus:ring-2 focus:ring-accent-100"
                           />
                         </div>
                       </div>
@@ -1086,7 +1086,7 @@ export const MealCheckIn: React.FC = () => {
           )}
 
           {/* Action Buttons */}
-          <div className="flex gap-3 pt-4 border-t border-gray-150 dark:border-gray-800">
+          <div className="flex gap-3 border-t border-line pt-4">
             <Button
               onClick={() => {
                 setShowQuickUploadModal(false);
@@ -1113,7 +1113,7 @@ export const MealCheckIn: React.FC = () => {
       </Modal>
 
       {isLoading && (
-        <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/25">
           <Spinner />
         </div>
       )}

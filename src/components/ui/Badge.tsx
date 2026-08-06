@@ -31,12 +31,12 @@ export function Badge({
   children,
 }: BadgeProps) {
   const variants = {
-    default: 'bg-slate-500/20 text-slate-300 border-slate-500/30',
-    primary: 'bg-primary-500/20 text-primary-300 border-primary-500/30',
-    success: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
-    warning: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
-    danger: 'bg-red-500/20 text-red-300 border-red-500/30',
-    info: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
+    default: 'border-line bg-surface text-muted',
+    primary: 'border-primary-200 bg-primary-50 text-primary-700',
+    success: 'border-emerald-200 bg-emerald-50 text-emerald-700',
+    warning: 'border-amber-200 bg-amber-50 text-amber-700',
+    danger: 'border-red-200 bg-red-50 text-red-700',
+    info: 'border-accent-200 bg-accent-50 text-accent-700',
   };
 
   const sizes = {

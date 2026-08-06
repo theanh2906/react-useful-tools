@@ -72,10 +72,10 @@ export function CryptoToolsPage() {
       className="space-y-6"
     >
       <div>
-        <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">
+        <h1 className="font-display text-2xl font-bold text-foreground lg:text-3xl">
           Crypto Tools
         </h1>
-        <p className="text-slate-400 mt-1">Encrypt and decrypt text securely</p>
+        <p className="mt-1 text-muted">Encrypt and decrypt text securely</p>
       </div>
 
       <Card className="p-6 space-y-4">
@@ -84,10 +84,10 @@ export function CryptoToolsPage() {
             <button
               key={m}
               onClick={() => setMode(m as 'encrypt' | 'decrypt')}
-              className={`px-4 py-2 rounded-xl font-medium transition-all ${
+              className={`rounded-md px-4 py-2 font-medium transition-colors ${
                 mode === m
-                  ? 'bg-gradient-to-r from-primary-500 to-pink-500 text-white'
-                  : 'bg-white/5 text-slate-400 hover:bg-white/10'
+                  ? 'bg-primary-500 text-white'
+                  : 'border border-line bg-elevated text-muted hover:bg-surface hover:text-foreground'
               }`}
             >
               {m === 'encrypt' ? 'Encrypt' : 'Decrypt'}
@@ -100,10 +100,10 @@ export function CryptoToolsPage() {
             <button
               key={alg.id}
               onClick={() => setAlgorithm(alg.id)}
-              className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+              className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
                 algorithm === alg.id
-                  ? 'bg-white/20 text-white'
-                  : 'bg-white/5 text-slate-400 hover:bg-white/10'
+                  ? 'bg-accent-50 text-accent-700'
+                  : 'border border-line bg-elevated text-muted hover:bg-surface hover:text-foreground'
               }`}
             >
               {alg.label}
@@ -129,7 +129,7 @@ export function CryptoToolsPage() {
           onChange={(e) => setKey(e.target.value)}
         />
 
-        <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+        <div className="rounded-lg border border-line bg-surface p-4">
           <div className="flex items-center justify-between mb-3">
             <Badge variant="primary">Output</Badge>
             <Button variant="ghost" size="sm" onClick={handleCopy}>
@@ -141,7 +141,7 @@ export function CryptoToolsPage() {
               {copied ? 'Copied' : 'Copy'}
             </Button>
           </div>
-          <p className="text-sm text-slate-300 break-all">
+          <p className="break-all text-sm text-foreground">
             {output || 'Output will appear here.'}
           </p>
         </div>

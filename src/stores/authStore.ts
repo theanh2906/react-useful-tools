@@ -126,6 +126,7 @@ export const useAuthStore = create<AuthState>()(
         isAuthenticated: state.isAuthenticated,
       }),
       storage: createJSONStorage(() => localStorage),
+      skipHydration: true,
     }
   )
 );

@@ -125,41 +125,35 @@ export function AuthPage() {
   };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center py-12 px-4">
+    <div className="relative flex min-h-[80vh] items-center justify-center bg-background px-4 py-16 sm:px-6">
       {/* Back to Home Button */}
       <Button
         variant="ghost"
-        className="fixed top-4 left-4 z-20"
+        className="fixed left-4 top-4 z-20 bg-elevated"
         onClick={() => router.push('/')}
       >
         <ArrowLeft className="w-4 h-4 mr-2" />
         Back to Home
       </Button>
 
-      {/* Background decorations */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-500/20 rounded-full blur-3xl animate-pulse-slow" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent-500/15 rounded-full blur-3xl animate-pulse-slow animate-delay-500" />
-      </div>
-
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md relative z-10"
+        className="relative z-10 w-full max-w-md"
       >
         {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 mb-4">
-            <Sparkles className="w-8 h-8 text-white" />
+        <div className="mb-7 text-center">
+          <div className="mb-4 inline-flex size-14 items-center justify-center rounded-lg border border-accent-200 bg-accent-50">
+            <Sparkles className="size-7 text-accent-600" />
           </div>
-          <h1 className="text-2xl font-display font-bold text-white">
+          <h1 className="font-display text-2xl font-bold text-foreground">
             {isAdminLogin
               ? 'Administrator Access'
               : isSignUp
               ? 'Create Account'
               : 'Welcome Back'}
           </h1>
-          <p className="text-slate-400 mt-2">
+          <p className="mt-2 text-sm text-muted">
             {isAdminLogin
               ? 'Enter your secret key to continue'
               : isSignUp
@@ -168,7 +162,7 @@ export function AuthPage() {
           </p>
         </div>
 
-        <Card className="p-6 lg:p-8">
+        <Card className="p-6 shadow-sm sm:p-8">
           {/* Social Login Buttons & Divider */}
           {!isAdminLogin && (
             <>
@@ -221,7 +215,7 @@ export function AuthPage() {
                     setIsSignUp(false);
                   }}
                 >
-                  <Lock className="w-5 h-5 mr-2 text-primary-400" />
+                  <Lock className="mr-2 size-5 text-accent-600" />
                   Continue as Administrator
                 </Button>
               </div>
@@ -229,10 +223,10 @@ export function AuthPage() {
               {/* Divider */}
               <div className="relative mb-6">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-white/10" />
+                  <div className="w-full border-t border-line" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-4 bg-slate-900 text-slate-500">
+                  <span className="bg-elevated px-4 text-muted">
                     or continue with email
                   </span>
                 </div>
@@ -290,7 +284,7 @@ export function AuthPage() {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="hover:text-white transition-colors"
+                    className="text-muted transition-colors hover:text-foreground"
                   >
                     {showPassword ? (
                       <EyeOff className="w-4 h-4" />
@@ -309,7 +303,7 @@ export function AuthPage() {
                 <div className="flex justify-end">
                   <button
                     type="button"
-                    className="text-sm text-primary-400 hover:text-primary-300"
+                    className="text-sm font-medium text-accent-600 hover:text-accent-700"
                   >
                     Forgot password?
                   </button>
@@ -325,7 +319,7 @@ export function AuthPage() {
 
           {/* Toggle Sign Up / Sign In / Admin */}
           <div className="mt-6 flex flex-col items-center space-y-3">
-            <p className="text-sm text-slate-400">
+            <p className="text-sm text-muted">
               {!isAdminLogin && (
                 <>
                   {isSignUp
@@ -333,7 +327,7 @@ export function AuthPage() {
                     : "Don't have an account?"}{' '}
                   <button
                     onClick={() => setIsSignUp(!isSignUp)}
-                    className="text-primary-400 hover:text-primary-300 font-medium"
+                    className="font-semibold text-accent-600 hover:text-accent-700"
                   >
                     {isSignUp ? 'Sign In' : 'Sign Up'}
                   </button>
@@ -346,7 +340,7 @@ export function AuthPage() {
                 onClick={() => {
                   setIsAdminLogin(false);
                 }}
-                className="text-xs text-slate-500 hover:text-primary-400 transition-colors underline underline-offset-4"
+                className="text-xs text-muted underline underline-offset-4 transition-colors hover:text-accent-600"
               >
                 Back to User Login
               </button>
@@ -355,13 +349,13 @@ export function AuthPage() {
         </Card>
 
         {/* Terms */}
-        <p className="text-center text-xs text-slate-500 mt-6">
+        <p className="mt-6 text-center text-xs text-muted">
           By continuing, you agree to our{' '}
-          <a href="#" className="text-slate-400 hover:text-white">
+          <a href="#" className="font-medium text-foreground hover:text-accent-600">
             Terms of Service
           </a>{' '}
           and{' '}
-          <a href="#" className="text-slate-400 hover:text-white">
+          <a href="#" className="font-medium text-foreground hover:text-accent-600">
             Privacy Policy
           </a>
         </p>

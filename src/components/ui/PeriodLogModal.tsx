@@ -84,7 +84,7 @@ const PeriodLogModal: React.FC<PeriodLogModalProps> = ({
         </div>
 
         <div>
-          <label className="block text-xs text-slate-400 mb-2">
+          <label className="mb-2 block text-xs text-muted">
             {t('periodTracker.flowIntensity')}
           </label>
           <div className="flex gap-2">
@@ -93,10 +93,10 @@ const PeriodLogModal: React.FC<PeriodLogModalProps> = ({
                 key={flow}
                 onClick={() => setLogFlow(flow)}
                 className={cn(
-                  'px-3 py-1.5 rounded-lg text-xs font-medium transition-all',
+                  'rounded-md border px-3 py-1.5 text-xs font-medium transition-colors',
                   logFlow === flow
-                    ? 'bg-pink-500/30 text-pink-200 border border-pink-500/50'
-                    : 'bg-white/5 text-slate-400 border border-white/10 hover:bg-white/10'
+                    ? 'border-primary-300 bg-primary-50 text-primary-700'
+                    : 'border-line bg-elevated text-muted hover:bg-surface hover:text-foreground'
                 )}
               >
                 {t(`periodTracker.flow.${flow}`)}
@@ -106,14 +106,14 @@ const PeriodLogModal: React.FC<PeriodLogModalProps> = ({
         </div>
 
         <div>
-          <label className="block text-xs text-slate-400 mb-1">
+          <label className="mb-1 block text-xs text-muted">
             {t('periodTracker.notes')}
           </label>
           <textarea
             value={logNotes}
             onChange={(e) => setLogNotes(e.target.value)}
             rows={2}
-            className="w-full bg-white/10 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-1 focus:ring-primary-500 resize-none"
+            className="w-full resize-none rounded-md border border-line bg-elevated px-3 py-2 text-sm text-foreground placeholder:text-muted focus:border-accent-500 focus:outline-none focus:ring-1 focus:ring-accent-500"
             placeholder={t('periodTracker.notesPlaceholder')}
           />
         </div>

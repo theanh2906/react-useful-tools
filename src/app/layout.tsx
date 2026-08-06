@@ -1,8 +1,21 @@
 import type { Metadata, Viewport } from 'next';
-import Script from 'next/script';
+import { Be_Vietnam_Pro, JetBrains_Mono } from 'next/font/google';
 import { Providers } from '@/components/providers/Providers';
 import { AppInitializer } from '@/components/providers/AppInitializer';
 import './globals.css';
+
+const beVietnamPro = Be_Vietnam_Pro({
+  subsets: ['latin', 'vietnamese'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-be-vietnam-pro',
+  display: 'swap',
+});
+
+const jetBrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains-mono',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -32,7 +45,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: '#7c3aed',
+  themeColor: '#ffffff',
 };
 
 export default function RootLayout({
@@ -41,38 +54,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="font-sans antialiased">
+    <html lang="vi" suppressHydrationWarning>
+      <body
+        className={`${beVietnamPro.variable} ${jetBrainsMono.variable} font-sans antialiased`}
+      >
         <Providers>
           <AppInitializer>{children}</AppInitializer>
         </Providers>
-
-        <Script id="disable-zoom" strategy="afterInteractive">{`
-          document.addEventListener('gesturestart', function(e) { e.preventDefault(); }, { passive: false });
-          document.addEventListener('gesturechange', function(e) { e.preventDefault(); }, { passive: false });
-          document.addEventListener('gestureend', function(e) { e.preventDefault(); }, { passive: false });
-          document.addEventListener('touchmove', function(e) { if (e.touches.length > 1) { e.preventDefault(); } }, { passive: false });
-          (function() {
-            var lastTouchEnd = 0;
-            document.addEventListener('touchend', function(e) {
-              var now = Date.now();
-              if (now - lastTouchEnd <= 300) { e.preventDefault(); }
-              lastTouchEnd = now;
-            }, { passive: false });
-          })();
-        `}</Script>
       </body>
     </html>
   );

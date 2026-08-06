@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { listenSettings, saveSettings, UserSettings, DashboardLayoutItem } from '@/services/settingsService';
 import { useAppStore } from './appStore';
+import i18n from '@/i18n';
 
 export const DEFAULT_DASHBOARD_LAYOUT: DashboardLayoutItem[] = [
   { id: 'quick-setup', visible: true, order: 0 },
@@ -40,12 +41,14 @@ export const useSettingsStore = create<SettingsState>()(
         }
         if (newSettings.language) {
           useAppStore.getState().setLanguage(newSettings.language);
+          await i18n.changeLanguage(newSettings.language);
+          document.documentElement.lang = newSettings.language;
         }
       },
 
       initSettingsListener: async () => {
         set({ isLoading: true });
-        const unsubscribe = await listenSettings((dbSettings) => {
+        const unsubscribe = await listenSettings(async (dbSettings) => {
           if (dbSettings) {
             const currentSettings = get().settings;
             const updatedSettings = { ...currentSettings, ...dbSettings };
@@ -72,6 +75,8 @@ export const useSettingsStore = create<SettingsState>()(
             }
             if (dbSettings.language) {
               useAppStore.getState().setLanguage(dbSettings.language);
+              await i18n.changeLanguage(dbSettings.language);
+              document.documentElement.lang = dbSettings.language;
             }
           } else {
             set({ isLoading: false });
@@ -86,7 +91,17 @@ export const useSettingsStore = create<SettingsState>()(
     }),
     {
       name: 'settings-storage',
+      version: 2,
+      migrate: (persistedState, version) => {
+        const state = persistedState as Partial<SettingsState>;
+        if (version >= 2 || !state.settings) return state;
+        return {
+          ...state,
+          settings: { ...state.settings, theme: 'light' },
+        };
+      },
       storage: createJSONStorage(() => localStorage),
+      skipHydration: true,
     }
   )
 );

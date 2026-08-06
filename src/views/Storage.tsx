@@ -139,7 +139,9 @@ export function StoragePage() {
     try {
       const selected = Array.from(fileList);
       await Promise.all(
-        selected.map((file) => uploadFile(resolveStoragePath(currentPath), file))
+        selected.map((file) =>
+          uploadFile(resolveStoragePath(currentPath), file)
+        )
       );
       toast.success(`${selected.length} file(s) uploaded successfully!`);
       setShowUploadModal(false);
@@ -155,19 +157,19 @@ export function StoragePage() {
     const fileType = type.split('/')[0];
     switch (fileType) {
       case 'image':
-        return <Image className="w-5 h-5 text-purple-400" />;
+        return <Image className="h-5 w-5 text-accent-600" />;
       case 'video':
-        return <Video className="w-5 h-5 text-blue-400" />;
+        return <Video className="h-5 w-5 text-accent-500" />;
       case 'audio':
-        return <Music className="w-5 h-5 text-pink-400" />;
+        return <Music className="h-5 w-5 text-primary-500" />;
       case 'application':
         if (type.includes('pdf'))
           return <FileText className="w-5 h-5 text-red-400" />;
         if (type.includes('zip') || type.includes('rar'))
-          return <Archive className="w-5 h-5 text-amber-400" />;
-        return <File className="w-5 h-5 text-slate-400" />;
+          return <Archive className="h-5 w-5 text-primary-500" />;
+        return <File className="h-5 w-5 text-muted" />;
       default:
-        return <File className="w-5 h-5 text-slate-400" />;
+        return <File className="h-5 w-5 text-muted" />;
     }
   };
 
@@ -187,22 +189,22 @@ export function StoragePage() {
         className="space-y-4"
       >
         <div>
-          <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">
+          <h1 className="font-display text-2xl font-bold text-foreground lg:text-3xl">
             Storage
           </h1>
-          <p className="text-slate-400 mt-1">
+          <p className="mt-1 text-muted">
             Sign in to manage your personal cloud files
           </p>
         </div>
         <Card className="p-8 text-center">
-          <HardDrive className="w-12 h-12 text-slate-500 mx-auto mb-4" />
-          <p className="text-white font-medium mb-2">Sign in required</p>
-          <p className="text-sm text-slate-400 mb-6">
+          <HardDrive className="mx-auto mb-4 h-12 w-12 text-accent-500" />
+          <p className="mb-2 font-semibold text-foreground">Sign in required</p>
+          <p className="mb-6 text-sm text-muted">
             Storage is scoped to your account. Please sign in to continue.
           </p>
           <Link
             href="/auth?redirect=/storage"
-            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-primary-500 text-white font-medium rounded-xl hover:bg-primary-600 transition-all"
+            className="inline-flex min-h-10 items-center justify-center gap-2 rounded-md bg-primary-500 px-5 py-2.5 font-semibold text-white transition-colors hover:bg-primary-600"
           >
             Sign in
           </Link>
@@ -220,10 +222,10 @@ export function StoragePage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">
+          <h1 className="font-display text-2xl font-bold text-foreground lg:text-3xl">
             Storage
           </h1>
-          <p className="text-slate-400 mt-1">Manage your files and documents</p>
+          <p className="mt-1 text-muted">Manage your files and documents</p>
         </div>
         <Button onClick={() => setShowUploadModal(true)}>
           <Upload className="w-4 h-4" />
@@ -235,26 +237,26 @@ export function StoragePage() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <Card className="p-3">
           <div className="flex items-center gap-2">
-            <HardDrive className="w-4 h-4 text-primary-400" />
+            <HardDrive className="h-4 w-4 text-accent-500" />
             <div>
-              <p className="text-lg font-bold text-white">
+              <p className="text-lg font-bold text-foreground">
                 {formatFileSize(totalSize)}
               </p>
-              <p className="text-xs text-slate-500">Used</p>
+              <p className="text-xs text-muted">Used</p>
             </div>
           </div>
         </Card>
         <Card className="p-3">
-          <p className="text-lg font-bold text-white">{files.length}</p>
-          <p className="text-xs text-slate-500">Files</p>
+          <p className="text-lg font-bold text-foreground">{files.length}</p>
+          <p className="text-xs text-muted">Files</p>
         </Card>
         <Card className="p-3">
-          <p className="text-lg font-bold text-white">{FOLDERS.length}</p>
-          <p className="text-xs text-slate-500">Folders</p>
+          <p className="text-lg font-bold text-foreground">{FOLDERS.length}</p>
+          <p className="text-xs text-muted">Folders</p>
         </Card>
         <Card className="p-3">
-          <p className="text-lg font-bold text-emerald-400">10 GB</p>
-          <p className="text-xs text-slate-500">Available</p>
+          <p className="text-lg font-bold text-emerald-600">10 GB</p>
+          <p className="text-xs text-muted">Available</p>
         </Card>
       </div>
 
@@ -266,7 +268,7 @@ export function StoragePage() {
             {currentPath && (
               <button
                 onClick={() => setCurrentPath('')}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+                className="rounded-md p-1.5 text-muted transition-colors hover:bg-surface hover:text-foreground"
               >
                 <ArrowLeft className="w-4 h-4" />
               </button>
@@ -276,29 +278,31 @@ export function StoragePage() {
               className={cn(
                 'transition-colors',
                 currentPath
-                  ? 'text-slate-400 hover:text-white'
-                  : 'text-white font-medium'
+                  ? 'text-muted hover:text-foreground'
+                  : 'font-medium text-foreground'
               )}
             >
               Storage
             </button>
             {currentPath && (
               <>
-                <ChevronRight className="w-4 h-4 text-slate-600" />
-                <span className="text-white font-medium">{currentPath}</span>
+                <ChevronRight className="h-4 w-4 text-muted" />
+                <span className="font-medium text-foreground">
+                  {currentPath}
+                </span>
               </>
             )}
           </div>
 
           {/* Search */}
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
             <input
               type="text"
               placeholder="Search..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full sm:w-56 pl-9 pr-4 py-2 bg-white/5 border border-white/10 rounded-lg text-sm text-white placeholder-slate-500 focus:outline-none focus:border-primary-500/50"
+              className="w-full rounded-md border border-line bg-elevated py-2 pl-9 pr-4 text-sm text-foreground placeholder:text-muted focus:border-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-100 sm:w-56"
             />
           </div>
         </div>
@@ -307,7 +311,7 @@ export function StoragePage() {
       {/* File List */}
       <Card className="overflow-hidden">
         {/* Header row */}
-        <div className="hidden sm:grid sm:grid-cols-12 gap-4 px-4 py-3 bg-white/5 text-xs font-medium text-slate-400 uppercase tracking-wider">
+        <div className="hidden gap-4 border-b border-line bg-surface px-4 py-3 text-xs font-medium uppercase tracking-wider text-muted sm:grid sm:grid-cols-12">
           <div className="col-span-6">Name</div>
           <div className="col-span-2">Size</div>
           <div className="col-span-2">Modified</div>
@@ -318,7 +322,7 @@ export function StoragePage() {
         {isLoading && (
           <div className="p-8 text-center">
             <div className="w-8 h-8 mx-auto mb-3 rounded-full border-2 border-primary-500/20 border-t-primary-500 animate-spin" />
-            <p className="text-slate-400 text-sm">Loading...</p>
+            <p className="text-sm text-muted">Loading...</p>
           </div>
         )}
 
@@ -331,25 +335,25 @@ export function StoragePage() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.03 }}
-                className="grid grid-cols-12 gap-4 px-4 py-3 hover:bg-white/5 transition-colors cursor-pointer border-b border-white/5"
+                className="grid cursor-pointer grid-cols-12 gap-4 border-b border-line px-4 py-3 transition-colors hover:bg-surface"
                 onClick={() => setCurrentPath(folder.name)}
               >
                 <div className="col-span-12 sm:col-span-6 flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-lg bg-amber-500/20 flex items-center justify-center shrink-0">
-                    <Folder className="w-5 h-5 text-amber-400" />
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-accent-50">
+                    <Folder className="h-5 w-5 text-accent-600" />
                   </div>
-                  <span className="font-medium text-white truncate">
+                  <span className="truncate font-medium text-foreground">
                     {folder.label}
                   </span>
                 </div>
-                <div className="hidden sm:flex sm:col-span-2 items-center text-sm text-slate-500">
+                <div className="hidden items-center text-sm text-muted sm:col-span-2 sm:flex">
                   —
                 </div>
-                <div className="hidden sm:flex sm:col-span-2 items-center text-sm text-slate-500">
+                <div className="hidden items-center text-sm text-muted sm:col-span-2 sm:flex">
                   —
                 </div>
                 <div className="hidden sm:flex sm:col-span-2 items-center justify-end">
-                  <ChevronRight className="w-4 h-4 text-slate-500" />
+                  <ChevronRight className="h-4 w-4 text-muted" />
                 </div>
               </motion.div>
             ))}
@@ -367,33 +371,33 @@ export function StoragePage() {
                 exit={{ opacity: 0 }}
                 transition={{ delay: i * 0.02 }}
                 className={cn(
-                  'grid grid-cols-12 gap-4 px-4 py-3 hover:bg-white/5 transition-colors border-b border-white/5 last:border-b-0',
+                  'grid grid-cols-12 gap-4 border-b border-line px-4 py-3 transition-colors last:border-b-0 hover:bg-surface',
                   isPreviewable(file) && 'cursor-pointer'
                 )}
                 onClick={() => handlePreview(file)}
               >
                 {/* Name */}
                 <div className="col-span-12 sm:col-span-6 flex items-center gap-3 min-w-0">
-                  <div className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center shrink-0">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-surface">
                     {getFileIcon(file.type)}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="font-medium text-white truncate">
+                    <p className="truncate font-medium text-foreground">
                       {file.name}
                     </p>
-                    <p className="text-xs text-slate-500 sm:hidden">
+                    <p className="text-xs text-muted sm:hidden">
                       {formatFileSize(file.size)} • {formatDate(file.createdAt)}
                     </p>
                   </div>
                 </div>
 
                 {/* Size */}
-                <div className="hidden sm:flex sm:col-span-2 items-center text-sm text-slate-400">
+                <div className="hidden items-center text-sm text-muted sm:col-span-2 sm:flex">
                   {formatFileSize(file.size)}
                 </div>
 
                 {/* Modified */}
-                <div className="hidden sm:flex sm:col-span-2 items-center text-sm text-slate-400">
+                <div className="hidden items-center text-sm text-muted sm:col-span-2 sm:flex">
                   {formatDate(file.createdAt)}
                 </div>
 
@@ -405,7 +409,7 @@ export function StoragePage() {
                         e.stopPropagation();
                         handlePreview(file);
                       }}
-                      className="p-2 rounded-lg text-slate-400 hover:text-primary-400 hover:bg-primary-500/10 transition-colors"
+                      className="rounded-md p-2 text-muted transition-colors hover:bg-accent-50 hover:text-accent-600"
                       title="Preview"
                     >
                       <Eye className="w-4 h-4" />
@@ -413,14 +417,14 @@ export function StoragePage() {
                   )}
                   <button
                     onClick={(e) => handleDownload(file, e)}
-                    className="p-2 rounded-lg text-slate-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"
+                    className="rounded-md p-2 text-muted transition-colors hover:bg-emerald-50 hover:text-emerald-600"
                     title="Download"
                   >
                     <Download className="w-4 h-4" />
                   </button>
                   <button
                     onClick={(e) => handleDeleteClick(file, e)}
-                    className="p-2 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                    className="rounded-md p-2 text-muted transition-colors hover:bg-red-50 hover:text-red-600"
                     title="Delete"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -434,8 +438,8 @@ export function StoragePage() {
         {/* Empty State */}
         {!isLoading && filteredFiles.length === 0 && currentPath !== '' && (
           <div className="p-8 text-center">
-            <File className="w-10 h-10 text-slate-600 mx-auto mb-3" />
-            <p className="text-slate-400">No files in this folder</p>
+            <File className="mx-auto mb-3 h-10 w-10 text-muted" />
+            <p className="text-muted">No files in this folder</p>
           </div>
         )}
 
@@ -444,8 +448,8 @@ export function StoragePage() {
           filteredFiles.length === 0 &&
           currentPath === '' &&
           FOLDERS.length > 0 && (
-            <div className="p-6 text-center border-t border-white/5">
-              <p className="text-slate-500 text-sm">No files at root level</p>
+            <div className="border-t border-line p-6 text-center">
+              <p className="text-sm text-muted">No files at root level</p>
             </div>
           )}
       </Card>
@@ -458,12 +462,12 @@ export function StoragePage() {
         size="md"
       >
         <div className="space-y-4">
-          <div className="border-2 border-dashed border-white/20 rounded-xl p-6 text-center hover:border-primary-500/50 transition-colors">
-            <Upload className="w-10 h-10 text-slate-500 mx-auto mb-3" />
-            <p className="text-white font-medium mb-1">
+          <div className="rounded-lg border-2 border-dashed border-line bg-surface p-6 text-center transition-colors hover:border-accent-300">
+            <Upload className="mx-auto mb-3 h-10 w-10 text-accent-500" />
+            <p className="mb-1 font-medium text-foreground">
               Choose files to upload
             </p>
-            <p className="text-sm text-slate-400 mb-4">
+            <p className="mb-4 text-sm text-muted">
               {currentPath
                 ? `Uploading to: ${currentPath}/`
                 : 'Uploading to: root'}
@@ -476,7 +480,7 @@ export function StoragePage() {
               onChange={(e) => handleUpload(e.target.files)}
             />
             <label htmlFor="file-upload" className="cursor-pointer">
-              <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary-500 text-white font-medium rounded-xl hover:bg-primary-600 transition-all">
+              <span className="inline-flex items-center gap-2 rounded-md bg-primary-500 px-5 py-2.5 font-medium text-white transition-colors hover:bg-primary-600">
                 {isUploading ? (
                   <>
                     <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
@@ -510,7 +514,7 @@ export function StoragePage() {
         {previewFile && (
           <div className="space-y-4">
             {/* Preview Content */}
-            <div className="bg-black/30 rounded-xl overflow-hidden flex items-center justify-center min-h-[300px] max-h-[60vh]">
+            <div className="flex min-h-[300px] max-h-[60vh] items-center justify-center overflow-hidden rounded-lg border border-line bg-surface">
               {previewFile.type.startsWith('image') && previewFile.url ? (
                 <img
                   src={previewFile.url}
@@ -526,28 +530,28 @@ export function StoragePage() {
               ) : (
                 <div className="text-center p-8">
                   {getFileIcon(previewFile.type)}
-                  <p className="text-slate-400 mt-2">Preview not available</p>
+                  <p className="mt-2 text-muted">Preview not available</p>
                 </div>
               )}
             </div>
 
             {/* File Info */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
-              <div className="p-3 bg-white/5 rounded-lg">
-                <p className="text-slate-500 text-xs">Size</p>
-                <p className="text-white font-medium">
+              <div className="rounded-md border border-line bg-surface p-3">
+                <p className="text-xs text-muted">Size</p>
+                <p className="font-medium text-foreground">
                   {formatFileSize(previewFile.size)}
                 </p>
               </div>
-              <div className="p-3 bg-white/5 rounded-lg">
-                <p className="text-slate-500 text-xs">Type</p>
-                <p className="text-white font-medium truncate">
+              <div className="rounded-md border border-line bg-surface p-3">
+                <p className="text-xs text-muted">Type</p>
+                <p className="truncate font-medium text-foreground">
                   {previewFile.type}
                 </p>
               </div>
-              <div className="p-3 bg-white/5 rounded-lg col-span-2">
-                <p className="text-slate-500 text-xs">Created</p>
-                <p className="text-white font-medium">
+              <div className="col-span-2 rounded-md border border-line bg-surface p-3">
+                <p className="text-xs text-muted">Created</p>
+                <p className="font-medium text-foreground">
                   {formatDate(previewFile.createdAt)}
                 </p>
               </div>
@@ -584,11 +588,13 @@ export function StoragePage() {
         size="sm"
       >
         <div className="text-center py-4">
-          <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-red-500/20 flex items-center justify-center">
-            <Trash2 className="w-6 h-6 text-red-400" />
+          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-red-50">
+            <Trash2 className="h-6 w-6 text-red-600" />
           </div>
-          <p className="text-white mb-2">Are you sure you want to delete?</p>
-          <p className="text-slate-400 text-sm truncate px-4">
+          <p className="mb-2 text-foreground">
+            Are you sure you want to delete?
+          </p>
+          <p className="truncate px-4 text-sm text-muted">
             "{fileToDelete?.name}"
           </p>
         </div>

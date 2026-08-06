@@ -50,7 +50,7 @@ export function Progress({
 
   const variants = {
     default: 'bg-primary-500',
-    gradient: 'bg-gradient-to-r from-primary-500 via-pink-500 to-accent-500',
+    gradient: 'bg-emerald-500',
     success: 'bg-emerald-500',
     warning: 'bg-amber-500',
     danger: 'bg-red-500',
@@ -60,9 +60,9 @@ export function Progress({
     <div className={cn('space-y-2', className)}>
       {(label || showValue) && (
         <div className="flex items-center justify-between text-sm">
-          {label && <span className="text-slate-400">{label}</span>}
+          {label && <span className="text-muted">{label}</span>}
           {showValue && (
-            <span className="text-slate-300 font-medium">
+            <span className="font-medium text-foreground">
               {Math.round(percentage)}%
             </span>
           )}
@@ -70,7 +70,7 @@ export function Progress({
       )}
       <div
         className={cn(
-          'bg-slate-700/50 rounded-full overflow-hidden',
+          'overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700',
           sizes[size]
         )}
       >
@@ -139,7 +139,7 @@ export function CircularProgress({
           fill="none"
           stroke="currentColor"
           strokeWidth={strokeWidth}
-          className="text-slate-700/50"
+          className="text-slate-200 dark:text-slate-700"
         />
         {/* Progress circle */}
         <motion.circle
@@ -147,28 +147,19 @@ export function CircularProgress({
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke={variant === 'gradient' ? 'url(#gradient)' : 'currentColor'}
+          stroke="currentColor"
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           initial={{ strokeDashoffset: circumference }}
           animate={{ strokeDashoffset: offset }}
           transition={{ duration: 1, ease: 'easeOut' }}
           strokeDasharray={circumference}
-          className={variant === 'default' ? 'text-primary-500' : ''}
+          className={variant === 'default' ? 'text-primary-500' : 'text-emerald-500'}
         />
-        {variant === 'gradient' && (
-          <defs>
-            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#d946ef" />
-              <stop offset="50%" stopColor="#ec4899" />
-              <stop offset="100%" stopColor="#f97316" />
-            </linearGradient>
-          </defs>
-        )}
       </svg>
       {showValue && (
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-2xl font-display font-bold gradient-text">
+          <span className="font-display text-2xl font-bold text-foreground">
             {Math.round(percentage)}%
           </span>
         </div>

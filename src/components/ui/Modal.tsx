@@ -63,7 +63,7 @@ export function Modal({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closeOnOverlayClick ? onClose : undefined}
-            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-50 bg-slate-900/35 backdrop-blur-[2px]"
           />
 
           {/* Modal Container */}
@@ -74,22 +74,22 @@ export function Modal({
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
               className={cn(
-                'relative w-full bg-slate-900/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl',
+                'relative w-full rounded-lg border border-line bg-elevated shadow-2xl',
                 'max-h-[90vh] overflow-hidden',
                 sizes[size]
               )}
             >
               {/* Header */}
               {(title || showCloseButton) && (
-                <div className="flex items-start justify-between p-6 border-b border-white/5">
+                <div className="flex items-start justify-between border-b border-line p-6">
                   <div>
                     {title && (
-                      <h2 className="text-xl font-display font-semibold text-white">
+                      <h2 className="font-display text-xl font-semibold text-foreground">
                         {title}
                       </h2>
                     )}
                     {description && (
-                      <p className="mt-1 text-sm text-slate-400">
+                      <p className="mt-1 text-sm text-muted">
                         {description}
                       </p>
                     )}
@@ -97,7 +97,7 @@ export function Modal({
                   {showCloseButton && (
                     <button
                       onClick={onClose}
-                      className="p-2 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                      className="rounded-md p-2 text-muted transition-colors hover:bg-surface hover:text-foreground"
                     >
                       <X className="w-5 h-5" />
                     </button>
@@ -134,7 +134,7 @@ export function ModalFooter({ className, children }: ModalFooterProps) {
   return (
     <div
       className={cn(
-        'flex items-center justify-end gap-3 pt-6 border-t border-white/5 -mx-6 -mb-6 px-6 py-4 bg-slate-800/50',
+        '-mx-6 -mb-6 flex items-center justify-end gap-3 border-t border-line bg-surface px-6 py-4 pt-6',
         className
       )}
     >

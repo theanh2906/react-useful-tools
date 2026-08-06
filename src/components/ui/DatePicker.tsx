@@ -245,7 +245,7 @@ export const DatePicker = ({
   return (
     <div className="space-y-2" ref={containerRef}>
       {label && (
-        <label className="block text-sm font-medium text-slate-300">
+        <label className="block text-sm font-medium text-foreground">
           {label}
         </label>
       )}
@@ -256,18 +256,18 @@ export const DatePicker = ({
           type="button"
           onClick={() => setIsOpen(!isOpen)}
           className={cn(
-            'w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-left',
+            'w-full rounded-md border border-line bg-elevated px-4 py-3 text-left',
             'flex items-center justify-between gap-2',
-            'focus:outline-none focus:border-primary-500/50 focus:ring-2 focus:ring-primary-500/20',
+            'focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-100',
             'transition-all duration-200',
-            isOpen && 'border-primary-500/50 ring-2 ring-primary-500/20',
+            isOpen && 'border-accent-500 ring-2 ring-accent-100',
             error && 'border-red-500/50'
           )}
         >
           <span
             className={cn(
               'text-sm whitespace-nowrap',
-              value ? 'text-white' : 'text-slate-400'
+              value ? 'text-foreground' : 'text-muted'
             )}
           >
             {value ? formatDisplayDate(value) : placeholder}
@@ -277,12 +277,12 @@ export const DatePicker = ({
               <div
                 role="button"
                 onClick={handleClear}
-                className="p-1 hover:bg-white/10 rounded-lg transition-colors cursor-pointer"
+                className="cursor-pointer rounded-md p-1 transition-colors hover:bg-surface"
               >
-                <X className="w-4 h-4 text-slate-400 hover:text-white" />
+                <X className="h-4 w-4 text-muted hover:text-foreground" />
               </div>
             )}
-            <Calendar className="w-5 h-5 text-slate-400" />
+            <Calendar className="h-5 w-5 text-muted" />
           </div>
         </button>
 
@@ -342,7 +342,7 @@ export const DatePicker = ({
                         }
                   }
                   className={cn(
-                    'p-4 bg-slate-800/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl'
+                    'rounded-lg border border-line bg-elevated p-4 shadow-2xl'
                   )}
                 >
                   {/* Header */}
@@ -350,21 +350,21 @@ export const DatePicker = ({
                     <button
                       type="button"
                       onClick={handlePrevMonth}
-                      className="p-2 hover:bg-white/10 rounded-xl transition-colors"
+                      className="rounded-md p-2 transition-colors hover:bg-surface"
                     >
-                      <ChevronLeft className="w-5 h-5 text-slate-400" />
+                      <ChevronLeft className="h-5 w-5 text-muted" />
                     </button>
 
-                    <h3 className="text-lg font-semibold text-white">
+                    <h3 className="text-lg font-semibold text-foreground">
                       {MONTHS[month]} {year}
                     </h3>
 
                     <button
                       type="button"
                       onClick={handleNextMonth}
-                      className="p-2 hover:bg-white/10 rounded-xl transition-colors"
+                      className="rounded-md p-2 transition-colors hover:bg-surface"
                     >
-                      <ChevronRight className="w-5 h-5 text-slate-400" />
+                      <ChevronRight className="h-5 w-5 text-muted" />
                     </button>
                   </div>
 
@@ -373,7 +373,7 @@ export const DatePicker = ({
                     {DAYS.map((day) => (
                       <div
                         key={day}
-                        className="text-center text-xs font-medium text-slate-500 py-2"
+                        className="py-2 text-center text-xs font-medium text-muted"
                       >
                         {day}
                       </div>
@@ -410,15 +410,15 @@ export const DatePicker = ({
                           }
                           disabled={!item.isCurrentMonth || disabled}
                           className={cn(
-                            'relative aspect-square flex items-center justify-center text-sm rounded-xl transition-all duration-200',
+                            'relative flex aspect-square items-center justify-center rounded-md text-sm transition-colors duration-200',
                             item.isCurrentMonth
-                              ? 'text-white hover:bg-white/10'
-                              : 'text-slate-600',
+                              ? 'text-foreground hover:bg-surface'
+                              : 'text-slate-400',
                             isSelected &&
-                              'bg-gradient-to-br from-primary-500 to-pink-500 text-white font-semibold shadow-lg shadow-primary-500/25',
+                              'bg-accent-500 text-white font-semibold',
                             isToday &&
                               !isSelected &&
-                              'ring-2 ring-primary-500/50',
+                              'ring-2 ring-accent-300',
                             disabled &&
                               'opacity-30 cursor-not-allowed hover:bg-transparent'
                           )}
@@ -430,18 +430,18 @@ export const DatePicker = ({
                   </div>
 
                   {/* Footer */}
-                  <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/10">
+                  <div className="mt-4 flex items-center justify-between border-t border-line pt-4">
                     <button
                       type="button"
                       onClick={handleClear}
-                      className="px-3 py-1.5 text-sm text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                      className="rounded-md px-3 py-1.5 text-sm text-muted transition-colors hover:bg-surface hover:text-foreground"
                     >
                       Clear
                     </button>
                     <button
                       type="button"
                       onClick={handleToday}
-                      className="px-3 py-1.5 text-sm font-medium text-primary-400 hover:bg-primary-500/10 rounded-lg transition-colors"
+                      className="rounded-md px-3 py-1.5 text-sm font-semibold text-accent-600 transition-colors hover:bg-accent-50"
                     >
                       Today
                     </button>
@@ -454,7 +454,7 @@ export const DatePicker = ({
         )}
       </div>
 
-      {error && <p className="text-sm text-red-400">{error}</p>}
+      {error && <p className="text-sm text-red-600">{error}</p>}
     </div>
   );
 };

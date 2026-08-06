@@ -127,17 +127,17 @@ export function Settings() {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="max-w-4xl mx-auto space-y-6 pb-20"
+      className="mx-auto max-w-4xl space-y-5 pb-20"
     >
-      <div className="flex items-center gap-3 mb-8">
-        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center shadow-lg">
-          <SettingsIcon className="w-6 h-6 text-white" />
+      <div className="mb-7 flex items-center gap-3">
+        <div className="flex size-11 items-center justify-center rounded-lg border border-accent-200 bg-accent-50">
+          <SettingsIcon className="size-5 text-accent-600" />
         </div>
         <div>
-          <h1 className="text-2xl lg:text-3xl font-display font-bold text-white">
+          <h1 className="font-display text-2xl font-bold text-foreground lg:text-3xl">
             {t('common.settings')}
           </h1>
-          <p className="text-slate-400">
+          <p className="text-sm text-muted">
             {t('settings.subtitle', 'Customize your experience')}
           </p>
         </div>
@@ -145,10 +145,10 @@ export function Settings() {
 
       {/* Appearance */}
       <motion.div variants={itemVariants}>
-        <Card className="p-6">
-          <div className="flex items-center gap-2 mb-6">
-            <Palette className="w-5 h-5 text-primary-400" />
-            <h2 className="text-lg font-display font-semibold text-white">
+        <Card className="p-5 sm:p-6">
+          <div className="mb-6 flex items-center gap-2">
+            <Palette className="size-5 text-primary-500" />
+            <h2 className="font-display text-lg font-semibold text-foreground">
               {t('settings.appearance', 'Appearance')}
             </h2>
           </div>
@@ -156,15 +156,15 @@ export function Settings() {
           <div className="space-y-6">
             {/* Theme */}
             <div>
-              <p className="text-sm font-medium text-slate-300 mb-3">{t('settings.theme', 'Theme')}</p>
-              <div className="flex gap-3">
+              <p className="mb-3 text-sm font-medium text-foreground">{t('settings.theme', 'Theme')}</p>
+              <div className="grid grid-cols-2 gap-2">
                 <button
                   onClick={() => handleThemeChange('light')}
                   className={cn(
-                    "flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl border transition-all",
-                    theme === 'light' 
-                      ? "bg-primary-500/20 border-primary-500 text-white" 
-                      : "bg-white/5 border-white/10 text-slate-400 hover:bg-white/10"
+                    "flex min-h-11 items-center justify-center gap-2 rounded-md border px-4 py-3 font-medium transition-colors",
+                    theme === 'light'
+                      ? "border-accent-300 bg-accent-50 text-accent-700"
+                      : "border-line bg-elevated text-muted hover:bg-surface hover:text-foreground"
                   )}
                 >
                   <Sun className="w-4 h-4" />
@@ -173,10 +173,10 @@ export function Settings() {
                 <button
                   onClick={() => handleThemeChange('dark')}
                   className={cn(
-                    "flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl border transition-all",
-                    theme === 'dark' 
-                      ? "bg-primary-500/20 border-primary-500 text-white" 
-                      : "bg-white/5 border-white/10 text-slate-400 hover:bg-white/10"
+                    "flex min-h-11 items-center justify-center gap-2 rounded-md border px-4 py-3 font-medium transition-colors",
+                    theme === 'dark'
+                      ? "border-accent-300 bg-accent-50 text-accent-700"
+                      : "border-line bg-elevated text-muted hover:bg-surface hover:text-foreground"
                   )}
                 >
                   <Moon className="w-4 h-4" />
@@ -187,15 +187,15 @@ export function Settings() {
 
             {/* Language */}
             <div>
-              <p className="text-sm font-medium text-slate-300 mb-3">{t('settings.language', 'Language')}</p>
-              <div className="flex gap-3">
+              <p className="mb-3 text-sm font-medium text-foreground">{t('settings.language', 'Language')}</p>
+              <div className="grid grid-cols-2 gap-2">
                 <button
                   onClick={() => handleLanguageChange('en')}
                   className={cn(
-                    "flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl border transition-all",
-                    language === 'en' 
-                      ? "bg-primary-500/20 border-primary-500 text-white" 
-                      : "bg-white/5 border-white/10 text-slate-400 hover:bg-white/10"
+                    "flex min-h-11 items-center justify-center gap-2 rounded-md border px-3 py-3 font-medium transition-colors sm:px-4",
+                    language === 'en'
+                      ? "border-accent-300 bg-accent-50 text-accent-700"
+                      : "border-line bg-elevated text-muted hover:bg-surface hover:text-foreground"
                   )}
                 >
                   <Globe className="w-4 h-4" />
@@ -204,10 +204,10 @@ export function Settings() {
                 <button
                   onClick={() => handleLanguageChange('vi')}
                   className={cn(
-                    "flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl border transition-all",
-                    language === 'vi' 
-                      ? "bg-primary-500/20 border-primary-500 text-white" 
-                      : "bg-white/5 border-white/10 text-slate-400 hover:bg-white/10"
+                    "flex min-h-11 items-center justify-center gap-2 rounded-md border px-3 py-3 font-medium transition-colors sm:px-4",
+                    language === 'vi'
+                      ? "border-accent-300 bg-accent-50 text-accent-700"
+                      : "border-line bg-elevated text-muted hover:bg-surface hover:text-foreground"
                   )}
                 >
                   <Globe className="w-4 h-4" />
@@ -221,11 +221,11 @@ export function Settings() {
 
       {/* Dashboard Layout */}
       <motion.div variants={itemVariants}>
-        <Card className="p-6">
-          <div className="flex items-center justify-between mb-6">
+        <Card className="p-5 sm:p-6">
+          <div className="mb-6 flex items-center justify-between gap-3">
             <div className="flex items-center gap-2">
-              <LayoutDashboard className="w-5 h-5 text-blue-400" />
-              <h2 className="text-lg font-display font-semibold text-white">
+              <LayoutDashboard className="size-5 text-accent-600" />
+              <h2 className="font-display text-lg font-semibold text-foreground">
                 {t('settings.dashboardLayout', 'Dashboard Layout')}
               </h2>
             </div>
@@ -236,33 +236,33 @@ export function Settings() {
             axis="y" 
             values={sortedLayout} 
             onReorder={handleReorder}
-            className="space-y-3"
+            className="divide-y divide-line border-y border-line"
           >
             {sortedLayout.map((item) => (
               <Reorder.Item 
                 key={item.id}
                 value={item}
-                className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10 cursor-grab active:cursor-grabbing"
+                className="flex cursor-grab items-center justify-between gap-3 bg-elevated px-1 py-3 active:cursor-grabbing sm:px-2"
               >
                 <div className="flex items-center gap-3">
                   <button 
                     onClick={() => handleLayoutToggle(item.id)}
                     className={cn(
-                      "p-2 rounded-lg transition-colors",
-                      item.visible ? "text-primary-400 hover:bg-primary-500/10" : "text-slate-500 hover:bg-white/10"
+                      "rounded-md p-2 transition-colors",
+                      item.visible ? "text-accent-600 hover:bg-accent-50" : "text-muted hover:bg-surface"
                     )}
                   >
                     {item.visible ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
                   </button>
                   <span className={cn(
                     "font-medium",
-                    item.visible ? "text-white" : "text-slate-500 line-through"
+                    item.visible ? "text-foreground" : "text-muted line-through"
                   )}>
                     {layoutNames[item.id] || item.id}
                   </span>
                 </div>
 
-                <div className="flex items-center gap-1 text-slate-500 hover:text-slate-300 transition-colors">
+                <div className="flex items-center gap-1 text-muted transition-colors hover:text-foreground">
                   <GripVertical className="w-5 h-5" />
                 </div>
               </Reorder.Item>
@@ -273,18 +273,18 @@ export function Settings() {
 
       {/* Data Management */}
       <motion.div variants={itemVariants}>
-        <Card className="p-6">
-          <div className="flex items-center gap-2 mb-6">
-            <Database className="w-5 h-5 text-emerald-400" />
-            <h2 className="text-lg font-display font-semibold text-white">
+        <Card className="p-5 sm:p-6">
+          <div className="mb-6 flex items-center gap-2">
+            <Database className="size-5 text-emerald-600" />
+            <h2 className="font-display text-lg font-semibold text-foreground">
               {t('settings.dataManagement', 'Data Management')}
             </h2>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-4">
-            <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-              <h3 className="font-medium text-white mb-2">{t('settings.backupSettings', 'Backup Settings')}</h3>
-              <p className="text-sm text-slate-400 mb-4">
+          <div className="grid divide-y divide-line border-y border-line sm:grid-cols-2 sm:divide-x sm:divide-y-0">
+            <div className="py-5 sm:pr-6">
+              <h3 className="mb-2 font-medium text-foreground">{t('settings.backupSettings', 'Backup Settings')}</h3>
+              <p className="mb-4 text-sm text-muted">
                 {t('settings.backupDesc', 'Export your settings to a JSON file for safekeeping.')}
               </p>
               <Button onClick={handleExport} className="w-full flex items-center justify-center gap-2">
@@ -293,9 +293,9 @@ export function Settings() {
               </Button>
             </div>
 
-            <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-              <h3 className="font-medium text-white mb-2">{t('settings.restoreSettings', 'Restore Settings')}</h3>
-              <p className="text-sm text-slate-400 mb-4">
+            <div className="py-5 sm:pl-6">
+              <h3 className="mb-2 font-medium text-foreground">{t('settings.restoreSettings', 'Restore Settings')}</h3>
+              <p className="mb-4 text-sm text-muted">
                 {t('settings.restoreDesc', 'Import settings from a previously saved JSON file.')}
               </p>
               <input

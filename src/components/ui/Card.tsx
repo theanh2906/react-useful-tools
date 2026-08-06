@@ -35,22 +35,18 @@ export function Card({
   ...props
 }: CardProps) {
   const variants = {
-    glass: 'bg-white/5 backdrop-blur-xl border border-white/10',
-    solid: 'bg-slate-800/80 border border-slate-700',
-    gradient:
-      'bg-gradient-to-br from-primary-500/10 to-accent-500/10 border border-primary-500/20',
+    glass: 'border border-line bg-elevated',
+    solid: 'border border-line bg-surface',
+    gradient: 'border border-accent-100 bg-accent-50',
   };
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
       className={cn(
-        'relative rounded-2xl shadow-glass',
+        'relative rounded-lg shadow-glass',
         variants[variant],
         hover &&
-          'transition-all duration-300 hover:bg-white/10 hover:border-white/20 hover:scale-[1.02]',
+          'transition-colors duration-200 hover:border-accent-200 hover:bg-accent-50/40',
         glow && 'hover:shadow-glow',
         className
       )}
@@ -76,7 +72,7 @@ interface CardHeaderProps {
  */
 export function CardHeader({ className, children }: CardHeaderProps) {
   return (
-    <div className={cn('p-6 border-b border-white/5', className)}>
+    <div className={cn('border-b border-line p-6', className)}>
       {children}
     </div>
   );
@@ -98,7 +94,7 @@ interface CardTitleProps {
 export function CardTitle({ className, children }: CardTitleProps) {
   return (
     <h3
-      className={cn('text-xl font-display font-semibold text-white', className)}
+      className={cn('font-display text-xl font-semibold text-foreground', className)}
     >
       {children}
     </h3>
@@ -120,7 +116,7 @@ interface CardDescriptionProps {
  */
 export function CardDescription({ className, children }: CardDescriptionProps) {
   return (
-    <p className={cn('text-sm text-slate-400 mt-1', className)}>{children}</p>
+    <p className={cn('mt-1 text-sm text-muted', className)}>{children}</p>
   );
 }
 
@@ -156,7 +152,7 @@ interface CardFooterProps {
  */
 export function CardFooter({ className, children }: CardFooterProps) {
   return (
-    <div className={cn('p-6 border-t border-white/5', className)}>
+    <div className={cn('border-t border-line p-6', className)}>
       {children}
     </div>
   );

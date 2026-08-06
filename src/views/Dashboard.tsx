@@ -1,79 +1,77 @@
 /**
  * @module Dashboard
- * @description Landing dashboard with pregnancy overview, upcoming events,
- * recent notes and quick-action cards.
+ * @description Warm Family OS daily overview.
  */
-import { motion } from 'framer-motion';
+'use client';
+
 import Link from 'next/link';
 import {
-  Calendar,
-  FileText,
-  Baby,
-  Image,
-  Apple,
-  Clock,
-  Heart,
   Activity,
-  Sparkles,
   ArrowRight,
+  Baby,
+  CalendarDays,
+  CheckCircle2,
+  Clock3,
+  FileText,
+  Lightbulb,
+  MapPin,
+  Plus,
+  Utensils,
 } from 'lucide-react';
-import {
-  Card,
-  CircularProgress,
-  Badge,
-  DatePicker,
-} from '@/components/ui';
-import { useAppStore } from '@/stores/appStore';
-import { useEventsStore } from '@/stores/eventsStore';
-import { useNotesStore } from '@/stores/notesStore';
-import { useAuthStore } from '@/stores/authStore';
-import { listenUltrasounds } from '@/services/ultrasoundService';
-import { listenPeanutRecords, listenSoyaRecords } from '@/services/babyService';
-import { cn } from '@/lib/utils';
 import { useEffect, useMemo, useState } from 'react';
+import { Card, DatePicker, Progress } from '@/components/ui';
 import { SHOW_PREGNANCY_UI } from '@/config/constants';
-
+import { listenPeanutRecords, listenSoyaRecords } from '@/services/babyService';
+import { listenUltrasounds } from '@/services/ultrasoundService';
+import { useAppStore } from '@/stores/appStore';
+import { useAuthStore } from '@/stores/authStore';
+import { useEventsStore } from '@/stores/eventsStore';
+import { useMealCheckInStore } from '@/stores/mealCheckInStore';
+import { useNotesStore } from '@/stores/notesStore';
 import { useSettingsStore } from '@/stores/settingsStore';
+import type { EventData } from '@/types';
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 },
-  },
-};
+function formatLongDate(date: Date) {
+  const value = new Intl.DateTimeFormat('vi-VN', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).format(date);
+  return value.charAt(0).toUpperCase() + value.slice(1);
+}
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
-};
+function formatEventTime(event: EventData) {
+  if (event.allDay) return 'Cả ngày';
+  return new Date(event.start).toLocaleTimeString('vi-VN', {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}
 
-/**
- * Main dashboard page.
- * Aggregates pregnancy info, upcoming calendar events, recent notes,
- * ultrasound gallery previews and baby growth stats into a single view.
- */
 export function Dashboard() {
-  const getPregnancyInfo = useAppStore((state) => state.getPregnancyInfo);
+  const user = useAuthStore((state) => state.user);
+  const userId = user?.id;
   const getBabyAge = useAppStore((state) => state.getBabyAge);
-  const conceptionDate = useAppStore((state) => state.conceptionDate);
   const babyBirthDate = useAppStore((state) => state.babyBirthDate);
-  const setConceptionDate = useAppStore((state) => state.setConceptionDate);
   const setBabyBirthDate = useAppStore((state) => state.setBabyBirthDate);
   const saveProfile = useAppStore((state) => state.saveProfile);
-
-  const pregnancyInfo = getPregnancyInfo();
-  const babyAge = getBabyAge();
-
   const { events, subscribeEvents } = useEventsStore();
   const { notes, subscribeNotes } = useNotesStore();
-  const userId = useAuthStore((state) => state.user?.id);
+  const { cycleStats, checkIns, loadCycleData } = useMealCheckInStore();
+  const dashboardLayout = useSettingsStore((state) => state.settings.dashboardLayout) || [];
   const [ultrasoundCount, setUltrasoundCount] = useState(0);
   const [peanutCount, setPeanutCount] = useState(0);
   const [soyaCount, setSoyaCount] = useState(0);
+  const [draftBirthDate, setDraftBirthDate] = useState(babyBirthDate || '');
 
-  const dashboardLayout = useSettingsStore((state) => state.settings.dashboardLayout) || [];
-  const sortedLayout = [...dashboardLayout].sort((a, b) => a.order - b.order);
+  const now = new Date();
+  const todayKey = now.toISOString().slice(0, 10);
+  const babyAge = getBabyAge();
+  const visibleSections = useMemo(
+    () => new Set(dashboardLayout.filter((item) => item.visible).map((item) => item.id)),
+    [dashboardLayout]
+  );
 
   useEffect(() => {
     subscribeEvents();
@@ -81,485 +79,273 @@ export function Dashboard() {
   }, [subscribeEvents, subscribeNotes, userId]);
 
   useEffect(() => {
-    let unsubUltrasounds: (() => void) | null = null;
-    let unsubPeanut: (() => void) | null = null;
-    let unsubSoya: (() => void) | null = null;
+    if (userId) loadCycleData(userId);
+  }, [loadCycleData, userId]);
+
+  useEffect(() => {
+    let stopUltrasounds: (() => void) | null = null;
+    let stopPeanut: (() => void) | null = null;
+    let stopSoya: (() => void) | null = null;
 
     if (SHOW_PREGNANCY_UI) {
-      listenUltrasounds((data) => setUltrasoundCount(data.length)).then(
-        (unsub) => {
-          unsubUltrasounds = unsub;
-        }
-      );
-      listenSoyaRecords((data) => setSoyaCount(data.length)).then((unsub) => {
-        unsubSoya = unsub;
+      listenUltrasounds((records) => setUltrasoundCount(records.length)).then((stop) => {
+        stopUltrasounds = stop;
       });
-    } else {
-      setUltrasoundCount(0);
-      setSoyaCount(0);
+      listenSoyaRecords((records) => setSoyaCount(records.length)).then((stop) => {
+        stopSoya = stop;
+      });
     }
-    listenPeanutRecords((data) => setPeanutCount(data.length)).then((unsub) => {
-      unsubPeanut = unsub;
+    listenPeanutRecords((records) => setPeanutCount(records.length)).then((stop) => {
+      stopPeanut = stop;
     });
 
     return () => {
-      if (unsubUltrasounds) unsubUltrasounds();
-      if (unsubPeanut) unsubPeanut();
-      if (unsubSoya) unsubSoya();
+      stopUltrasounds?.();
+      stopPeanut?.();
+      stopSoya?.();
     };
   }, [userId]);
 
-  const stats = useMemo(
-    () => ({
-      developmentRecords: peanutCount + soyaCount,
-      scheduledEvents: events.length,
-      ultrasoundScans: ultrasoundCount,
-    }),
-    [peanutCount, soyaCount, events.length, ultrasoundCount]
+  const timelineEvents = useMemo(() => {
+    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+    const endOfToday = startOfToday + 24 * 60 * 60 * 1000;
+    const todayEvents = events
+      .filter((event) => {
+        const time = new Date(event.start).getTime();
+        return time >= startOfToday && time < endOfToday;
+      })
+      .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
+
+    if (todayEvents.length > 0) return todayEvents.slice(0, 6);
+    return events
+      .filter((event) => new Date(event.start).getTime() >= startOfToday)
+      .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime())
+      .slice(0, 5);
+  }, [events, now]);
+
+  const nextEvent = timelineEvents[0];
+  const latestNote = useMemo(
+    () => [...notes].sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime())[0],
+    [notes]
   );
+  const checkedInToday = checkIns.some((checkIn) => checkIn.date === todayKey);
+  const developmentRecords = peanutCount + soyaCount;
 
-  const statCards = useMemo(() => {
-    if (SHOW_PREGNANCY_UI) {
-      return [
-        {
-          icon: Activity,
-          label: 'Development Records',
-          value: stats.developmentRecords,
-          color: 'text-emerald-400',
-        },
-        {
-          icon: Calendar,
-          label: 'Scheduled Events',
-          value: stats.scheduledEvents,
-          color: 'text-blue-400',
-        },
-        {
-          icon: Image,
-          label: 'Ultrasound Scans',
-          value: stats.ultrasoundScans,
-          color: 'text-purple-400',
-        },
-      ];
-    }
-    return [
-      {
-        icon: Activity,
-        label: 'Development Records',
-        value: peanutCount,
-        color: 'text-emerald-400',
-      },
-      {
-        icon: Calendar,
-        label: 'Scheduled Events',
-        value: stats.scheduledEvents,
-        color: 'text-blue-400',
-      },
-    ];
-  }, [stats, peanutCount]);
-
-  const quickActions = useMemo(() => {
-    const all: {
-      icon: typeof Calendar;
-      label: string;
-      path: string;
-      color: string;
-      pregnancyOnly?: boolean;
-    }[] = [
-      {
-        icon: Calendar,
-        label: 'Calendar',
-        path: '/calendar',
-        color: 'from-pink-500 to-rose-500',
-      },
-      {
-        icon: FileText,
-        label: 'Notes',
-        path: '/notes',
-        color: 'from-blue-500 to-cyan-500',
-      },
-      {
-        icon: Baby,
-        label: 'Baby Tracker',
-        path: '/baby',
-        color: 'from-purple-500 to-violet-500',
-      },
-      {
-        icon: Image,
-        label: 'Ultrasounds',
-        path: '/ultrasounds',
-        color: 'from-amber-500 to-orange-500',
-        pregnancyOnly: true,
-      },
-      {
-        icon: Apple,
-        label: 'Food Guide',
-        path: '/foods',
-        color: 'from-emerald-500 to-teal-500',
-        pregnancyOnly: true,
-      },
-      {
-        icon: Clock,
-        label: 'Timeline',
-        path: '/timeline',
-        color: 'from-indigo-500 to-purple-500',
-        pregnancyOnly: true,
-      },
-    ];
-    return all.filter((a) => SHOW_PREGNANCY_UI || !a.pregnancyOnly);
-  }, []);
-
-  const renderSection = (id: string) => {
-    switch (id) {
-      case 'quick-setup':
-        if (!(SHOW_PREGNANCY_UI ? !pregnancyInfo : !babyBirthDate)) return null;
-        return (
-          <motion.div key={id} variants={itemVariants}>
-            <Card className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <h2 className="text-lg font-display font-semibold text-white">
-                    Quick Setup
-                  </h2>
-                  <p className="text-sm text-slate-400">
-                    {SHOW_PREGNANCY_UI
-                      ? 'Add key dates to personalize your dashboard'
-                      : "Add your baby's birth date to personalize the dashboard"}
-                  </p>
-                </div>
-                <Badge variant="warning">Setup</Badge>
-              </div>
-              <div
-                className={cn(
-                  'grid gap-4',
-                  SHOW_PREGNANCY_UI ? 'sm:grid-cols-2' : 'sm:grid-cols-1'
-                )}
-              >
-                {SHOW_PREGNANCY_UI && (
-                  <DatePicker
-                    label="Conception Date"
-                    value={conceptionDate || ''}
-                    onChange={(date) => setConceptionDate(date)}
-                    placeholder="Select conception date"
-                    maxDate={new Date().toISOString().split('T')[0]}
-                  />
-                )}
-                <DatePicker
-                  label={
-                    SHOW_PREGNANCY_UI
-                      ? 'Baby Birth Date (optional)'
-                      : 'Baby Birth Date'
-                  }
-                  value={babyBirthDate || ''}
-                  onChange={(date) => setBabyBirthDate(date)}
-                  placeholder="Select birth date"
-                  maxDate={new Date().toISOString().split('T')[0]}
-                />
-              </div>
-              <div className="mt-4 flex justify-end">
-                <button className="btn-primary" onClick={() => saveProfile()}>
-                  Save Profile
-                </button>
-              </div>
-            </Card>
-          </motion.div>
-        );
-
-      case 'stats-grid':
-        return (
-          <motion.div key={id} variants={itemVariants}>
-            <div
-              className={cn(
-                'grid gap-4 lg:gap-6',
-                statCards.length === 3 ? 'grid-cols-3' : 'grid-cols-2'
-              )}
-            >
-              {statCards.map((stat, i) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: i * 0.1 }}
-                >
-                  <Card hover glow className="p-5 lg:p-6">
-                    <div
-                      className={cn(
-                        'w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center mb-4',
-                        stat.color
-                      )}
-                    >
-                      <stat.icon className="w-5 h-5" />
-                    </div>
-                    <p className="stat-value">{stat.value}</p>
-                    <p className="stat-label text-xs lg:text-sm">{stat.label}</p>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        );
-
-      case 'quick-actions':
-        return (
-          <motion.div key={id} variants={itemVariants}>
-            <Card className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-display font-semibold text-white">
-                  Quick Actions
-                </h2>
-                <Badge variant="info">{quickActions.length} Tools</Badge>
-              </div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                {quickActions.map((action, i) => (
-                  <motion.div
-                    key={action.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.05 }}
-                  >
-                    <Link
-                      href={action.path}
-                      className="group flex flex-col items-center gap-3 p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all"
-                    >
-                      <div
-                        className={cn(
-                          'w-12 h-12 rounded-xl bg-gradient-to-br flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform',
-                          action.color
-                        )}
-                      >
-                        <action.icon className="w-6 h-6 text-white" />
-                      </div>
-                      <span className="text-sm font-medium text-slate-300 group-hover:text-white transition-colors">
-                        {action.label}
-                      </span>
-                    </Link>
-                  </motion.div>
-                ))}
-              </div>
-            </Card>
-          </motion.div>
-        );
-
-      case 'baby-age':
-        if (!babyAge) return null;
-        return (
-          <motion.div key={id} variants={itemVariants}>
-            <Card variant="gradient" className="p-6 h-full">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-400 to-rose-500 flex items-center justify-center">
-                  <Baby className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <h3 className="font-display font-semibold text-white">
-                    Peanut's Age
-                  </h3>
-                  <p className="text-xs text-slate-400">Your little one</p>
-                </div>
-              </div>
-
-              <div className="flex justify-center mb-6">
-                <CircularProgress value={babyAge.weeks} max={52} size={140} />
-              </div>
-
-              <div className="grid grid-cols-3 gap-3 text-center">
-                <div className="p-3 rounded-lg bg-white/5">
-                  <p className="text-2xl font-display font-bold text-white">
-                    {babyAge.days}
-                  </p>
-                  <p className="text-xs text-slate-400">Days</p>
-                </div>
-                <div className="p-3 rounded-lg bg-white/5">
-                  <p className="text-2xl font-display font-bold text-white">
-                    {babyAge.weeks}
-                  </p>
-                  <p className="text-xs text-slate-400">Weeks</p>
-                </div>
-                <div className="p-3 rounded-lg bg-white/5">
-                  <p className="text-2xl font-display font-bold text-white">
-                    {babyAge.months}
-                  </p>
-                  <p className="text-xs text-slate-400">Months</p>
-                </div>
-              </div>
-            </Card>
-          </motion.div>
-        );
-
-      case 'recent-activity':
-        return (
-          <motion.div key={id} variants={itemVariants}>
-            <Card className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-lg font-display font-semibold text-white">
-                  Recent Activity
-                </h2>
-                {SHOW_PREGNANCY_UI ? (
-                  <Link
-                    href="/timeline"
-                    className="text-sm text-primary-400 hover:text-primary-300 flex items-center gap-1"
-                  >
-                    View All <ArrowRight className="w-4 h-4" />
-                  </Link>
-                ) : (
-                  <Link
-                    href="/calendar"
-                    className="text-sm text-primary-400 hover:text-primary-300 flex items-center gap-1"
-                  >
-                    Calendar <ArrowRight className="w-4 h-4" />
-                  </Link>
-                )}
-              </div>
-              <div className="space-y-4">
-                {[
-                  ...events.slice(0, 2).map((event) => ({
-                    icon: Calendar,
-                    title: event.title,
-                    time: new Date(event.start).toLocaleString(),
-                    color: 'bg-blue-500/20 text-blue-400',
-                  })),
-                  ...notes.slice(0, 2).map((note) => ({
-                    icon: FileText,
-                    title: note.title,
-                    time: new Date(note.createdDate).toLocaleString(),
-                    color: 'bg-amber-500/20 text-amber-400',
-                  })),
-                ]
-                  .slice(0, 4)
-                  .map((activity, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.1 }}
-                      className="flex items-center gap-4 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
-                    >
-                      <div
-                        className={cn(
-                          'w-10 h-10 rounded-lg flex items-center justify-center',
-                          activity.color
-                        )}
-                      >
-                        <activity.icon className="w-5 h-5" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-white truncate">
-                          {activity.title}
-                        </p>
-                        <p className="text-xs text-slate-500">{activity.time}</p>
-                      </div>
-                    </motion.div>
-                  ))}
-                {events.length === 0 && notes.length === 0 && (
-                  <p className="text-sm text-slate-500">
-                    No recent activity yet.
-                  </p>
-                )}
-              </div>
-            </Card>
-          </motion.div>
-        );
-
-      case 'todays-tip':
-        return (
-          <motion.div key={id} variants={itemVariants}>
-            <Card className="p-6 h-full">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center">
-                  <Sparkles className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <h3 className="font-display font-semibold text-white">
-                    Today's Tip
-                  </h3>
-                  <p className="text-xs text-slate-400">
-                    {SHOW_PREGNANCY_UI
-                      ? `Week ${pregnancyInfo?.currentWeek || 0} advice`
-                      : 'Newborn care'}
-                  </p>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                {SHOW_PREGNANCY_UI ? (
-                  <>
-                    <div className="p-4 rounded-xl bg-gradient-to-br from-amber-500/10 to-orange-500/10 border border-amber-500/20">
-                      <p className="text-slate-300 leading-relaxed">
-                        💡{' '}
-                        <span className="text-white font-medium">
-                          Stay hydrated!
-                        </span>{' '}
-                        Aim for 8-10 glasses of water daily. This helps maintain
-                        amniotic fluid levels and supports your baby's
-                        development.
-                      </p>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="p-4 rounded-xl bg-white/5 text-center">
-                        <Activity className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
-                        <p className="text-sm text-white font-medium">
-                          Baby Size
-                        </p>
-                        <p className="text-xs text-slate-400">Like a lemon 🍋</p>
-                      </div>
-                      <div className="p-4 rounded-xl bg-white/5 text-center">
-                        <Heart className="w-6 h-6 text-pink-400 mx-auto mb-2" />
-                        <p className="text-sm text-white font-medium">
-                          Heart Rate
-                        </p>
-                        <p className="text-xs text-slate-400">150-160 BPM</p>
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="p-4 rounded-xl bg-gradient-to-br from-amber-500/10 to-orange-500/10 border border-amber-500/20">
-                      <p className="text-slate-300 leading-relaxed">
-                        💡{' '}
-                        <span className="text-white font-medium">Rest when baby rests.</span>{' '}
-                        Short naps help you recover, especially in the first
-                        weeks. Ask for help with meals or chores when you can.
-                      </p>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="p-4 rounded-xl bg-white/5 text-center">
-                        <Heart className="w-6 h-6 text-pink-400 mx-auto mb-2" />
-                        <p className="text-sm text-white font-medium">
-                          Safe sleep
-                        </p>
-                        <p className="text-xs text-slate-400">
-                          Alone, on back, in crib
-                        </p>
-                      </div>
-                      <div className="p-4 rounded-xl bg-white/5 text-center">
-                        <Activity className="w-6 h-6 text-emerald-400 mx-auto mb-2" />
-                        <p className="text-sm text-white font-medium">Feeding</p>
-                        <p className="text-xs text-slate-400">
-                          Follow pediatric guidance
-                        </p>
-                      </div>
-                    </div>
-                  </>
-                )}
-              </div>
-            </Card>
-          </motion.div>
-        );
-
-      default:
-        return null;
-    }
+  const saveBirthDate = async () => {
+    if (!draftBirthDate) return;
+    setBabyBirthDate(draftBirthDate);
+    await saveProfile();
   };
 
+  const rightRailSections = [...dashboardLayout]
+    .filter((item) => item.visible && ['recent-activity', 'stats-grid', 'baby-age', 'todays-tip'].includes(item.id))
+    .sort((a, b) => a.order - b.order);
+
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="space-y-8"
-    >
-      {sortedLayout.filter(item => item.visible).map(item => renderSection(item.id))}
-    </motion.div>
+    <div className="space-y-5 lg:space-y-6">
+      <section className="flex flex-col gap-4 border-b border-line pb-5 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex min-w-0 items-start gap-4">
+          <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-amber-50 text-amber-500">
+            <Lightbulb className="size-6" />
+          </span>
+          <div className="min-w-0">
+            <h1 className="text-2xl font-bold text-foreground sm:text-3xl">
+              Chào buổi sáng, {user?.displayName?.split(' ')[0] || 'bạn'}
+            </h1>
+            <p className="mt-1 text-sm text-muted">Cùng nhau tạo nên một ngày thật ý nghĩa.</p>
+          </div>
+        </div>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="flex items-center gap-3 rounded-md border border-line bg-elevated px-4 py-2.5">
+            <CalendarDays className="size-5 text-accent-500" />
+            <span className="text-sm font-semibold text-foreground">{formatLongDate(now)}</span>
+          </div>
+          <Link href="/calendar" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-primary-500 px-5 text-sm font-semibold text-white hover:bg-primary-600">
+            <Plus className="size-5" />
+            Tạo hoạt động
+          </Link>
+        </div>
+      </section>
+
+      {visibleSections.has('quick-setup') && !babyBirthDate && (
+        <section className="rounded-lg border border-amber-200 bg-amber-50 p-4 sm:p-5">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <h2 className="font-semibold text-foreground">Hoàn tất hồ sơ gia đình</h2>
+              <p className="mt-1 text-sm text-muted">Thêm ngày sinh của bé để cá nhân hóa thông tin theo dõi.</p>
+            </div>
+            <div className="flex w-full flex-col gap-3 sm:flex-row lg:w-auto">
+              <div className="min-w-[240px]">
+                <DatePicker value={draftBirthDate} onChange={setDraftBirthDate} placeholder="Chọn ngày sinh" maxDate={todayKey} />
+              </div>
+              <button type="button" className="btn-primary" onClick={saveBirthDate} disabled={!draftBirthDate}>
+                Lưu hồ sơ
+              </button>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_360px]">
+        <section className="overflow-hidden rounded-lg border border-line bg-elevated">
+          <header className="flex items-center justify-between border-b border-line bg-accent-50/70 px-5 py-4">
+            <div className="flex items-center gap-3">
+              <Activity className="size-5 text-accent-500" />
+              <h2 className="text-lg font-semibold text-accent-600">Nhịp sống hôm nay</h2>
+            </div>
+            <Link href="/calendar" className="text-sm font-semibold text-accent-600 hover:text-accent-700">
+              Xem lịch
+            </Link>
+          </header>
+
+          <div className="divide-y divide-line">
+            {timelineEvents.length > 0 ? (
+              timelineEvents.map((event, index) => (
+                <div key={event.id || `${event.start}-${index}`} className="grid grid-cols-[64px_1fr] gap-3 px-4 py-4 sm:grid-cols-[76px_44px_1fr_auto] sm:items-center sm:px-5">
+                  <time className="text-sm font-semibold text-foreground">{formatEventTime(event)}</time>
+                  <span className="hidden size-10 items-center justify-center rounded-full bg-accent-50 text-accent-500 sm:flex">
+                    <CalendarDays className="size-5" />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="truncate text-sm font-semibold text-foreground">{event.title}</p>
+                    <p className="mt-1 flex items-center gap-1 truncate text-xs text-muted">
+                      {event.location ? <><MapPin className="size-3.5" />{event.location}</> : event.notes || 'Hoạt động gia đình'}
+                    </p>
+                  </div>
+                  <span className="col-start-2 mt-2 w-fit rounded-full bg-accent-50 px-2.5 py-1 text-xs font-medium text-accent-600 sm:col-auto sm:mt-0">
+                    {new Date(event.start).toDateString() === now.toDateString() ? 'Hôm nay' : 'Sắp tới'}
+                  </span>
+                </div>
+              ))
+            ) : (
+              <div className="px-5 py-12 text-center">
+                <CalendarDays className="mx-auto size-9 text-slate-300" />
+                <p className="mt-3 font-medium text-foreground">Hôm nay chưa có hoạt động.</p>
+                <p className="mt-1 text-sm text-muted">Tạo một sự kiện để bắt đầu nhịp sống gia đình.</p>
+              </div>
+            )}
+
+            {userId && (
+              <div className="grid grid-cols-[64px_1fr] gap-3 px-4 py-4 sm:grid-cols-[76px_44px_1fr_auto] sm:items-center sm:px-5">
+                <span className="text-sm font-semibold text-foreground">Bữa ăn</span>
+                <span className="hidden size-10 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 sm:flex">
+                  <Utensils className="size-5" />
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-foreground">Check-in bữa ăn hôm nay</p>
+                  <p className="mt-1 text-xs text-muted">Theo dõi đều đặn trong chu kỳ hiện tại</p>
+                </div>
+                <Link
+                  href="/meal-checkin"
+                  className={`col-start-2 mt-2 inline-flex w-fit items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold sm:col-auto sm:mt-0 ${
+                    checkedInToday ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'
+                  }`}
+                >
+                  {checkedInToday && <CheckCircle2 className="size-3.5" />}
+                  {checkedInToday ? 'Đã check-in' : 'Chưa check-in'}
+                </Link>
+              </div>
+            )}
+          </div>
+        </section>
+
+        <aside className="space-y-4">
+          {rightRailSections.map((section) => {
+            if (section.id === 'recent-activity') {
+              return (
+                <Card key={section.id} className="overflow-hidden">
+                  <div className="border-b border-line px-5 py-4">
+                    <h2 className="flex items-center gap-2 font-semibold text-foreground">
+                      <CalendarDays className="size-5 text-accent-500" /> Sự kiện tiếp theo
+                    </h2>
+                  </div>
+                  {nextEvent ? (
+                    <div className="p-5">
+                      <p className="text-xs font-medium text-muted">{new Date(nextEvent.start).toLocaleString('vi-VN')}</p>
+                      <p className="mt-2 font-semibold text-foreground">{nextEvent.title}</p>
+                      {nextEvent.location && <p className="mt-2 flex items-center gap-1 text-sm text-muted"><MapPin className="size-4" />{nextEvent.location}</p>}
+                      <Link href="/calendar" className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-accent-600">Xem chi tiết <ArrowRight className="size-4" /></Link>
+                    </div>
+                  ) : (
+                    <p className="p-5 text-sm text-muted">Chưa có sự kiện sắp tới.</p>
+                  )}
+                </Card>
+              );
+            }
+
+            if (section.id === 'stats-grid') {
+              return (
+                <Card key={section.id} className="p-5">
+                  <h2 className="flex items-center gap-2 font-semibold text-foreground"><CheckCircle2 className="size-5 text-emerald-600" /> Tiến độ chu kỳ bữa ăn</h2>
+                  {cycleStats ? (
+                    <>
+                      <p className="mt-5 text-2xl font-bold text-emerald-600">{cycleStats.checkedInDays} / {cycleStats.totalCycleDays}</p>
+                      <p className="mt-1 text-sm text-muted">{cycleStats.percentage}% hoàn thành</p>
+                      <Progress value={cycleStats.percentage} variant="success" className="mt-4" />
+                      <Link href="/meal-checkin" className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-accent-600">Xem chu kỳ <ArrowRight className="size-4" /></Link>
+                    </>
+                  ) : (
+                    <p className="mt-3 text-sm text-muted">Đăng nhập để xem tiến độ check-in.</p>
+                  )}
+                </Card>
+              );
+            }
+
+            if (section.id === 'baby-age' && babyAge) {
+              return (
+                <Card key={section.id} className="p-5">
+                  <h2 className="flex items-center gap-2 font-semibold text-foreground"><Baby className="size-5 text-primary-500" /> Theo dõi bé</h2>
+                  <div className="mt-4 grid grid-cols-3 divide-x divide-line text-center">
+                    <div><p className="text-xl font-bold text-foreground">{babyAge.days}</p><p className="text-xs text-muted">Ngày</p></div>
+                    <div><p className="text-xl font-bold text-foreground">{babyAge.weeks}</p><p className="text-xs text-muted">Tuần</p></div>
+                    <div><p className="text-xl font-bold text-foreground">{babyAge.months}</p><p className="text-xs text-muted">Tháng</p></div>
+                  </div>
+                  <p className="mt-4 text-xs text-muted">{developmentRecords} bản ghi phát triển{SHOW_PREGNANCY_UI ? ` · ${ultrasoundCount} siêu âm` : ''}</p>
+                </Card>
+              );
+            }
+
+            if (section.id === 'todays-tip') {
+              return (
+                <Card key={section.id} className="border-amber-200 bg-amber-50 p-5">
+                  <h2 className="flex items-center gap-2 font-semibold text-foreground"><Lightbulb className="size-5 text-amber-500" /> Mẹo nhỏ cho gia đình</h2>
+                  <p className="mt-3 text-sm leading-6 text-muted">Dành một khoảng ngắn để cả nhà cùng ăn và chia sẻ về ngày hôm nay.</p>
+                </Card>
+              );
+            }
+
+            return null;
+          })}
+
+          {latestNote && (
+            <Card className="p-5">
+              <h2 className="flex items-center gap-2 font-semibold text-foreground"><FileText className="size-5 text-amber-500" /> Ghi chú gần đây</h2>
+              <p className="mt-3 truncate text-sm font-semibold text-foreground">{latestNote.title}</p>
+              <p className="mt-1 text-xs text-muted">{new Date(latestNote.createdDate).toLocaleString('vi-VN')}</p>
+              <Link href="/notes" className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-accent-600">Mở ghi chú <ArrowRight className="size-4" /></Link>
+            </Card>
+          )}
+        </aside>
+      </div>
+
+      {visibleSections.has('quick-actions') && (
+        <section className="border-t border-line pt-5">
+          <div className="flex flex-wrap gap-2">
+            {[
+              { href: '/calendar', label: 'Lịch gia đình', icon: CalendarDays },
+              { href: '/meal-checkin', label: 'Meal Check-in', icon: Utensils },
+              { href: '/notes', label: 'Ghi chú', icon: FileText },
+              { href: '/baby', label: 'Theo dõi bé', icon: Baby },
+            ].map((item) => (
+              <Link key={item.href} href={item.href} className="inline-flex min-h-10 items-center gap-2 rounded-md border border-line bg-elevated px-3 text-sm font-medium text-foreground hover:bg-surface">
+                <item.icon className="size-4 text-accent-500" />
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
   );
 }
 

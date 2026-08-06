@@ -15,13 +15,12 @@ export function ToastProvider() {
       expand={false}
       richColors
       closeButton
-      theme="dark"
+      theme="light"
       toastOptions={{
         style: {
-          background: 'rgba(15, 15, 20, 0.95)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          backdropFilter: 'blur(12px)',
-          color: 'white',
+          background: 'rgb(var(--color-elevated))',
+          border: '1px solid rgb(var(--color-border))',
+          color: 'rgb(var(--color-foreground))',
         },
         className: 'toast-custom',
       }}

@@ -32,21 +32,21 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="space-y-2">
         {label && (
-          <label className="block text-sm font-medium text-slate-300">
+          <label className="block text-sm font-medium text-foreground">
             {label}
           </label>
         )}
         <div className="relative">
           {leftIcon && (
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted">
               {leftIcon}
             </div>
           )}
           <input
             ref={ref}
             className={cn(
-              'w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-400',
-              'focus:outline-none focus:border-primary-500/50 focus:ring-2 focus:ring-primary-500/20',
+              'w-full rounded-md border border-line bg-elevated px-4 py-3 text-foreground placeholder:text-muted',
+              'focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-100',
               'transition-all duration-200',
               leftIcon && 'pl-12',
               rightIcon && 'pr-12',
@@ -57,12 +57,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             {...props}
           />
           {rightIcon && (
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-muted">
               {rightIcon}
             </div>
           )}
         </div>
-        {error && <p className="text-sm text-red-400">{error}</p>}
+        {error && <p className="text-sm text-red-600">{error}</p>}
       </div>
     );
   }
@@ -93,23 +93,23 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
     return (
       <div className="space-y-2">
         {label && (
-          <label className="block text-sm font-medium text-slate-300">
+          <label className="block text-sm font-medium text-foreground">
             {label}
           </label>
         )}
         <textarea
           ref={ref}
           className={cn(
-            'w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-400',
-            'focus:outline-none focus:border-primary-500/50 focus:ring-2 focus:ring-primary-500/20',
-            'transition-all duration-200 resize-none min-h-[120px]',
+            'min-h-[120px] w-full resize-none rounded-md border border-line bg-elevated px-4 py-3 text-foreground placeholder:text-muted',
+            'focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-100',
+            'transition-colors duration-200',
             error &&
               'border-red-500/50 focus:border-red-500/50 focus:ring-red-500/20',
             className
           )}
           {...props}
         />
-        {error && <p className="text-sm text-red-400">{error}</p>}
+        {error && <p className="text-sm text-red-600">{error}</p>}
       </div>
     );
   }
