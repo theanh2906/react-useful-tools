@@ -135,8 +135,21 @@ const PeriodTracker: React.FC = () => {
         await updatePeriodLog(logData.id, logData);
         toast.success(t('periodTracker.logUpdated'));
       } else {
-        await addPeriodLog(logData);
-        toast.success(t('periodTracker.logSaved'));
+        const existingLog = periodLogs.find(
+          (log) => log.startDate === logData.startDate
+        );
+
+        if (existingLog) {
+          await updatePeriodLog(existingLog.id, {
+            ...logData,
+            id: existingLog.id,
+            createdAt: existingLog.createdAt,
+          });
+          toast.success(t('periodTracker.logUpdated'));
+        } else {
+          await addPeriodLog(logData);
+          toast.success(t('periodTracker.logSaved'));
+        }
       }
       setShowLogModal(false);
     } catch {

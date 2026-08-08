@@ -123,13 +123,29 @@ export const SHOW_PREGNANCY_UI = false;
 
 // ─── Navigation ─────────────────────────────────────────────────────────────
 
+interface NavigationChild {
+  id: string;
+  label: string;
+  labelKey: string;
+  path: string;
+  icon: string;
+  protected?: boolean;
+}
+
+interface NavigationItem extends NavigationChild {
+  category: string;
+  pregnancyUiOnly?: boolean;
+  isAdminOnly?: boolean;
+  children?: NavigationChild[];
+}
+
 /**
  * Sidebar navigation items configuration.
  * Each item defines a route, icon, i18n key, and category grouping.
  * Items with `protected: true` require authentication.
  * Items with `pregnancyUiOnly: true` are omitted when {@link SHOW_PREGNANCY_UI} is false.
  */
-export const NAV_ITEMS = [
+export const NAV_ITEMS: NavigationItem[] = [
   {
     id: 'dashboard',
     label: 'Dashboard',
@@ -145,16 +161,6 @@ export const NAV_ITEMS = [
     path: '/calendar',
     icon: 'Calendar',
     category: 'main',
-    children: [
-      {
-        id: 'period-tracker',
-        label: 'Period Tracker',
-        labelKey: 'navigation.periodTracker',
-        path: '/calendar/period-tracker',
-        icon: 'Heart',
-        protected: true,
-      },
-    ],
   },
   {
     id: 'notes',
@@ -180,6 +186,15 @@ export const NAV_ITEMS = [
     path: '/baby',
     icon: 'Baby',
     category: 'family',
+  },
+  {
+    id: 'period-tracker',
+    label: 'Period Tracker',
+    labelKey: 'navigation.periodTracker',
+    path: '/calendar/period-tracker',
+    icon: 'Heart',
+    category: 'family',
+    protected: true,
   },
   {
     id: 'ultrasounds',

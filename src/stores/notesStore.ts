@@ -93,6 +93,8 @@ export const useNotesStore = create<NotesState>((set, get) => ({
 
     return notes
       .filter((note) => {
+        if (note.isArchived) return false;
+
         const matchesSearch =
           !searchQuery ||
           note.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -115,7 +117,7 @@ export const useNotesStore = create<NotesState>((set, get) => ({
   getCategories: () => {
     const { notes } = get();
     const categories = new Set<string>();
-    notes.forEach((note) => {
+    notes.filter((note) => !note.isArchived).forEach((note) => {
       note.categories.forEach((cat) => categories.add(cat));
     });
     return Array.from(categories);

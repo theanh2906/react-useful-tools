@@ -130,7 +130,26 @@ export interface EventData {
 
 // ─── Note Types ──────────────────────────────────────────────────────────────
 
-/** Represents a text note with categories and pin support. */
+/** A single actionable item embedded in a note. */
+export interface NoteChecklistItem {
+  /** Stable client-generated identifier. */
+  id: string;
+  /** Checklist item text. */
+  text: string;
+  /** Whether the item has been completed. */
+  done: boolean;
+}
+
+/** Available note card color treatments. */
+export type NoteColor =
+  | 'default'
+  | 'honey'
+  | 'sage'
+  | 'sky'
+  | 'rose'
+  | 'lavender';
+
+/** Represents a text note with categories, pinning, archiving and optional checklist items. */
 export interface Note {
   /** Unique note identifier. */
   id: string;
@@ -146,6 +165,14 @@ export interface Note {
   categories: string[];
   /** Whether the note is pinned to the top. */
   isPinned?: boolean;
+  /** Whether the note is hidden from the active workspace. */
+  isArchived?: boolean;
+  /** Whether the note was created through quick capture. */
+  isQuickCapture?: boolean;
+  /** Visual color treatment for the note card. */
+  color?: NoteColor;
+  /** Optional actionable items embedded in the note. */
+  checklist?: NoteChecklistItem[];
 }
 
 // ─── Baby Types ──────────────────────────────────────────────────────────────

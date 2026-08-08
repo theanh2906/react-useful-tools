@@ -12,3 +12,4 @@ export * from './Toast';
 export * from './LanguageSwitcher';
 export * from './Spinner';
 export * from './DatePicker';
+export * from './QuillEditor';

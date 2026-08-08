@@ -1,6 +1,6 @@
 /**
  * @module NotesPage
- * @description Rich-text notes page with tagging, pinning, search and ReactQuill editor.
+ * @description Rich-text notes page with tagging, pinning, search and Quill editor.
  */
 import {
   Badge,
@@ -9,6 +9,7 @@ import {
   Input,
   Modal,
   ModalFooter,
+  QuillEditor,
 } from '@/components/ui';
 import { toast } from '@/components/ui/Toast';
 import {
@@ -30,19 +31,14 @@ import {
   Search,
   Tag,
   Trash2,
-  Type,
   X,
 } from 'lucide-react';
-import { Suspense, useEffect, useState } from 'react';
-import dynamic from 'next/dynamic';
-import 'react-quill/dist/quill.snow.css';
-
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+import { useEffect, useState } from 'react';
 
 /**
  * Notes management page.
  * Supports creating, editing, pinning, tagging and deleting notes
- * with a rich-text editor (ReactQuill). Data synced to Firestore in real-time.
+ * with a rich-text editor. Data synced to Firebase in real-time.
  */
 export function NotesPage() {
   const {
@@ -374,31 +370,11 @@ export function NotesPage() {
               Content
             </label>
             <div>
-              <Suspense
-                fallback={
-                  <div className="flex h-64 items-center justify-center rounded-lg border border-line bg-surface">
-                    <Type className="h-8 w-8 animate-pulse text-accent-500" />
-                  </div>
-                }
-              >
-                <ReactQuill
-                  theme="snow"
-                  value={content}
-                  onChange={setContent}
-                  placeholder="Start writing your note..."
-                  modules={{
-                    toolbar: [
-                      [{ header: [1, 2, 3, false] }],
-                      ['bold', 'italic', 'underline', 'strike'],
-                      [{ list: 'ordered' }, { list: 'bullet' }],
-                      [{ color: [] }, { background: [] }],
-                      ['link', 'code-block'],
-                      ['clean'],
-                    ],
-                  }}
-                  className="overflow-hidden rounded-lg bg-elevated text-foreground"
-                />
-              </Suspense>
+              <QuillEditor
+                value={content}
+                onChange={setContent}
+                placeholder="Start writing your note..."
+              />
             </div>
           </div>
         </div>

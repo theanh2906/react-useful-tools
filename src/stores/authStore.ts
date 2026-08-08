@@ -16,6 +16,7 @@ import { clearResolvedPathCache } from '@/services/realtimeDb';
 interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
+  isInitialized: boolean;
   isLoading: boolean;
   error: string | null;
   login: (user: User) => void;
@@ -32,6 +33,7 @@ export const useAuthStore = create<AuthState>()(
     (set, get) => ({
       user: null,
       isAuthenticated: false,
+      isInitialized: false,
       isLoading: false,
       error: null,
 
@@ -39,6 +41,7 @@ export const useAuthStore = create<AuthState>()(
         set({
           user,
           isAuthenticated: true,
+          isInitialized: true,
           isLoading: false,
           error: null,
         });
@@ -49,6 +52,7 @@ export const useAuthStore = create<AuthState>()(
         set({
           user: null,
           isAuthenticated: false,
+          isInitialized: true,
           isLoading: false,
           error: null,
         });
@@ -80,13 +84,18 @@ export const useAuthStore = create<AuthState>()(
           const currentUser = get().user;
           if (currentUser?.role === 'Administrator') {
             if (get().checkTokenExpiration()) {
-              set({ isLoading: false });
+              set({ isInitialized: true, isLoading: false });
               return;
             }
           }
 
           clearResolvedPathCache();
-          set({ user: null, isAuthenticated: false, isLoading: false });
+          set({
+            user: null,
+            isAuthenticated: false,
+            isInitialized: true,
+            isLoading: false,
+          });
           return;
         }
 
@@ -107,13 +116,14 @@ export const useAuthStore = create<AuthState>()(
             role,
           },
           isAuthenticated: true,
+          isInitialized: true,
           isLoading: false,
           error: null,
         });
       },
 
       initAuthListener: () => {
-        set({ isLoading: true });
+        set({ isInitialized: false, isLoading: true });
         return subscribeToAuthChanges((firebaseUser) => {
           get().setUserFromFirebase(firebaseUser);
         });

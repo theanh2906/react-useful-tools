@@ -1,20 +1,21 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useAuthStore } from '@/stores/authStore';
 
 export function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, isInitialized } = useAuthStore();
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      router.replace('/auth');
+    if (isInitialized && !isAuthenticated) {
+      router.replace(`/auth?redirect=${encodeURIComponent(pathname)}`);
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, isInitialized, pathname, router]);
 
-  if (!isAuthenticated) {
+  if (!isInitialized || !isAuthenticated) {
     return null;
   }
 

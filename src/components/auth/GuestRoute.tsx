@@ -1,20 +1,26 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { useAuthStore } from '@/stores/authStore';
 
 export function GuestRoute({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, isInitialized } = useAuthStore();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectParam = searchParams.get('redirect');
+  const redirect =
+    redirectParam?.startsWith('/') && !redirectParam.startsWith('//')
+      ? redirectParam
+      : '/';
 
   useEffect(() => {
-    if (isAuthenticated) {
-      router.replace('/');
+    if (isInitialized && isAuthenticated) {
+      router.replace(redirect);
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, isInitialized, redirect, router]);
 
-  if (isAuthenticated) {
+  if (!isInitialized || isAuthenticated) {
     return null;
   }
 

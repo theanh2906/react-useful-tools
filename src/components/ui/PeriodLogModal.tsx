@@ -2,7 +2,7 @@
  * @module PeriodLogModal
  * @description Modal for creating and editing period log entries.
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Modal } from '@/components/ui/Modal';
 import { Button } from '@/components/ui/Button';
@@ -33,6 +33,8 @@ const PeriodLogModal: React.FC<PeriodLogModalProps> = ({
   const [logEnd, setLogEnd] = useState('');
   const [logFlow, setLogFlow] = useState<FlowIntensity>(FlowIntensity.MEDIUM);
   const [logNotes, setLogNotes] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
+  const saveInProgressRef = useRef(false);
 
   useEffect(() => {
     if (editingLog) {
@@ -49,15 +51,23 @@ const PeriodLogModal: React.FC<PeriodLogModalProps> = ({
   }, [editingLog, initialStartDate, isOpen]);
 
   const handleSave = async () => {
-    if (!logStart) return;
-    await onSave({
-      id: editingLog?.id || '',
-      startDate: logStart,
-      endDate: logEnd || undefined,
-      flowIntensity: logFlow,
-      notes: logNotes || undefined,
-      createdAt: editingLog?.createdAt || new Date().toISOString(),
-    });
+    if (!logStart || saveInProgressRef.current) return;
+
+    saveInProgressRef.current = true;
+    setIsSaving(true);
+    try {
+      await onSave({
+        id: editingLog?.id || '',
+        startDate: logStart,
+        endDate: logEnd || undefined,
+        flowIntensity: logFlow,
+        notes: logNotes || undefined,
+        createdAt: editingLog?.createdAt || new Date().toISOString(),
+      });
+    } finally {
+      saveInProgressRef.current = false;
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -119,10 +129,10 @@ const PeriodLogModal: React.FC<PeriodLogModalProps> = ({
         </div>
 
         <div className="flex gap-2 justify-end pt-2">
-          <Button variant="ghost" onClick={onClose}>
+          <Button variant="ghost" onClick={onClose} disabled={isSaving}>
             {t('common.cancel')}
           </Button>
-          <Button onClick={handleSave}>
+          <Button onClick={handleSave} isLoading={isSaving}>
             {t('common.save')}
           </Button>
         </div>
