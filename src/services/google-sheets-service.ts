@@ -13,6 +13,8 @@ import {
 
 const SHEETS_SCOPE = 'https://www.googleapis.com/auth/spreadsheets';
 const SHEETS_API = 'https://sheets.googleapis.com/v4/spreadsheets';
+const ACCESS_TOKEN_STORAGE_KEY = 'google-sheets-access-token';
+const ACCESS_TOKEN_TTL_MS = 50 * 60 * 1000;
 const EXCEL_HOSTS = ['1drv.ms', 'onedrive.live.com', 'sharepoint.com', 'office.com'];
 
 interface ParsedSpreadsheetUrl {
@@ -37,6 +39,17 @@ interface GoogleSpreadsheetResponse {
 
 interface GoogleValuesResponse {
   values?: Array<Array<string | number | boolean>>;
+}
+
+interface GoogleAppendResponse {
+  updates?: {
+    updatedData?: GoogleValuesResponse;
+  };
+}
+
+interface CachedAccessToken {
+  token: string;
+  expiresAt: number;
 }
 
 export class SpreadsheetServiceError extends Error {
@@ -79,10 +92,39 @@ export function parseSpreadsheetUrl(rawUrl: string): ParsedSpreadsheetUrl {
   );
 }
 
+export function getCachedGoogleSheetsAccess(): string | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const cached = JSON.parse(sessionStorage.getItem(ACCESS_TOKEN_STORAGE_KEY) ?? 'null') as CachedAccessToken | null;
+    if (!cached?.token || cached.expiresAt <= Date.now()) {
+      sessionStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY);
+      return null;
+    }
+    return cached.token;
+  } catch {
+    sessionStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY);
+    return null;
+  }
+}
+
+export function clearGoogleSheetsAccess() {
+  if (typeof window !== 'undefined') sessionStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY);
+}
+
+function cacheGoogleSheetsAccess(token: string) {
+  if (typeof window === 'undefined') return;
+  sessionStorage.setItem(ACCESS_TOKEN_STORAGE_KEY, JSON.stringify({
+    token,
+    expiresAt: Date.now() + ACCESS_TOKEN_TTL_MS,
+  } satisfies CachedAccessToken));
+}
+
 export async function requestGoogleSheetsAccess(): Promise<string> {
+  const cachedToken = getCachedGoogleSheetsAccess();
+  if (cachedToken) return cachedToken;
+
   const provider = new GoogleAuthProvider();
   provider.addScope(SHEETS_SCOPE);
-  provider.setCustomParameters({ prompt: 'select_account' });
 
   try {
     const currentUser = auth.currentUser;
@@ -95,6 +137,7 @@ export async function requestGoogleSheetsAccess(): Promise<string> {
     if (!credential?.accessToken) {
       throw new SpreadsheetServiceError('Google không trả về quyền truy cập Sheets.', 'auth');
     }
+    cacheGoogleSheetsAccess(credential.accessToken);
     return credential.accessToken;
   } catch (error) {
     if (error instanceof SpreadsheetServiceError) throw error;
@@ -109,6 +152,7 @@ async function googleRequest<T>(url: string, token: string, init?: RequestInit):
   try {
     const response = await fetch(url, {
       ...init,
+      cache: 'no-store',
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
@@ -178,7 +222,7 @@ export async function getSheetValues(
   sheetTitle: string,
   token: string
 ): Promise<SpreadsheetGrid> {
-  const range = sheetRange(sheetTitle, 'A1:ZZ111');
+  const range = sheetRange(sheetTitle, 'A1:ZZ');
   const result = await googleRequest<GoogleValuesResponse>(
     `${SHEETS_API}/${spreadsheetId}/values/${encodeURIComponent(range)}?majorDimension=ROWS`,
     token
@@ -194,10 +238,13 @@ export async function getSheetValues(
   }, 0);
   const rawHeaders = values[headerIndex] ?? [];
   const headers = rawHeaders.map((header, index) => header.trim() || `Cột ${index + 1}`);
+  const rows = values
+    .slice(headerIndex + 1)
+    .filter((row) => row.some((cell) => cell.trim()));
   return {
     headers,
-    rows: values.slice(headerIndex + 1, headerIndex + 101),
-    truncated: values.length > headerIndex + 101,
+    rows: rows.slice(-100),
+    truncated: rows.length > 100,
   };
 }
 
@@ -206,11 +253,12 @@ export async function appendSheetRow(
   sheetTitle: string,
   values: string[],
   token: string
-) {
+): Promise<string[]> {
   const range = sheetRange(sheetTitle, 'A:ZZ');
-  await googleRequest(
-    `${SHEETS_API}/${spreadsheetId}/values/${encodeURIComponent(range)}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
+  const result = await googleRequest<GoogleAppendResponse>(
+    `${SHEETS_API}/${spreadsheetId}/values/${encodeURIComponent(range)}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS&includeValuesInResponse=true&responseValueRenderOption=FORMATTED_VALUE`,
     token,
     { method: 'POST', body: JSON.stringify({ majorDimension: 'ROWS', values: [values] }) }
   );
+  return (result.updates?.updatedData?.values?.[0] ?? values).map((cell) => String(cell));
 }
