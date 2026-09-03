@@ -6,55 +6,61 @@
 
 **Implementation screenshot path**
 
-Unavailable in this run. The cloud browser rejected the local preview URL before capture.
+`/tmp/spreadsheet-manager-preview-top.png` in the cloud-browser runtime.
 
 **Viewport and normalization**
 
-- Source pixels: 852 × 1876.
-- Intended comparison CSS viewport: 426 × 938 at device scale factor 2.
-- Implementation pixels/CSS size/density: unavailable because browser capture was blocked.
+- Source pixels: 852 × 1876; intended mobile CSS viewport: 426 × 938 at density 2.
+- Implementation capture: 1365 × 936 desktop viewport at browser density 1.
+- No density normalization was applied because the current browser surface could not switch to the source viewport.
 
 **State**
 
-- Target: spreadsheet hub with one expanded Google Sheet, two collapsed file cards, tabs, recent records, and Excel fallback.
-- Implementation: route `/spreadsheets`; browser-rendered state could not be recaptured in this run.
+- Source: mobile hub with an expanded Google Sheet, collapsed Google/Excel cards, tabs, and recent records.
+- Implementation: desktop fallback state with one stored Excel URL. This is a real production-preview state created through the UI.
 
 **Full-view comparison evidence**
 
-- Source visual opened successfully.
-- Production build completed and the production server returned HTTP 200 for `/spreadsheets`.
-- A same-viewport browser screenshot was not available, so visual fidelity cannot be certified.
+- The shared coral primary CTA, bold heading hierarchy, bordered file cards, source icon, warning badge, restrained blue accent, and generous white-space rhythm carry through to the existing product shell.
+- The desktop implementation intentionally uses the product's sidebar/header rather than the source's mobile bottom navigation.
+- Production preview rendered the route and fallback card without clipping or overlap.
 
 **Focused region comparison evidence**
 
-Not performed. Header, card, tab, table, record form, and mobile navigation regions require browser-rendered evidence at the normalized viewport.
+- Add modal: opened from the header CTA; the URL field was addressable by its visible label and the submit button enabled only after input.
+- Excel fallback: submitting `BBT-mau.xlsx` closed the modal, persisted a file card, and showed the intended read-only warning toast/badge.
+- Console: no application-origin errors; observed errors came only from the cloud-browser extension.
 
 **Findings**
 
-- [P1] Browser visual verification unavailable
-  - Location: `/spreadsheets` route.
-  - Evidence: the cloud browser rejected access to the local preview URL under its URL policy.
-  - Impact: responsive layout, interaction states, and console behavior cannot be certified from the current environment.
-  - Fix: run the route in an accessible browser environment and capture the 426 × 938 target state before production promotion.
+- [P1] Native Google Sheets flow remains unverified
+  - Location: OAuth → metadata → sheet tabs → append record.
+  - Evidence: the supplied workbook is an Office `.xlsx`, and the user elected to upload/convert it manually.
+  - Impact: the core write path cannot be certified until tested with the resulting native Google Sheets URL.
+  - Fix: add the converted URL, authorize Google, switch tabs, and append a disposable test row.
+- [P2] Mobile viewport comparison remains unavailable
+  - Location: `/spreadsheets` responsive layout.
+  - Evidence: the available cloud browser captured only the 1365 × 936 desktop viewport while the source is 426 × 938 CSS pixels.
+  - Impact: exact mobile spacing and bottom-navigation fidelity are not certified.
+  - Fix: repeat the visual pass at 426 × 938.
 
 **Open Questions**
 
-- Confirm the Google OAuth popup and append-row flow against a native Google Sheet in the deployment environment.
+- Confirm whether production Firebase OAuth already allows the preview and production Vercel domains.
 
 **Implementation Checklist**
 
-- Open `/spreadsheets` at 426 × 938 and desktop width.
-- Add a native Google Sheets URL and complete OAuth.
-- Switch sheet tabs, refresh data, open the record form, and append a test row.
-- Confirm the Excel fallback card for an `.xlsx` URL.
-- Check browser console for application errors.
+- Test the native Google Sheets URL through OAuth, tab switching, refresh, and append-row.
+- Capture the route at 426 × 938 and compare against the source.
+- Promote only after those two checks pass.
 
 **Comparison History**
 
-- Current pass: source opened; build/type-check/HTTP route checks passed; browser capture blocked before visual comparison.
+- Pass 1: local preview URL was blocked by cloud-browser policy; no rendered evidence.
+- Pass 2: Git-backed Vercel preview reached `READY`; route, modal, fallback submission, persistence UI, and console were checked. Native Sheets and same-viewport mobile checks remain.
 
 **Follow-up Polish**
 
-- None classified until browser evidence is available.
+- Revisit exact mobile density after a same-viewport capture; no desktop P3 issue observed.
 
 final result: blocked
