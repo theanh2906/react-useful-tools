@@ -8,6 +8,8 @@ import { toast } from '@/components/ui/Toast';
 import { generateId } from '@/lib/utils';
 import {
   appendSheetRow,
+  clearGoogleSheetsAccess,
+  getCachedGoogleSheetsAccess,
   getSheetValues,
   getSpreadsheetMetadata,
   parseSpreadsheetUrl,
@@ -18,7 +20,7 @@ import { useSpreadsheetStore } from '@/stores/spreadsheet-store';
 import type { SpreadsheetConnection, SpreadsheetGrid } from '@/types';
 import { motion } from 'framer-motion';
 import { FilePlus2, LockKeyhole, Plus, TableProperties } from 'lucide-react';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 function gridKey(fileId: string, sheetId?: number) {
   return `${fileId}:${sheetId ?? 'none'}`;
@@ -26,13 +28,14 @@ function gridKey(fileId: string, sheetId?: number) {
 
 export default function SpreadsheetManager() {
   const { files, selectedId, addFile, updateFile, removeFile, selectFile } = useSpreadsheetStore();
-  const [googleToken, setGoogleToken] = useState<string | null>(null);
+  const [googleToken, setGoogleToken] = useState<string | null>(() => getCachedGoogleSheetsAccess());
   const [grids, setGrids] = useState<Record<string, SpreadsheetGrid>>({});
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const [isAddingFile, setIsAddingFile] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showRecordSheet, setShowRecordSheet] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const autoLoadedKeys = useRef(new Set<string>());
 
   const selectedFile = files.find((file) => file.id === selectedId) ?? null;
   const selectedSheet = selectedFile?.sheets.find((sheet) => sheet.id === selectedFile.selectedSheetId)
@@ -49,7 +52,10 @@ export default function SpreadsheetManager() {
       updateFile(file.id, { selectedSheetId: sheet.id, lastSyncedAt: Date.now(), status: 'connected' });
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Không thể tải bảng tính.';
-      if (error instanceof SpreadsheetServiceError && error.code === 'auth') setGoogleToken(null);
+      if (error instanceof SpreadsheetServiceError && error.code === 'auth') {
+        clearGoogleSheetsAccess();
+        setGoogleToken(null);
+      }
       updateFile(file.id, { status: 'error', statusMessage: message });
       toast.error('Không thể đồng bộ', message);
     } finally {
@@ -68,6 +74,10 @@ export default function SpreadsheetManager() {
       await loadGrid(updated, token, file.selectedSheetId);
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Không thể kết nối Google.';
+      if (error instanceof SpreadsheetServiceError && error.code === 'auth') {
+        clearGoogleSheetsAccess();
+        setGoogleToken(null);
+      }
       if (error instanceof SpreadsheetServiceError && error.code === 'office-file') {
         updateFile(file.id, {
           source: 'microsoft-excel',
@@ -134,6 +144,10 @@ export default function SpreadsheetManager() {
       toast.success('Đã kết nối Google Sheets');
       await loadGrid(file, token);
     } catch (error) {
+      if (error instanceof SpreadsheetServiceError && error.code === 'auth') {
+        clearGoogleSheetsAccess();
+        setGoogleToken(null);
+      }
       toast.error('Không thể thêm bảng tính', error instanceof Error ? error.message : 'Vui lòng thử lại.');
     } finally {
       setIsAddingFile(false);
@@ -158,16 +172,46 @@ export default function SpreadsheetManager() {
     if (!selectedFile?.externalId || !selectedSheet || !googleToken) return;
     setIsSaving(true);
     try {
-      await appendSheetRow(selectedFile.externalId, selectedSheet.title, values, googleToken);
-      await loadGrid(selectedFile, googleToken, selectedSheet.id);
+      const appendedValues = await appendSheetRow(
+        selectedFile.externalId,
+        selectedSheet.title,
+        values,
+        googleToken
+      );
+      const key = gridKey(selectedFile.id, selectedSheet.id);
+      setGrids((current) => {
+        const grid = current[key];
+        if (!grid) return current;
+        return {
+          ...current,
+          [key]: { ...grid, rows: [...grid.rows, appendedValues].slice(-100) },
+        };
+      });
+      updateFile(selectedFile.id, {
+        lastSyncedAt: Date.now(),
+        status: 'connected',
+        statusMessage: undefined,
+      });
       setShowRecordSheet(false);
       toast.success('Đã thêm bản ghi vào Google Sheets');
     } catch (error) {
+      if (error instanceof SpreadsheetServiceError && error.code === 'auth') {
+        clearGoogleSheetsAccess();
+        setGoogleToken(null);
+      }
       toast.error('Không thể lưu bản ghi', error instanceof Error ? error.message : 'Vui lòng thử lại.');
     } finally {
       setIsSaving(false);
     }
   };
+
+  useEffect(() => {
+    if (!googleToken || !selectedFile || !selectedSheet || selectedGrid) return;
+    const key = gridKey(selectedFile.id, selectedSheet.id);
+    if (autoLoadedKeys.current.has(key)) return;
+    autoLoadedKeys.current.add(key);
+    void loadGrid(selectedFile, googleToken, selectedSheet.id);
+  }, [googleToken, loadGrid, selectedFile, selectedGrid, selectedSheet]);
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mx-auto max-w-5xl space-y-6">
@@ -209,7 +253,7 @@ export default function SpreadsheetManager() {
 
       <div className="flex items-start gap-3 px-1 text-xs text-muted">
         <LockKeyhole className="mt-0.5 size-4 shrink-0 text-accent-500" />
-        <p>Danh sách link chỉ lưu trên trình duyệt này. Quyền Google chỉ giữ trong phiên hiện tại.</p>
+        <p>Danh sách link lưu trên trình duyệt này. Quyền Google được giữ an toàn trong tab hiện tại tối đa 50 phút.</p>
       </div>
 
       <AddSpreadsheetModal isOpen={showAddModal} isLoading={isAddingFile} onClose={() => setShowAddModal(false)} onSubmit={handleAddFile} />
