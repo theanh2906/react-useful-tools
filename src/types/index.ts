@@ -437,6 +437,44 @@ export interface DashboardStats {
   ultrasoundScans: number;
 }
 
+// ─── Spreadsheet Manager Types ──────────────────────────────────────────────
+
+export type SpreadsheetSource = 'google-sheets' | 'microsoft-excel';
+
+export type SpreadsheetConnectionStatus =
+  | 'connected'
+  | 'needs-auth'
+  | 'unsupported'
+  | 'error';
+
+export interface SpreadsheetSheet {
+  id: number;
+  title: string;
+  index: number;
+  rowCount: number;
+  columnCount: number;
+}
+
+export interface SpreadsheetConnection {
+  id: string;
+  source: SpreadsheetSource;
+  url: string;
+  externalId?: string;
+  title: string;
+  status: SpreadsheetConnectionStatus;
+  statusMessage?: string;
+  sheets: SpreadsheetSheet[];
+  selectedSheetId?: number;
+  lastSyncedAt?: number;
+  createdAt: number;
+}
+
+export interface SpreadsheetGrid {
+  headers: string[];
+  rows: string[][];
+  truncated: boolean;
+}
+
 // ─── State Management Types ──────────────────────────────────────────────────
 
 /** Action types for tracking CRUD operations in state management. */

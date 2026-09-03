@@ -2,7 +2,7 @@
  * @module Input
  * @description Text input and textarea components with label, error state and icon support.
  */
-import { forwardRef } from 'react';
+import { forwardRef, useId } from 'react';
 import { cn } from '@/lib/utils';
 
 /**
@@ -28,11 +28,13 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
  */
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, label, error, leftIcon, rightIcon, ...props }, ref) => {
+  ({ className, label, error, leftIcon, rightIcon, id, ...props }, ref) => {
+    const generatedId = useId();
+    const inputId = id ?? generatedId;
     return (
       <div className="space-y-2">
         {label && (
-          <label className="block text-sm font-medium text-foreground">
+          <label htmlFor={inputId} className="block text-sm font-medium text-foreground">
             {label}
           </label>
         )}
@@ -44,6 +46,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           )}
           <input
             ref={ref}
+            id={inputId}
             className={cn(
               'w-full rounded-md border border-line bg-elevated px-4 py-3 text-foreground placeholder:text-muted',
               'focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-100',
@@ -89,16 +92,19 @@ interface TextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement
  */
 
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
-  ({ className, label, error, ...props }, ref) => {
+  ({ className, label, error, id, ...props }, ref) => {
+    const generatedId = useId();
+    const inputId = id ?? generatedId;
     return (
       <div className="space-y-2">
         {label && (
-          <label className="block text-sm font-medium text-foreground">
+          <label htmlFor={inputId} className="block text-sm font-medium text-foreground">
             {label}
           </label>
         )}
         <textarea
           ref={ref}
+          id={inputId}
           className={cn(
             'min-h-[120px] w-full resize-none rounded-md border border-line bg-elevated px-4 py-3 text-foreground placeholder:text-muted',
             'focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-100',

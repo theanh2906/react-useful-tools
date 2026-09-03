@@ -22,6 +22,7 @@ A beautiful, modern React application for pregnancy tracking and productivity to
 
 - **Notes** - Rich text notes with categories
 - **Storage** - Cloud file management with Firebase Storage
+- **Spreadsheet Manager** - Connect Google Sheets, browse tabs, and append records from a responsive UI
 - **Live Share** - Real-time file/text sharing
 
 ### Utilities

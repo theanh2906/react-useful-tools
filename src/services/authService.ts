@@ -18,19 +18,26 @@ import {
 import { PublicClientApplication } from '@azure/msal-browser';
 import { msalConfig, loginRequest } from '@/config/authConfig';
 
-/** MSAL (Microsoft Authentication Library) client instance. */
-export const msalInstance = new PublicClientApplication(msalConfig);
+/** MSAL client, created lazily so non-secure/local previews can load the app. */
+let msalInstance: PublicClientApplication | null = null;
 let isMsalInitialized = false;
+
+const getMsalInstance = () => {
+  if (!msalInstance) msalInstance = new PublicClientApplication(msalConfig);
+  return msalInstance;
+};
 
 /**
  * Initializes the MSAL instance (idempotent).
  * Must be called before any Azure AD operations.
  */
 const initializeMsal = async () => {
+  const instance = getMsalInstance();
   if (!isMsalInitialized) {
-    await msalInstance.initialize();
+    await instance.initialize();
     isMsalInitialized = true;
   }
+  return instance;
 };
 
 /**
@@ -75,11 +82,11 @@ export const signInWithGoogle = async () => {
  * @throws {Error} If MSAL or Firebase Microsoft auth fails.
  */
 export const signInWithAzure = async () => {
-  await initializeMsal();
+  const instance = await initializeMsal();
 
   try {
     // 1. Login with Microsoft via PopUp
-    await msalInstance.loginPopup(loginRequest);
+    await instance.loginPopup(loginRequest);
     // const { accessToken } = loginResponse;
 
     // 2. Since Firebase doesn't directly support generic OIDC for all plans or requires setup,
@@ -119,10 +126,10 @@ export const signInWithAzure = async () => {
  * Handles MSAL logout popup if an active account exists.
  */
 export const signOutUser = async () => {
-  await initializeMsal(); // Ensure instance is ready
-  const account = msalInstance.getActiveAccount();
-  if (account) {
-    await msalInstance.logoutPopup();
+  if (msalInstance) {
+    const instance = await initializeMsal();
+    const account = instance.getActiveAccount();
+    if (account) await instance.logoutPopup();
   }
   return signOut(auth);
 };

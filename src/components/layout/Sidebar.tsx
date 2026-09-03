@@ -12,12 +12,14 @@ import { useTranslation } from 'react-i18next';
 import * as Icons from 'lucide-react';
 import { ChevronDown, ChevronLeft, LayoutGrid, Lock, X } from 'lucide-react';
 import { NAV_CATEGORIES, NAV_ITEMS, SHOW_PREGNANCY_UI } from '@/config/constants';
+import { SPREADSHEET_NAV_ITEM } from '@/config/spreadsheet-navigation';
 import { useIsMobile } from '@/hooks';
 import { cn } from '@/lib/utils';
 import { useAppStore } from '@/stores/appStore';
 import { useAuthStore } from '@/stores/authStore';
 
 type IconName = keyof typeof Icons;
+const NAVIGATION_ITEMS = [...NAV_ITEMS, SPREADSHEET_NAV_ITEM];
 
 function getIcon(name: string) {
   const Icon = Icons[name as IconName] as React.ComponentType<{ className?: string }>;
@@ -34,7 +36,7 @@ export function Sidebar() {
 
   const isOpen = isMobile ? mobileMenuOpen : sidebarOpen;
   const close = () => (isMobile ? setMobileMenuOpen(false) : setSidebarOpen(false));
-  const visibleNavItems = NAV_ITEMS.filter((item) => {
+  const visibleNavItems = NAVIGATION_ITEMS.filter((item) => {
     if (item.pregnancyUiOnly && !SHOW_PREGNANCY_UI) return false;
     if (item.isAdminOnly && user?.role !== 'Administrator') return false;
     return true;

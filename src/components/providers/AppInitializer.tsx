@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useAuthStore } from '@/stores/authStore';
 import { useAppStore } from '@/stores/appStore';
 import { useSettingsStore } from '@/stores/settingsStore';
+import { useSpreadsheetStore } from '@/stores/spreadsheet-store';
 import { GlobalLoading } from '@/components/ui';
 
 export function AppInitializer({ children }: { children: React.ReactNode }) {
@@ -22,6 +23,7 @@ export function AppInitializer({ children }: { children: React.ReactNode }) {
       useAuthStore.persist.rehydrate(),
       useAppStore.persist.rehydrate(),
       useSettingsStore.persist.rehydrate(),
+      useSpreadsheetStore.persist.rehydrate(),
     ]).finally(() => setStoresHydrated(true));
   }, []);
 

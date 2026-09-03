@@ -21,11 +21,14 @@ import {
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NAV_ITEMS, SHOW_PREGNANCY_UI } from '@/config/constants';
+import { SPREADSHEET_NAV_ITEM } from '@/config/spreadsheet-navigation';
 import { useIsMobile } from '@/hooks';
 import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
 import { useAppStore } from '@/stores/appStore';
 import { useAuthStore } from '@/stores/authStore';
 import { useSettingsStore } from '@/stores/settingsStore';
+
+const NAVIGATION_ITEMS = [...NAV_ITEMS, SPREADSHEET_NAV_ITEM];
 
 export function Header() {
   const { t } = useTranslation();
@@ -42,7 +45,7 @@ export function Header() {
   const searchResults = useMemo(() => {
     const needle = query.trim().toLowerCase();
     if (!needle) return [];
-    return NAV_ITEMS.filter((item) => {
+    return NAVIGATION_ITEMS.filter((item) => {
       if (item.pregnancyUiOnly && !SHOW_PREGNANCY_UI) return false;
       if (item.isAdminOnly && user?.role !== 'Administrator') return false;
       return `${item.label} ${item.id}`.toLowerCase().includes(needle);
