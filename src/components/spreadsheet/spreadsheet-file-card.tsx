@@ -35,7 +35,7 @@ export function SpreadsheetFileCard(props: SpreadsheetFileCardProps) {
 
   return (
     <Card className={cn(
-      'overflow-hidden transition-colors',
+      'overflow-visible transition-colors',
       isSelected && file.source === 'google-sheets' && 'border-accent-500 ring-1 ring-accent-500/20'
     )}>
       <div className="flex items-start gap-3 p-4 sm:items-center sm:p-5">
@@ -66,7 +66,7 @@ export function SpreadsheetFileCard(props: SpreadsheetFileCardProps) {
             </Button>
           )}
           {menuOpen && (
-            <div className="absolute right-0 top-11 z-20 w-44 rounded-md border border-line bg-elevated p-1.5 shadow-xl">
+            <div className="absolute right-0 top-11 z-50 w-44 rounded-md border border-line bg-elevated p-1.5 shadow-xl">
               <Button type="button" variant="ghost" size="sm" onClick={() => { setMenuOpen(false); props.onRemove(); }} className="w-full justify-start text-red-600">
                 <Trash2 className="size-4" /> Xóa khỏi danh sách
               </Button>

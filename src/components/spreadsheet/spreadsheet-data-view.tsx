@@ -38,6 +38,15 @@ export function SpreadsheetDataView({
     );
   }
 
+  const desktopRows = data.rows.slice(-8).map((row, index, rows) => ({
+    row,
+    sourceIndex: data.rows.length - rows.length + index,
+  })).reverse();
+  const mobileRows = data.rows.slice(-4).map((row, index, rows) => ({
+    row,
+    sourceIndex: data.rows.length - rows.length + index,
+  })).reverse();
+
   return (
     <div className="space-y-4">
       <div className="overflow-hidden rounded-md border border-line bg-elevated">
@@ -51,8 +60,8 @@ export function SpreadsheetDataView({
               </tr>
             </thead>
             <tbody className="divide-y divide-line">
-              {data.rows.slice(0, 8).map((row, rowIndex) => (
-                <tr key={rowIndex} className="hover:bg-surface/70">
+              {desktopRows.map(({ row, sourceIndex }) => (
+                <tr key={sourceIndex} className="hover:bg-surface/70">
                   {data.headers.map((header, columnIndex) => (
                     <td key={`${header}-${columnIndex}`} className="max-w-64 truncate px-4 py-3 text-foreground">
                       {row[columnIndex] || <span className="text-muted">—</span>}
@@ -65,8 +74,8 @@ export function SpreadsheetDataView({
         </div>
 
         <div className="divide-y divide-line md:hidden">
-          {data.rows.slice(0, 4).map((row, rowIndex) => (
-            <div key={rowIndex} className="space-y-2 px-4 py-3">
+          {mobileRows.map(({ row, sourceIndex }) => (
+            <div key={sourceIndex} className="space-y-2 px-4 py-3">
               {data.headers.slice(0, 4).map((header, columnIndex) => (
                 <div key={`${header}-${columnIndex}`} className="flex items-start justify-between gap-4 text-sm">
                   <span className="shrink-0 text-muted">{header}</span>
@@ -79,7 +88,9 @@ export function SpreadsheetDataView({
       </div>
 
       {data.rows.length === 0 && <p className="text-sm text-muted">{emptyLabel}</p>}
-      {data.truncated && <p className="text-xs text-muted">Đang hiển thị 100 hàng đầu tiên.</p>}
+      {data.rows.length > 4 && <p className="text-xs text-muted md:hidden">Đang hiển thị 4 bản ghi mới nhất.</p>}
+      {data.rows.length > 8 && <p className="hidden text-xs text-muted md:block">Đang hiển thị 8 bản ghi mới nhất.</p>}
+      {data.truncated && <p className="text-xs text-muted">Đã tải 100 bản ghi gần nhất từ trang tính.</p>}
       <Button onClick={onAddRecord} disabled={!canAddRecord} leftIcon={<Plus className="size-4" />}>
         {addLabel}
       </Button>
