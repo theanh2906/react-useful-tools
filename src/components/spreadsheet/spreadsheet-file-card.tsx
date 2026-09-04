@@ -1,8 +1,8 @@
-import { Badge, Button, Card } from '@/components/ui';
+import { Badge, Button, Card, Modal, ModalFooter } from '@/components/ui';
 import { SpreadsheetSourceIcon } from './spreadsheet-source-icon';
 import type { SpreadsheetConnection, SpreadsheetGrid } from '@/types';
 import { cn } from '@/lib/utils';
-import { ChevronDown, MoreVertical, RefreshCw, Trash2 } from 'lucide-react';
+import { ChevronDown, RefreshCw, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { SpreadsheetDataView } from './spreadsheet-data-view';
 
@@ -30,14 +30,15 @@ function relativeSync(timestamp?: number) {
 
 export function SpreadsheetFileCard(props: SpreadsheetFileCardProps) {
   const { file, data, isSelected, isLoading, hasGoogleAccess } = props;
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [showRemoveConfirm, setShowRemoveConfirm] = useState(false);
   const selectedSheet = file.sheets.find((sheet) => sheet.id === file.selectedSheetId) ?? file.sheets[0];
 
   return (
-    <Card className={cn(
-      'overflow-visible transition-colors',
-      isSelected && file.source === 'google-sheets' && 'border-accent-500 ring-1 ring-accent-500/20'
-    )}>
+    <>
+      <Card className={cn(
+        'overflow-hidden transition-colors',
+        isSelected && file.source === 'google-sheets' && 'border-accent-500 ring-1 ring-accent-500/20'
+      )}>
       <div className="flex items-start gap-3 p-4 sm:items-center sm:p-5">
         <SpreadsheetSourceIcon source={file.source} />
         <button type="button" onClick={props.onSelect} className="min-w-0 flex-1 text-left">
@@ -56,21 +57,21 @@ export function SpreadsheetFileCard(props: SpreadsheetFileCardProps) {
           </span>
         </button>
 
-        <div className="relative flex items-center gap-1">
-          <Button type="button" variant="ghost" size="sm" onClick={() => setMenuOpen((open) => !open)} aria-label="Tùy chọn bảng tính">
-            <MoreVertical className="size-5" />
+        <div className="flex items-center gap-1">
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={() => setShowRemoveConfirm(true)}
+            aria-label={`Xóa ${file.title} khỏi danh sách`}
+            className="text-red-600 hover:bg-red-50 hover:text-red-700"
+          >
+            <Trash2 className="size-5" />
           </Button>
           {file.source === 'google-sheets' && (
             <Button type="button" variant="ghost" size="sm" onClick={props.onSelect} aria-label={isSelected ? 'Thu gọn' : 'Mở bảng tính'}>
               <ChevronDown className={cn('size-5 transition-transform', isSelected && 'rotate-180')} />
             </Button>
-          )}
-          {menuOpen && (
-            <div className="absolute right-0 top-11 z-50 w-44 rounded-md border border-line bg-elevated p-1.5 shadow-xl">
-              <Button type="button" variant="ghost" size="sm" onClick={() => { setMenuOpen(false); props.onRemove(); }} className="w-full justify-start text-red-600">
-                <Trash2 className="size-4" /> Xóa khỏi danh sách
-              </Button>
-            </div>
           )}
         </div>
       </div>
@@ -104,6 +105,7 @@ export function SpreadsheetFileCard(props: SpreadsheetFileCardProps) {
                 </Button>
               </div>
               <SpreadsheetDataView
+                key={selectedSheet?.id}
                 data={data}
                 isLoading={isLoading}
                 canAddRecord={Boolean(data?.headers.length)}
@@ -115,6 +117,41 @@ export function SpreadsheetFileCard(props: SpreadsheetFileCardProps) {
           )}
         </div>
       )}
-    </Card>
+
+      </Card>
+
+      <Modal
+        isOpen={showRemoveConfirm}
+        onClose={() => setShowRemoveConfirm(false)}
+        title="Xóa bảng tính khỏi danh sách?"
+        size="sm"
+      >
+        <div className="py-2 text-center">
+          <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-lg bg-red-50">
+            <Trash2 className="size-6 text-red-600" />
+          </div>
+          <p className="break-words font-medium text-foreground">{file.title}</p>
+          <p className="mt-2 text-sm text-muted">
+            Link chỉ bị xóa khỏi trình duyệt này. File Google Sheets và dữ liệu bên trong vẫn được giữ nguyên.
+          </p>
+        </div>
+        <ModalFooter>
+          <Button type="button" variant="secondary" onClick={() => setShowRemoveConfirm(false)}>
+            Hủy
+          </Button>
+          <Button
+            type="button"
+            variant="danger"
+            onClick={() => {
+              setShowRemoveConfirm(false);
+              props.onRemove();
+            }}
+            leftIcon={<Trash2 className="size-4" />}
+          >
+            Xóa khỏi danh sách
+          </Button>
+        </ModalFooter>
+      </Modal>
+    </>
   );
 }

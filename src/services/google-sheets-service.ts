@@ -243,8 +243,7 @@ export async function getSheetValues(
     .filter((row) => row.some((cell) => cell.trim()));
   return {
     headers,
-    rows: rows.slice(-100),
-    truncated: rows.length > 100,
+    rows,
   };
 }
 

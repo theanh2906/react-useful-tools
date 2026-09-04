@@ -184,7 +184,7 @@ export default function SpreadsheetManager() {
         if (!grid) return current;
         return {
           ...current,
-          [key]: { ...grid, rows: [...grid.rows, appendedValues].slice(-100) },
+          [key]: { ...grid, rows: [...grid.rows, appendedValues] },
         };
       });
       updateFile(selectedFile.id, {
