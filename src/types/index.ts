@@ -472,7 +472,6 @@ export interface SpreadsheetConnection {
 export interface SpreadsheetGrid {
   headers: string[];
   rows: string[][];
-  truncated: boolean;
 }
 
 // ─── State Management Types ──────────────────────────────────────────────────

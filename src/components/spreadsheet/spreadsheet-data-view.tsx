@@ -1,6 +1,9 @@
 import type { SpreadsheetGrid } from '@/types';
 import { Button } from '@/components/ui';
-import { Plus, Rows3 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Plus, Rows3 } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+
+const RECORDS_PER_PAGE = 10;
 
 interface SpreadsheetDataViewProps {
   data: SpreadsheetGrid | null;
@@ -19,6 +22,24 @@ export function SpreadsheetDataView({
   emptyLabel,
   addLabel,
 }: SpreadsheetDataViewProps) {
+  const [page, setPage] = useState(() => Math.max(
+    1,
+    Math.ceil((data?.rows.length ?? 0) / RECORDS_PER_PAGE)
+  ));
+  const previousRowCount = useRef(data?.rows.length ?? 0);
+  const totalRows = data?.rows.length ?? 0;
+  const totalPages = Math.max(1, Math.ceil(totalRows / RECORDS_PER_PAGE));
+
+  useEffect(() => {
+    const previousCount = previousRowCount.current;
+    if (totalRows > previousCount) {
+      setPage(totalPages);
+    } else {
+      setPage((current) => Math.min(current, totalPages));
+    }
+    previousRowCount.current = totalRows;
+  }, [totalPages, totalRows]);
+
   if (isLoading) {
     return (
       <div className="space-y-3" aria-label="Loading spreadsheet rows">
@@ -38,14 +59,10 @@ export function SpreadsheetDataView({
     );
   }
 
-  const desktopRows = data.rows.slice(-8).map((row, index, rows) => ({
-    row,
-    sourceIndex: data.rows.length - rows.length + index,
-  })).reverse();
-  const mobileRows = data.rows.slice(-4).map((row, index, rows) => ({
-    row,
-    sourceIndex: data.rows.length - rows.length + index,
-  })).reverse();
+  const pageRows = data.rows.slice(
+    (page - 1) * RECORDS_PER_PAGE,
+    page * RECORDS_PER_PAGE
+  );
 
   return (
     <div className="space-y-4">
@@ -60,8 +77,8 @@ export function SpreadsheetDataView({
               </tr>
             </thead>
             <tbody className="divide-y divide-line">
-              {desktopRows.map(({ row, sourceIndex }) => (
-                <tr key={sourceIndex} className="hover:bg-surface/70">
+              {pageRows.map((row, rowIndex) => (
+                <tr key={`${page}-${rowIndex}`} className="hover:bg-surface/70">
                   {data.headers.map((header, columnIndex) => (
                     <td key={`${header}-${columnIndex}`} className="max-w-64 truncate px-4 py-3 text-foreground">
                       {row[columnIndex] || <span className="text-muted">—</span>}
@@ -74,8 +91,8 @@ export function SpreadsheetDataView({
         </div>
 
         <div className="divide-y divide-line md:hidden">
-          {mobileRows.map(({ row, sourceIndex }) => (
-            <div key={sourceIndex} className="space-y-2 px-4 py-3">
+          {pageRows.map((row, rowIndex) => (
+            <div key={`${page}-${rowIndex}`} className="space-y-2 px-4 py-3">
               {data.headers.slice(0, 4).map((header, columnIndex) => (
                 <div key={`${header}-${columnIndex}`} className="flex items-start justify-between gap-4 text-sm">
                   <span className="shrink-0 text-muted">{header}</span>
@@ -88,9 +105,37 @@ export function SpreadsheetDataView({
       </div>
 
       {data.rows.length === 0 && <p className="text-sm text-muted">{emptyLabel}</p>}
-      {data.rows.length > 4 && <p className="text-xs text-muted md:hidden">Đang hiển thị 4 bản ghi mới nhất.</p>}
-      {data.rows.length > 8 && <p className="hidden text-xs text-muted md:block">Đang hiển thị 8 bản ghi mới nhất.</p>}
-      {data.truncated && <p className="text-xs text-muted">Đã tải 100 bản ghi gần nhất từ trang tính.</p>}
+      {data.rows.length > 0 && (
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-xs text-muted">
+            {totalRows} bản ghi · Trang {page}/{totalPages}
+          </p>
+          <div className="flex items-center gap-2">
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
+              onClick={() => setPage((current) => Math.max(1, current - 1))}
+              disabled={page === 1}
+              aria-label="Trang trước"
+              className="px-2.5"
+            >
+              <ChevronLeft className="size-4" />
+            </Button>
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
+              onClick={() => setPage((current) => Math.min(totalPages, current + 1))}
+              disabled={page === totalPages}
+              aria-label="Trang sau"
+              className="px-2.5"
+            >
+              <ChevronRight className="size-4" />
+            </Button>
+          </div>
+        </div>
+      )}
       <Button onClick={onAddRecord} disabled={!canAddRecord} leftIcon={<Plus className="size-4" />}>
         {addLabel}
       </Button>
