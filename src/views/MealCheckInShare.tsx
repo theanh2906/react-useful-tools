@@ -67,27 +67,17 @@ export default function MealCheckInShare() {
 
     const load = async () => {
       try {
-        const userId =
-          await mealCheckInService.getUserIdByShareToken(shareToken);
-        if (!userId) {
+        const shared = await mealCheckInService.getSharedDataByToken(shareToken);
+        if (!shared || shared.configs.length === 0) {
           setIsInvalid(true);
           return;
         }
-
-        const configs = await mealCheckInService.getCycleConfigs(userId);
-        if (configs.length === 0) {
-          setIsInvalid(true);
-          return;
-        }
+        const configs = shared.configs;
         const latestConfig = configs[configs.length - 1];
         setCycleConfig(latestConfig);
         setCycleConfigs(configs);
 
-        const records = await mealCheckInService.getCheckInsByDateRange(
-          userId,
-          '0000-01-01',
-          '9999-12-31'
-        );
+        const records = shared.checkIns;
         const stats = calculateMealCheckInCycleStats(configs, records);
 
         setCheckIns(records);
