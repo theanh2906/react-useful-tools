@@ -8,13 +8,14 @@ import type { PeriodLog, CycleSettings } from '@/types';
 import {
   createItem,
   deleteItem,
+  fetchCollection,
   listenCollection,
   updateItem,
   fetchValue,
   setValue,
 } from './realtimeDb';
 import { ref as dbRef, set, get, remove } from 'firebase/database';
-import { database } from '@/config/firebase';
+import { auth, database } from '@/config/firebase';
 
 /** Strips keys with `undefined` values — Firebase RTDB rejects them. */
 const stripUndefined = <T extends Record<string, unknown>>(obj: T): T => {
@@ -31,6 +32,16 @@ const CYCLE_SETTINGS_PATH = 'cycleSettings';
 
 /** @internal Realtime Database root collection for period share tokens. */
 const SHARE_TOKENS_COLLECTION = 'periodShareTokens';
+
+/** @internal Public read-only snapshots keyed by share token. */
+const PUBLIC_SHARES_COLLECTION = 'publicShares/periodTrackers';
+
+export interface SharedPeriodTrackerData {
+  ownerUserId: string;
+  settings: CycleSettings;
+  logs: PeriodLog[];
+  updatedAt: number;
+}
 
 /**
  * Subscribes to real-time updates of period logs.
@@ -50,7 +61,9 @@ export const listenPeriodLogs = (onChange: (logs: PeriodLog[]) => void) => {
  */
 export const createPeriodLog = async (log: PeriodLog) => {
   const { id, ...payload } = log;
-  return createItem(PERIOD_LOGS_PATH, stripUndefined(payload));
+  const key = await createItem(PERIOD_LOGS_PATH, stripUndefined(payload));
+  await syncPeriodShareSnapshot();
+  return key;
 };
 
 /**
@@ -61,7 +74,8 @@ export const createPeriodLog = async (log: PeriodLog) => {
  */
 export const updatePeriodLog = async (id: string, log: Partial<PeriodLog>) => {
   const { id: _ignore, ...payload } = log;
-  return updateItem(PERIOD_LOGS_PATH, id, stripUndefined(payload));
+  await updateItem(PERIOD_LOGS_PATH, id, stripUndefined(payload));
+  await syncPeriodShareSnapshot();
 };
 
 /**
@@ -70,7 +84,8 @@ export const updatePeriodLog = async (id: string, log: Partial<PeriodLog>) => {
  * @param id - Period log ID to delete.
  */
 export const deletePeriodLog = async (id: string) => {
-  return deleteItem(PERIOD_LOGS_PATH, id);
+  await deleteItem(PERIOD_LOGS_PATH, id);
+  await syncPeriodShareSnapshot();
 };
 
 /**
@@ -88,7 +103,55 @@ export const fetchCycleSettings = async () => {
  * @param settings - The cycle settings to persist.
  */
 export const saveCycleSettings = async (settings: CycleSettings) => {
-  return setValue(CYCLE_SETTINGS_PATH, settings);
+  await setValue(CYCLE_SETTINGS_PATH, settings);
+  if (settings.shareToken) {
+    await publishPeriodShareSnapshot(
+      auth.currentUser?.uid ?? '',
+      settings.shareToken,
+      settings
+    );
+  }
+};
+
+const mapValueToPeriodLogs = (value: unknown): PeriodLog[] => {
+  if (!value) return [];
+  if (Array.isArray(value)) {
+    return value.filter(Boolean) as PeriodLog[];
+  }
+  return Object.entries(value as Record<string, unknown>).map(([id, item]) => ({
+    ...(item as object),
+    id,
+  })) as PeriodLog[];
+};
+
+const publishPeriodShareSnapshot = async (
+  userId: string,
+  token: string,
+  settings?: CycleSettings | null
+) => {
+  if (!userId || !token) return;
+
+  const cycleSettings = settings ?? (await fetchCycleSettings());
+  if (!cycleSettings) return;
+
+  const logs = await fetchCollection<PeriodLog>(PERIOD_LOGS_PATH);
+  const publicRef = dbRef(database, `${PUBLIC_SHARES_COLLECTION}/${token}`);
+  await set(publicRef, {
+    ownerUserId: userId,
+    settings: cycleSettings,
+    logs,
+    updatedAt: Date.now(),
+  } satisfies SharedPeriodTrackerData);
+};
+
+const syncPeriodShareSnapshot = async () => {
+  const userId = auth.currentUser?.uid;
+  if (!userId) return;
+
+  const settings = await fetchCycleSettings();
+  if (!settings?.shareToken) return;
+
+  await publishPeriodShareSnapshot(userId, settings.shareToken, settings);
 };
 
 /**
@@ -111,6 +174,8 @@ export const generateShareToken = async (userId: string): Promise<string> => {
     const tokenRef = dbRef(database, `${SHARE_TOKENS_COLLECTION}/${token}`);
     await set(tokenRef, { userId });
 
+    await publishPeriodShareSnapshot(userId, token, updatedSettings);
+
     return token;
   } catch (error) {
     console.error('Error generating period share token:', error);
@@ -127,6 +192,9 @@ export const revokeShareToken = async (userId: string, token: string): Promise<v
     const tokenRef = dbRef(database, `${SHARE_TOKENS_COLLECTION}/${token}`);
     await remove(tokenRef);
 
+    const publicRef = dbRef(database, `${PUBLIC_SHARES_COLLECTION}/${token}`);
+    await remove(publicRef);
+
     // 2. Clear token from cycle settings
     const settings = await fetchCycleSettings();
     if (settings) {
@@ -139,62 +207,27 @@ export const revokeShareToken = async (userId: string, token: string): Promise<v
   }
 };
 
-/**
- * Resolve a share token to its owner's userId.
- * Returns null if the token does not exist.
- */
-export const getUserIdByShareToken = async (token: string): Promise<string | null> => {
+export const fetchSharedPeriodTrackerByToken = async (
+  token: string
+): Promise<SharedPeriodTrackerData | null> => {
   try {
-    const tokenRef = dbRef(database, `${SHARE_TOKENS_COLLECTION}/${token}`);
-    const snapshot = await get(tokenRef);
-    if (snapshot.exists()) {
-      const data = snapshot.val() as { userId: string };
-      return data.userId;
-    }
-    return null;
+    const shareRef = dbRef(database, `${PUBLIC_SHARES_COLLECTION}/${token}`);
+    const snapshot = await get(shareRef);
+    if (!snapshot.exists()) return null;
+
+    const data = snapshot.val() as Omit<SharedPeriodTrackerData, 'logs'> & {
+      logs?: unknown;
+    };
+    if (!data.settings || !data.ownerUserId) return null;
+
+    return {
+      ownerUserId: data.ownerUserId,
+      settings: data.settings,
+      logs: mapValueToPeriodLogs(data.logs),
+      updatedAt: data.updatedAt,
+    };
   } catch (error) {
-    console.error('Error resolving period share token:', error);
+    console.error('Error loading shared period tracker snapshot:', error);
     return null;
   }
 };
-
-/**
- * Fetch period logs for a specific user (public read-only)
- */
-export const fetchSharedPeriodLogs = async (userId: string): Promise<PeriodLog[]> => {
-  try {
-    const logsRef = dbRef(database, `users/${userId}/${PERIOD_LOGS_PATH}`);
-    const snapshot = await get(logsRef);
-    if (!snapshot.exists()) return [];
-
-    const val = snapshot.val();
-    if (Array.isArray(val)) {
-      return val.filter(Boolean);
-    }
-    return Object.entries(val).map(([id, item]) => ({
-      ...(item as object),
-      id,
-    })) as PeriodLog[];
-  } catch (error) {
-    console.error('Error fetching shared period logs:', error);
-    throw error;
-  }
-};
-
-/**
- * Fetch cycle settings for a specific user (public read-only)
- */
-export const fetchSharedCycleSettings = async (userId: string): Promise<CycleSettings | null> => {
-  try {
-    const settingsRef = dbRef(database, `users/${userId}/${CYCLE_SETTINGS_PATH}`);
-    const snapshot = await get(settingsRef);
-    if (snapshot.exists()) {
-      return snapshot.val() as CycleSettings;
-    }
-    return null;
-  } catch (error) {
-    console.error('Error fetching shared cycle settings:', error);
-    throw error;
-  }
-};
-
