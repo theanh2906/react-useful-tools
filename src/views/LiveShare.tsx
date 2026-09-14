@@ -25,6 +25,7 @@ import {
   listenRoomMessages,
   uploadRoomFile,
   getAdminRoomId,
+  isAdminRoomId,
   type RoomFile,
   type RoomMessage,
 } from '@/services/liveShareService';
@@ -95,6 +96,10 @@ export function LiveSharePage() {
   const handleSend = async () => {
     if (!message.trim()) return;
     if (!activeRoom) return;
+    if (isRestrictedAdminRoom) {
+      toast.error('This personal admin room is private');
+      return;
+    }
 
     try {
       await addMessage(activeRoom, {
@@ -111,6 +116,11 @@ export function LiveSharePage() {
 
   const handleUpload = async (file: File) => {
     if (!activeRoom) return;
+    if (isRestrictedAdminRoom) {
+      toast.error('This personal admin room is private');
+      return;
+    }
+
     setIsProcessing(true);
     try {
       await uploadRoomFile(activeRoom, file);
@@ -155,6 +165,9 @@ export function LiveSharePage() {
   }, [activeRoom]);
 
   const isAdminRoom = user && activeRoom === getAdminRoomId(user.id);
+  const isRestrictedAdminRoom =
+    !!activeRoom && isAdminRoomId(activeRoom) && !isAdminRoom;
+  const canClearHistory = !!isAdminRoom;
 
   return (
     <motion.div
@@ -182,8 +195,8 @@ export function LiveSharePage() {
                 <User className="w-4 h-4" /> Personal Admin Room
               </h3>
               <p className="mt-1 text-sm text-muted">
-                You are in your persistent room. Share your Room ID with others
-                to invite them.
+                You are in your private persistent room. Use random rooms for
+                guest collaboration.
               </p>
             </div>
             <div className="text-right">
@@ -236,11 +249,20 @@ export function LiveSharePage() {
                 <Copy className="w-4 h-4" />
                 Copy Link
               </Button>
-              <Button variant="ghost" size="sm" onClick={clearHistory}>
-                <Trash2 className="w-4 h-4" />
-                Clear
-              </Button>
+              {canClearHistory && (
+                <Button variant="ghost" size="sm" onClick={clearHistory}>
+                  <Trash2 className="w-4 h-4" />
+                  Clear
+                </Button>
+              )}
             </div>
+          </div>
+        )}
+
+        {isRestrictedAdminRoom && (
+          <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
+            Personal admin rooms are private under the secure database rules.
+            Ask the owner to create a random room for guest sharing.
           </div>
         )}
       </Card>
@@ -301,8 +323,12 @@ export function LiveSharePage() {
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
               className="flex-1"
+              disabled={isRestrictedAdminRoom}
             />
-            <Button onClick={handleSend} disabled={!activeRoom}>
+            <Button
+              onClick={handleSend}
+              disabled={!activeRoom || isRestrictedAdminRoom}
+            >
               <Send className="w-4 h-4" />
             </Button>
           </div>
@@ -357,13 +383,13 @@ export function LiveSharePage() {
                 const file = e.target.files?.[0];
                 if (file) handleUpload(file);
               }}
-              disabled={!activeRoom || isProcessing}
+              disabled={!activeRoom || isProcessing || isRestrictedAdminRoom}
             />
             <label htmlFor="live-share-file">
               <Button
                 variant="secondary"
                 className="w-full"
-                disabled={!activeRoom || isProcessing}
+                disabled={!activeRoom || isProcessing || isRestrictedAdminRoom}
               >
                 <Upload className="w-4 h-4" />
                 {isProcessing ? 'Uploading...' : 'Upload File'}
