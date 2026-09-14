@@ -15,9 +15,7 @@ import { Spinner } from '@/components/ui/Spinner';
 import PeriodCalendar from '@/components/ui/PeriodCalendar';
 import PeriodHistory from '@/components/ui/PeriodHistory';
 import {
-  getUserIdByShareToken,
-  fetchSharedPeriodLogs,
-  fetchSharedCycleSettings,
+  fetchSharedPeriodTrackerByToken,
 } from '@/services/periodService';
 import type { PeriodLog, CycleSettings, CyclePrediction } from '@/types';
 
@@ -41,21 +39,15 @@ export default function PeriodTrackerShare() {
 
     const loadSharedData = async () => {
       try {
-        const userId = await getUserIdByShareToken(shareToken);
-        if (!userId) {
+        const shared = await fetchSharedPeriodTrackerByToken(shareToken);
+        if (!shared) {
           setIsInvalid(true);
           return;
         }
 
-        const settings = await fetchSharedCycleSettings(userId);
-        if (!settings) {
-          setIsInvalid(true);
-          return;
-        }
-        setCycleSettings(settings);
+        setCycleSettings(shared.settings);
 
-        const logs = await fetchSharedPeriodLogs(userId);
-        const sorted = [...logs].sort(
+        const sorted = [...shared.logs].sort(
           (a, b) => parseISO(b.startDate).getTime() - parseISO(a.startDate).getTime()
         );
         setPeriodLogs(sorted);
