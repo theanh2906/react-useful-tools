@@ -33,6 +33,15 @@ import { normalizeMealCheckInCycles } from '../utils/mealCheckInCycles';
 const COLLECTION_NAME = 'mealCheckIns';
 const CONFIG_COLLECTION_NAME = 'mealCheckInConfigs';
 const SHARE_TOKENS_COLLECTION = 'mealCheckInShareTokens';
+const PUBLIC_SHARES_COLLECTION = 'publicShares/mealCheckIns';
+
+export interface SharedMealCheckInData {
+  ownerUserId: string;
+  config: MealCheckInCycleConfig;
+  configs: MealCheckInCycleConfig[];
+  checkIns: MealCheckIn[];
+  updatedAt: number;
+}
 
 const normalizeCycleHistory = (
   cycles: MealCheckInCycleDefinition[]
@@ -47,6 +56,72 @@ const normalizeCycleHistory = (
   return Array.from(byStartDate.values()).sort((a, b) =>
     a.startDate.localeCompare(b.startDate)
   );
+};
+
+const mapCheckInsSnapshot = (snapshot: Awaited<ReturnType<typeof get>>) => {
+  if (!snapshot.exists()) return [];
+
+  const checkIns: MealCheckIn[] = [];
+  snapshot.forEach((childSnapshot) => {
+    checkIns.push(childSnapshot.val() as MealCheckIn);
+  });
+
+  return checkIns;
+};
+
+const fetchCheckInsForUser = async (userId: string) => {
+  const checkInsRef = dbRef(database, COLLECTION_NAME);
+  const userQuery = query(checkInsRef, orderByChild('userId'), equalTo(userId));
+  const snapshot = await get(userQuery);
+  return mapCheckInsSnapshot(snapshot);
+};
+
+const buildCycleConfigs = (
+  userId: string,
+  legacyConfig: MealCheckInCycleConfig | null
+) => {
+  const configs: MealCheckInCycleConfig[] = [];
+
+  if (legacyConfig) {
+    configs.push(legacyConfig);
+    configs.push(
+      ...(legacyConfig.cycleHistory ?? []).map((cycle) => ({
+        userId,
+        startDate: cycle.startDate,
+        cycleDays: cycle.cycleDays,
+      }))
+    );
+  }
+
+  return normalizeMealCheckInCycles(configs);
+};
+
+const syncMealCheckInShareSnapshot = async (userId: string) => {
+  if (!userId) return;
+
+  const configRef = dbRef(database, `${CONFIG_COLLECTION_NAME}/${userId}`);
+  const configSnapshot = await get(configRef);
+  if (!configSnapshot.exists()) return;
+
+  const config = configSnapshot.val() as MealCheckInCycleConfig;
+  if (!config.shareToken) return;
+
+  const configs = buildCycleConfigs(userId, config);
+  const checkIns = (await fetchCheckInsForUser(userId)).sort((a, b) =>
+    a.date.localeCompare(b.date)
+  );
+  const publicRef = dbRef(
+    database,
+    `${PUBLIC_SHARES_COLLECTION}/${config.shareToken}`
+  );
+
+  await set(publicRef, {
+    ownerUserId: userId,
+    config,
+    configs,
+    checkIns,
+    updatedAt: Date.now(),
+  } satisfies SharedMealCheckInData);
 };
 
 export const mealCheckInService = {
@@ -88,6 +163,7 @@ export const mealCheckInService = {
 
       const checkInRef = dbRef(database, `${COLLECTION_NAME}/${checkInId}`);
       await set(checkInRef, checkInData);
+      await syncMealCheckInShareSnapshot(userId);
 
       return checkInData;
     } catch (error) {
@@ -127,27 +203,9 @@ export const mealCheckInService = {
     endDate: string
   ): Promise<MealCheckIn[]> {
     try {
-      // Get all check-ins from database
-      const checkInsRef = dbRef(database, COLLECTION_NAME);
-      const snapshot = await get(checkInsRef);
-
-      if (!snapshot.exists()) {
-        return [];
-      }
-
-      // Filter check-ins for the specific user and date range
-      const rangeCheckIns: MealCheckIn[] = [];
-      snapshot.forEach((childSnapshot) => {
-        const checkIn = childSnapshot.val() as MealCheckIn;
-        // Filter by userId and date range
-        if (
-          checkIn.userId === userId &&
-          checkIn.date >= startDate &&
-          checkIn.date <= endDate
-        ) {
-          rangeCheckIns.push(checkIn);
-        }
-      });
+      const rangeCheckIns = (await fetchCheckInsForUser(userId)).filter(
+        (checkIn) => checkIn.date >= startDate && checkIn.date <= endDate
+      );
 
       return rangeCheckIns.sort((a, b) => a.date.localeCompare(b.date));
     } catch (error) {
@@ -200,6 +258,7 @@ export const mealCheckInService = {
         `${CONFIG_COLLECTION_NAME}/${config.userId}`
       );
       await set(configRef, configToSave);
+      await syncMealCheckInShareSnapshot(config.userId);
     } catch (error) {
       console.error('Error saving cycle config:', error);
       throw error;
@@ -230,20 +289,7 @@ export const mealCheckInService = {
   async getCycleConfigs(userId: string): Promise<MealCheckInCycleConfig[]> {
     try {
       const legacyConfig = await this.getCycleConfig(userId);
-      const configs: MealCheckInCycleConfig[] = [];
-
-      if (legacyConfig) {
-        configs.push(legacyConfig);
-        configs.push(
-          ...(legacyConfig.cycleHistory ?? []).map((cycle) => ({
-            userId,
-            startDate: cycle.startDate,
-            cycleDays: cycle.cycleDays,
-          }))
-        );
-      }
-
-      return normalizeMealCheckInCycles(configs);
+      return buildCycleConfigs(userId, legacyConfig);
     } catch (error) {
       console.error('Error getting cycle configs:', error);
       throw error;
@@ -263,6 +309,7 @@ export const mealCheckInService = {
       // Delete document
       const checkInRef = dbRef(database, `${COLLECTION_NAME}/${checkIn.id}`);
       await remove(checkInRef);
+      await syncMealCheckInShareSnapshot(checkIn.userId);
     } catch (error) {
       console.error('Error deleting meal check-in:', error);
       throw error;
@@ -281,10 +328,11 @@ export const mealCheckInService = {
       const checkInId = `${userId}_${date}`;
       const checkInRef = dbRef(database, `${COLLECTION_NAME}/${checkInId}`);
 
-      await set(checkInRef, {
+      await update(checkInRef, {
         notes,
         updatedAt: Date.now(),
       });
+      await syncMealCheckInShareSnapshot(userId);
     } catch (error) {
       console.error('Error updating check-in notes:', error);
       throw error;
@@ -346,22 +394,7 @@ export const mealCheckInService = {
    */
   async getAllCheckIns(userId: string): Promise<MealCheckIn[]> {
     try {
-      const checkInsRef = dbRef(database, COLLECTION_NAME);
-      const userQuery = query(
-        checkInsRef,
-        orderByChild('userId'),
-        equalTo(userId)
-      );
-      const snapshot = await get(userQuery);
-
-      if (!snapshot.exists()) {
-        return [];
-      }
-
-      const allCheckIns: MealCheckIn[] = [];
-      snapshot.forEach((childSnapshot) => {
-        allCheckIns.push(childSnapshot.val() as MealCheckIn);
-      });
+      const allCheckIns = await fetchCheckInsForUser(userId);
 
       return allCheckIns.sort((a, b) => b.date.localeCompare(a.date));
     } catch (error) {
@@ -388,6 +421,7 @@ export const mealCheckInService = {
         `${SHARE_TOKENS_COLLECTION}/${token}`
       );
       await set(tokenRef, { userId });
+      await syncMealCheckInShareSnapshot(userId);
 
       return token;
     } catch (error) {
@@ -408,6 +442,9 @@ export const mealCheckInService = {
       );
       await remove(tokenRef);
 
+      const publicRef = dbRef(database, `${PUBLIC_SHARES_COLLECTION}/${token}`);
+      await remove(publicRef);
+
       // Clear token from cycle config
       const configRef = dbRef(database, `${CONFIG_COLLECTION_NAME}/${userId}`);
       await update(configRef, { shareToken: null });
@@ -417,24 +454,28 @@ export const mealCheckInService = {
     }
   },
 
-  /**
-   * Resolve a share token to its owner's userId.
-   * Returns null if the token does not exist.
-   */
-  async getUserIdByShareToken(token: string): Promise<string | null> {
+  async getSharedDataByToken(
+    token: string
+  ): Promise<SharedMealCheckInData | null> {
     try {
-      const tokenRef = dbRef(
-        database,
-        `${SHARE_TOKENS_COLLECTION}/${token}`
-      );
-      const snapshot = await get(tokenRef);
-      if (snapshot.exists()) {
-        const data = snapshot.val() as { userId: string };
-        return data.userId;
+      const publicRef = dbRef(database, `${PUBLIC_SHARES_COLLECTION}/${token}`);
+      const snapshot = await get(publicRef);
+      if (!snapshot.exists()) return null;
+
+      const data = snapshot.val() as SharedMealCheckInData;
+      if (!data.ownerUserId || !data.config || !Array.isArray(data.checkIns)) {
+        return null;
       }
-      return null;
+
+      return {
+        ownerUserId: data.ownerUserId,
+        config: data.config,
+        configs: Array.isArray(data.configs) ? data.configs : [data.config],
+        checkIns: data.checkIns,
+        updatedAt: data.updatedAt,
+      };
     } catch (error) {
-      console.error('Error resolving share token:', error);
+      console.error('Error loading shared meal check-in snapshot:', error);
       return null;
     }
   },
