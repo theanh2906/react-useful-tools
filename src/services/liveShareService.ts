@@ -41,8 +41,20 @@ export type RoomFile = {
  * Builds the database path for a room's messages or files.
  * @internal
  */
+const ADMIN_ROOM_PREFIX = 'admin-';
+
+export const isAdminRoomId = (roomId: string) =>
+  roomId.startsWith(ADMIN_ROOM_PREFIX);
+
+const roomRootPath = (roomId: string) => {
+  if (isAdminRoomId(roomId)) {
+    return `liveShare/admin/${roomId.slice(ADMIN_ROOM_PREFIX.length)}`;
+  }
+  return `liveShare/public/${roomId}`;
+};
+
 const roomPath = (roomId: string, type: 'messages' | 'files') =>
-  `liveShare/${roomId}/${type}`;
+  `${roomRootPath(roomId)}/${type}`;
 
 /**
  * Generates a deterministic admin room ID for a given user.
@@ -134,5 +146,5 @@ export const clearRoom = async (roomId: string) => {
  * @param roomId - The room identifier.
  */
 export const deleteRoom = async (roomId: string) => {
-  await setValue(`liveShare/${roomId}`, null);
+  await setValue(roomRootPath(roomId), null);
 };
