@@ -1,0 +1,81 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "users": {
+      "$uid": {
+        ".read": "auth != null && auth.uid == $uid",
+        ".write": "auth != null && auth.uid == $uid"
+      }
+    },
+    "mealCheckIns": {
+      ".indexOn": ["userId", "date"],
+      ".read": "auth != null && query.orderByChild == 'userId' && query.equalTo == auth.uid",
+      "$checkInId": {
+        ".read": "auth != null && data.child('userId').val() == auth.uid",
+        ".write": "auth != null && ((!data.exists() && newData.exists() && newData.child('userId').val() == auth.uid) || (data.exists() && data.child('userId').val() == auth.uid && (!newData.exists() || newData.child('userId').val() == auth.uid)))",
+        ".validate": "!newData.exists() || (newData.hasChildren(['id', 'userId', 'date', 'createdAt']) && newData.child('id').isString() && newData.child('userId').isString() && newData.child('date').isString() && newData.child('createdAt').isNumber())"
+      }
+    },
+    "mealCheckInConfigs": {
+      "$uid": {
+        ".read": "auth != null && auth.uid == $uid",
+        ".write": "auth != null && auth.uid == $uid",
+        ".validate": "!newData.exists() || (newData.hasChildren(['userId', 'startDate', 'cycleDays']) && newData.child('userId').val() == $uid && newData.child('startDate').isString() && newData.child('cycleDays').isNumber())"
+      }
+    },
+    "periodShareTokens": {
+      "$token": {
+        ".read": false,
+        ".write": "auth != null && ((!data.exists() && newData.exists() && newData.child('userId').val() == auth.uid) || (data.exists() && data.child('userId').val() == auth.uid && (!newData.exists() || newData.child('userId').val() == auth.uid)))",
+        ".validate": "!newData.exists() || (newData.hasChildren(['userId']) && newData.child('userId').isString())"
+      }
+    },
+    "mealCheckInShareTokens": {
+      "$token": {
+        ".read": false,
+        ".write": "auth != null && ((!data.exists() && newData.exists() && newData.child('userId').val() == auth.uid) || (data.exists() && data.child('userId').val() == auth.uid && (!newData.exists() || newData.child('userId').val() == auth.uid)))",
+        ".validate": "!newData.exists() || (newData.hasChildren(['userId']) && newData.child('userId').isString())"
+      }
+    },
+    "publicShares": {
+      "periodTrackers": {
+        "$token": {
+          ".read": true,
+          ".write": "auth != null && ((!data.exists() && newData.exists() && newData.child('ownerUserId').val() == auth.uid) || (data.exists() && data.child('ownerUserId').val() == auth.uid && (!newData.exists() || newData.child('ownerUserId').val() == auth.uid)))",
+          ".validate": "!newData.exists() || (newData.hasChildren(['ownerUserId', 'updatedAt']) && newData.child('ownerUserId').isString() && newData.child('updatedAt').isNumber())"
+        }
+      },
+      "mealCheckIns": {
+        "$token": {
+          ".read": true,
+          ".write": "auth != null && ((!data.exists() && newData.exists() && newData.child('ownerUserId').val() == auth.uid) || (data.exists() && data.child('ownerUserId').val() == auth.uid && (!newData.exists() || newData.child('ownerUserId').val() == auth.uid)))",
+          ".validate": "!newData.exists() || (newData.hasChildren(['ownerUserId', 'updatedAt']) && newData.child('ownerUserId').isString() && newData.child('updatedAt').isNumber())"
+        }
+      }
+    },
+    "liveShare": {
+      "admin": {
+        "$uid": {
+          ".read": "auth != null && auth.uid == $uid",
+          ".write": "auth != null && auth.uid == $uid"
+        }
+      },
+      "public": {
+        "$roomId": {
+          ".read": true,
+          "messages": {
+            "$messageId": {
+              ".write": "!data.exists() && newData.exists() && newData.hasChildren(['content', 'timestamp', 'author']) && newData.child('content').isString() && newData.child('timestamp').isNumber() && newData.child('author').isString()"
+            }
+          },
+          "files": {
+            "$fileId": {
+              ".write": "!data.exists() && newData.exists() && newData.hasChildren(['name', 'url', 'size', 'timestamp', 'type']) && newData.child('name').isString() && newData.child('url').isString() && newData.child('size').isNumber() && newData.child('timestamp').isNumber() && newData.child('type').val() == 'file'"
+            }
+          }
+        }
+      }
+    }
+  }
+}
