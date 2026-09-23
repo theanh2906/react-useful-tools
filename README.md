@@ -23,6 +23,7 @@ A beautiful, modern React application for pregnancy tracking and productivity to
 - **Notes** - Rich text notes with categories
 - **Storage** - Cloud file management with Firebase Storage
 - **Spreadsheet Manager** - Connect Google Sheets, browse tabs, and append records from a responsive UI
+- **Spending Analyzer** - Import text-based Sacombank credit-card PDF statements locally, review and edit categories, compare billing periods or calendar months with interactive charts
 - **Live Share** - Real-time file/text sharing
 
 ### Utilities
@@ -111,6 +112,14 @@ The app is built with a mobile-first approach:
 - Touch-friendly interactions
 - Optimized for various screen sizes
 - Safe area support for notched devices
+
+## Spending Analyzer
+
+Open `/spending` and choose a Sacombank credit-card statement PDF. The app extracts transactions in the browser, checks purchase, fee, payment and outstanding-balance totals against the statement, then shows a category review before saving. Unsupported, encrypted, scanned/image-only or unreconciled PDFs are rejected. Reimporting the same statement date and card suffix replaces the previous import after review.
+
+Use the period selector for the last 3, 6, 12 or all months, or select a custom range. Choose **Kỳ sao kê** to group transactions by their statement's closing month, or **Tháng giao dịch** to group them by transaction date. Click a month, category or merchant chart to drill down; search descriptions and correct categories in the transaction list. Purchases are reported separately from fees and credit payments, and missing months are shown without a spending value.
+
+PDF bytes are not uploaded or retained. Parsed transactions are stored in this browser's IndexedDB, so they remain available after reload on this device but are not synced or encrypted at rest. Use the delete control beside a statement to remove its local data. Do not import financial statements on a shared browser profile.
 
 ## Authentication
 

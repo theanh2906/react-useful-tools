@@ -27,9 +27,8 @@ export const WS_ENDPOINT =
 
 // ─── Weather API ─────────────────────────────────────────────────────────────
 
-/** Visual Crossing Weather API key. Overridable via `NEXT_PUBLIC_WEATHER_API_KEY` env var. */
-export const WEATHER_API_KEY =
-  process.env.NEXT_PUBLIC_WEATHER_API_KEY || 'W9ZMQH9J9C95VMW3EFA7XLNXB';
+/** Visual Crossing Weather API key supplied by the deployment environment. */
+export const WEATHER_API_KEY = process.env.NEXT_PUBLIC_WEATHER_API_KEY || '';
 
 /** Visual Crossing Weather API base URL for timeline requests. */
 export const WEATHER_API_URL =
@@ -170,6 +169,14 @@ export const NAV_ITEMS: NavigationItem[] = [
     icon: 'FileText',
     category: 'productivity',
     protected: true,
+  },
+  {
+    id: 'spending',
+    label: 'Phân tích chi tiêu',
+    labelKey: 'navigation.spending',
+    path: '/spending',
+    icon: 'ChartNoAxesCombined',
+    category: 'productivity',
   },
   {
     id: 'storage',
