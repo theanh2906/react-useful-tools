@@ -1,0 +1,1193 @@
+[
+  {
+    "id": "jira-board",
+    "title": "Jira · bảng",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-jira-board-cells-query",
+        "canonicalCommand": "twg jira board cells query",
+        "title": "Tra cứu ô trong bảng của bảng của Jira",
+        "command": "twg jira board cells query",
+        "description": "Tra cứu ô trong bảng của bảng của Jira.",
+        "example": "twg jira board cells query --id \"ari:cloud:jira:CLOUD_ID:board-cell/<id>\"",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jira",
+          "board",
+          "cells",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên; có thể nhập nhiều giá trị",
+            "example": "--id 12345"
+          }
+        ]
+      },
+      {
+        "id": "twg-jira-board-create",
+        "canonicalCommand": "twg jira board create",
+        "title": "Tạo bảng của Jira",
+        "command": "twg jira board create",
+        "description": "Tạo bảng của Jira.",
+        "example": "twg jira board create --name 'Demo Scrum' --type scrum --filter-id 10000",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jira",
+          "board",
+          "create"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Tên",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--type <type>",
+            "description": "Loại tài nguyên hoặc nội dung theo lệnh",
+            "example": "--type TYPE"
+          },
+          {
+            "flag": "--filter-id <filterId>",
+            "description": "ID bộ lọc",
+            "example": "--filter-id 12345"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-board-delete",
+        "canonicalCommand": "twg jira board delete",
+        "title": "Xóa bảng của Jira",
+        "command": "twg jira board delete",
+        "description": "Xóa bảng của Jira.",
+        "example": "twg jira board delete --id 12345",
+        "exampleKind": "usage",
+        "risk": "destructive",
+        "tags": [
+          "jira",
+          "board",
+          "delete"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--board-id <boardId>",
+            "description": "ID bảng",
+            "example": "--board-id 12345"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên",
+            "example": "--id 12345"
+          }
+        ],
+        "warning": "Có thể xóa dữ liệu, thu hồi quyền hoặc gỡ cấu hình. Đọc lại đối tượng và khả năng khôi phục; ưu tiên --dry-run nếu lệnh hỗ trợ. Không thêm --yes khi chưa kiểm tra. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-board-get",
+        "canonicalCommand": "twg jira board get",
+        "title": "Đọc bảng của Jira",
+        "command": "twg jira board get",
+        "description": "Đọc bảng của Jira.",
+        "example": "twg jira board get",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jira",
+          "board",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên; có thể nhập nhiều giá trị",
+            "example": "--id 12345"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-board-projects-query",
+        "canonicalCommand": "twg jira board projects query",
+        "title": "Tra cứu dự án Atlas của bảng của Jira",
+        "command": "twg jira board projects query",
+        "description": "Tra cứu dự án Atlas của bảng của Jira.",
+        "example": "twg jira board projects query",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jira",
+          "board",
+          "projects",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--board-id <boardId>",
+            "description": "ID bảng",
+            "example": "--board-id 12345"
+          },
+          {
+            "flag": "--start-at <startAt>",
+            "description": "Tham số start-at",
+            "example": "--start-at 1"
+          },
+          {
+            "flag": "--max-results <maxResults>",
+            "description": "Tham số max-results",
+            "example": "--max-results 10"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên",
+            "example": "--id 12345"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-board-query",
+        "canonicalCommand": "twg jira board query",
+        "title": "Tra cứu bảng của Jira",
+        "command": "twg jira board query",
+        "description": "Tra cứu bảng của Jira.",
+        "example": "twg jira board query --project PROJ --site demo",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jira",
+          "board",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--project-ari <projectAri>",
+            "description": "ARI dự án",
+            "example": "--project-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Tên",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--type <type>",
+            "description": "Loại tài nguyên hoặc nội dung theo lệnh",
+            "example": "--type TYPE"
+          },
+          {
+            "flag": "--start-at <startAt>",
+            "description": "Tham số start-at",
+            "example": "--start-at 1"
+          },
+          {
+            "flag": "--max-results <maxResults>",
+            "description": "Tham số max-results",
+            "example": "--max-results 10"
+          },
+          {
+            "flag": "--project <project>",
+            "description": "Dự án",
+            "example": "--project DEMO"
+          },
+          {
+            "flag": "--issue <issue>",
+            "description": "Ticket",
+            "example": "--issue DEMO-123"
+          },
+          {
+            "flag": "--filter-id <filterId>",
+            "description": "ID bộ lọc",
+            "example": "--filter-id 12345"
+          }
+        ]
+      },
+      {
+        "id": "twg-jira-board-quick-filter-get",
+        "canonicalCommand": "twg jira board quick-filter get",
+        "title": "Đọc bộ lọc nhanh của bảng của Jira",
+        "command": "twg jira board quick-filter get",
+        "description": "Đọc bộ lọc nhanh của bảng của Jira.",
+        "example": "twg jira board quick-filter get --board-id 312 --quick-filter-id 7 --site demo",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jira",
+          "board",
+          "quick-filter",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--board-id <boardId>",
+            "description": "ID bảng",
+            "example": "--board-id 12345"
+          },
+          {
+            "flag": "--quick-filter-id <quickFilterId>",
+            "description": "ID bộ lọc nhanh",
+            "example": "--quick-filter-id 12345"
+          }
+        ]
+      },
+      {
+        "id": "twg-jira-board-quick-filter-query",
+        "canonicalCommand": "twg jira board quick-filter query",
+        "title": "Tra cứu bộ lọc nhanh của bảng của Jira",
+        "command": "twg jira board quick-filter query",
+        "description": "Tra cứu bộ lọc nhanh của bảng của Jira.",
+        "example": "twg jira board quick-filter query --board-id 312 --site demo",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jira",
+          "board",
+          "quick-filter",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--board-id <boardId>",
+            "description": "ID bảng",
+            "example": "--board-id 12345"
+          },
+          {
+            "flag": "--start-at <startAt>",
+            "description": "Tham số start-at",
+            "example": "--start-at 1"
+          },
+          {
+            "flag": "--max-results <maxResults>",
+            "description": "Tham số max-results",
+            "example": "--max-results 10"
+          }
+        ]
+      },
+      {
+        "id": "twg-jira-board-scope-query",
+        "canonicalCommand": "twg jira board scope query",
+        "title": "Tra cứu phạm vi của bảng của Jira",
+        "command": "twg jira board scope query",
+        "description": "Tra cứu phạm vi của bảng của Jira.",
+        "example": "twg jira board scope query",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jira",
+          "board",
+          "scope",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--board-id <boardId>",
+            "description": "ID bảng",
+            "example": "--board-id 12345"
+          },
+          {
+            "flag": "--project-ari <projectAri>",
+            "description": "ARI dự án",
+            "example": "--project-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--custom-filter-ids <customFilterIds>",
+            "description": "Danh sách ID custom-filter",
+            "example": "--custom-filter-ids CUSTOM_FILTER_IDS"
+          },
+          {
+            "flag": "--filter-jql <filterJql>",
+            "description": "Tham số filter-jql",
+            "example": "--filter-jql 'project = DEMO ORDER BY updated DESC'"
+          },
+          {
+            "flag": "--is-cmp <isCMP>",
+            "description": "Tham số is-cmp",
+            "example": "--is-cmp IS_CMP"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "--project <project>",
+            "description": "Dự án",
+            "example": "--project DEMO"
+          },
+          {
+            "flag": "--issue <issue>",
+            "description": "Ticket",
+            "example": "--issue DEMO-123"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-board-sprints-query",
+        "canonicalCommand": "twg jira board sprints query",
+        "title": "Tra cứu sprint của bảng của Jira",
+        "command": "twg jira board sprints query",
+        "description": "Tra cứu sprint của bảng của Jira.",
+        "example": "twg jira board sprints query",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jira",
+          "board",
+          "sprints",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--board-id <boardId>",
+            "description": "ID bảng",
+            "example": "--board-id 12345"
+          },
+          {
+            "flag": "--project-ari <projectAri>",
+            "description": "ARI dự án",
+            "example": "--project-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--state <state>",
+            "description": "Trạng thái; dùng đúng giá trị được lệnh hỗ trợ",
+            "example": "--state open"
+          },
+          {
+            "flag": "--start-at <startAt>",
+            "description": "Tham số start-at",
+            "example": "--start-at 1"
+          },
+          {
+            "flag": "--max-results <maxResults>",
+            "description": "Tham số max-results",
+            "example": "--max-results 10"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "--project <project>",
+            "description": "Dự án",
+            "example": "--project DEMO"
+          },
+          {
+            "flag": "--issue <issue>",
+            "description": "Ticket",
+            "example": "--issue DEMO-123"
+          },
+          {
+            "flag": "--current",
+            "description": "Tham số current",
+            "example": "--current"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-board-view-settings-query",
+        "canonicalCommand": "twg jira board view-settings query",
+        "title": "Tra cứu cài đặt chế độ xem của bảng của Jira",
+        "command": "twg jira board view-settings query",
+        "description": "Tra cứu cài đặt chế độ xem của bảng của Jira.",
+        "example": "twg jira board view-settings query",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jira",
+          "board",
+          "view-settings",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--input-json <json>",
+            "description": "Payload JSON theo schema của lệnh",
+            "example": "--input-json '{}'"
+          },
+          {
+            "flag": "--view-id <viewId>",
+            "description": "ID chế độ xem",
+            "example": "--view-id 12345"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      }
+    ]
+  },
+  {
+    "id": "jira-dashboard",
+    "title": "Jira · dashboard",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-jira-dashboard-bulk-edit",
+        "canonicalCommand": "twg jira dashboard bulk-edit",
+        "title": "Sửa hàng loạt dashboard của Jira",
+        "command": "twg jira dashboard bulk-edit",
+        "description": "Sửa hàng loạt dashboard của Jira.",
+        "example": "twg jira dashboard bulk-edit --id 10000 --id 10001 --action changeOwner --change-owner-details-json '{\"newOwner\":\"account-id\",\"autofixName\":true}' --site demo",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jira",
+          "dashboard",
+          "bulk-edit"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn; không dùng cùng --input-json",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--input-json <json>",
+            "description": "Payload JSON theo schema của lệnh; không dùng cùng --variables-json",
+            "example": "--input-json '{}'"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên; có thể nhập nhiều giá trị; mặc định: []",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "--action <action>",
+            "description": "Hành động",
+            "example": "--action ACTION"
+          },
+          {
+            "flag": "--change-owner-details-json <json>",
+            "description": "JSON cho change-owner-details",
+            "example": "--change-owner-details-json '{}'"
+          },
+          {
+            "flag": "--permission-details-json <json>",
+            "description": "JSON cho permission-details",
+            "example": "--permission-details-json '{}'"
+          },
+          {
+            "flag": "--extend-admin-permissions <extendAdminPermissions>",
+            "description": "Tham số extend-admin-permissions",
+            "example": "--extend-admin-permissions EXTEND_ADMIN_PERMISSIONS"
+          },
+          {
+            "flag": "--yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-jira-dashboard-copy",
+        "canonicalCommand": "twg jira dashboard copy",
+        "title": "Sao chép dashboard của Jira",
+        "command": "twg jira dashboard copy",
+        "description": "Sao chép dashboard của Jira.",
+        "example": "twg jira dashboard copy --id 10000 --name \"Delivery copy\" --share-permissions-json '[]' --edit-permissions-json '[]' --site demo",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jira",
+          "dashboard",
+          "copy"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn; không dùng cùng --input-json",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--input-json <json>",
+            "description": "Payload JSON theo schema của lệnh; không dùng cùng --variables-json",
+            "example": "--input-json '{}'"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Tên",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--description <description>",
+            "description": "Mô tả",
+            "example": "--description 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--share-permissions-json <json>",
+            "description": "Payload JSON mô tả quyền chia sẻ; kiểm tra người nhận và phạm vi",
+            "example": "--share-permissions-json '{}'"
+          },
+          {
+            "flag": "--edit-permissions-json <json>",
+            "description": "JSON cho edit-permissions",
+            "example": "--edit-permissions-json '{}'"
+          },
+          {
+            "flag": "--extend-admin-permissions <extendAdminPermissions>",
+            "description": "Tham số extend-admin-permissions",
+            "example": "--extend-admin-permissions EXTEND_ADMIN_PERMISSIONS"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-jira-dashboard-create",
+        "canonicalCommand": "twg jira dashboard create",
+        "title": "Tạo dashboard của Jira",
+        "command": "twg jira dashboard create",
+        "description": "Tạo dashboard của Jira.",
+        "example": "twg jira dashboard create --name 'Demo dashboard' --description 'Dashboard thử nghiệm'",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jira",
+          "dashboard",
+          "create"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn; không dùng cùng --input-json",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--input-json <json>",
+            "description": "Payload JSON theo schema của lệnh; không dùng cùng --variables-json",
+            "example": "--input-json '{}'"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Tên",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--description <description>",
+            "description": "Mô tả",
+            "example": "--description 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--share-permissions-json <json>",
+            "description": "Payload JSON mô tả quyền chia sẻ; kiểm tra người nhận và phạm vi",
+            "example": "--share-permissions-json '{}'"
+          },
+          {
+            "flag": "--edit-permissions-json <json>",
+            "description": "JSON cho edit-permissions",
+            "example": "--edit-permissions-json '{}'"
+          },
+          {
+            "flag": "--extend-admin-permissions <extendAdminPermissions>",
+            "description": "Tham số extend-admin-permissions",
+            "example": "--extend-admin-permissions EXTEND_ADMIN_PERMISSIONS"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-dashboard-delete",
+        "canonicalCommand": "twg jira dashboard delete",
+        "title": "Xóa dashboard của Jira",
+        "command": "twg jira dashboard delete",
+        "description": "Xóa dashboard của Jira.",
+        "example": "twg jira dashboard delete --id 12345",
+        "exampleKind": "usage",
+        "risk": "destructive",
+        "tags": [
+          "jira",
+          "dashboard",
+          "delete"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "--yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể xóa dữ liệu, thu hồi quyền hoặc gỡ cấu hình. Đọc lại đối tượng và khả năng khôi phục; ưu tiên --dry-run nếu lệnh hỗ trợ. Không thêm --yes khi chưa kiểm tra. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-dashboard-gadget-add",
+        "canonicalCommand": "twg jira dashboard gadget add",
+        "title": "Thêm gadget của dashboard của Jira",
+        "command": "twg jira dashboard gadget add",
+        "description": "Thêm gadget của dashboard của Jira.",
+        "example": "twg jira dashboard gadget add --dashboard-id 12345 --module-key \"$GADGET_MODULE_KEY\" --title 'Demo gadget' --row 0 --column 0",
+        "exampleKind": "template",
+        "risk": "write",
+        "tags": [
+          "jira",
+          "dashboard",
+          "gadget",
+          "add"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn; không dùng cùng --input-json",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--input-json <json>",
+            "description": "Payload JSON theo schema của lệnh; không dùng cùng --variables-json",
+            "example": "--input-json '{}'"
+          },
+          {
+            "flag": "--dashboard-id <dashboardId>",
+            "description": "ID dashboard",
+            "example": "--dashboard-id 12345"
+          },
+          {
+            "flag": "--gadget-json <json>",
+            "description": "JSON cho gadget",
+            "example": "--gadget-json '{}'"
+          },
+          {
+            "flag": "--title <title>",
+            "description": "Tiêu đề",
+            "example": "--title 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--module-key <moduleKey>",
+            "description": "Tham số module-key",
+            "example": "--module-key DEMO"
+          },
+          {
+            "flag": "--uri <uri>",
+            "description": "Tham số uri",
+            "example": "--uri URI"
+          },
+          {
+            "flag": "--color <color>",
+            "description": "Tham số color",
+            "example": "--color COLOR"
+          },
+          {
+            "flag": "--row <row>",
+            "description": "Tham số row",
+            "example": "--row ROW"
+          },
+          {
+            "flag": "--column <column>",
+            "description": "Tham số column",
+            "example": "--column COLUMN"
+          },
+          {
+            "flag": "--ignore-uri-and-module-key-validation <ignoreUriAndModuleKeyValidation>",
+            "description": "Tham số ignore-uri-and-module-key-validation",
+            "example": "--ignore-uri-and-module-key-validation DEMO"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cần điền biến: GADGET_MODULE_KEY. Lấy ID, giá trị và JSON hợp lệ từ schema/metadata của site; chạy twg help describe 'jira dashboard gadget add' để kiểm tra trước. Đây không phải ví dụ đã chạy thành công trên tenant."
+      },
+      {
+        "id": "twg-jira-dashboard-gadget-catalog-query",
+        "canonicalCommand": "twg jira dashboard gadget catalog query",
+        "title": "Tra cứu danh mục của gadget của dashboard của Jira",
+        "command": "twg jira dashboard gadget catalog query",
+        "description": "Tra cứu danh mục của gadget của dashboard của Jira.",
+        "example": "twg jira dashboard gadget catalog query --site demo -o json",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jira",
+          "dashboard",
+          "gadget",
+          "catalog",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      },
+      {
+        "id": "twg-jira-dashboard-gadget-delete",
+        "canonicalCommand": "twg jira dashboard gadget delete",
+        "title": "Xóa gadget của dashboard của Jira",
+        "command": "twg jira dashboard gadget delete",
+        "description": "Xóa gadget của dashboard của Jira.",
+        "example": "twg jira dashboard gadget delete --dashboard-id 12345 --gadget-id 67890",
+        "exampleKind": "usage",
+        "risk": "destructive",
+        "tags": [
+          "jira",
+          "dashboard",
+          "gadget",
+          "delete"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--dashboard-id <dashboardId>",
+            "description": "ID dashboard",
+            "example": "--dashboard-id 12345"
+          },
+          {
+            "flag": "--gadget-id <gadgetId>",
+            "description": "ID gadget",
+            "example": "--gadget-id 12345"
+          },
+          {
+            "flag": "--yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể xóa dữ liệu, thu hồi quyền hoặc gỡ cấu hình. Đọc lại đối tượng và khả năng khôi phục; ưu tiên --dry-run nếu lệnh hỗ trợ. Không thêm --yes khi chưa kiểm tra. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-dashboard-gadget-query",
+        "canonicalCommand": "twg jira dashboard gadget query",
+        "title": "Tra cứu gadget của dashboard của Jira",
+        "command": "twg jira dashboard gadget query",
+        "description": "Tra cứu gadget của dashboard của Jira.",
+        "example": "twg jira dashboard gadget query",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jira",
+          "dashboard",
+          "gadget",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--dashboard-id <dashboardId>",
+            "description": "ID dashboard",
+            "example": "--dashboard-id 12345"
+          },
+          {
+            "flag": "--gadget-id <gadgetId>",
+            "description": "ID gadget; có thể nhập nhiều giá trị",
+            "example": "--gadget-id 12345"
+          },
+          {
+            "flag": "--module-key <moduleKey>",
+            "description": "Tham số module-key; có thể nhập nhiều giá trị",
+            "example": "--module-key DEMO"
+          },
+          {
+            "flag": "--uri <uri>",
+            "description": "Tham số uri; có thể nhập nhiều giá trị",
+            "example": "--uri URI"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-dashboard-gadget-update",
+        "canonicalCommand": "twg jira dashboard gadget update",
+        "title": "Cập nhật gadget của dashboard của Jira",
+        "command": "twg jira dashboard gadget update",
+        "description": "Cập nhật gadget của dashboard của Jira.",
+        "example": "twg jira dashboard gadget update --dashboard-id 12345 --gadget-id 67890 --title 'Tên gadget mới'",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jira",
+          "dashboard",
+          "gadget",
+          "update"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn; không dùng cùng --input-json",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--input-json <json>",
+            "description": "Payload JSON theo schema của lệnh; không dùng cùng --variables-json",
+            "example": "--input-json '{}'"
+          },
+          {
+            "flag": "--dashboard-id <dashboardId>",
+            "description": "ID dashboard",
+            "example": "--dashboard-id 12345"
+          },
+          {
+            "flag": "--gadget-id <gadgetId>",
+            "description": "ID gadget",
+            "example": "--gadget-id 12345"
+          },
+          {
+            "flag": "--gadget-json <json>",
+            "description": "JSON cho gadget",
+            "example": "--gadget-json '{}'"
+          },
+          {
+            "flag": "--title <title>",
+            "description": "Tiêu đề",
+            "example": "--title 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--color <color>",
+            "description": "Tham số color",
+            "example": "--color COLOR"
+          },
+          {
+            "flag": "--row <row>",
+            "description": "Tham số row",
+            "example": "--row ROW"
+          },
+          {
+            "flag": "--column <column>",
+            "description": "Tham số column",
+            "example": "--column COLUMN"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-dashboard-get",
+        "canonicalCommand": "twg jira dashboard get",
+        "title": "Đọc dashboard của Jira",
+        "command": "twg jira dashboard get <id>",
+        "description": "Đọc dashboard của Jira.",
+        "example": "twg jira dashboard get 12345",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jira",
+          "dashboard",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      }
+    ]
+  }
+]

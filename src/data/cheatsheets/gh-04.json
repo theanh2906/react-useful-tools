@@ -1,0 +1,1181 @@
+[
+  {
+    "id": "run",
+    "title": "GitHub Actions: lần chạy",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-run-download",
+        "canonicalCommand": "gh run download",
+        "title": "Tải artifact từ run",
+        "command": "gh run download [<run-id>] [flags]",
+        "description": "Tải và giải nén artifact của một lần chạy cụ thể vào thư mục cục bộ.",
+        "example": "gh run download 123456789 --repo octo-org/cli-sandbox --dir ./artifacts-review",
+        "risk": "write",
+        "tags": [
+          "run",
+          "download"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_run_download",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--dir",
+            "description": "Chọn thư mục nhận artifact."
+          },
+          {
+            "flag": "--name",
+            "description": "Chọn tên artifact; lặp lại để tải nhiều tên."
+          },
+          {
+            "flag": "--pattern",
+            "description": "Lọc tên bằng glob."
+          }
+        ],
+        "warning": "Ghi và giải nén file cục bộ. Dùng gh từ 2.102.0, thư mục mới và tránh symlink không tin cậy; không chạy artifact trước khi xác minh nguồn."
+      },
+      {
+        "id": "gh-run-list",
+        "canonicalCommand": "gh run list",
+        "title": "Liệt kê workflow runs",
+        "command": "gh run list [flags]",
+        "description": "Xem các lần chạy gần đây và lấy ID để đọc log/theo dõi.",
+        "example": "gh run list --repo cli/cli --limit 30",
+        "risk": "read",
+        "tags": [
+          "run",
+          "list"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_run_list",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--limit",
+            "description": "Giới hạn số kết quả lấy về."
+          },
+          {
+            "flag": "--workflow",
+            "description": "Lọc theo workflow."
+          },
+          {
+            "flag": "--branch",
+            "description": "Chọn nhánh."
+          },
+          {
+            "flag": "--status",
+            "description": "Lọc trạng thái hoặc kết quả như in_progress, success, failure."
+          },
+          {
+            "flag": "--json",
+            "description": "Xuất các trường được chỉ định dưới dạng JSON."
+          }
+        ]
+      },
+      {
+        "id": "gh-run-rerun",
+        "canonicalCommand": "gh run rerun",
+        "title": "Chạy lại workflow run",
+        "command": "gh run rerun [<run-id>] [flags]",
+        "description": "Chạy lại toàn bộ, các job lỗi hoặc một job cụ thể cùng phụ thuộc của nó.",
+        "example": "gh run rerun 123456789 --repo octo-org/cli-sandbox --failed",
+        "risk": "write",
+        "tags": [
+          "run",
+          "rerun"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_run_rerun",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--failed",
+            "description": "Chạy lại job lỗi và phụ thuộc."
+          },
+          {
+            "flag": "--job",
+            "description": "Nhận databaseId của job từ gh run view --json jobs, không lấy tùy tiện số trên URL."
+          },
+          {
+            "flag": "--debug",
+            "description": "Bật log chẩn đoán khi chạy lại."
+          }
+        ],
+        "warning": "Tiêu tốn tài nguyên Actions và có thể lặp lại triển khai/tác dụng phụ. Kiểm tra workflow, run và đầu vào trước khi chạy.",
+        "billingNote": "Có thể liên quan hạn mức hoặc chi phí GitHub Actions, Copilot hoặc Codespaces tùy dịch vụ, gói và tổ chức; kiểm tra tài khoản trước khi chạy."
+      },
+      {
+        "id": "gh-run-view",
+        "canonicalCommand": "gh run view",
+        "title": "Xem run và log lỗi",
+        "command": "gh run view [<run-id>] [flags]",
+        "description": "Đọc tổng quan, job hoặc log của một lần chạy workflow.",
+        "example": "gh run view 123456789 --repo octo-org/cli-sandbox --log-failed",
+        "risk": "read",
+        "tags": [
+          "run",
+          "view"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_run_view",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--log-failed",
+            "description": "Chỉ in log bước lỗi."
+          },
+          {
+            "flag": "--log",
+            "description": "In toàn bộ log."
+          },
+          {
+            "flag": "--job",
+            "description": "Giới hạn vào job ID."
+          },
+          {
+            "flag": "--attempt",
+            "description": "Chọn lần thử của run."
+          },
+          {
+            "flag": "--exit-status",
+            "description": "Trả mã khác 0 nếu run thất bại."
+          }
+        ],
+        "warning": "Log có thể chứa dữ liệu nội bộ; che bí mật trước khi chia sẻ. Không coi mã 0 là bằng chứng run đang pending đã hoàn thành."
+      },
+      {
+        "id": "gh-run-watch",
+        "canonicalCommand": "gh run watch",
+        "title": "Theo dõi run đến khi xong",
+        "command": "gh run watch <run-id> [flags]",
+        "description": "Giữ terminal để theo dõi tiến độ run và trả mã lỗi khi run thất bại nếu yêu cầu.",
+        "example": "gh run watch 123456789 --repo octo-org/cli-sandbox --exit-status --interval 10",
+        "risk": "read",
+        "tags": [
+          "run",
+          "watch"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_run_watch",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--exit-status",
+            "description": "Trả mã khác 0 nếu run thất bại."
+          },
+          {
+            "flag": "--interval",
+            "description": "Chu kỳ làm mới, đơn vị giây."
+          },
+          {
+            "flag": "--compact",
+            "description": "Chỉ hiện bước liên quan hoặc thất bại."
+          }
+        ],
+        "warning": "Ctrl+C dừng xem, không hủy workflow. Manual hiện ghi chưa hỗ trợ fine-grained PAT cho lệnh này."
+      }
+    ]
+  },
+  {
+    "id": "workflow",
+    "title": "GitHub Actions: workflow",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-workflow-disable",
+        "canonicalCommand": "gh workflow disable",
+        "title": "Vô hiệu hóa workflow",
+        "command": "gh workflow disable [<workflow-id> | <workflow-name>]",
+        "description": "Ngăn workflow chạy và ẩn khỏi danh sách mặc định.",
+        "example": "gh workflow disable ci.yml --repo octo-org/cli-sandbox",
+        "risk": "write",
+        "tags": [
+          "workflow",
+          "disable"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_workflow_disable",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          }
+        ],
+        "warning": "Có thể làm mất CI bắt buộc, kiểm tra an toàn hoặc lịch chạy. Kiểm tra ảnh hưởng và đúng workflow trước khi thay đổi."
+      },
+      {
+        "id": "gh-workflow-enable",
+        "canonicalCommand": "gh workflow enable",
+        "title": "Bật lại workflow",
+        "command": "gh workflow enable [<workflow-id> | <workflow-name>]",
+        "description": "Cho phép workflow chạy và hiện lại trong danh sách.",
+        "example": "gh workflow enable ci.yml --repo octo-org/cli-sandbox",
+        "risk": "write",
+        "tags": [
+          "workflow",
+          "enable"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_workflow_enable",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          }
+        ],
+        "warning": "Các trigger tương lai có thể chạy mã, triển khai và tiêu tốn Actions. Đọc workflow trước khi bật."
+      },
+      {
+        "id": "gh-workflow-list",
+        "canonicalCommand": "gh workflow list",
+        "title": "Liệt kê workflow",
+        "command": "gh workflow list [flags]",
+        "description": "Xem file workflow trong repository; dùng --all để kèm workflow vô hiệu hóa.",
+        "example": "gh workflow list --repo cli/cli --all",
+        "risk": "read",
+        "tags": [
+          "workflow",
+          "list"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_workflow_list",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--all",
+            "description": "Bao gồm workflow đang bị vô hiệu hóa."
+          },
+          {
+            "flag": "--limit",
+            "description": "Giới hạn số kết quả lấy về."
+          },
+          {
+            "flag": "--json",
+            "description": "Xuất các trường được chỉ định dưới dạng JSON."
+          }
+        ]
+      },
+      {
+        "id": "gh-workflow-run",
+        "canonicalCommand": "gh workflow run",
+        "title": "Kích hoạt workflow_dispatch",
+        "command": "gh workflow run [<workflow-id> | <workflow-name>] [flags]",
+        "description": "Gửi sự kiện chạy thủ công tới workflow có khai báo workflow_dispatch.",
+        "example": "gh workflow run ci.yml --repo octo-org/cli-sandbox --ref main",
+        "risk": "write",
+        "tags": [
+          "workflow",
+          "run"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_workflow_run",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--ref",
+            "description": "Chọn tên nhánh hoặc tag."
+          },
+          {
+            "flag": "--raw-field",
+            "description": "Truyền input key=value dạng chuỗi."
+          },
+          {
+            "flag": "--field",
+            "description": "Truyền input key=value và hỗ trợ đọc @file."
+          },
+          {
+            "flag": "--json",
+            "description": "Đọc input JSON từ stdin, không phải xuất JSON."
+          }
+        ],
+        "warning": "Khởi chạy CI thật, có thể tính phí và triển khai. Kiểm tra ref, input, workflow và môi trường đích trước khi chạy.",
+        "billingNote": "Có thể liên quan hạn mức hoặc chi phí GitHub Actions, Copilot hoặc Codespaces tùy dịch vụ, gói và tổ chức; kiểm tra tài khoản trước khi chạy."
+      },
+      {
+        "id": "gh-workflow-view",
+        "canonicalCommand": "gh workflow view",
+        "title": "Đọc cấu hình workflow",
+        "command": "gh workflow view [<workflow-id> | <workflow-name> | <filename>] [flags]",
+        "description": "Xem tổng quan hoặc YAML workflow tại nhánh/tag được chọn.",
+        "example": "gh workflow view ci.yml --repo octo-org/cli-sandbox --yaml --ref main",
+        "risk": "read",
+        "tags": [
+          "workflow",
+          "view"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_workflow_view",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--yaml",
+            "description": "In file YAML."
+          },
+          {
+            "flag": "--ref",
+            "description": "Chọn tên nhánh hoặc tag."
+          },
+          {
+            "flag": "--web",
+            "description": "Mở nội dung hoặc luồng tương ứng trong trình duyệt."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cache",
+    "title": "GitHub Actions: cache",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-cache-list",
+        "canonicalCommand": "gh cache list",
+        "title": "Liệt kê cache Actions",
+        "command": "gh cache list [flags]",
+        "description": "Xem cache của repository theo khóa, ref và dung lượng.",
+        "example": "gh cache list --repo octo-org/cli-sandbox --limit 30",
+        "risk": "read",
+        "tags": [
+          "cache",
+          "list"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_cache_list",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--key",
+            "description": "Lọc theo tiền tố cache key."
+          },
+          {
+            "flag": "--ref",
+            "description": "Lọc bằng refs/heads/BRANCH hoặc refs/pull/NUMBER/merge."
+          },
+          {
+            "flag": "--sort",
+            "description": "Chọn trường dùng để sắp xếp."
+          },
+          {
+            "flag": "--limit",
+            "description": "Giới hạn số kết quả lấy về."
+          },
+          {
+            "flag": "--json",
+            "description": "Xuất các trường được chỉ định dưới dạng JSON."
+          }
+        ]
+      },
+      {
+        "id": "gh-cache-delete",
+        "canonicalCommand": "gh cache delete",
+        "title": "Xóa cache Actions",
+        "command": "gh cache delete [<cache-id> | <cache-key> | --all] [flags]",
+        "description": "Xóa cache theo ID, key hoặc toàn bộ phạm vi được chỉ định.",
+        "example": "gh cache delete 1234 --repo octo-org/cli-sandbox",
+        "risk": "destructive",
+        "tags": [
+          "cache",
+          "delete"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_cache_delete",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--ref",
+            "description": "Giới hạn key hoặc --all vào Git ref cụ thể."
+          },
+          {
+            "flag": "--all",
+            "description": "Áp dụng cho tất cả mục trong phạm vi được chọn; kiểm tra phạm vi trước khi chạy."
+          },
+          {
+            "flag": "--succeed-on-no-caches",
+            "description": "Cho mã 0 khi --all không tìm thấy cache."
+          }
+        ],
+        "warning": "Cache bị xóa không khôi phục trực tiếp; lần chạy sau có thể chậm/tốn tài nguyên hơn. Ưu tiên ID đã kiểm tra, tránh --all ngoài phạm vi dự định."
+      }
+    ]
+  },
+  {
+    "id": "search",
+    "title": "Tìm kiếm GitHub",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-search-code",
+        "canonicalCommand": "gh search code",
+        "title": "Tìm nội dung mã trên GitHub",
+        "command": "gh search code <query> [flags]",
+        "description": "Tìm code qua công cụ tìm kiếm API cũ, có bộ lọc ngôn ngữ và repository.",
+        "example": "gh search code \"error handling\" --repo cli/cli --language go --limit 30",
+        "risk": "read",
+        "tags": [
+          "search",
+          "code"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_search_code",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--language",
+            "description": "Lọc ngôn ngữ."
+          },
+          {
+            "flag": "--filename",
+            "description": "Chỉ định tên file."
+          },
+          {
+            "flag": "--extension",
+            "description": "Lọc phần mở rộng file."
+          },
+          {
+            "flag": "--limit",
+            "description": "Giới hạn số kết quả lấy về."
+          },
+          {
+            "flag": "--json",
+            "description": "Xuất các trường được chỉ định dưới dạng JSON."
+          }
+        ],
+        "warning": "Kết quả có thể khác GitHub web; API chưa hỗ trợ các tính năng mới như regex code search."
+      },
+      {
+        "id": "gh-search-commits",
+        "canonicalCommand": "gh search commits",
+        "title": "Tìm commit",
+        "command": "gh search commits [<query>] [flags]",
+        "description": "Tìm commit theo từ khóa, repository, tác giả hoặc hash.",
+        "example": "gh search commits \"readme typo\" --repo cli/cli --limit 30",
+        "risk": "read",
+        "tags": [
+          "search",
+          "commits"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_search_commits",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--author",
+            "description": "Lọc tài khoản tác giả."
+          },
+          {
+            "flag": "--hash",
+            "description": "Lọc commit hash."
+          },
+          {
+            "flag": "--author-date",
+            "description": "Lọc ngày tác giả, ví dụ >=2026-01-01."
+          },
+          {
+            "flag": "--limit",
+            "description": "Giới hạn số kết quả lấy về."
+          },
+          {
+            "flag": "--json",
+            "description": "Xuất các trường được chỉ định dưới dạng JSON."
+          }
+        ]
+      },
+      {
+        "id": "gh-search-issues",
+        "canonicalCommand": "gh search issues",
+        "title": "Tìm issue trên nhiều repo",
+        "command": "gh search issues [<query>] [flags]",
+        "description": "Tìm issue bằng qualifier, bộ lọc hoặc xếp hạng semantic/hybrid khi host hỗ trợ.",
+        "example": "gh search issues --assignee @me --state open --limit 30",
+        "risk": "read",
+        "tags": [
+          "search",
+          "issues"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_search_issues",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--assignee",
+            "description": "Lọc người được giao."
+          },
+          {
+            "flag": "--state",
+            "description": "Lọc trạng thái; xem các giá trị được hỗ trợ trong tài liệu."
+          },
+          {
+            "flag": "--include-prs",
+            "description": "Bao gồm pull request."
+          },
+          {
+            "flag": "--search-type",
+            "description": "Chọn lexical, semantic hoặc hybrid; semantic/hybrid không đi cùng sort/order và không có trên GHES."
+          },
+          {
+            "flag": "--limit",
+            "description": "Giới hạn số kết quả lấy về."
+          }
+        ],
+        "warning": "Query có qualifier bắt đầu bằng dấu - nên đặt sau -- để tránh bị hiểu là cờ. Semantic/hybrid chỉ trả một trang kết quả."
+      },
+      {
+        "id": "gh-search-prs",
+        "canonicalCommand": "gh search prs",
+        "title": "Tìm pull request",
+        "command": "gh search prs [<query>] [flags]",
+        "description": "Tìm PR theo review, trạng thái, tác giả và nhánh trên GitHub.",
+        "example": "gh search prs --review-requested @me --state open --limit 30",
+        "risk": "read",
+        "tags": [
+          "search",
+          "prs"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_search_prs",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--review-requested",
+            "description": "Lọc người hoặc nhóm được yêu cầu review."
+          },
+          {
+            "flag": "--review",
+            "description": "Lọc none, required, approved hoặc changes_requested."
+          },
+          {
+            "flag": "--checks",
+            "description": "Lọc trạng thái kiểm tra."
+          },
+          {
+            "flag": "--merged",
+            "description": "Lọc đã merge."
+          },
+          {
+            "flag": "--limit",
+            "description": "Giới hạn số kết quả lấy về."
+          }
+        ]
+      },
+      {
+        "id": "gh-search-repos",
+        "canonicalCommand": "gh search repos",
+        "title": "Tìm repository",
+        "command": "gh search repos [<query>] [flags]",
+        "description": "Tìm repository theo chủ đề, ngôn ngữ, giấy phép hoặc số sao.",
+        "example": "gh search repos \"command line\" --language go --limit 30",
+        "risk": "read",
+        "tags": [
+          "search",
+          "repos"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_search_repos",
+        "options": [
+          {
+            "flag": "--owner",
+            "description": "Giới hạn theo chủ sở hữu."
+          },
+          {
+            "flag": "--topic",
+            "description": "Lọc chủ đề repository."
+          },
+          {
+            "flag": "--language",
+            "description": "Lọc ngôn ngữ chính."
+          },
+          {
+            "flag": "--stars",
+            "description": "Lọc số sao, ví dụ >=100."
+          },
+          {
+            "flag": "--archived",
+            "description": "Lọc trạng thái lưu trữ."
+          },
+          {
+            "flag": "--limit",
+            "description": "Giới hạn số kết quả lấy về."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gist",
+    "title": "Gists",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-gist-clone",
+        "canonicalCommand": "gh gist clone",
+        "title": "Clone gist về máy",
+        "command": "gh gist clone <gist> [<directory>] [-- <gitflags>...]",
+        "description": "Tải gist bằng Git vào thư mục mới trên máy.",
+        "example": "gh gist clone GIST_ID ./gist-study",
+        "risk": "write",
+        "tags": [
+          "gist",
+          "clone"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_gist_clone",
+        "warning": "Ghi file cục bộ. Dùng thư mục mới và không chạy nội dung gist chưa tin cậy; cờ sau -- được chuyển cho git clone."
+      },
+      {
+        "id": "gh-gist-create",
+        "canonicalCommand": "gh gist create",
+        "title": "Tạo gist từ file",
+        "command": "gh gist create [<filename>... | <pattern>... | -] [flags]",
+        "description": "Đăng một hoặc nhiều file thành gist; mặc định là gist không liệt kê công khai.",
+        "example": "gh gist create ./example.txt --desc \"Ví dụ sử dụng\"",
+        "risk": "write",
+        "tags": [
+          "gist",
+          "create"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_gist_create",
+        "options": [
+          {
+            "flag": "--desc",
+            "description": "Mô tả gist."
+          },
+          {
+            "flag": "--filename",
+            "description": "Chỉ định tên file."
+          },
+          {
+            "flag": "--public",
+            "description": "Công khai nội dung cho người khác xem."
+          },
+          {
+            "flag": "--web",
+            "description": "Mở nội dung hoặc luồng tương ứng trong trình duyệt."
+          }
+        ],
+        "warning": "Tải nội dung file lên GitHub. Gist secret không phải kho bí mật: bất kỳ ai có URL đều có thể xem. Không đăng token, dữ liệu cá nhân hoặc mã nội bộ."
+      },
+      {
+        "id": "gh-gist-delete",
+        "canonicalCommand": "gh gist delete",
+        "title": "Xóa gist",
+        "command": "gh gist delete {<id> | <url>} [flags]",
+        "description": "Xóa gist theo ID hoặc URL đã chọn.",
+        "example": "gh gist delete GIST_ID",
+        "risk": "destructive",
+        "tags": [
+          "gist",
+          "delete"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_gist_delete",
+        "options": [
+          {
+            "flag": "--yes",
+            "description": "Bỏ qua bước xác nhận; không dùng trước khi kiểm tra mục tiêu."
+          }
+        ],
+        "warning": "Xóa dữ liệu đã chọn; có thể không khôi phục được bằng CLI. Kiểm tra ID, phạm vi và bản sao lưu trước khi xác nhận."
+      },
+      {
+        "id": "gh-gist-edit",
+        "canonicalCommand": "gh gist edit",
+        "title": "Chỉnh sửa gist",
+        "command": "gh gist edit {<id> | <url>} [<filename>] [flags]",
+        "description": "Sửa nội dung/mô tả hoặc thêm và gỡ file trong gist của bạn.",
+        "example": "gh gist edit GIST_ID --filename example.txt",
+        "risk": "write",
+        "tags": [
+          "gist",
+          "edit"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_gist_edit",
+        "options": [
+          {
+            "flag": "--filename",
+            "description": "Chỉ định tên file."
+          },
+          {
+            "flag": "--add",
+            "description": "Thêm file cục bộ vào gist."
+          },
+          {
+            "flag": "--remove",
+            "description": "Xóa file được chỉ định khỏi gist."
+          },
+          {
+            "flag": "--desc",
+            "description": "Đổi mô tả."
+          }
+        ],
+        "warning": "Thay đổi dữ liệu thật trên GitHub và có thể gửi thông báo. Kiểm tra đúng tài khoản, repository và nội dung trước khi chạy. Kiểm tra khả năng truy cập gist trước khi đưa nội dung lên."
+      },
+      {
+        "id": "gh-gist-list",
+        "canonicalCommand": "gh gist list",
+        "title": "Liệt kê gist của bạn",
+        "command": "gh gist list [flags]",
+        "description": "Xem gist của tài khoản đang dùng và lọc theo tên, mô tả hoặc nội dung.",
+        "example": "gh gist list --limit 30",
+        "risk": "read",
+        "tags": [
+          "gist",
+          "list"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_gist_list",
+        "options": [
+          {
+            "flag": "--limit",
+            "description": "Giới hạn số kết quả lấy về."
+          },
+          {
+            "flag": "--public",
+            "description": "Chỉ xem gist công khai."
+          },
+          {
+            "flag": "--secret",
+            "description": "Chỉ xem gist không liệt kê công khai."
+          },
+          {
+            "flag": "--filter",
+            "description": "Lọc bằng biểu thức chính quy."
+          },
+          {
+            "flag": "--include-content",
+            "description": "Đọc cả nội dung khi lọc, tốn thêm request và thời gian."
+          }
+        ]
+      },
+      {
+        "id": "gh-gist-rename",
+        "canonicalCommand": "gh gist rename",
+        "title": "Đổi tên file trong gist",
+        "command": "gh gist rename {<id> | <url>} <old-filename> <new-filename>",
+        "description": "Đổi tên một file thuộc gist đã chọn.",
+        "example": "gh gist rename GIST_ID old-name.txt new-name.txt",
+        "risk": "write",
+        "tags": [
+          "gist",
+          "rename"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_gist_rename",
+        "warning": "Thay đổi dữ liệu thật trên GitHub và có thể gửi thông báo. Kiểm tra đúng tài khoản, repository và nội dung trước khi chạy."
+      },
+      {
+        "id": "gh-gist-view",
+        "canonicalCommand": "gh gist view",
+        "title": "Đọc gist",
+        "command": "gh gist view [<id> | <url>] [flags]",
+        "description": "Xem nội dung gist hoặc danh sách file trong terminal.",
+        "example": "gh gist view GIST_ID --files",
+        "risk": "read",
+        "tags": [
+          "gist",
+          "view"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_gist_view",
+        "options": [
+          {
+            "flag": "--files",
+            "description": "Chỉ liệt kê tên file."
+          },
+          {
+            "flag": "--filename",
+            "description": "Chỉ định tên file."
+          },
+          {
+            "flag": "--raw",
+            "description": "In nội dung thô."
+          },
+          {
+            "flag": "--web",
+            "description": "Mở nội dung hoặc luồng tương ứng trong trình duyệt."
+          }
+        ],
+        "warning": "Nội dung từ bên ngoài chưa đáng tin; tránh --allow-escape-sequences nếu không kiểm soát được ký tự điều khiển terminal."
+      }
+    ]
+  },
+  {
+    "id": "codespace",
+    "title": "Codespaces",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-codespace-code",
+        "canonicalCommand": "gh codespace code",
+        "title": "Mở Codespace bằng VS Code",
+        "command": "gh codespace code [flags]",
+        "description": "Kết nối Codespace vào Visual Studio Code cục bộ hoặc bản web.",
+        "example": "gh codespace code --codespace CODESPACE_NAME",
+        "risk": "write",
+        "tags": [
+          "codespace",
+          "code"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_codespace_code",
+        "options": [
+          {
+            "flag": "--codespace",
+            "description": "Chỉ rõ tên Codespace cần thao tác."
+          },
+          {
+            "flag": "--web",
+            "description": "Mở nội dung hoặc luồng tương ứng trong trình duyệt."
+          },
+          {
+            "flag": "--insiders",
+            "description": "Dùng bản VS Code Insiders."
+          },
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          }
+        ],
+        "warning": "Có thể khởi động Codespace và phát sinh chi phí tính toán/lưu trữ. Kiểm tra đúng Codespace và chính sách tổ chức.",
+        "billingNote": "Có thể liên quan hạn mức hoặc chi phí GitHub Actions, Copilot hoặc Codespaces tùy dịch vụ, gói và tổ chức; kiểm tra tài khoản trước khi chạy."
+      },
+      {
+        "id": "gh-codespace-cp",
+        "canonicalCommand": "gh codespace cp",
+        "title": "Sao chép file với Codespace",
+        "command": "gh codespace cp [-e] [-r] [-- [<scp flags>...]] <sources>... <dest>",
+        "description": "Chuyển file giữa máy hiện tại và Codespace; tiền tố remote: xác định đường dẫn bên Codespace.",
+        "example": "gh codespace cp --codespace CODESPACE_NAME ./README.md remote:README-copy.md",
+        "risk": "write",
+        "tags": [
+          "codespace",
+          "cp"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_codespace_cp",
+        "options": [
+          {
+            "flag": "--codespace",
+            "description": "Chỉ rõ tên Codespace cần thao tác."
+          },
+          {
+            "flag": "--recursive",
+            "description": "Sao chép thư mục đệ quy."
+          },
+          {
+            "flag": "--expand",
+            "description": "Cho shell từ xa mở rộng tên file; tuyệt đối tránh đối số không tin cậy."
+          },
+          {
+            "flag": "--profile",
+            "description": "Chọn profile SSH."
+          }
+        ],
+        "warning": "Có thể khởi động Codespace và phát sinh chi phí tính toán/lưu trữ. Kiểm tra đúng Codespace và chính sách tổ chức. Ghi file ở đích và có thể tạo cặp khóa SSH cục bộ; kiểm tra hướng sao chép, ghi đè và độ nhạy cảm của file.",
+        "billingNote": "Có thể liên quan hạn mức hoặc chi phí GitHub Actions, Copilot hoặc Codespaces tùy dịch vụ, gói và tổ chức; kiểm tra tài khoản trước khi chạy."
+      },
+      {
+        "id": "gh-codespace-create",
+        "canonicalCommand": "gh codespace create",
+        "title": "Tạo Codespace",
+        "command": "gh codespace create [flags]",
+        "description": "Khởi tạo môi trường phát triển từ repository và nhánh đã chọn.",
+        "example": "gh codespace create --repo octo-org/cli-sandbox --branch main",
+        "risk": "write",
+        "tags": [
+          "codespace",
+          "create"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_codespace_create",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--branch",
+            "description": "Chọn nhánh."
+          },
+          {
+            "flag": "--machine",
+            "description": "Chọn cấu hình CPU/RAM của máy."
+          },
+          {
+            "flag": "--idle-timeout",
+            "description": "Thời gian không hoạt động trước khi dừng, như 30m."
+          },
+          {
+            "flag": "--retention-period",
+            "description": "Thời gian giữ Codespace đã dừng trước khi tự xóa."
+          },
+          {
+            "flag": "--devcontainer-path",
+            "description": "Chọn file devcontainer.json."
+          }
+        ],
+        "warning": "Có thể khởi động Codespace và phát sinh chi phí tính toán/lưu trữ. Kiểm tra đúng Codespace và chính sách tổ chức. Devcontainer/dotfiles có thể chạy mã; chỉ dùng repository tin cậy và xem các quyền bổ sung.",
+        "billingNote": "Có thể liên quan hạn mức hoặc chi phí GitHub Actions, Copilot hoặc Codespaces tùy dịch vụ, gói và tổ chức; kiểm tra tài khoản trước khi chạy."
+      },
+      {
+        "id": "gh-codespace-delete",
+        "canonicalCommand": "gh codespace delete",
+        "title": "Xóa Codespace",
+        "command": "gh codespace delete [flags]",
+        "description": "Xóa Codespace theo tên hoặc bộ lọc.",
+        "example": "gh codespace delete --codespace CODESPACE_NAME",
+        "risk": "destructive",
+        "tags": [
+          "codespace",
+          "delete"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_codespace_delete",
+        "options": [
+          {
+            "flag": "--codespace",
+            "description": "Chỉ rõ tên Codespace cần thao tác."
+          },
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--days",
+            "description": "Chọn Codespace cũ hơn số ngày chỉ định."
+          },
+          {
+            "flag": "--all",
+            "description": "Áp dụng cho tất cả mục trong phạm vi được chọn; kiểm tra phạm vi trước khi chạy."
+          },
+          {
+            "flag": "--force",
+            "description": "Bỏ một số bước bảo vệ hoặc buộc thao tác; chỉ dùng sau khi hiểu tác động."
+          }
+        ],
+        "warning": "Xóa dữ liệu đã chọn; có thể không khôi phục được bằng CLI. Kiểm tra ID, phạm vi và bản sao lưu trước khi xác nhận. Commit/push hoặc sao lưu công việc chưa đồng bộ; tránh --all và --force nếu chưa rà soát.",
+        "billingNote": "Có thể liên quan hạn mức hoặc chi phí GitHub Actions, Copilot hoặc Codespaces tùy dịch vụ, gói và tổ chức; kiểm tra tài khoản trước khi chạy."
+      },
+      {
+        "id": "gh-codespace-edit",
+        "canonicalCommand": "gh codespace edit",
+        "title": "Đổi tên hoặc cấu hình Codespace",
+        "command": "gh codespace edit [flags]",
+        "description": "Sửa tên hiển thị hoặc loại máy ảo của Codespace.",
+        "example": "gh codespace edit --codespace CODESPACE_NAME --display-name \"Review sandbox\"",
+        "risk": "write",
+        "tags": [
+          "codespace",
+          "edit"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_codespace_edit",
+        "options": [
+          {
+            "flag": "--codespace",
+            "description": "Chỉ rõ tên Codespace cần thao tác."
+          },
+          {
+            "flag": "--display-name",
+            "description": "Đặt tên hiển thị."
+          },
+          {
+            "flag": "--machine",
+            "description": "Thay đổi cấu hình VM và mức sử dụng tài nguyên."
+          }
+        ],
+        "warning": "Có thể khởi động Codespace và phát sinh chi phí tính toán/lưu trữ. Kiểm tra đúng Codespace và chính sách tổ chức.",
+        "billingNote": "Có thể liên quan hạn mức hoặc chi phí GitHub Actions, Copilot hoặc Codespaces tùy dịch vụ, gói và tổ chức; kiểm tra tài khoản trước khi chạy."
+      },
+      {
+        "id": "gh-codespace-jupyter",
+        "canonicalCommand": "gh codespace jupyter",
+        "title": "Mở JupyterLab trong Codespace",
+        "command": "gh codespace jupyter [flags]",
+        "description": "Kết nối tới JupyterLab của Codespace.",
+        "example": "gh codespace jupyter --codespace CODESPACE_NAME",
+        "risk": "write",
+        "tags": [
+          "codespace",
+          "jupyter"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_codespace_jupyter",
+        "options": [
+          {
+            "flag": "--codespace",
+            "description": "Chỉ rõ tên Codespace cần thao tác."
+          },
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          }
+        ],
+        "warning": "Có thể khởi động Codespace và phát sinh chi phí tính toán/lưu trữ. Kiểm tra đúng Codespace và chính sách tổ chức. Chỉ chạy notebook đã được kiểm tra.",
+        "billingNote": "Có thể liên quan hạn mức hoặc chi phí GitHub Actions, Copilot hoặc Codespaces tùy dịch vụ, gói và tổ chức; kiểm tra tài khoản trước khi chạy."
+      },
+      {
+        "id": "gh-codespace-list",
+        "canonicalCommand": "gh codespace list",
+        "title": "Liệt kê Codespaces",
+        "command": "gh codespace list [flags]",
+        "description": "Xem Codespace của tài khoản; quản trị viên có thể lọc theo tổ chức được tính phí.",
+        "example": "gh codespace list --limit 30",
+        "risk": "read",
+        "tags": [
+          "codespace",
+          "list"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_codespace_list",
+        "options": [
+          {
+            "flag": "--limit",
+            "description": "Giới hạn số kết quả lấy về."
+          },
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--org",
+            "description": "Chọn tổ chức; một số thao tác đòi hỏi quyền quản trị."
+          },
+          {
+            "flag": "--user",
+            "description": "Chọn tài khoản người dùng."
+          },
+          {
+            "flag": "--json",
+            "description": "Xuất các trường được chỉ định dưới dạng JSON."
+          }
+        ]
+      },
+      {
+        "id": "gh-codespace-logs",
+        "canonicalCommand": "gh codespace logs",
+        "title": "Đọc log Codespace",
+        "command": "gh codespace logs [flags]",
+        "description": "Hiển thị hoặc theo dõi log của Codespace được chọn.",
+        "example": "gh codespace logs --codespace CODESPACE_NAME",
+        "risk": "read",
+        "tags": [
+          "codespace",
+          "logs"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_codespace_logs",
+        "options": [
+          {
+            "flag": "--codespace",
+            "description": "Chỉ rõ tên Codespace cần thao tác."
+          },
+          {
+            "flag": "--follow",
+            "description": "Tiếp tục theo dõi log khi có dữ liệu mới."
+          },
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          }
+        ],
+        "warning": "Log có thể chứa dữ liệu nội bộ. Che thông tin nhạy cảm trước khi chia sẻ."
+      },
+      {
+        "id": "gh-codespace-ports",
+        "canonicalCommand": "gh codespace ports",
+        "title": "Liệt kê cổng Codespace",
+        "command": "gh codespace ports [flags]",
+        "description": "Xem các cổng chuyển tiếp và mức hiển thị; lệnh này vừa có hành vi riêng vừa chứa subcommand.",
+        "example": "gh codespace ports --codespace CODESPACE_NAME",
+        "risk": "read",
+        "tags": [
+          "codespace",
+          "ports"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_codespace_ports",
+        "options": [
+          {
+            "flag": "--codespace",
+            "description": "Chỉ rõ tên Codespace cần thao tác."
+          },
+          {
+            "flag": "--json",
+            "description": "Xuất các trường được chỉ định dưới dạng JSON."
+          },
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          }
+        ]
+      },
+      {
+        "id": "gh-codespace-ports-forward",
+        "canonicalCommand": "gh codespace ports forward",
+        "title": "Chuyển tiếp cổng về máy",
+        "command": "gh codespace ports forward <remote-port>:<local-port>... [flags]",
+        "description": "Tạo đường hầm từ cổng Codespace sang cổng cục bộ; mặc định bind 127.0.0.1.",
+        "example": "gh codespace ports forward 3000:3000 --codespace CODESPACE_NAME",
+        "risk": "write",
+        "tags": [
+          "codespace",
+          "ports",
+          "forward"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_codespace_ports_forward",
+        "options": [
+          {
+            "flag": "--codespace",
+            "description": "Chỉ rõ tên Codespace cần thao tác."
+          },
+          {
+            "flag": "--all-interfaces",
+            "description": "Bind trên mọi interface, có thể để máy khác trong mạng truy cập."
+          }
+        ],
+        "warning": "Mở truy cập mạng tới dịch vụ đang chạy. Kiểm tra nội dung phục vụ và xung đột cổng; chỉ dùng --all-interfaces khi chấp nhận phạm vi mạng rộng hơn.",
+        "billingNote": "Có thể liên quan hạn mức hoặc chi phí GitHub Actions, Copilot hoặc Codespaces tùy dịch vụ, gói và tổ chức; kiểm tra tài khoản trước khi chạy."
+      },
+      {
+        "id": "gh-codespace-ports-visibility",
+        "canonicalCommand": "gh codespace ports visibility",
+        "title": "Đổi quyền xem cổng",
+        "command": "gh codespace ports visibility <port>:{public|private|org}...",
+        "description": "Đặt cổng được chuyển tiếp thành private, org hoặc public.",
+        "example": "gh codespace ports visibility 3000:private --codespace CODESPACE_NAME",
+        "risk": "write",
+        "tags": [
+          "codespace",
+          "ports",
+          "visibility"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_codespace_ports_visibility",
+        "options": [
+          {
+            "flag": "--codespace",
+            "description": "Chỉ rõ tên Codespace cần thao tác."
+          },
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          }
+        ],
+        "warning": "Đổi quyền truy cập dịch vụ. public có thể công khai dữ liệu hoặc ứng dụng; xác minh xác thực và nội dung trước khi mở rộng quyền.",
+        "billingNote": "Có thể liên quan hạn mức hoặc chi phí GitHub Actions, Copilot hoặc Codespaces tùy dịch vụ, gói và tổ chức; kiểm tra tài khoản trước khi chạy."
+      }
+    ]
+  }
+]

@@ -1,0 +1,1106 @@
+[
+  {
+    "id": "bitbucket-repo",
+    "title": "Bitbucket · repository",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-bitbucket-repo-query",
+        "canonicalCommand": "twg bitbucket repo query",
+        "title": "Tra cứu repository của Bitbucket",
+        "command": "twg bitbucket repo query",
+        "description": "Tra cứu repository của Bitbucket.",
+        "example": "twg bitbucket repo query --workspace demo-workspace",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "bitbucket",
+          "repo",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          },
+          {
+            "flag": "-q, --query <search>",
+            "description": "Chuỗi truy vấn theo lệnh",
+            "example": "--query onboarding"
+          },
+          {
+            "flag": "--project <key>",
+            "description": "Dự án",
+            "example": "--project DEMO"
+          },
+          {
+            "flag": "--language <lang>",
+            "description": "Tham số language",
+            "example": "--language LANGUAGE"
+          },
+          {
+            "flag": "--sort <field>",
+            "description": "Thứ tự; mặc định: \"-updated_on\"",
+            "example": "--sort SORT"
+          },
+          {
+            "flag": "--role <role>",
+            "description": "Vai trò dùng để lọc hoặc phân quyền",
+            "example": "--role ROLE"
+          },
+          {
+            "flag": "-n, --limit <count>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh; mặc định: \"25\"",
+            "example": "--limit 10"
+          }
+        ]
+      },
+      {
+        "id": "twg-bitbucket-repo-url",
+        "canonicalCommand": "twg bitbucket repo url",
+        "title": "Xem URL của repository của Bitbucket",
+        "command": "twg bitbucket repo url [slug]",
+        "description": "Xem URL của repository của Bitbucket.",
+        "example": "twg bitbucket repo url twg-cli --workspace demo-workspace",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "bitbucket",
+          "repo",
+          "url"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bitbucket-search",
+    "title": "Bitbucket · search",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-bitbucket-search-prs",
+        "canonicalCommand": "twg bitbucket search prs",
+        "title": "Xem PR của search của Bitbucket",
+        "command": "twg bitbucket search prs <text>",
+        "description": "Xem PR của search của Bitbucket.",
+        "example": "twg bitbucket search prs onboarding",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "bitbucket",
+          "search",
+          "prs"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          },
+          {
+            "flag": "--scope <scope>",
+            "description": "Phạm vi truy vấn hoặc thao tác; nhận: repo, me; mặc định: \"repo\"",
+            "example": "--scope repo"
+          },
+          {
+            "flag": "--state <state>",
+            "description": "Trạng thái; dùng đúng giá trị được lệnh hỗ trợ; mặc định: \"OPEN\"",
+            "example": "--state open"
+          },
+          {
+            "flag": "--field <field>",
+            "description": "Trường hoặc giá trị trường theo hợp đồng của lệnh; nhận: both, title, description; mặc định: \"both\"",
+            "example": "--field both"
+          },
+          {
+            "flag": "--role <role>",
+            "description": "Vai trò dùng để lọc hoặc phân quyền; nhận: author, reviewer; mặc định: \"author\"",
+            "example": "--role author"
+          },
+          {
+            "flag": "-n, --limit <count>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh; mặc định: \"25\"",
+            "example": "--limit 10"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      }
+    ]
+  },
+  {
+    "id": "bitbucket-workspace",
+    "title": "Bitbucket · workspace",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-bitbucket-workspace-get",
+        "canonicalCommand": "twg bitbucket workspace get",
+        "title": "Đọc workspace của Bitbucket",
+        "command": "twg bitbucket workspace get",
+        "description": "Đọc workspace của Bitbucket.",
+        "example": "twg bitbucket workspace get --workspace demo-workspace",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "bitbucket",
+          "workspace",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          }
+        ]
+      },
+      {
+        "id": "twg-bitbucket-workspace-member-get",
+        "canonicalCommand": "twg bitbucket workspace member get",
+        "title": "Đọc thành viên của workspace của Bitbucket",
+        "command": "twg bitbucket workspace member get <member>",
+        "description": "Đọc thành viên của workspace của Bitbucket.",
+        "example": "twg bitbucket workspace member get {user-uuid} --workspace demo-workspace -o json",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "bitbucket",
+          "workspace",
+          "member",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          }
+        ]
+      },
+      {
+        "id": "twg-bitbucket-workspace-member-query",
+        "canonicalCommand": "twg bitbucket workspace member query",
+        "title": "Tra cứu thành viên của workspace của Bitbucket",
+        "command": "twg bitbucket workspace member query",
+        "description": "Tra cứu thành viên của workspace của Bitbucket.",
+        "example": "twg bitbucket workspace member query --workspace demo-workspace -o json",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "bitbucket",
+          "workspace",
+          "member",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--include-permissions",
+            "description": "Kèm quyền",
+            "example": "--include-permissions"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          },
+          {
+            "flag": "-n, --limit <count>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh; mặc định: \"50\"",
+            "example": "--limit 10"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "commits",
+    "title": "Commit",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-commits",
+        "canonicalCommand": "twg commits",
+        "title": "Đọc commit",
+        "command": "twg commits <ari...>",
+        "description": "Đọc commit.",
+        "example": "twg commits \"ari:cloud:graph::commit/abc123\"",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "commits"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--full",
+            "description": "Yêu cầu chi tiết đầy đủ theo lệnh; có thể tăng lượng dữ liệu và số yêu cầu",
+            "example": "--full"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "confluence-approvals",
+    "title": "Confluence · phê duyệt",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-confluence-approvals-settings-site-get",
+        "canonicalCommand": "twg confluence approvals settings site get",
+        "title": "Đọc site của cài đặt của phê duyệt của Confluence",
+        "command": "twg confluence approvals settings site get",
+        "description": "Đọc site của cài đặt của phê duyệt của Confluence.",
+        "example": "twg confluence approvals settings site get",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "confluence",
+          "approvals",
+          "settings",
+          "site",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-confluence-approvals-settings-site-set",
+        "canonicalCommand": "twg confluence approvals settings site set",
+        "title": "Đặt site của cài đặt của phê duyệt của Confluence",
+        "command": "twg confluence approvals settings site set --enabled <true|false>",
+        "description": "Đặt site của cài đặt của phê duyệt của Confluence.",
+        "example": "twg confluence approvals settings site set --enabled true",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "confluence",
+          "approvals",
+          "settings",
+          "site",
+          "set"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--enabled <true|false>",
+            "description": "Tham số enabled; bắt buộc",
+            "example": "--enabled true"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-confluence-approvals-settings-space-get",
+        "canonicalCommand": "twg confluence approvals settings space get",
+        "title": "Đọc space của cài đặt của phê duyệt của Confluence",
+        "command": "twg confluence approvals settings space get --space-key <key>",
+        "description": "Đọc space của cài đặt của phê duyệt của Confluence.",
+        "example": "twg confluence approvals settings space get --space-key DEMO",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "confluence",
+          "approvals",
+          "settings",
+          "space",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--space-key <key>",
+            "description": "Mã space; bắt buộc",
+            "example": "--space-key DEMO"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-confluence-approvals-settings-space-set",
+        "canonicalCommand": "twg confluence approvals settings space set",
+        "title": "Đặt space của cài đặt của phê duyệt của Confluence",
+        "command": "twg confluence approvals settings space set --space-key <key>",
+        "description": "Đặt space của cài đặt của phê duyệt của Confluence.",
+        "example": "twg confluence approvals settings space set --space-key DEMO --enabled true",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "confluence",
+          "approvals",
+          "settings",
+          "space",
+          "set"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--space-key <key>",
+            "description": "Mã space; bắt buộc",
+            "example": "--space-key DEMO"
+          },
+          {
+            "flag": "--enabled <true|false>",
+            "description": "Tham số enabled",
+            "example": "--enabled true"
+          },
+          {
+            "flag": "--disallow-first-publish <true|false>",
+            "description": "Tham số disallow-first-publish",
+            "example": "--disallow-first-publish true"
+          },
+          {
+            "flag": "--settings-json <json>",
+            "description": "JSON cho cài đặt; không dùng cùng --enabled, --disallow-first-publish",
+            "example": "--settings-json '{}'"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      }
+    ]
+  },
+  {
+    "id": "confluence-content",
+    "title": "Confluence · nội dung",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-confluence-content-analytics",
+        "canonicalCommand": "twg confluence content analytics",
+        "title": "Xem phân tích của nội dung của Confluence",
+        "command": "twg confluence content analytics <url-or-id>",
+        "description": "Xem phân tích của nội dung của Confluence.",
+        "example": "twg confluence content analytics 12345",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "confluence",
+          "content",
+          "analytics"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--limit <count>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh; mặc định: \"25\"",
+            "example": "--limit 10"
+          },
+          {
+            "flag": "--cursor <cursor>",
+            "description": "Con trỏ lấy từ trang kết quả trước",
+            "example": "--cursor CURSOR"
+          },
+          {
+            "flag": "--from-date <YYYY-MM-DD>",
+            "description": "Tham số from-date",
+            "example": "--from-date 2026-10-01"
+          },
+          {
+            "flag": "--to-date <YYYY-MM-DD>",
+            "description": "Tham số to-date",
+            "example": "--to-date 2026-10-01"
+          }
+        ]
+      },
+      {
+        "id": "twg-confluence-content-approvals-approve",
+        "canonicalCommand": "twg confluence content approvals approve",
+        "title": "Phê duyệt phê duyệt của nội dung của Confluence",
+        "command": "twg confluence content approvals approve --id <contentId> --content-status <status> --review-id <reviewId>",
+        "description": "Phê duyệt phê duyệt của nội dung của Confluence.",
+        "example": "twg confluence content approvals approve --id 12345 --content-status current --review-id 12345",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "confluence",
+          "content",
+          "approvals",
+          "approve"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--id <contentId>",
+            "description": "Định danh tài nguyên; bắt buộc",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--content-status <status>",
+            "description": "Tham số content-status; bắt buộc; nhận: current, draft",
+            "example": "--content-status current"
+          },
+          {
+            "flag": "--review-id <reviewId>",
+            "description": "ID review; bắt buộc",
+            "example": "--review-id 12345"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          },
+          {
+            "flag": "--comment <comment>",
+            "description": "Bình luận",
+            "example": "--comment 'Ví dụ trong môi trường thử nghiệm'"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-confluence-content-approvals-cancel",
+        "canonicalCommand": "twg confluence content approvals cancel",
+        "title": "Hủy phê duyệt của nội dung của Confluence",
+        "command": "twg confluence content approvals cancel --id <contentId> --content-status <status> --review-id <reviewId>",
+        "description": "Hủy phê duyệt của nội dung của Confluence.",
+        "example": "twg confluence content approvals cancel --id 12345 --content-status current --review-id 12345",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "confluence",
+          "content",
+          "approvals",
+          "cancel"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--id <contentId>",
+            "description": "Định danh tài nguyên; bắt buộc",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--content-status <status>",
+            "description": "Tham số content-status; bắt buộc; nhận: current, draft",
+            "example": "--content-status current"
+          },
+          {
+            "flag": "--review-id <reviewId>",
+            "description": "ID review; bắt buộc",
+            "example": "--review-id 12345"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-confluence-content-approvals-clear",
+        "canonicalCommand": "twg confluence content approvals clear",
+        "title": "Xóa cấu hình phê duyệt của nội dung của Confluence",
+        "command": "twg confluence content approvals clear --id <contentId> --content-status <status> --review-id <reviewId>",
+        "description": "Xóa cấu hình phê duyệt của nội dung của Confluence.",
+        "example": "twg confluence content approvals clear --id 12345 --content-status current --review-id 12345",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "confluence",
+          "content",
+          "approvals",
+          "clear"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--id <contentId>",
+            "description": "Định danh tài nguyên; bắt buộc",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--content-status <status>",
+            "description": "Tham số content-status; bắt buộc; nhận: current, draft",
+            "example": "--content-status current"
+          },
+          {
+            "flag": "--review-id <reviewId>",
+            "description": "ID review; bắt buộc",
+            "example": "--review-id 12345"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-confluence-content-approvals-due-date-clear",
+        "canonicalCommand": "twg confluence content approvals due-date clear",
+        "title": "Xóa cấu hình ngày đến hạn của phê duyệt của nội dung của Confluence",
+        "command": "twg confluence content approvals due-date clear --id <contentId> --content-status <status> --review-id <reviewId>",
+        "description": "Xóa cấu hình ngày đến hạn của phê duyệt của nội dung của Confluence.",
+        "example": "twg confluence content approvals due-date clear --id 12345 --content-status current --review-id 12345",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "confluence",
+          "content",
+          "approvals",
+          "due-date",
+          "clear"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--id <contentId>",
+            "description": "Định danh tài nguyên; bắt buộc",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--content-status <status>",
+            "description": "Tham số content-status; bắt buộc; nhận: current, draft",
+            "example": "--content-status current"
+          },
+          {
+            "flag": "--review-id <reviewId>",
+            "description": "ID review; bắt buộc",
+            "example": "--review-id 12345"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-confluence-content-approvals-due-date-set",
+        "canonicalCommand": "twg confluence content approvals due-date set",
+        "title": "Đặt ngày đến hạn của phê duyệt của nội dung của Confluence",
+        "command": "twg confluence content approvals due-date set --id <contentId> --content-status <status> --review-id <reviewId> --due-date <yyyy-mm-dd>",
+        "description": "Đặt ngày đến hạn của phê duyệt của nội dung của Confluence.",
+        "example": "twg confluence content approvals due-date set --id 12345 --content-status current --review-id 12345 --due-date 2026-10-01",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "confluence",
+          "content",
+          "approvals",
+          "due-date",
+          "set"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--id <contentId>",
+            "description": "Định danh tài nguyên; bắt buộc",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--content-status <status>",
+            "description": "Tham số content-status; bắt buộc; nhận: current, draft",
+            "example": "--content-status current"
+          },
+          {
+            "flag": "--review-id <reviewId>",
+            "description": "ID review; bắt buộc",
+            "example": "--review-id 12345"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          },
+          {
+            "flag": "--due-date <yyyy-mm-dd>",
+            "description": "Ngày đến hạn; bắt buộc",
+            "example": "--due-date 2026-10-01"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-confluence-content-approvals-enabled",
+        "canonicalCommand": "twg confluence content approvals enabled",
+        "title": "Xem enabled của phê duyệt của nội dung của Confluence",
+        "command": "twg confluence content approvals enabled --id <contentId>",
+        "description": "Xem enabled của phê duyệt của nội dung của Confluence.",
+        "example": "twg confluence content approvals enabled --id 12345",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "confluence",
+          "content",
+          "approvals",
+          "enabled"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--id <contentId>",
+            "description": "Định danh tài nguyên; bắt buộc",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-confluence-content-approvals-get",
+        "canonicalCommand": "twg confluence content approvals get",
+        "title": "Đọc phê duyệt của nội dung của Confluence",
+        "command": "twg confluence content approvals get --id <contentId> --content-status <status>",
+        "description": "Đọc phê duyệt của nội dung của Confluence.",
+        "example": "twg confluence content approvals get --id 12345 --content-status current",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "confluence",
+          "content",
+          "approvals",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--id <contentId>",
+            "description": "Định danh tài nguyên; bắt buộc",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--content-status <status>",
+            "description": "Tham số content-status; bắt buộc; nhận: current, draft",
+            "example": "--content-status current"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-confluence-content-approvals-history",
+        "canonicalCommand": "twg confluence content approvals history",
+        "title": "Xem lịch sử của phê duyệt của nội dung của Confluence",
+        "command": "twg confluence content approvals history --id <contentId> --content-status <status>",
+        "description": "Xem lịch sử của phê duyệt của nội dung của Confluence.",
+        "example": "twg confluence content approvals history --id 12345 --content-status current",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "confluence",
+          "content",
+          "approvals",
+          "history"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--id <contentId>",
+            "description": "Định danh tài nguyên; bắt buộc",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--content-status <status>",
+            "description": "Tham số content-status; bắt buộc; nhận: current, draft",
+            "example": "--content-status current"
+          },
+          {
+            "flag": "--limit <limit>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh",
+            "example": "--limit 10"
+          },
+          {
+            "flag": "--cursor <cursor>",
+            "description": "Con trỏ lấy từ trang kết quả trước",
+            "example": "--cursor CURSOR"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-confluence-content-approvals-message-set",
+        "canonicalCommand": "twg confluence content approvals message set",
+        "title": "Đặt nội dung thông báo của phê duyệt của nội dung của Confluence",
+        "command": "twg confluence content approvals message set --id <contentId> --content-status <status> --review-id <reviewId> --message <message>",
+        "description": "Đặt nội dung thông báo của phê duyệt của nội dung của Confluence.",
+        "example": "twg confluence content approvals message set --id 12345 --content-status current --review-id 12345 --message 'Ví dụ trong môi trường thử nghiệm'",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "confluence",
+          "content",
+          "approvals",
+          "message",
+          "set"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--id <contentId>",
+            "description": "Định danh tài nguyên; bắt buộc",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--content-status <status>",
+            "description": "Tham số content-status; bắt buộc; nhận: current, draft",
+            "example": "--content-status current"
+          },
+          {
+            "flag": "--review-id <reviewId>",
+            "description": "ID review; bắt buộc",
+            "example": "--review-id 12345"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          },
+          {
+            "flag": "--message <message>",
+            "description": "Nội dung thông báo; bắt buộc",
+            "example": "--message 'Ví dụ trong môi trường thử nghiệm'"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-confluence-content-approvals-request",
+        "canonicalCommand": "twg confluence content approvals request",
+        "title": "Xem yêu cầu của phê duyệt của nội dung của Confluence",
+        "command": "twg confluence content approvals request --id <contentId> --content-status <status>",
+        "description": "Xem yêu cầu của phê duyệt của nội dung của Confluence.",
+        "example": "twg confluence content approvals request --id 12345 --content-status current",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "confluence",
+          "content",
+          "approvals",
+          "request"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--id <contentId>",
+            "description": "Định danh tài nguyên; bắt buộc",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--content-status <status>",
+            "description": "Tham số content-status; bắt buộc; nhận: current, draft",
+            "example": "--content-status current"
+          },
+          {
+            "flag": "--reviewer-user <accountId>",
+            "description": "Tham số reviewer-user; có thể nhập nhiều giá trị",
+            "example": "--reviewer-user REVIEWER_USER"
+          },
+          {
+            "flag": "--reviewer-group <groupId>",
+            "description": "Tham số reviewer-group; có thể nhập nhiều giá trị",
+            "example": "--reviewer-group REVIEWER_GROUP"
+          },
+          {
+            "flag": "--message <message>",
+            "description": "Nội dung thông báo",
+            "example": "--message 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--due-date <yyyy-mm-dd>",
+            "description": "Ngày đến hạn",
+            "example": "--due-date 2026-10-01"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-confluence-content-approvals-request-changes",
+        "canonicalCommand": "twg confluence content approvals request-changes",
+        "title": "Yêu cầu chỉnh sửa phê duyệt của nội dung của Confluence",
+        "command": "twg confluence content approvals request-changes --id <contentId> --content-status <status> --review-id <reviewId>",
+        "description": "Yêu cầu chỉnh sửa phê duyệt của nội dung của Confluence.",
+        "example": "twg confluence content approvals request-changes --id 12345 --content-status current --review-id 12345",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "confluence",
+          "content",
+          "approvals",
+          "request-changes"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--id <contentId>",
+            "description": "Định danh tài nguyên; bắt buộc",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--content-status <status>",
+            "description": "Tham số content-status; bắt buộc; nhận: current, draft",
+            "example": "--content-status current"
+          },
+          {
+            "flag": "--review-id <reviewId>",
+            "description": "ID review; bắt buộc",
+            "example": "--review-id 12345"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          },
+          {
+            "flag": "--comment <comment>",
+            "description": "Bình luận",
+            "example": "--comment 'Ví dụ trong môi trường thử nghiệm'"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      }
+    ]
+  }
+]

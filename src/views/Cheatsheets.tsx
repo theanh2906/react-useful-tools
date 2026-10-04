@@ -1,10 +1,12 @@
 'use client';
 
 import {
+  ArrowLeft,
   ArrowRight,
   ArrowUpRight,
   BookOpen,
   ChevronRight,
+  ChevronDown,
   Code2,
   Command,
   GitBranch,
@@ -14,10 +16,14 @@ import {
   Terminal,
   X,
 } from 'lucide-react';
-import { useMemo, useRef, useState } from 'react';
+import { useDeferredValue, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { cheatsheets } from '@/data/cheatsheets';
-import { filterCheatsheetGroups } from '@/lib/cheatsheets';
+import {
+  CHEATSHEET_PAGE_SIZE,
+  filterCheatsheetGroups,
+  paginateCheatsheetGroups,
+} from '@/lib/cheatsheets';
 import CommandGroup from '@/components/cheatsheets/CommandGroup';
 import { ShellCommand } from '@/components/cheatsheets/CommandExample';
 import styles from '@/components/cheatsheets/cheatsheets.module.css';
@@ -32,27 +38,73 @@ export default function Cheatsheets() {
     useState<(typeof toolOrder)[number]>('gh');
   const [category, setCategory] = useState('all');
   const [query, setQuery] = useState('');
+  const deferredQuery = useDeferredValue(query);
+  const [page, setPage] = useState(1);
+  const [showAll, setShowAll] = useState(false);
+  const [showAllTopics, setShowAllTopics] = useState(false);
+  const boardRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
   const toolRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const sheets = toolOrder
     .map((id) => cheatsheets.find((sheet) => sheet.id === id))
     .filter((sheet) => sheet !== undefined);
   const sheet = sheets.find((item) => item.id === activeTool)!;
+  const visibleCategories =
+    sheet?.groups.filter(
+      (group, index) => showAllTopics || index < 8 || group.id === category
+    ) ?? [];
   const filteredGroups = useMemo(
-    () => filterCheatsheetGroups(sheet?.groups ?? [], query, category),
-    [sheet, query, category]
+    () => filterCheatsheetGroups(sheet?.groups ?? [], deferredQuery, category),
+    [sheet, deferredQuery, category]
   );
   const searchGroups = useMemo(
-    () => filterCheatsheetGroups(sheet?.groups ?? [], query),
-    [sheet, query]
+    () => filterCheatsheetGroups(sheet?.groups ?? [], deferredQuery),
+    [sheet, deferredQuery]
   );
   const count = filteredGroups.reduce(
     (total, group) => total + group.commands.length,
     0
   );
+  const pageCount = Math.max(1, Math.ceil(count / CHEATSHEET_PAGE_SIZE));
+  const currentPage = Math.min(page, pageCount);
+  const visibleGroups = useMemo(
+    () =>
+      showAll
+        ? filteredGroups
+        : paginateCheatsheetGroups(filteredGroups, currentPage),
+    [filteredGroups, currentPage, showAll]
+  );
+  const visibleCount = visibleGroups.reduce(
+    (total, group) => total + group.commands.length,
+    0
+  );
+  const rangeStart =
+    count === 0
+      ? 0
+      : showAll
+        ? 1
+        : (currentPage - 1) * CHEATSHEET_PAGE_SIZE + 1;
+  const rangeEnd = count === 0 ? 0 : rangeStart + visibleCount - 1;
+  const searchPending = query !== deferredQuery;
   const totalCount =
     sheet?.groups.reduce((total, group) => total + group.commands.length, 0) ??
     0;
+  const discoveryCount =
+    sheet?.groups.reduce(
+      (total, group) =>
+        total +
+        group.commands.filter((command) => command.exampleKind === 'discovery')
+          .length,
+      0
+    ) ?? 0;
+  const templateCount =
+    sheet?.groups.reduce(
+      (total, group) =>
+        total +
+        group.commands.filter((command) => command.exampleKind === 'template')
+          .length,
+      0
+    ) ?? 0;
   const allCount = sheets.reduce(
     (total, item) =>
       total +
@@ -63,13 +115,33 @@ export default function Cheatsheets() {
     .flatMap((group) => group.commands)
     .find((command) => command.risk === 'read');
 
+  const resetPage = () => {
+    setPage(1);
+    setShowAll(false);
+  };
+  const updateQuery = (value: string) => {
+    setQuery(value);
+    resetPage();
+  };
+  const selectCategory = (value: string) => {
+    setCategory(value);
+    resetPage();
+  };
+  const changePage = (value: number) => {
+    setPage(value);
+    boardRef.current?.focus({ preventScroll: true });
+    boardRef.current?.scrollIntoView({ block: 'start' });
+  };
   const selectTool = (id: (typeof toolOrder)[number]) => {
     setActiveTool(id);
+    setShowAllTopics(false);
     setCategory('all');
+    resetPage();
   };
   const clearFilters = () => {
     setQuery('');
     setCategory('all');
+    resetPage();
     searchRef.current?.focus();
   };
 
@@ -136,10 +208,9 @@ export default function Cheatsheets() {
         {sheets.map((item, index) => {
           const Icon = toolIcons[item.id];
           const active = item.id === activeTool;
-          const commandCount = item.groups.reduce(
-            (sum, group) => sum + group.commands.length,
-            0
-          );
+          const commandCount =
+            item.coverage?.coveredCommands ??
+            item.groups.reduce((sum, group) => sum + group.commands.length, 0);
           return (
             <button
               key={item.id}
@@ -219,10 +290,10 @@ export default function Cheatsheets() {
                 aria-label={t('cheatsheets.searchLabel', {
                   tool: toolNames[activeTool],
                 })}
-                onChange={(event) => setQuery(event.target.value)}
+                onChange={(event) => updateQuery(event.target.value)}
                 onKeyDown={(event) => {
                   if (event.key === 'Escape') {
-                    setQuery('');
+                    updateQuery('');
                     event.stopPropagation();
                   }
                 }}
@@ -231,7 +302,7 @@ export default function Cheatsheets() {
                 <button
                   type="button"
                   onClick={() => {
-                    setQuery('');
+                    updateQuery('');
                     searchRef.current?.focus();
                   }}
                   aria-label={t('cheatsheets.clearSearch')}
@@ -242,6 +313,59 @@ export default function Cheatsheets() {
             </div>
           </div>
 
+          {sheet.coverage && (
+            <details className={styles.coverage}>
+              <summary>
+                <BookOpen size={14} aria-hidden="true" />
+                <strong>
+                  {t('cheatsheets.coverageLabel', {
+                    covered: sheet.coverage.coveredCommands,
+                    total: sheet.coverage.totalCommands,
+                  })}
+                </strong>
+                <span>{sheet.coverage.inventoryVersion}</span>
+                {discoveryCount > 0 && (
+                  <span className={styles.coverageCaveat}>
+                    {t('cheatsheets.coverageDiscovery', {
+                      count: discoveryCount,
+                    })}
+                  </span>
+                )}
+                {templateCount > 0 && (
+                  <span className={styles.coverageCaveat}>
+                    {t('cheatsheets.coverageTemplates', {
+                      count: templateCount,
+                    })}
+                  </span>
+                )}
+              </summary>
+              <div>
+                <p>{sheet.coverage.scope}</p>
+                {sheet.coverage.exclusions &&
+                  sheet.coverage.exclusions.length > 0 && (
+                    <>
+                      <p className={styles.coverageExclusions}>
+                        {t('cheatsheets.outsideScope')}
+                      </p>
+                      <ul>
+                        {sheet.coverage.exclusions.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
+                <a
+                  href={sheet.coverage.referenceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {t('cheatsheets.inventorySource')}
+                  <ArrowUpRight size={12} aria-hidden="true" />
+                </a>
+              </div>
+            </details>
+          )}
+
           <div
             className={styles.categories}
             role="group"
@@ -249,7 +373,7 @@ export default function Cheatsheets() {
           >
             <button
               type="button"
-              onClick={() => setCategory('all')}
+              onClick={() => selectCategory('all')}
               aria-pressed={category === 'all'}
               className={category === 'all' ? styles.categoryActive : ''}
             >
@@ -261,23 +385,73 @@ export default function Cheatsheets() {
                 )}
               </span>
             </button>
-            {sheet.groups.map((group, index) => (
+            {visibleCategories.map((group) => (
               <button
                 key={group.id}
                 type="button"
-                onClick={() => setCategory(group.id)}
+                onClick={() => selectCategory(group.id)}
                 aria-pressed={category === group.id}
                 className={category === group.id ? styles.categoryActive : ''}
               >
-                <i className={styles.categoryDot} data-color={index % 6} />
+                <i
+                  className={styles.categoryDot}
+                  data-color={
+                    sheet.groups.findIndex((item) => item.id === group.id) % 6
+                  }
+                />
                 {group.title}
               </button>
             ))}
+            {sheet.groups.length > 20 && (
+              <select
+                className={styles.topicSelect}
+                aria-label={t('cheatsheets.chooseTopic', {
+                  count: sheet.groups.length,
+                })}
+                value={category}
+                onChange={(event) => selectCategory(event.target.value)}
+              >
+                <option value="all">
+                  {t('cheatsheets.chooseTopic', { count: sheet.groups.length })}
+                </option>
+                {sheet.groups.map((group) => (
+                  <option key={group.id} value={group.id}>
+                    {group.title}
+                  </option>
+                ))}
+              </select>
+            )}
+            {sheet.groups.length > 8 && sheet.groups.length <= 20 && (
+              <button
+                type="button"
+                className={styles.moreTopics}
+                onClick={() => setShowAllTopics(!showAllTopics)}
+                aria-expanded={showAllTopics}
+              >
+                {showAllTopics
+                  ? t('cheatsheets.fewerTopics')
+                  : t('cheatsheets.moreTopics', {
+                      count: sheet.groups.length - visibleCategories.length,
+                    })}
+                <ChevronDown
+                  size={12}
+                  aria-hidden="true"
+                  className={showAllTopics ? styles.rotated : ''}
+                />
+              </button>
+            )}
           </div>
 
           <div className={styles.boardMeta}>
             <span role="status" aria-live="polite">
-              {t('cheatsheets.showing', { count, total: totalCount })}
+              {searchPending
+                ? t('cheatsheets.searching')
+                : t('cheatsheets.showingRange', {
+                    start: rangeStart,
+                    end: rangeEnd,
+                    count,
+                    total: totalCount,
+                  })}
             </span>
             {query || category !== 'all' ? (
               <button type="button" onClick={clearFilters}>
@@ -289,31 +463,100 @@ export default function Cheatsheets() {
             )}
           </div>
 
-          {filteredGroups.length > 0 ? (
-            <div className={styles.board}>
-              {filteredGroups.map((group) => (
-                <CommandGroup
-                  key={`${activeTool}-${group.id}`}
-                  group={group}
-                  tool={activeTool}
-                  index={sheet.groups.findIndex((item) => item.id === group.id)}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className={styles.empty}>
-              <Search size={30} aria-hidden="true" />
-              <h3>{t('cheatsheets.noResults')}</h3>
-              <p>
-                {t('cheatsheets.noResultsHint', {
-                  tool: toolNames[activeTool],
-                })}
-              </p>
-              <button type="button" onClick={clearFilters}>
-                {t('cheatsheets.resetFilters')}
-                <ArrowRight size={15} />
-              </button>
-            </div>
+          <div
+            ref={boardRef}
+            className={styles.boardRegion}
+            role="region"
+            tabIndex={-1}
+            aria-label={t('cheatsheets.commandResults')}
+            aria-busy={searchPending}
+          >
+            {filteredGroups.length > 0 ? (
+              <div className={styles.board}>
+                {visibleGroups.map((group) => (
+                  <CommandGroup
+                    key={`${activeTool}-${group.id}`}
+                    group={group}
+                    tool={activeTool}
+                    totalCommands={
+                      filteredGroups.find((item) => item.id === group.id)
+                        ?.commands.length ?? group.commands.length
+                    }
+                    index={sheet.groups.findIndex(
+                      (item) => item.id === group.id
+                    )}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className={styles.empty}>
+                <Search size={30} aria-hidden="true" />
+                <h3>{t('cheatsheets.noResults')}</h3>
+                <p>
+                  {t('cheatsheets.noResultsHint', {
+                    tool: toolNames[activeTool],
+                  })}
+                </p>
+                <button type="button" onClick={clearFilters}>
+                  {t('cheatsheets.resetFilters')}
+                  <ArrowRight size={15} />
+                </button>
+              </div>
+            )}
+          </div>
+          {count > CHEATSHEET_PAGE_SIZE && (
+            <nav
+              className={styles.pagination}
+              aria-label={t('cheatsheets.resultPages')}
+            >
+              <p>{t('cheatsheets.fullSearchHint', { count: totalCount })}</p>
+              <div>
+                {!showAll && (
+                  <>
+                    <button
+                      type="button"
+                      disabled={currentPage <= 1}
+                      onClick={() => changePage(currentPage - 1)}
+                      aria-label={t('cheatsheets.previousPage')}
+                    >
+                      <ArrowLeft size={14} />
+                      {t('common.back')}
+                    </button>
+                    <span>
+                      {t('cheatsheets.pageNumber', {
+                        page: currentPage,
+                        pages: pageCount,
+                      })}
+                    </span>
+                    <button
+                      type="button"
+                      disabled={currentPage >= pageCount}
+                      onClick={() => changePage(currentPage + 1)}
+                      aria-label={t('cheatsheets.nextPage')}
+                    >
+                      {t('common.next')}
+                      <ArrowRight size={14} />
+                    </button>
+                  </>
+                )}
+                <button
+                  type="button"
+                  className={styles.showAll}
+                  onClick={() => {
+                    setShowAll(!showAll);
+                    setPage(1);
+                    if (showAll) {
+                      boardRef.current?.focus({ preventScroll: true });
+                      boardRef.current?.scrollIntoView({ block: 'start' });
+                    }
+                  }}
+                >
+                  {showAll
+                    ? t('cheatsheets.usePages')
+                    : t('cheatsheets.showAll', { count })}
+                </button>
+              </div>
+            </nav>
           )}
 
           <footer className={styles.footer}>

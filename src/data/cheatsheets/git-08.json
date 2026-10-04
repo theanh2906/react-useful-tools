@@ -1,0 +1,1102 @@
+[
+  {
+    "id": "synchingrepositories",
+    "title": "Đồng bộ cấp thấp",
+    "level": "plumbing",
+    "commands": [
+      {
+        "id": "git-http-backend",
+        "canonicalCommand": "git http-backend",
+        "title": "Sinh phản hồi CGI Git HTTP",
+        "command": "GIT_PROJECT_ROOT=<root> PATH_INFO=<path> QUERY_STRING=<query> REQUEST_METHOD=GET git http-backend",
+        "description": "CGI backend do web server gọi, không tự mở HTTP server. Ví dụ mô phỏng quảng bá refs đọc từ /srv/git/demo.git có git-daemon-export-ok.",
+        "example": "GIT_PROJECT_ROOT=/srv/git PATH_INFO=/demo.git/info/refs QUERY_STRING=service=git-upload-pack REQUEST_METHOD=GET git http-backend",
+        "risk": "read",
+        "tags": [
+          "http-backend",
+          "plumbing",
+          "http",
+          "cgi",
+          "server"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-http-backend",
+        "options": [
+          {
+            "flag": "GIT_PROJECT_ROOT",
+            "description": "Biến môi trường chứa gốc các repository được phục vụ"
+          },
+          {
+            "flag": "PATH_INFO / PATH_TRANSLATED",
+            "description": "Đường dẫn CGI do web server cung cấp để tìm kho"
+          },
+          {
+            "flag": "REQUEST_METHOD / QUERY_STRING",
+            "description": "Phương thức HTTP và query của yêu cầu CGI"
+          },
+          {
+            "flag": "GIT_HTTP_EXPORT_ALL",
+            "description": "Bỏ yêu cầu marker git-daemon-export-ok; tăng phạm vi công khai"
+          },
+          {
+            "flag": "GIT_PROTOCOL / HTTP_GIT_PROTOCOL",
+            "description": "Truyền phiên bản/capability giao thức từ client"
+          },
+          {
+            "flag": "http.uploadpack",
+            "description": "Config bật/tắt dịch vụ đọc upload-pack"
+          },
+          {
+            "flag": "http.receivepack",
+            "description": "Config cho phép push; cần web server xác thực và phân quyền"
+          },
+          {
+            "flag": "http.getanyfile",
+            "description": "Dumb HTTP truy cập object, kể cả unreachable còn lưu; bật mặc định"
+          },
+          {
+            "flag": "http.uploadarchive",
+            "description": "Bật archive qua HTTP protocol v2; mặc định tắt"
+          }
+        ],
+        "warning": "Backend dựa vào web server để xác thực, phân quyền và HTTPS. Không bật GIT_HTTP_EXPORT_ALL hoặc receive-pack rộng rãi; phản hồi có thể lộ refs/object của kho."
+      },
+      {
+        "id": "git-send-pack",
+        "canonicalCommand": "git send-pack",
+        "title": "Xem trước push bằng giao thức cấp thấp",
+        "command": "git send-pack --dry-run <repository> <src>:<dst>",
+        "description": "Gửi object/ref qua receive-pack. Ví dụ chỉ xem trước cập nhật main của kho bare local ../demo.git; Git push là giao diện nên dùng hằng ngày.",
+        "example": "git send-pack --dry-run ../demo.git refs/heads/main:refs/heads/main",
+        "risk": "read",
+        "tags": [
+          "send-pack",
+          "plumbing",
+          "push",
+          "protocol"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-send-pack",
+        "options": [
+          {
+            "flag": "--dry-run",
+            "description": "Không gửi cập nhật thực tế"
+          },
+          {
+            "flag": "--all",
+            "description": "Gửi mọi nhánh local thay vì liệt kê refspec"
+          },
+          {
+            "flag": "--mirror",
+            "description": "Đồng bộ toàn bộ refs theo bản local; có thể xóa/ghi đè refs remote"
+          },
+          {
+            "flag": "--force",
+            "description": "Bỏ kiểm tra fast-forward, có thể làm mất lịch sử remote"
+          },
+          {
+            "flag": "--atomic",
+            "description": "Yêu cầu toàn bộ refs được cập nhật hoặc không ref nào"
+          },
+          {
+            "flag": "--thin",
+            "description": "Dùng thin pack để giảm lượng dữ liệu truyền"
+          },
+          {
+            "flag": "--signed / --signed=if-asked",
+            "description": "Ký yêu cầu push hoặc ký khi server yêu cầu"
+          },
+          {
+            "flag": "--receive-pack=<path> / --exec=<path>",
+            "description": "Chọn chương trình receive-pack phía remote"
+          },
+          {
+            "flag": "--stdin",
+            "description": "Đọc thêm refspec từ stdin"
+          },
+          {
+            "flag": "--push-option=<string>",
+            "description": "Truyền push option cho hooks server nếu được hỗ trợ"
+          },
+          {
+            "flag": "--verbose",
+            "description": "Hiện chi tiết quá trình"
+          }
+        ],
+        "warning": "Bỏ --dry-run sẽ cập nhật remote. --force, --mirror và refspec xóa có thể xóa/viết lại lịch sử; kiểm tra đúng kho đích và refs."
+      },
+      {
+        "id": "git-update-server-info",
+        "canonicalCommand": "git update-server-info",
+        "title": "Cập nhật metadata cho dumb transport",
+        "command": "git update-server-info [--force]",
+        "description": "Tạo/cập nhật info/refs và objects/info/packs để client dumb HTTP có thể tìm refs và packs. Ví dụ thao tác trên bare repo ../demo.git.",
+        "example": "git --git-dir=../demo.git update-server-info",
+        "risk": "write",
+        "tags": [
+          "update-server-info",
+          "plumbing",
+          "server",
+          "http",
+          "metadata"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-update-server-info",
+        "options": [
+          {
+            "flag": "-f / --force",
+            "description": "Tạo lại metadata từ đầu"
+          }
+        ],
+        "warning": "Chỉ là metadata phục vụ transport, không tự bật server hay bảo vệ quyền truy cập. Dumb HTTP có thể cho truy cập object lịch sử vẫn còn trên máy chủ."
+      }
+    ]
+  },
+  {
+    "id": "synchelpers",
+    "title": "Trợ giúp giao thức và máy chủ",
+    "level": "plumbing",
+    "commands": [
+      {
+        "id": "git-http-fetch",
+        "canonicalCommand": "git http-fetch",
+        "title": "Tải object qua dumb HTTP",
+        "command": "git http-fetch [--recover] <commit-or-ref> <url>",
+        "description": "Helper HTTP cấp thấp tải object vào kho hiện tại. Ví dụ refs/heads/main trên server được chỉ bằng heads/main dưới URL kho; example.invalid là địa chỉ minh họa cần thay bằng máy chủ được phép.",
+        "example": "git http-fetch --recover heads/main https://example.invalid/demo.git/",
+        "risk": "write",
+        "tags": [
+          "http-fetch",
+          "plumbing",
+          "http",
+          "fetch",
+          "internal"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-http-fetch",
+        "options": [
+          {
+            "flag": "<commit-id>",
+            "description": "OID hoặc đường dẫn dưới URL/refs/, ví dụ heads/main"
+          },
+          {
+            "flag": "--recover",
+            "description": "Kiểm tra mọi object reachable đã tải đủ sau lần bị ngắt"
+          },
+          {
+            "flag": "-v",
+            "description": "Báo các object đang tải"
+          },
+          {
+            "flag": "-w <filename>",
+            "description": "Ghi commit OID vào ref local dưới refs/<filename>"
+          },
+          {
+            "flag": "--stdin",
+            "description": "Nhận mỗi dòng commit-id và tùy chọn tab-tên-ref từ stdin"
+          },
+          {
+            "flag": "--packfile=<hash>",
+            "description": "Chế độ nội bộ tải trực tiếp pack ở URL; cần --index-pack-arg"
+          },
+          {
+            "flag": "--index-pack-arg=<arg>",
+            "description": "Đối số nội bộ cho tiến trình index-pack khi tải pack trực tiếp"
+          },
+          {
+            "flag": "-a / -c / -t",
+            "description": "Các cờ lịch sử bị bỏ qua; hiện luôn tải đủ object cần thiết"
+          }
+        ],
+        "warning": "Dùng git fetch cho remote thông thường. -w có thể thay ref local; không nhúng mật khẩu/token vào URL hoặc input hiển thị."
+      },
+      {
+        "id": "git-http-push",
+        "canonicalCommand": "git http-push",
+        "title": "Xem trước push HTTP/WebDAV",
+        "command": "git http-push --dry-run <url> <src>:<dst>",
+        "description": "Helper dành cho HTTP/WebDAV có hỗ trợ ghi, không phải giao diện smart HTTP thường dùng. Ví dụ domain example.invalid minh họa server DAV được phép.",
+        "example": "git http-push --dry-run https://example.invalid/demo.git/ refs/heads/main:refs/heads/main",
+        "risk": "read",
+        "tags": [
+          "http-push",
+          "plumbing",
+          "http",
+          "dav",
+          "push",
+          "internal"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-http-push",
+        "options": [
+          {
+            "flag": "--dry-run",
+            "description": "Kiểm tra nhưng không gửi cập nhật"
+          },
+          {
+            "flag": "--all",
+            "description": "Xác minh server có mọi object trong toàn bộ lịch sử ref local"
+          },
+          {
+            "flag": "--force",
+            "description": "Cho phép cập nhật non-fast-forward"
+          },
+          {
+            "flag": "--verbose",
+            "description": "In thông tin object được duyệt và gửi"
+          },
+          {
+            "flag": "-d <ref>",
+            "description": "Xóa nhánh remote nếu các điều kiện an toàn tổ tiên và HEAD được đáp ứng"
+          },
+          {
+            "flag": "-D <ref>",
+            "description": "Xóa nhánh remote bỏ một số kiểm tra an toàn; không được xóa remote HEAD"
+          },
+          {
+            "flag": "<src>:<dst>",
+            "description": "Chọn ref nguồn local và ref đích remote"
+          },
+          {
+            "flag": "+<src>:<dst>",
+            "description": "Bỏ kiểm tra fast-forward riêng ref này"
+          }
+        ],
+        "warning": "Chỉ dùng với máy chủ DAV phù hợp và libcurl được hỗ trợ. Bỏ --dry-run sẽ ghi remote; --force, -D và refspec ép có thể làm mất refs/lịch sử."
+      },
+      {
+        "id": "git-receive-pack",
+        "canonicalCommand": "git receive-pack",
+        "title": "Quảng bá refs của dịch vụ nhận push",
+        "command": "git receive-pack --http-backend-info-refs <git-dir>",
+        "description": "Helper phía server nhận pack rồi cập nhật refs theo giao thức push. Ví dụ chỉ xuất quảng bá HTTP info/refs của bare repo, không nhận một giao dịch push.",
+        "example": "git receive-pack --http-backend-info-refs /srv/git/demo.git",
+        "risk": "read",
+        "tags": [
+          "receive-pack",
+          "plumbing",
+          "push",
+          "server",
+          "internal"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-receive-pack",
+        "options": [
+          {
+            "flag": "<git-dir>",
+            "description": "Kho đích cho yêu cầu push; thông thường do SSH hoặc HTTP backend cung cấp"
+          },
+          {
+            "flag": "--http-backend-info-refs",
+            "description": "Chế độ quảng bá refs cho HTTP backend"
+          },
+          {
+            "flag": "--skip-connectivity-check",
+            "description": "Bỏ kiểm tra kết nối object; chỉ cho server có cơ chế xác minh tương đương riêng"
+          },
+          {
+            "flag": "receive.denyNonFastForwards",
+            "description": "Config server từ chối cập nhật non-fast-forward"
+          },
+          {
+            "flag": "receive.denyDeletes",
+            "description": "Config server từ chối xóa refs"
+          },
+          {
+            "flag": "pre-receive / update / post-receive",
+            "description": "Hooks server dùng kiểm tra hoặc xử lý giao dịch nhận"
+          }
+        ],
+        "warning": "Chạy chế độ nhận thực có thể cập nhật/xóa ref và chạy hooks server. Không mở nhận push cho người chưa xác thực; không tắt connectivity check nếu không thay bằng kiểm tra tương đương."
+      },
+      {
+        "id": "git-shell",
+        "canonicalCommand": "git shell",
+        "title": "Chạy lệnh Git trong shell giới hạn",
+        "command": "git shell -c \"git-upload-pack '<repository>'\"",
+        "description": "Login shell giới hạn cho tài khoản Git qua SSH, nhận các lệnh giao thức cho fetch/push/archive. Ví dụ gửi packet flush để kết thúc đàm phán sau quảng bá của kho demo; đầu ra là packet-line nhị phân, không phải danh sách dễ đọc.",
+        "example": "printf 0000 | git shell -c \"git-upload-pack '/srv/git/demo.git'\"",
+        "risk": "read",
+        "tags": [
+          "shell",
+          "plumbing",
+          "ssh",
+          "server",
+          "internal"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-shell",
+        "options": [
+          {
+            "flag": "-c <command>",
+            "description": "Thực thi một lệnh được phép thay vì mở shell tương tác"
+          },
+          {
+            "flag": "git upload-pack <repository>",
+            "description": "Dịch vụ đọc cho clone/fetch"
+          },
+          {
+            "flag": "git receive-pack <repository>",
+            "description": "Dịch vụ nhận push; có thể ghi và chạy hooks"
+          },
+          {
+            "flag": "git upload-archive <repository>",
+            "description": "Dịch vụ archive từ xa"
+          },
+          {
+            "flag": "~/git-shell-commands/",
+            "description": "Thư mục các lệnh tùy chỉnh được shell cho phép"
+          },
+          {
+            "flag": "no-interactive-login",
+            "description": "Chương trình trong git-shell-commands để chặn chế độ tương tác"
+          }
+        ],
+        "warning": "git-shell giới hạn tập lệnh nhưng không tự quyết định người dùng được đọc/ghi kho nào. Cấu hình SSH, quyền filesystem và helper tùy chỉnh vẫn phải an toàn."
+      },
+      {
+        "id": "git-upload-archive",
+        "canonicalCommand": "git upload-archive",
+        "title": "Phục vụ archive theo yêu cầu client",
+        "command": "git archive --remote=<repository> --exec=git-upload-archive --format=tar <ref> > <archive.tar>",
+        "description": "Helper upload-archive được client archive gọi qua giao thức, không nên nhập tay packet-line. Ví dụ tạo demo.tar từ HEAD của bare repo local ../demo.git qua helper được chỉ định.",
+        "example": "git archive --remote=../demo.git --exec=git-upload-archive --format=tar HEAD > demo.tar",
+        "risk": "write",
+        "tags": [
+          "upload-archive",
+          "plumbing",
+          "archive",
+          "server",
+          "internal"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-upload-archive",
+        "options": [
+          {
+            "flag": "<repository>",
+            "description": "Đối số của git upload-archive phía server: kho nguồn để tạo archive"
+          },
+          {
+            "flag": "--remote=<repository>",
+            "description": "Tùy chọn của git archive phía client, kích hoạt giao thức upload-archive"
+          },
+          {
+            "flag": "--exec=git-upload-archive",
+            "description": "Tùy chọn client chọn helper phía server"
+          },
+          {
+            "flag": "uploadArchive.allowUnreachable",
+            "description": "Config server bỏ giới hạn revision được phép; có nguy cơ lộ object unreachable"
+          }
+        ],
+        "warning": "Ví dụ ghi đè demo.tar nếu đã có. Mặc định server chỉ chấp nhận ref hoặc ref:path phù hợp, không nhận biểu thức revision tùy ý; không bật allowUnreachable cho kho có lịch sử riêng tư."
+      },
+      {
+        "id": "git-upload-pack",
+        "canonicalCommand": "git upload-pack",
+        "title": "Quảng bá refs của dịch vụ đọc",
+        "command": "git upload-pack --advertise-refs <repository>",
+        "description": "Helper phía server của clone/fetch. Ví dụ chỉ xuất refs/capabilities dưới dạng packet-line rồi kết thúc; không phải đầu ra ls-remote dành cho người dùng.",
+        "example": "git upload-pack --advertise-refs /srv/git/demo.git",
+        "risk": "read",
+        "tags": [
+          "upload-pack",
+          "plumbing",
+          "fetch",
+          "server",
+          "internal"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-upload-pack",
+        "options": [
+          {
+            "flag": "--advertise-refs",
+            "description": "Chỉ quảng bá refs/capabilities mà không thực hiện trao đổi object đầy đủ"
+          },
+          {
+            "flag": "--strict / --no-strict",
+            "description": "Có hoặc không thử thêm /.git khi đường dẫn chưa phải Git directory"
+          },
+          {
+            "flag": "--timeout=<n>",
+            "description": "Ngắt sau n giây không hoạt động"
+          },
+          {
+            "flag": "--stateless-rpc",
+            "description": "Chỉ xử lý một chu kỳ đọc/ghi phù hợp HTTP POST"
+          },
+          {
+            "flag": "--http-backend-info-refs",
+            "description": "Chế độ quảng bá info/refs dành cho HTTP backend"
+          },
+          {
+            "flag": "GIT_PROTOCOL",
+            "description": "Biến môi trường bắt tay phiên bản/capability giao thức"
+          },
+          {
+            "flag": "GIT_NO_LAZY_FETCH",
+            "description": "Mặc định helper ngăn lazy fetch để tránh chạy config/hook không tin cậy"
+          }
+        ],
+        "warning": "Không đặt GIT_NO_LAZY_FETCH=0 với kho không tin cậy. Helper không thay thế lớp xác thực/phân quyền của dịch vụ Git."
+      }
+    ]
+  },
+  {
+    "id": "purehelpers",
+    "title": "Tiện ích nội bộ và shell",
+    "level": "plumbing",
+    "commands": [
+      {
+        "id": "git-check-attr",
+        "canonicalCommand": "git check-attr",
+        "title": "Kiểm tra thuộc tính của tệp",
+        "command": "git check-attr <attribute>... -- <path>...",
+        "description": "Xem thuộc tính được áp dụng từ gitattributes. Kết quả phân biệt set, unset, unspecified và giá trị cụ thể; ví dụ kiểm tra cơ chế text/EOL/diff của README.md.",
+        "example": "git check-attr text eol diff -- README.md",
+        "risk": "read",
+        "tags": [
+          "check-attr",
+          "plumbing",
+          "attributes",
+          "eol",
+          "diagnostics"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-check-attr",
+        "options": [
+          {
+            "flag": "-a / --all",
+            "description": "Hiện mọi thuộc tính đã được định nghĩa, không hiện unspecified"
+          },
+          {
+            "flag": "--cached",
+            "description": "Chỉ dùng .gitattributes trong index, bỏ working tree"
+          },
+          {
+            "flag": "--source=<tree-ish>",
+            "description": "Dùng thuộc tính từ snapshot chỉ định"
+          },
+          {
+            "flag": "--stdin",
+            "description": "Đọc tên tệp từ stdin"
+          },
+          {
+            "flag": "-z",
+            "description": "Phân cách các trường output bằng NUL; với --stdin input cũng dùng NUL"
+          },
+          {
+            "flag": "--",
+            "description": "Tách danh sách thuộc tính khỏi đường dẫn"
+          }
+        ]
+      },
+      {
+        "id": "git-check-ignore",
+        "canonicalCommand": "git check-ignore",
+        "title": "Tìm quy tắc khiến tệp bị ignore",
+        "command": "git check-ignore --verbose -- <path>...",
+        "description": "Hiện nguồn, số dòng và pattern khớp để gỡ lỗi gitignore. Ví dụ kiểm tra build/output.js; không thay đổi .gitignore.",
+        "example": "git check-ignore --verbose -- build/output.js",
+        "risk": "read",
+        "tags": [
+          "check-ignore",
+          "plumbing",
+          "ignore",
+          "diagnostics"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-check-ignore",
+        "options": [
+          {
+            "flag": "-v / --verbose",
+            "description": "Hiện nguồn, dòng, pattern và đường dẫn; pattern ! có nghĩa khớp ngoại lệ không ignore"
+          },
+          {
+            "flag": "-q / --quiet",
+            "description": "Chỉ mã thoát, chỉ dùng với một đường dẫn"
+          },
+          {
+            "flag": "--stdin",
+            "description": "Đọc các đường dẫn từ stdin"
+          },
+          {
+            "flag": "-z",
+            "description": "Dùng NUL cho các trường output và input khi --stdin"
+          },
+          {
+            "flag": "-n / --non-matching",
+            "description": "Với --verbose, hiện cả đường dẫn không khớp để theo dõi từng input"
+          },
+          {
+            "flag": "--no-index",
+            "description": "Không bỏ qua tệp đã track, dùng để thử quy tắc ignore cho chúng"
+          }
+        ],
+        "warning": "Tệp đã track không chịu tác động ignore và mặc định không xuất hiện. Mã 0 có ít nhất một tệp bị ignore; mã 1 không có; 128 là lỗi."
+      },
+      {
+        "id": "git-check-mailmap",
+        "canonicalCommand": "git check-mailmap",
+        "title": "Chuẩn hóa danh tính qua mailmap",
+        "command": "git check-mailmap [--stdin] <contact>...",
+        "description": "Tìm tên/email chuẩn theo mailmap mà không sửa commit. Ví dụ dùng danh tính giả; nếu không có mapping thì giữ nguyên input.",
+        "example": "git check-mailmap \"Demo <demo@example.invalid>\"",
+        "risk": "read",
+        "tags": [
+          "check-mailmap",
+          "plumbing",
+          "mailmap",
+          "identity"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-check-mailmap",
+        "options": [
+          {
+            "flag": "--stdin",
+            "description": "Đọc thêm từng contact trên mỗi dòng sau đối số command line"
+          },
+          {
+            "flag": "--mailmap-file=<file>",
+            "description": "Đọc mailmap bổ sung, ưu tiên hơn nguồn đã cấu hình"
+          },
+          {
+            "flag": "--mailmap-blob=<blob>",
+            "description": "Đọc mailmap từ blob; ưu tiên thấp hơn --mailmap-file"
+          },
+          {
+            "flag": "<contact>",
+            "description": "Name <email>, <email> hoặc email; quote khi có khoảng trắng/ký tự shell"
+          }
+        ]
+      },
+      {
+        "id": "git-check-ref-format",
+        "canonicalCommand": "git check-ref-format",
+        "title": "Kiểm tra tên nhánh hoặc ref",
+        "command": "git check-ref-format --branch <branch-name>",
+        "description": "Xác minh tên nhánh hợp lệ trước khi tạo. Ví dụ feature/login chỉ được kiểm tra; không tạo branch.",
+        "example": "git check-ref-format --branch feature/login",
+        "risk": "read",
+        "tags": [
+          "check-ref-format",
+          "plumbing",
+          "refs",
+          "validate"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-check-ref-format",
+        "options": [
+          {
+            "flag": "--branch",
+            "description": "Kiểm tra theo quy tắc tên nhánh; cho phép mở rộng @{-n} trong kho"
+          },
+          {
+            "flag": "--normalize",
+            "description": "Bỏ slash đầu và gộp slash lặp, in ref chuẩn hóa nếu hợp lệ"
+          },
+          {
+            "flag": "--allow-onelevel / --no-allow-onelevel",
+            "description": "Cho phép hoặc cấm ref chỉ có một thành phần"
+          },
+          {
+            "flag": "--refspec-pattern",
+            "description": "Cho phép đúng một dấu * dùng trong refspec pattern"
+          },
+          {
+            "flag": "<refname>",
+            "description": "Tên ref đầy đủ như refs/heads/feature/login khi không dùng --branch"
+          }
+        ],
+        "warning": "Tên hợp lệ không đồng nghĩa ref tồn tại hoặc người dùng có quyền sửa. Khi nhận input không tin cậy, vẫn phải bảo vệ option parsing ở lệnh tiếp theo."
+      },
+      {
+        "id": "git-column",
+        "canonicalCommand": "git column",
+        "title": "Dàn văn bản thành nhiều cột",
+        "command": "git column --mode=<mode> [--width=<n>]",
+        "description": "Đọc mỗi dòng stdin thành một ô rồi dàn theo hàng hoặc cột. Ví dụ chỉ định bề rộng để kết quả không phụ thuộc terminal.",
+        "example": "printf \"%s\\n\" main develop feature/login release | git column --mode=row --width=60 --padding=3",
+        "risk": "read",
+        "tags": [
+          "column",
+          "plumbing",
+          "format",
+          "text"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-column",
+        "options": [
+          {
+            "flag": "--mode=<mode>",
+            "description": "Chọn row, column, dense hoặc các chế độ column.ui hỗ trợ"
+          },
+          {
+            "flag": "--command=<name>",
+            "description": "Đọc cách bố trí từ column.<name> và column.ui"
+          },
+          {
+            "flag": "--raw-mode=<n>",
+            "description": "Dạng mode số nội bộ cho chương trình đã parse cấu hình"
+          },
+          {
+            "flag": "--width=<n>",
+            "description": "Bề rộng đầu ra; mặc định tự dò hoặc 80 cột"
+          },
+          {
+            "flag": "--indent=<string>",
+            "description": "Tiền tố cho từng dòng"
+          },
+          {
+            "flag": "--padding=<n>",
+            "description": "Số khoảng trắng giữa các cột, mặc định 1"
+          },
+          {
+            "flag": "--nl=<string>",
+            "description": "Chuỗi kết thúc mỗi dòng, bao gồm newline nếu muốn"
+          }
+        ]
+      },
+      {
+        "id": "git-credential",
+        "canonicalCommand": "git credential",
+        "title": "Giao thức trao đổi thông tin xác thực",
+        "command": "git credential <action>",
+        "description": "Giao diện stdin/stdout cho credential helpers. Ví dụ capability chỉ hỏi khả năng hỗ trợ, không đọc hay in mật khẩu; fill/approve/reject dùng bản ghi key=value kết thúc bằng dòng trống.",
+        "example": "git credential capability",
+        "risk": "read",
+        "tags": [
+          "credential",
+          "plumbing",
+          "credentials",
+          "security",
+          "protocol"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-credential",
+        "options": [
+          {
+            "flag": "capability",
+            "description": "Liệt kê các capability của giao diện credential"
+          },
+          {
+            "flag": "fill",
+            "description": "Hỏi helper/người dùng để hoàn thành credential; đầu ra có thể chứa bí mật"
+          },
+          {
+            "flag": "approve",
+            "description": "Báo credential dùng thành công để helper có thể lưu"
+          },
+          {
+            "flag": "reject",
+            "description": "Báo credential không còn hợp lệ để helper xóa"
+          },
+          {
+            "flag": "protocol / host / path / username",
+            "description": "Các trường chọn ngữ cảnh trong giao thức stdin, không phải cờ CLI"
+          },
+          {
+            "flag": "password / credential",
+            "description": "Trường bí mật của giao thức; không đặt trực tiếp trên command line"
+          },
+          {
+            "flag": "capability[]",
+            "description": "Khai báo capability cho các phần mở rộng giao thức"
+          }
+        ],
+        "warning": "fill có thể in token/mật khẩu lên stdout; không dùng để chẩn đoán trên màn hình, log hay lịch sử shell. approve có thể lưu bí mật; reject có thể xóa credential. Ví dụ chỉ hỏi capability."
+      },
+      {
+        "id": "git-credential-cache",
+        "canonicalCommand": "git credential-cache",
+        "title": "Xóa sớm credential cache trong RAM",
+        "command": "git credential-cache exit",
+        "description": "Dừng cache-daemon và quên các credential đang giữ trong RAM. Đây là helper cho credential.helper, không phải kho lưu token lâu dài.",
+        "example": "git credential-cache exit",
+        "risk": "destructive",
+        "tags": [
+          "credential-cache",
+          "plumbing",
+          "credentials",
+          "security",
+          "cache"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-credential-cache",
+        "options": [
+          {
+            "flag": "exit",
+            "description": "Dừng daemon và quên tất cả credential tại socket được chọn"
+          },
+          {
+            "flag": "--timeout=<seconds>",
+            "description": "Thời gian giữ credential, mặc định 900 giây; thường đặt trong credential.helper"
+          },
+          {
+            "flag": "--socket=<absolute-path>",
+            "description": "Chọn Unix-domain socket tuyệt đối cho cache"
+          },
+          {
+            "flag": "get / store / erase",
+            "description": "Các action của giao thức helper, do Git gọi với bản ghi stdin"
+          },
+          {
+            "flag": "credential.helper=cache",
+            "description": "Cấu hình Git sử dụng helper RAM; có thể kèm --timeout và --socket"
+          }
+        ],
+        "warning": "exit có thể làm các kho dùng chung cache phải đăng nhập lại. Cache biến mất khi timeout hoặc daemon dừng; không thay thế kho bảo mật cho token cần lưu lâu dài."
+      },
+      {
+        "id": "git-credential-store",
+        "canonicalCommand": "git credential-store",
+        "title": "Xóa bản ghi khỏi credential file riêng",
+        "command": "git credential-store --file=<file> erase < <query-file>",
+        "description": "Helper lưu credential dạng plaintext. Ví dụ chỉ xóa ngữ cảnh giả example.invalid khỏi tệp demo riêng, không đọc/in secret và không đụng tệp credential mặc định.",
+        "example": "printf \"protocol=https\\nhost=example.invalid\\n\\n\" | git credential-store --file=/tmp/git-demo-credentials erase",
+        "risk": "destructive",
+        "tags": [
+          "credential-store",
+          "plumbing",
+          "credentials",
+          "security",
+          "plaintext"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-credential-store",
+        "options": [
+          {
+            "flag": "--file=<path>",
+            "description": "Chọn tệp lưu/tra cứu; quyền filesystem hạn chế nhưng nội dung không mã hóa"
+          },
+          {
+            "flag": "get",
+            "description": "Đọc credential khớp và trả qua stdout; có thể làm lộ bí mật"
+          },
+          {
+            "flag": "store",
+            "description": "Lưu credential nhận qua giao thức stdin thành plaintext"
+          },
+          {
+            "flag": "erase",
+            "description": "Xóa credential khớp ngữ cảnh stdin"
+          },
+          {
+            "flag": "credential.helper=store",
+            "description": "Cấu hình dùng helper; không khuyến nghị khi có keychain/credential manager bảo mật"
+          }
+        ],
+        "warning": "Mật khẩu/token được lưu KHÔNG MÃ HÓA. erase xóa bản ghi phù hợp; thiếu trường chọn ngữ cảnh có thể xóa rộng hơn dự định. Không nhập token vào command line hay hiển thị tệp credential."
+      },
+      {
+        "id": "git-fmt-merge-msg",
+        "canonicalCommand": "git fmt-merge-msg",
+        "title": "Dựng thông điệp merge từ FETCH_HEAD",
+        "command": "git fmt-merge-msg --log=<n> -F <fetch-head-file>",
+        "description": "Tạo thông điệp merge trên stdout từ dữ liệu FETCH_HEAD. Ví dụ yêu cầu đã fetch trước đó và dùng rev-parse để tìm đúng metadata path; không tự merge hay commit.",
+        "example": "git fmt-merge-msg --log=5 -F \"$(git rev-parse --git-path FETCH_HEAD)\"",
+        "risk": "read",
+        "tags": [
+          "fmt-merge-msg",
+          "plumbing",
+          "merge",
+          "message",
+          "internal"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-fmt-merge-msg",
+        "options": [
+          {
+            "flag": "-F <file> / --file=<file>",
+            "description": "Đọc danh sách commit được merge từ tệp thay vì stdin"
+          },
+          {
+            "flag": "-m <message> / --message=<message>",
+            "description": "Dùng tiêu đề/thông điệp merge cho trước"
+          },
+          {
+            "flag": "--log[=<n>]",
+            "description": "Kèm tối đa n tiêu đề commit từ mỗi nhánh được merge"
+          },
+          {
+            "flag": "--no-log",
+            "description": "Không kèm danh sách commit"
+          },
+          {
+            "flag": "--into-name <branch>",
+            "description": "Viết như thể merge vào nhánh được chỉ định"
+          }
+        ]
+      },
+      {
+        "id": "git-hook",
+        "canonicalCommand": "git hook",
+        "title": "Liệt kê hook trước khi chạy",
+        "command": "git hook list [--show-scope] <hook-name>",
+        "description": "Xem các hook được cấu hình cho một sự kiện cùng phạm vi cấu hình. Git 2.56 hỗ trợ hook config và hook truyền thống; ví dụ không thực thi pre-commit.",
+        "example": "git hook list --show-scope pre-commit",
+        "risk": "read",
+        "tags": [
+          "hook",
+          "plumbing",
+          "hooks",
+          "security"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-hook",
+        "options": [
+          {
+            "flag": "list <hook-name>",
+            "description": "Liệt kê hook; không có hook thì cảnh báo và trả mã 1"
+          },
+          {
+            "flag": "list --show-scope",
+            "description": "Hiện local/global/system cho hook qua config"
+          },
+          {
+            "flag": "list -z",
+            "description": "Kết thúc entry bằng NUL"
+          },
+          {
+            "flag": "run <hook-name>",
+            "description": "Thực thi các hook của sự kiện; hook truyền thống chạy sau các hook config"
+          },
+          {
+            "flag": "run --ignore-missing",
+            "description": "Bỏ qua hook không có, trả thành công"
+          },
+          {
+            "flag": "run --to-stdin=<path>",
+            "description": "Cấp nội dung tệp làm stdin cho hook"
+          },
+          {
+            "flag": "run -j <n> / --jobs=<n>",
+            "description": "Giới hạn số hook chạy song song khi sự kiện hỗ trợ"
+          },
+          {
+            "flag": "--allow-unknown-hook-name",
+            "description": "Cho phép sự kiện ngoài danh sách Git biết, phục vụ wrapper"
+          },
+          {
+            "flag": "-- <hook-args>",
+            "description": "Đối số cho hook, bắt buộc đặt sau dấu --"
+          }
+        ],
+        "warning": "run thực thi mã tùy ý với quyền người dùng và có thể sửa tệp, gửi mạng hoặc tạo commit. Hãy kiểm tra hook/config và sự kiện trước; ví dụ list chỉ đọc."
+      },
+      {
+        "id": "git-interpret-trailers",
+        "canonicalCommand": "git interpret-trailers",
+        "title": "Đọc và chỉnh metadata cuối thông điệp",
+        "command": "git interpret-trailers --parse <message-file>",
+        "description": "Phân tích trailer như Reviewed-by, Signed-off-by hoặc Ticket ở cuối thông điệp. Ví dụ đọc message.txt và chỉ in trailer hiện có, không sửa tệp.",
+        "example": "git interpret-trailers --parse message.txt",
+        "risk": "read",
+        "tags": [
+          "interpret-trailers",
+          "plumbing",
+          "metadata",
+          "message",
+          "trailers"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-interpret-trailers",
+        "options": [
+          {
+            "flag": "--parse",
+            "description": "Tương đương --only-trailers --only-input --unfold; không thêm trailer do config"
+          },
+          {
+            "flag": "--trailer <key>=<value>",
+            "description": "Thêm hoặc xử lý trailer theo quy tắc"
+          },
+          {
+            "flag": "--in-place / --no-in-place",
+            "description": "Sửa trực tiếp tệp hay chỉ in stdout; mặc định chỉ in"
+          },
+          {
+            "flag": "--trim-empty",
+            "description": "Bỏ trailer có giá trị rỗng hoặc chỉ khoảng trắng"
+          },
+          {
+            "flag": "--where=(after|before|end|start)",
+            "description": "Chọn vị trí đặt trailer"
+          },
+          {
+            "flag": "--if-exists=(addIfDifferentNeighbor|addIfDifferent|add|replace|doNothing)",
+            "description": "Xử lý khóa trailer đã có"
+          },
+          {
+            "flag": "--if-missing=(add|doNothing)",
+            "description": "Xử lý khóa trailer chưa có"
+          },
+          {
+            "flag": "--only-trailers",
+            "description": "Chỉ in phần trailer"
+          },
+          {
+            "flag": "--only-input",
+            "description": "Chỉ xử lý trailer có sẵn trong input, không thêm từ config/CLI"
+          },
+          {
+            "flag": "--unfold",
+            "description": "Ghép giá trị nhiều dòng thành một dòng"
+          },
+          {
+            "flag": "--no-divider",
+            "description": "Không coi --- là ranh giới bắt đầu patch"
+          }
+        ],
+        "warning": "--in-place ghi đè tệp. Không tự thêm Signed-off-by/Reviewed-by cho người chưa đồng ý; trailer có thể mang ý nghĩa xác nhận trách nhiệm."
+      },
+      {
+        "id": "git-mailinfo",
+        "canonicalCommand": "git mailinfo",
+        "title": "Tách thông điệp và patch từ email",
+        "command": "git mailinfo <message-file> <patch-file> < <email-file>",
+        "description": "Đọc một email và ghi phần thông điệp/patch thành hai tệp; metadata author, email và subject được in ra stdout. Ví dụ 0001.patch là email format-patch đã có sẵn.",
+        "example": "git mailinfo /tmp/git-demo-message.txt /tmp/git-demo-change.patch < 0001.patch",
+        "risk": "write",
+        "tags": [
+          "mailinfo",
+          "plumbing",
+          "email",
+          "patch",
+          "internal"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-mailinfo",
+        "options": [
+          {
+            "flag": "-k",
+            "description": "Giữ nguyên phần trang trí Subject thay vì bỏ Re: hoặc [PATCH]"
+          },
+          {
+            "flag": "-b",
+            "description": "Chỉ bỏ cặp ngoặc vuông có chữ PATCH khỏi đầu Subject"
+          },
+          {
+            "flag": "-u",
+            "description": "Chuyển charset metadata theo i18n.commitEncoding hoặc UTF-8; mặc định"
+          },
+          {
+            "flag": "--encoding=<encoding>",
+            "description": "Chọn charset metadata đầu ra; không chuyển charset patch"
+          },
+          {
+            "flag": "-n",
+            "description": "Không chuyển charset metadata"
+          },
+          {
+            "flag": "-m / --message-id",
+            "description": "Kèm Message-ID vào cuối thông điệp commit"
+          },
+          {
+            "flag": "--scissors / --no-scissors",
+            "description": "Bỏ hoặc giữ phần trước dòng kéo -- >8 --"
+          },
+          {
+            "flag": "--quoted-cr=(nowarn|warn|strip)",
+            "description": "Xử lý CRLF trong nội dung MIME đã decode"
+          },
+          {
+            "flag": "<msg> / <patch>",
+            "description": "Hai đường dẫn đầu ra, có thể bị ghi đè"
+          }
+        ],
+        "warning": "Không tự áp dụng patch. Các tệp đầu ra bị ghi và metadata có thể chứa email riêng; dùng đường dẫn riêng, xem lại trước khi commit."
+      },
+      {
+        "id": "git-mailsplit",
+        "canonicalCommand": "git mailsplit",
+        "title": "Tách mbox hoặc Maildir thành từng thư",
+        "command": "git mailsplit -o<output-directory> <mbox-or-Maildir>",
+        "description": "Tạo các tệp 0001, 0002… trong thư mục xuất đã chuẩn bị. Ví dụ /tmp/git-demo-mails là thư mục trống có sẵn; series.mbox là bộ patch email local.",
+        "example": "git mailsplit -o/tmp/git-demo-mails series.mbox",
+        "risk": "write",
+        "tags": [
+          "mailsplit",
+          "plumbing",
+          "email",
+          "patch",
+          "internal"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-mailsplit",
+        "options": [
+          {
+            "flag": "-o<directory>",
+            "description": "Thư mục chứa từng email đầu ra"
+          },
+          {
+            "flag": "-b",
+            "description": "Tệp không có dòng From đầu được coi là một email đơn"
+          },
+          {
+            "flag": "-d<prec>",
+            "description": "Số chữ số trong tên tệp; mặc định 4"
+          },
+          {
+            "flag": "-f<nn>",
+            "description": "Bỏ qua nn số đầu; -f3 bắt đầu từ 0004"
+          },
+          {
+            "flag": "--keep-cr",
+            "description": "Giữ CR trong dòng CRLF"
+          },
+          {
+            "flag": "--mboxrd",
+            "description": "Giải escaping >From theo định dạng mboxrd"
+          },
+          {
+            "flag": "stdin",
+            "description": "Nếu không có đường dẫn mbox, đọc hộp thư từ stdin"
+          }
+        ],
+        "warning": "Dùng thư mục đầu ra riêng để tránh va chạm tệp. Thứ tự patch khi đọc Maildir phụ thuộc thứ tự tên tệp; kiểm tra trước khi git am."
+      },
+      {
+        "id": "git-merge-one-file",
+        "canonicalCommand": "git merge-one-file",
+        "title": "Helper merge một tệp xung đột",
+        "command": "git merge-index git-merge-one-file -- <file>",
+        "description": "Helper chuẩn do merge-index gọi sau bước read-tree -m. Ví dụ merge README.md có các stage xung đột trong index; không gọi helper rỗng như một lệnh merge thông thường.",
+        "example": "git merge-index git-merge-one-file -- README.md",
+        "risk": "destructive",
+        "tags": [
+          "merge-one-file",
+          "plumbing",
+          "merge",
+          "index",
+          "internal"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-merge-one-file",
+        "options": [
+          {
+            "flag": "git merge-index git-merge-one-file -a",
+            "description": "Chạy helper cho mọi tệp cần merge trong index"
+          },
+          {
+            "flag": "<base-oid> <ours-oid> <theirs-oid> <path> <base-mode> <ours-mode> <theirs-mode>",
+            "description": "Giao thức đối số do merge-index cung cấp, không phải cờ cho người dùng"
+          }
+        ],
+        "warning": "Helper có thể sửa tệp và index; cần lưu thay đổi trước. Dùng git merge cho quy trình thông thường thay vì tự dựng các stage."
+      },
+      {
+        "id": "git-patch-id",
+        "canonicalCommand": "git patch-id",
+        "title": "Tính định danh tương đương của patch",
+        "command": "git patch-id --stable < <patch-file>",
+        "description": "Tính patch ID từ diff để phát hiện các commit có cùng thay đổi dù OID khác. Ví dụ dùng diff commit hiện tại và giữ commit OID trong đầu vào.",
+        "example": "git show --pretty=medium --no-ext-diff HEAD | git patch-id --stable",
+        "risk": "read",
+        "tags": [
+          "patch-id",
+          "plumbing",
+          "patch",
+          "hash",
+          "equivalence"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-patch-id",
+        "options": [
+          {
+            "flag": "--stable",
+            "description": "Không phụ thuộc thứ tự file diff và bỏ qua khoảng trắng"
+          },
+          {
+            "flag": "--unstable",
+            "description": "Tương thích thuật toán Git 1.9 trở về trước; là mặc định nếu config không đổi"
+          },
+          {
+            "flag": "--verbatim",
+            "description": "Không bỏ khoảng trắng; ngầm bật stable, không kết hợp unstable"
+          },
+          {
+            "flag": "stdin",
+            "description": "Luồng patch; nếu có OID commit trong đầu vào phù hợp, trả cặp patch-ID và commit-ID"
+          }
+        ],
+        "warning": "Patch ID là phép nhận diện thay đổi có tính ổn định tương đối, không thay thế commit OID/chữ ký và không phải bằng chứng hai commit giống hệt metadata."
+      }
+    ]
+  }
+]

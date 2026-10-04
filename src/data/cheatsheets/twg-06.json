@@ -1,0 +1,1251 @@
+[
+  {
+    "id": "org-tree",
+    "title": "Cây tổ chức",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-org-tree",
+        "canonicalCommand": "twg org-tree",
+        "title": "Xem cây tổ chức",
+        "command": "twg org-tree [name]",
+        "description": "Xem cây tổ chức.",
+        "example": "twg org-tree -s hello",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "org-tree"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--account-id <id-or-ari>",
+            "description": "ID tài khoản Atlassian hoặc ARI được hỗ trợ",
+            "example": "--account-id ACCOUNT_ID"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--depth <levels>",
+            "description": "Số cấp quan hệ cần mở rộng; mặc định: \"3\"",
+            "example": "--depth 1"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Tên",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--email <email>",
+            "description": "Email",
+            "example": "--email person@example.com"
+          },
+          {
+            "flag": "--include-profile-title",
+            "description": "Kèm profile-title",
+            "example": "--include-profile-title"
+          },
+          {
+            "flag": "--include-location",
+            "description": "Kèm location",
+            "example": "--include-location"
+          },
+          {
+            "flag": "--include-dept",
+            "description": "Kèm dept",
+            "example": "--include-dept"
+          },
+          {
+            "flag": "--include-counts",
+            "description": "Kèm số lượng",
+            "example": "--include-counts"
+          },
+          {
+            "flag": "--up-only",
+            "description": "Tham số up-only",
+            "example": "--up-only"
+          },
+          {
+            "flag": "--down-only",
+            "description": "Tham số down-only",
+            "example": "--down-only"
+          }
+        ],
+        "billingNote": "Enriched: cần Rovo Credits; quyền và hạn mức do tổ chức quản lý."
+      }
+    ]
+  },
+  {
+    "id": "pr-tree",
+    "title": "Cây pr",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-pr-tree",
+        "canonicalCommand": "twg pr-tree",
+        "title": "Xem cây hoạt động PR",
+        "command": "twg pr-tree [selector]",
+        "description": "Xem cây hoạt động PR.",
+        "example": "twg pr-tree -s hello",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "pr-tree"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--account-id <id-or-ari>",
+            "description": "ID tài khoản Atlassian hoặc ARI được hỗ trợ",
+            "example": "--account-id ACCOUNT_ID"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Tên",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--email <email>",
+            "description": "Email",
+            "example": "--email person@example.com"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--depth <levels>",
+            "description": "Số cấp quan hệ cần mở rộng; mặc định: \"2\"",
+            "example": "--depth 1"
+          },
+          {
+            "flag": "--role <role>",
+            "description": "Vai trò dùng để lọc hoặc phân quyền; nhận: author, reviewer; mặc định: \"author\"",
+            "example": "--role author"
+          },
+          {
+            "flag": "--state <state>",
+            "description": "Trạng thái; dùng đúng giá trị được lệnh hỗ trợ; mặc định: \"merged\"",
+            "example": "--state open"
+          },
+          {
+            "flag": "--since <duration-or-date>",
+            "description": "Mốc hoặc khoảng thời gian bắt đầu",
+            "example": "--since 7d"
+          },
+          {
+            "flag": "--created-since <date>",
+            "description": "Tham số created-since",
+            "example": "--created-since 2026-10-01"
+          },
+          {
+            "flag": "--created-before <date>",
+            "description": "Tham số created-before",
+            "example": "--created-before CREATED_BEFORE"
+          },
+          {
+            "flag": "--updated-since <date>",
+            "description": "Lọc theo lần cập nhật từ mốc chỉ định",
+            "example": "--updated-since 2026-10-01"
+          },
+          {
+            "flag": "--updated-before <date>",
+            "description": "Tham số updated-before",
+            "example": "--updated-before UPDATED_BEFORE"
+          },
+          {
+            "flag": "--merged-since <date>",
+            "description": "Lọc theo thời điểm merge từ mốc chỉ định",
+            "example": "--merged-since 2026-10-01"
+          },
+          {
+            "flag": "--workspace <workspace>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "--repo <repo>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          },
+          {
+            "flag": "--samples <number>",
+            "description": "Tham số samples; mặc định: \"3\"",
+            "example": "--samples 10"
+          },
+          {
+            "flag": "--limited-fetch",
+            "description": "Tham số limited-fetch",
+            "example": "--limited-fetch"
+          },
+          {
+            "flag": "--full-fetch",
+            "description": "Tham số full-fetch",
+            "example": "--full-fetch"
+          },
+          {
+            "flag": "--active-only",
+            "description": "Tham số active-only",
+            "example": "--active-only"
+          },
+          {
+            "flag": "--include-profile-title",
+            "description": "Kèm profile-title",
+            "example": "--include-profile-title"
+          },
+          {
+            "flag": "--include-location",
+            "description": "Kèm location",
+            "example": "--include-location"
+          },
+          {
+            "flag": "--include-dept",
+            "description": "Kèm dept",
+            "example": "--include-dept"
+          },
+          {
+            "flag": "--summary <mode>",
+            "description": "Nội dung tóm tắt; nhận: none, compact, full; mặc định: \"compact\"",
+            "example": "--summary none"
+          }
+        ],
+        "billingNote": "Enriched: cần Rovo Credits; quyền và hạn mức do tổ chức quản lý."
+      }
+    ]
+  },
+  {
+    "id": "pull-requests",
+    "title": "Pr",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-pull-requests-get",
+        "canonicalCommand": "twg pull-requests get",
+        "title": "Đọc PR",
+        "command": "twg pull-requests get <ari-or-url...>",
+        "description": "Đọc PR.",
+        "example": "twg pull-requests get https://bitbucket.org/demo-workspace/demo-repo/pull-requests/42",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "pull-requests",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--full",
+            "description": "Yêu cầu chi tiết đầy đủ theo lệnh; có thể tăng lượng dữ liệu và số yêu cầu",
+            "example": "--full"
+          },
+          {
+            "flag": "--batch-concurrency <n>",
+            "description": "Giới hạn số yêu cầu chi tiết chạy đồng thời",
+            "example": "--batch-concurrency 10"
+          },
+          {
+            "flag": "--strict",
+            "description": "Báo lỗi khi một phần của truy vấn nhiều mục thất bại",
+            "example": "--strict"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường.",
+        "billingNote": "Enriched: cần Rovo Credits; quyền và hạn mức do tổ chức quản lý."
+      },
+      {
+        "id": "twg-pull-requests-query",
+        "canonicalCommand": "twg pull-requests query",
+        "title": "Tra cứu PR",
+        "command": "twg pull-requests query [text...]",
+        "description": "Tra cứu PR.",
+        "example": "twg pull-requests query \"auth refactor\" --scope me --state open",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "pull-requests",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--scope <scope>",
+            "description": "Phạm vi truy vấn hoặc thao tác",
+            "example": "--scope SCOPE"
+          },
+          {
+            "flag": "--account-id <id-or-ari>",
+            "description": "ID tài khoản Atlassian hoặc ARI được hỗ trợ; có thể nhập nhiều giá trị",
+            "example": "--account-id ACCOUNT_ID"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Tên",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--email <email>",
+            "description": "Email",
+            "example": "--email person@example.com"
+          },
+          {
+            "flag": "--author <id-or-name-or-email>",
+            "description": "Tác giả",
+            "example": "--author AUTHOR"
+          },
+          {
+            "flag": "--reviewer <id-or-name-or-email>",
+            "description": "Reviewer",
+            "example": "--reviewer ACCOUNT_ID"
+          },
+          {
+            "flag": "--role <role>",
+            "description": "Vai trò dùng để lọc hoặc phân quyền",
+            "example": "--role ROLE"
+          },
+          {
+            "flag": "--state <state>",
+            "description": "Trạng thái; dùng đúng giá trị được lệnh hỗ trợ",
+            "example": "--state open"
+          },
+          {
+            "flag": "--since <duration-or-date>",
+            "description": "Mốc hoặc khoảng thời gian bắt đầu",
+            "example": "--since 7d"
+          },
+          {
+            "flag": "--created-since <date>",
+            "description": "Tham số created-since",
+            "example": "--created-since 2026-10-01"
+          },
+          {
+            "flag": "--created-before <date>",
+            "description": "Tham số created-before",
+            "example": "--created-before CREATED_BEFORE"
+          },
+          {
+            "flag": "--updated-since <date>",
+            "description": "Lọc theo lần cập nhật từ mốc chỉ định",
+            "example": "--updated-since 2026-10-01"
+          },
+          {
+            "flag": "--updated-before <date>",
+            "description": "Tham số updated-before",
+            "example": "--updated-before UPDATED_BEFORE"
+          },
+          {
+            "flag": "--merged-since <date>",
+            "description": "Lọc theo thời điểm merge từ mốc chỉ định",
+            "example": "--merged-since 2026-10-01"
+          },
+          {
+            "flag": "--workspace <workspace>",
+            "description": "Workspace; có thể nhập nhiều giá trị",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "--repo <repo>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          },
+          {
+            "flag": "--query <text>",
+            "description": "Chuỗi truy vấn theo lệnh",
+            "example": "--query onboarding"
+          },
+          {
+            "flag": "-n, --limit <number>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh; mặc định: \"100\"",
+            "example": "--limit 10"
+          },
+          {
+            "flag": "--hydrate <mode>",
+            "description": "Tham số hydrate",
+            "example": "--hydrate HYDRATE"
+          },
+          {
+            "flag": "--only-counts",
+            "description": "Chỉ chọn số lượng",
+            "example": "--only-counts"
+          },
+          {
+            "flag": "--themes",
+            "description": "Tham số themes",
+            "example": "--themes"
+          }
+        ],
+        "billingNote": "Enriched: cần Rovo Credits; quyền và hạn mức do tổ chức quản lý."
+      },
+      {
+        "id": "twg-pull-requests-search",
+        "canonicalCommand": "twg pull-requests search",
+        "title": "Tìm PR",
+        "command": "twg pull-requests search [text...]",
+        "description": "Tìm PR.",
+        "example": "twg pull-requests search \"auth refactor\" --since 30d",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "pull-requests",
+          "search"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--query <text>",
+            "description": "Chuỗi truy vấn theo lệnh",
+            "example": "--query onboarding"
+          },
+          {
+            "flag": "--since <duration-or-date>",
+            "description": "Mốc hoặc khoảng thời gian bắt đầu",
+            "example": "--since 7d"
+          },
+          {
+            "flag": "--updated-since <duration-or-date>",
+            "description": "Lọc theo lần cập nhật từ mốc chỉ định",
+            "example": "--updated-since 2026-10-01"
+          },
+          {
+            "flag": "-n, --limit <number>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh; mặc định: \"20\"",
+            "example": "--limit 10"
+          }
+        ],
+        "billingNote": "Enriched: cần Rovo Credits; quyền và hạn mức do tổ chức quản lý."
+      }
+    ]
+  },
+  {
+    "id": "recently-viewed",
+    "title": "Nội dung vừa xem",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-recently-viewed",
+        "canonicalCommand": "twg recently-viewed",
+        "title": "Xem nội dung gần đây",
+        "command": "twg recently-viewed [query...]",
+        "description": "Xem nội dung gần đây.",
+        "example": "twg recently-viewed",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "recently-viewed"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--since <duration>",
+            "description": "Mốc hoặc khoảng thời gian bắt đầu; mặc định: \"30d\"",
+            "example": "--since 7d"
+          },
+          {
+            "flag": "--first <n>",
+            "description": "Số phần tử của trang đầu/tiếp theo",
+            "example": "--first 10"
+          },
+          {
+            "flag": "--limit <n>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh",
+            "example": "--limit 10"
+          },
+          {
+            "flag": "--after <cursor>",
+            "description": "Con trỏ hoặc mốc bắt đầu theo lệnh",
+            "example": "--after AFTER"
+          },
+          {
+            "flag": "--query <text>",
+            "description": "Chuỗi truy vấn theo lệnh",
+            "example": "--query onboarding"
+          }
+        ],
+        "billingNote": "Enriched: cần Rovo Credits; quyền và hạn mức do tổ chức quản lý."
+      }
+    ]
+  },
+  {
+    "id": "responsibility",
+    "title": "Người chịu trách nhiệm",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-responsibility-get",
+        "canonicalCommand": "twg responsibility get",
+        "title": "Đọc người chịu trách nhiệm",
+        "command": "twg responsibility get <reference>",
+        "description": "Đọc người chịu trách nhiệm.",
+        "example": "twg responsibility get ari:cloud:jira:...:issue/10001",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "responsibility",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--type <kind>",
+            "description": "Loại tài nguyên hoặc nội dung theo lệnh; nhận: jira-workitem, atlas-project, atlas-goal",
+            "example": "--type jira-workitem"
+          },
+          {
+            "flag": "--limit <n>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh; mặc định: \"5\"",
+            "example": "--limit 10"
+          }
+        ],
+        "billingNote": "Enriched: cần Rovo Credits; quyền và hạn mức do tổ chức quản lý."
+      },
+      {
+        "id": "twg-responsibility-infer",
+        "canonicalCommand": "twg responsibility infer",
+        "title": "Suy luận người chịu trách nhiệm",
+        "command": "twg responsibility infer <reference>",
+        "description": "Suy luận người chịu trách nhiệm.",
+        "example": "twg responsibility infer https://example.atlassian.net/browse/DEMO-123 --role owner",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "responsibility",
+          "infer"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--type <kind>",
+            "description": "Loại tài nguyên hoặc nội dung theo lệnh; nhận: jira-workitem, atlas-project, atlas-goal",
+            "example": "--type jira-workitem"
+          },
+          {
+            "flag": "--limit <n>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh; mặc định: \"5\"",
+            "example": "--limit 10"
+          },
+          {
+            "flag": "--role <role>",
+            "description": "Vai trò dùng để lọc hoặc phân quyền; có thể nhập nhiều giá trị; nhận: owner, maintainer, expert, reviewer, escalation",
+            "example": "--role owner"
+          },
+          {
+            "flag": "--since <duration-or-date>",
+            "description": "Mốc hoặc khoảng thời gian bắt đầu; mặc định: \"30d\"",
+            "example": "--since 7d"
+          }
+        ],
+        "billingNote": "Enriched: cần Rovo Credits; quyền và hạn mức do tổ chức quản lý."
+      }
+    ]
+  },
+  {
+    "id": "rovo",
+    "title": "Rovo",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-rovo-auth",
+        "canonicalCommand": "twg rovo auth",
+        "title": "Xem xác thực của Rovo",
+        "command": "twg rovo auth <app>",
+        "description": "Xem xác thực của Rovo.",
+        "example": "twg rovo auth slack",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "rovo",
+          "auth"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      },
+      {
+        "id": "twg-rovo-list-apps",
+        "canonicalCommand": "twg rovo list-apps",
+        "title": "Liệt kê nguồn Rovo",
+        "command": "twg rovo list-apps",
+        "description": "Liệt kê nguồn Rovo.",
+        "example": "twg rovo list-apps --site demo",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "rovo",
+          "list-apps"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      },
+      {
+        "id": "twg-rovo-search",
+        "canonicalCommand": "twg rovo search",
+        "title": "Tìm Rovo",
+        "command": "twg rovo search <query>",
+        "description": "Tìm Rovo.",
+        "example": "twg rovo search \"quarterly planning OKRs\"",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "rovo",
+          "search"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "-n, --limit <number>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh",
+            "example": "--limit 10"
+          },
+          {
+            "flag": "--app <app>",
+            "description": "Tham số app; có thể nhập nhiều giá trị",
+            "example": "--app APP"
+          },
+          {
+            "flag": "--type <type>",
+            "description": "Loại tài nguyên hoặc nội dung theo lệnh; có thể nhập nhiều giá trị",
+            "example": "--type TYPE"
+          },
+          {
+            "flag": "--contributor <user>",
+            "description": "Tham số contributor; có thể nhập nhiều giá trị",
+            "example": "--contributor CONTRIBUTOR"
+          },
+          {
+            "flag": "--updated-since <date>",
+            "description": "Lọc theo lần cập nhật từ mốc chỉ định",
+            "example": "--updated-since 2026-10-01"
+          },
+          {
+            "flag": "--updated-before <date>",
+            "description": "Tham số updated-before",
+            "example": "--updated-before UPDATED_BEFORE"
+          },
+          {
+            "flag": "--created-since <date>",
+            "description": "Tham số created-since",
+            "example": "--created-since 2026-10-01"
+          },
+          {
+            "flag": "--created-before <date>",
+            "description": "Tham số created-before",
+            "example": "--created-before CREATED_BEFORE"
+          },
+          {
+            "flag": "--space <key>",
+            "description": "Space; có thể nhập nhiều giá trị",
+            "example": "--space DEMO"
+          },
+          {
+            "flag": "--label <label>",
+            "description": "Nhãn; có thể nhập nhiều giá trị",
+            "example": "--label LABEL"
+          },
+          {
+            "flag": "--owner <user>",
+            "description": "Chủ sở hữu; có thể nhập nhiều giá trị",
+            "example": "--owner ACCOUNT_ID"
+          },
+          {
+            "flag": "--mention <user>",
+            "description": "Tham số mention; có thể nhập nhiều giá trị",
+            "example": "--mention MENTION"
+          },
+          {
+            "flag": "--assignee <user>",
+            "description": "Người phụ trách; có thể nhập nhiều giá trị",
+            "example": "--assignee me"
+          },
+          {
+            "flag": "--reporter <user>",
+            "description": "Người báo cáo; có thể nhập nhiều giá trị",
+            "example": "--reporter me"
+          },
+          {
+            "flag": "--issue-type <type>",
+            "description": "Loại ticket; có thể nhập nhiều giá trị",
+            "example": "--issue-type ISSUE_TYPE"
+          },
+          {
+            "flag": "--status <category>",
+            "description": "Trạng thái; giá trị và ý nghĩa phụ thuộc lệnh; có thể nhập nhiều giá trị",
+            "example": "--status open"
+          },
+          {
+            "flag": "--title-only",
+            "description": "Tham số title-only",
+            "example": "--title-only"
+          }
+        ],
+        "billingNote": "Enriched: cần Rovo Credits; quyền và hạn mức do tổ chức quản lý."
+      }
+    ]
+  },
+  {
+    "id": "search-code",
+    "title": "Tìm kiếm mã nguồn",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-search-code-dir",
+        "canonicalCommand": "twg search-code dir",
+        "title": "Xem thư mục của tìm kiếm mã nguồn",
+        "command": "twg search-code dir [path] --workspace <slug> --repo <slug>",
+        "description": "Xem thư mục của tìm kiếm mã nguồn.",
+        "example": "twg search-code dir --workspace demo-workspace --repo demo-repo",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "search-code",
+          "dir"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository",
+            "example": "--repo demo-repo"
+          },
+          {
+            "flag": "--commit <hash>",
+            "description": "Commit; mặc định: \"HEAD\"",
+            "example": "--commit 0123456789abcdef0123456789abcdef01234567"
+          },
+          {
+            "flag": "--depth <n>",
+            "description": "Số cấp quan hệ cần mở rộng; mặc định: \"3\"",
+            "example": "--depth 1"
+          }
+        ],
+        "billingNote": "Enriched: cần Rovo Credits; quyền và hạn mức do tổ chức quản lý."
+      },
+      {
+        "id": "twg-search-code-file",
+        "canonicalCommand": "twg search-code file",
+        "title": "Xem tệp của tìm kiếm mã nguồn",
+        "command": "twg search-code file <path> --workspace <slug> --repo <slug>",
+        "description": "Xem tệp của tìm kiếm mã nguồn.",
+        "example": "twg search-code file src/auth/handler.ts --workspace demo-workspace --repo demo-repo",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "search-code",
+          "file"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository",
+            "example": "--repo demo-repo"
+          },
+          {
+            "flag": "-p, --app <scm>",
+            "description": "Tham số app; có thể nhập nhiều giá trị",
+            "example": "--app APP"
+          },
+          {
+            "flag": "--commit <hash>",
+            "description": "Commit; mặc định: \"HEAD\"",
+            "example": "--commit 0123456789abcdef0123456789abcdef01234567"
+          }
+        ],
+        "billingNote": "Enriched: cần Rovo Credits; quyền và hạn mức do tổ chức quản lý."
+      },
+      {
+        "id": "twg-search-code-overview",
+        "canonicalCommand": "twg search-code overview",
+        "title": "Xem tổng quan của tìm kiếm mã nguồn",
+        "command": "twg search-code overview",
+        "description": "Xem tổng quan của tìm kiếm mã nguồn.",
+        "example": "twg search-code overview --workspace demo-workspace --repo demo-repo",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "search-code",
+          "overview"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository",
+            "example": "--repo demo-repo"
+          },
+          {
+            "flag": "--commit <hash>",
+            "description": "Commit; mặc định: \"HEAD\"",
+            "example": "--commit 0123456789abcdef0123456789abcdef01234567"
+          },
+          {
+            "flag": "--depth <n>",
+            "description": "Số cấp quan hệ cần mở rộng; mặc định: \"10\"",
+            "example": "--depth 1"
+          }
+        ],
+        "billingNote": "Enriched: cần Rovo Credits; quyền và hạn mức do tổ chức quản lý."
+      },
+      {
+        "id": "twg-search-code-scan",
+        "canonicalCommand": "twg search-code scan",
+        "title": "Liệt kê đường dẫn tìm kiếm mã nguồn",
+        "command": "twg search-code scan --workspace <slug> --repo <slug>",
+        "description": "Liệt kê đường dẫn tìm kiếm mã nguồn.",
+        "example": "twg search-code scan --workspace demo-workspace --repo demo-repo",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "search-code",
+          "scan"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository",
+            "example": "--repo demo-repo"
+          },
+          {
+            "flag": "--commit <hash>",
+            "description": "Commit; mặc định: \"HEAD\"",
+            "example": "--commit 0123456789abcdef0123456789abcdef01234567"
+          },
+          {
+            "flag": "--filter <glob>",
+            "description": "Bộ lọc; mặc định: \"**\"",
+            "example": "--filter FILTER"
+          },
+          {
+            "flag": "--root <path>",
+            "description": "Tham số root",
+            "example": "--root ROOT"
+          },
+          {
+            "flag": "--limit <n>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh",
+            "example": "--limit 10"
+          },
+          {
+            "flag": "--cursor <cursor>",
+            "description": "Con trỏ lấy từ trang kết quả trước",
+            "example": "--cursor CURSOR"
+          }
+        ],
+        "billingNote": "Enriched: cần Rovo Credits; quyền và hạn mức do tổ chức quản lý."
+      },
+      {
+        "id": "twg-search-code-search",
+        "canonicalCommand": "twg search-code search",
+        "title": "Tìm tìm kiếm mã nguồn",
+        "command": "twg search-code search <query>",
+        "description": "Tìm tìm kiếm mã nguồn.",
+        "example": "twg search-code search \"rate limiting\" --search-mode semantic --max-results 5",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "search-code",
+          "search"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository",
+            "example": "--repo demo-repo"
+          },
+          {
+            "flag": "-p, --app <scm>",
+            "description": "Tham số app; có thể nhập nhiều giá trị",
+            "example": "--app APP"
+          },
+          {
+            "flag": "--search-mode <mode>",
+            "description": "Tham số search-mode; mặc định: \"hybrid\"",
+            "example": "--search-mode SEARCH_MODE"
+          },
+          {
+            "flag": "--max-results <n>",
+            "description": "Tham số max-results; mặc định: \"10\"",
+            "example": "--max-results 10"
+          },
+          {
+            "flag": "--language <lang>",
+            "description": "Tham số language",
+            "example": "--language LANGUAGE"
+          },
+          {
+            "flag": "--extension <ext>",
+            "description": "Tham số extension",
+            "example": "--extension EXTENSION"
+          },
+          {
+            "flag": "--path <prefix>",
+            "description": "Đường dẫn",
+            "example": "--path ./example.txt"
+          }
+        ],
+        "billingNote": "Enriched: cần Rovo Credits; quyền và hạn mức do tổ chức quản lý."
+      }
+    ]
+  },
+  {
+    "id": "subgraph",
+    "title": "Đồ thị con",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-subgraph-content-references",
+        "canonicalCommand": "twg subgraph content-references",
+        "title": "Xem liên kết tham chiếu nội dung của đồ thị con",
+        "command": "twg subgraph content-references <target>",
+        "description": "Xem liên kết tham chiếu nội dung của đồ thị con.",
+        "example": "twg subgraph content-references ari:cloud:confluence:...:page/6708572130",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "subgraph",
+          "content-references"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--depth <depth>",
+            "description": "Số cấp quan hệ cần mở rộng; mặc định: \"2\"",
+            "example": "--depth 1"
+          }
+        ],
+        "billingNote": "Enriched: cần Rovo Credits; quyền và hạn mức do tổ chức quản lý."
+      },
+      {
+        "id": "twg-subgraph-get",
+        "canonicalCommand": "twg subgraph get",
+        "title": "Đọc đồ thị con",
+        "command": "twg subgraph get <target>",
+        "description": "Đọc đồ thị con.",
+        "example": "twg subgraph get ari:cloud:jira:...:issue/123",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "subgraph",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--depth <depth>",
+            "description": "Số cấp quan hệ cần mở rộng; mặc định: \"2\"",
+            "example": "--depth 1"
+          },
+          {
+            "flag": "--direction <direction>",
+            "description": "Tham số direction",
+            "example": "--direction DIRECTION"
+          },
+          {
+            "flag": "--node-type <types>",
+            "description": "Tham số node-type",
+            "example": "--node-type NODE_TYPE"
+          },
+          {
+            "flag": "--edge-type <types>",
+            "description": "Tham số edge-type",
+            "example": "--edge-type EDGE_TYPE"
+          },
+          {
+            "flag": "--limit-nodes <n>",
+            "description": "Tham số limit-nodes",
+            "example": "--limit-nodes 10"
+          },
+          {
+            "flag": "--limit-edges <n>",
+            "description": "Tham số limit-edges",
+            "example": "--limit-edges 10"
+          }
+        ],
+        "billingNote": "Enriched: cần Rovo Credits; quyền và hạn mức do tổ chức quản lý."
+      },
+      {
+        "id": "twg-subgraph-jira-links",
+        "canonicalCommand": "twg subgraph jira-links",
+        "title": "Xem liên kết Jira của đồ thị con",
+        "command": "twg subgraph jira-links <target>",
+        "description": "Xem liên kết Jira của đồ thị con.",
+        "example": "twg subgraph jira-links TARGET",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "subgraph",
+          "jira-links"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--depth <depth>",
+            "description": "Số cấp quan hệ cần mở rộng; mặc định: \"2\"",
+            "example": "--depth 1"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường.",
+        "billingNote": "Enriched: cần Rovo Credits; quyền và hạn mức do tổ chức quản lý."
+      },
+      {
+        "id": "twg-subgraph-space-content",
+        "canonicalCommand": "twg subgraph space-content",
+        "title": "Xem nội dung trong space của đồ thị con",
+        "command": "twg subgraph space-content <target>",
+        "description": "Xem nội dung trong space của đồ thị con.",
+        "example": "twg subgraph space-content TARGET",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "subgraph",
+          "space-content"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--depth <depth>",
+            "description": "Số cấp quan hệ cần mở rộng; mặc định: \"2\"",
+            "example": "--depth 1"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường.",
+        "billingNote": "Enriched: cần Rovo Credits; quyền và hạn mức do tổ chức quản lý."
+      }
+    ]
+  },
+  {
+    "id": "trello-search",
+    "title": "Trello · search",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-trello-search",
+        "canonicalCommand": "twg trello search",
+        "title": "Tìm Trello",
+        "command": "twg trello search <query...>",
+        "description": "Tìm Trello.",
+        "example": "twg trello search release notes",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "trello",
+          "search"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--limit <number>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh; mặc định: \"20\"",
+            "example": "--limit 10"
+          }
+        ],
+        "billingNote": "Enriched: cần Rovo Credits; quyền và hạn mức do tổ chức quản lý."
+      }
+    ]
+  }
+]

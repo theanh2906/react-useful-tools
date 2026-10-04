@@ -8,10 +8,12 @@ export default function CommandGroup({
   group,
   index,
   tool,
+  totalCommands,
 }: {
   group: CheatsheetGroup;
   index: number;
   tool: string;
+  totalCommands: number;
 }) {
   const { t } = useTranslation();
   const headingId = `${tool}-${group.id}-heading`;
@@ -27,8 +29,17 @@ export default function CommandGroup({
           {String(index + 1).padStart(2, '0')}
         </span>
         <h3 id={headingId}>{group.title}</h3>
-        <span className={styles.groupCount}>{group.commands.length}</span>
+        <span className={styles.groupCount}>
+          {group.commands.length === totalCommands
+            ? totalCommands
+            : `${group.commands.length}/${totalCommands}`}
+        </span>
       </header>
+      {group.level && group.level !== 'core' && (
+        <p className={styles.groupLevel}>
+          {t(`cheatsheets.level.${group.level}`)}
+        </p>
+      )}
       <div className={styles.groupCommands}>
         {group.commands.map((command) => (
           <article key={command.id} className={styles.command}>
@@ -40,6 +51,11 @@ export default function CommandGroup({
                 </span>
               )}
             </div>
+            {command.status && (
+              <span className={styles.commandStatus}>
+                {t(`cheatsheets.commandStatus.${command.status}`)}
+              </span>
+            )}
             <code className={styles.syntax}>{command.command}</code>
             <p className={styles.commandDescription}>{command.description}</p>
             {command.warning && (
@@ -54,7 +70,47 @@ export default function CommandGroup({
                 <span>{command.billingNote}</span>
               </p>
             )}
-            <CommandExample example={command.example} title={command.title} />
+            {command.exampleKind && command.exampleKind !== 'usage' && (
+              <p className={styles.discoveryLabel}>
+                <Info size={13} aria-hidden="true" />
+                {t(
+                  command.exampleKind === 'template'
+                    ? 'cheatsheets.templateExample'
+                    : 'cheatsheets.discoveryExample'
+                )}
+              </p>
+            )}
+            <CommandExample
+              example={command.example}
+              title={command.title}
+              kind={command.exampleKind}
+            />
+            {command.options && command.options.length > 0 && (
+              <details className={styles.commandOptions}>
+                <summary>
+                  {t('cheatsheets.importantOptions', {
+                    count: command.options.length,
+                  })}
+                </summary>
+                <dl>
+                  {command.options.map((option, optionIndex) => (
+                    <div key={`${option.flag}-${optionIndex}`}>
+                      <dt>
+                        <code>{option.flag}</code>
+                      </dt>
+                      <dd>
+                        {option.description}
+                        {option.example && (
+                          <code className={styles.optionExample}>
+                            {option.example}
+                          </code>
+                        )}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </details>
+            )}
             <a
               href={command.sourceUrl}
               className={styles.commandDocs}

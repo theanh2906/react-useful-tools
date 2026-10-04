@@ -1,0 +1,1196 @@
+[
+  {
+    "id": "issue",
+    "title": "Issue & quan hệ công việc",
+    "level": "core",
+    "commands": [
+      {
+        "id": "gh-issue-delete",
+        "canonicalCommand": "gh issue delete",
+        "title": "Xóa issue",
+        "command": "gh issue delete {<number> | <url>} [flags]",
+        "description": "Xóa một issue theo số hoặc URL.",
+        "example": "gh issue delete 12 --repo octo-org/cli-sandbox",
+        "risk": "destructive",
+        "tags": [
+          "issue",
+          "delete"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_issue_delete",
+        "warning": "Xóa issue và nội dung thảo luận; kiểm tra đúng issue và lưu dữ liệu cần thiết trước khi xác nhận.",
+        "options": [
+          {
+            "flag": "--yes",
+            "description": "Bỏ qua bước hỏi xác nhận xóa; kiểm tra đúng mục tiêu trước khi dùng"
+          },
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          }
+        ]
+      },
+      {
+        "id": "gh-issue-develop",
+        "canonicalCommand": "gh issue develop",
+        "title": "Tạo nhánh gắn với issue",
+        "command": "gh issue develop {<number> | <url>} [flags]",
+        "description": "Tạo nhánh phát triển liên kết với issue hoặc liệt kê các nhánh đã liên kết.",
+        "example": "gh issue develop 12 --repo octo-org/cli-sandbox --name fix/issue-12 --base main",
+        "risk": "write",
+        "tags": [
+          "issue",
+          "develop"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_issue_develop",
+        "warning": "Mặc định tạo nhánh trên GitHub; --checkout và --worktree còn thay đổi dữ liệu Git cục bộ.",
+        "options": [
+          {
+            "flag": "-l, --list",
+            "description": "Chỉ liệt kê các nhánh đã liên kết, không tạo nhánh"
+          },
+          {
+            "flag": "-n, --name <string>",
+            "description": "Tên nhánh mới cần tạo"
+          },
+          {
+            "flag": "-b, --base <string>",
+            "description": "Nhánh remote làm gốc; cũng cấu hình nhánh đích cho gh pr create"
+          },
+          {
+            "flag": "--branch-repo <string>",
+            "description": "Kho dùng để tạo nhánh, có thể khác kho chứa issue"
+          },
+          {
+            "flag": "-c, --checkout",
+            "description": "Checkout nhánh sau khi tạo"
+          },
+          {
+            "flag": "--worktree <path>",
+            "description": "Checkout nhánh vào Git worktree ở đường dẫn được chỉ định"
+          }
+        ]
+      },
+      {
+        "id": "gh-issue-edit",
+        "canonicalCommand": "gh issue edit",
+        "title": "Sửa thông tin issue",
+        "command": "gh issue edit {<numbers> | <urls>} [flags]",
+        "description": "Sửa một hoặc nhiều issue cùng kho, gồm metadata, nhãn và quan hệ phụ thuộc/cha con.",
+        "example": "gh issue edit 12 34 --repo octo-org/cli-sandbox --add-label \"help wanted\" --add-assignee \"@me\"",
+        "risk": "write",
+        "tags": [
+          "issue",
+          "edit"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_issue_edit",
+        "warning": "Có thể sửa hàng loạt issue. Đính kèm chỉ hỗ trợ một issue; tải tệp thất bại một phần vẫn có thể đã cập nhật issue.",
+        "options": [
+          {
+            "flag": "-t, --title <string>",
+            "description": "Tiêu đề mới"
+          },
+          {
+            "flag": "-F, --body-file <file>",
+            "description": "Đọc nội dung từ tệp; dùng - để lấy từ stdin"
+          },
+          {
+            "flag": "--add-label <name>",
+            "description": "Thêm nhãn theo tên"
+          },
+          {
+            "flag": "--add-assignee <login>",
+            "description": "Thêm người phụ trách theo tài khoản; @me là chính mình"
+          },
+          {
+            "flag": "--parent <number>",
+            "description": "Đặt issue cha bằng số hoặc URL"
+          },
+          {
+            "flag": "--add-blocked-by <number>",
+            "description": "Thêm quan hệ bị chặn bởi issue theo số hoặc URL"
+          }
+        ]
+      },
+      {
+        "id": "gh-issue-list",
+        "canonicalCommand": "gh issue list",
+        "title": "Liệt kê issue",
+        "command": "gh issue list [flags]",
+        "description": "Liệt kê issue của một kho; mặc định chỉ các issue đang mở.",
+        "example": "gh issue list --repo octo-org/cli-sandbox --state open --assignee \"@me\" --limit 50",
+        "risk": "read",
+        "tags": [
+          "issue",
+          "list"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_issue_list",
+        "options": [
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          },
+          {
+            "flag": "-s, --state <string> (default \"open\")",
+            "description": "Lọc trạng thái: open, closed hoặc all"
+          },
+          {
+            "flag": "-a, --assignee <string>",
+            "description": "Lọc theo người phụ trách; @me là chính mình"
+          },
+          {
+            "flag": "-S, --search <query>",
+            "description": "Lọc bằng cú pháp tìm kiếm issue/PR của GitHub"
+          },
+          {
+            "flag": "-L, --limit <int> (default 30)",
+            "description": "Số kết quả tối đa cần lấy, mặc định 30"
+          },
+          {
+            "flag": "--json <fields>",
+            "description": "Xuất JSON với các trường được chỉ định"
+          }
+        ]
+      },
+      {
+        "id": "gh-issue-lock",
+        "canonicalCommand": "gh issue lock",
+        "title": "Khóa thảo luận issue",
+        "command": "gh issue lock {<number> | <url>} [flags]",
+        "description": "Khóa cuộc thảo luận của issue với lý do tùy chọn.",
+        "example": "gh issue lock 12 --repo octo-org/cli-sandbox --reason resolved",
+        "risk": "write",
+        "tags": [
+          "issue",
+          "lock"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_issue_lock",
+        "warning": "Hạn chế người dùng tiếp tục bình luận trên issue.",
+        "options": [
+          {
+            "flag": "-r, --reason <string>",
+            "description": "Lý do khóa: off_topic, resolved, spam hoặc too_heated"
+          },
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          }
+        ]
+      },
+      {
+        "id": "gh-issue-pin",
+        "canonicalCommand": "gh issue pin",
+        "title": "Ghim issue",
+        "command": "gh issue pin {<number> | <url>}",
+        "description": "Ghim issue vào khu vực nổi bật của kho.",
+        "example": "gh issue pin 12 --repo octo-org/cli-sandbox",
+        "risk": "write",
+        "tags": [
+          "issue",
+          "pin"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_issue_pin",
+        "warning": "Thay đổi danh sách issue được ghim của kho.",
+        "options": [
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          }
+        ]
+      },
+      {
+        "id": "gh-issue-reopen",
+        "canonicalCommand": "gh issue reopen",
+        "title": "Mở lại issue",
+        "command": "gh issue reopen {<number> | <url>} [flags]",
+        "description": "Mở lại issue đã đóng và tùy chọn gửi bình luận.",
+        "example": "gh issue reopen 12 --repo octo-org/cli-sandbox --comment \"The regression is still reproducible.\"",
+        "risk": "write",
+        "tags": [
+          "issue",
+          "reopen"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_issue_reopen",
+        "warning": "Đổi trạng thái issue; bình luận và thay đổi có thể gửi thông báo.",
+        "options": [
+          {
+            "flag": "-c, --comment <string>",
+            "description": "Kèm một bình luận khi đổi trạng thái"
+          },
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          }
+        ]
+      },
+      {
+        "id": "gh-issue-status",
+        "canonicalCommand": "gh issue status",
+        "title": "Xem issue liên quan đến bạn",
+        "command": "gh issue status [flags]",
+        "description": "Tổng hợp issue giao cho bạn, nhắc đến bạn hoặc do bạn tạo.",
+        "example": "gh issue status --repo octo-org/cli-sandbox",
+        "risk": "read",
+        "tags": [
+          "issue",
+          "status"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_issue_status",
+        "options": [
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          },
+          {
+            "flag": "--json <fields>",
+            "description": "Xuất JSON với các trường được chỉ định"
+          },
+          {
+            "flag": "-q, --jq <expression>",
+            "description": "Lọc đầu ra JSON bằng biểu thức jq"
+          },
+          {
+            "flag": "-t, --template <string>",
+            "description": "Định dạng JSON bằng Go template"
+          }
+        ]
+      },
+      {
+        "id": "gh-issue-transfer",
+        "canonicalCommand": "gh issue transfer",
+        "title": "Chuyển issue sang kho khác",
+        "command": "gh issue transfer {<number> | <url>} <destination-repo>",
+        "description": "Di chuyển issue sang một kho đích được chỉ định.",
+        "example": "gh issue transfer 12 octo-org/cli-support --repo octo-org/cli-sandbox",
+        "risk": "write",
+        "tags": [
+          "issue",
+          "transfer"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_issue_transfer",
+        "warning": "Di chuyển nội dung và thảo luận sang kho khác; kiểm tra quyền truy cập và độ hiển thị của kho đích.",
+        "options": [
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          }
+        ]
+      },
+      {
+        "id": "gh-issue-unlock",
+        "canonicalCommand": "gh issue unlock",
+        "title": "Mở khóa thảo luận issue",
+        "command": "gh issue unlock {<number> | <url>}",
+        "description": "Gỡ khóa cuộc thảo luận của một issue.",
+        "example": "gh issue unlock 12 --repo octo-org/cli-sandbox",
+        "risk": "write",
+        "tags": [
+          "issue",
+          "unlock"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_issue_unlock",
+        "warning": "Cho phép người dùng đủ quyền tiếp tục bình luận trên issue.",
+        "options": [
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          }
+        ]
+      },
+      {
+        "id": "gh-issue-unpin",
+        "canonicalCommand": "gh issue unpin",
+        "title": "Bỏ ghim issue",
+        "command": "gh issue unpin {<number> | <url>}",
+        "description": "Gỡ issue khỏi danh sách issue được ghim trong kho.",
+        "example": "gh issue unpin 12 --repo octo-org/cli-sandbox",
+        "risk": "write",
+        "tags": [
+          "issue",
+          "unpin"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_issue_unpin",
+        "warning": "Thay đổi khu vực issue được ghim; không đóng hoặc xóa issue.",
+        "options": [
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          }
+        ]
+      },
+      {
+        "id": "gh-issue-view",
+        "canonicalCommand": "gh issue view",
+        "title": "Xem chi tiết issue",
+        "command": "gh issue view {<number> | <url>} [flags]",
+        "description": "Đọc tiêu đề, nội dung, bình luận và metadata của một issue.",
+        "example": "gh issue view 12 --repo octo-org/cli-sandbox --comments",
+        "risk": "read",
+        "tags": [
+          "issue",
+          "view"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_issue_view",
+        "options": [
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          },
+          {
+            "flag": "-c, --comments",
+            "description": "Hiển thị thêm bình luận"
+          },
+          {
+            "flag": "--json <fields>",
+            "description": "Xuất JSON với các trường được chỉ định"
+          },
+          {
+            "flag": "-q, --jq <expression>",
+            "description": "Lọc đầu ra JSON bằng biểu thức jq"
+          },
+          {
+            "flag": "-w, --web",
+            "description": "Mở nội dung tương ứng trong trình duyệt"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pr",
+    "title": "Pull request & review",
+    "level": "core",
+    "commands": [
+      {
+        "id": "gh-pr-checkout",
+        "canonicalCommand": "gh pr checkout",
+        "title": "Checkout nhánh của PR",
+        "command": "gh pr checkout [<number> | <url> | <branch>] [flags]",
+        "description": "Lấy và checkout nhánh của pull request trong kho Git cục bộ.",
+        "example": "gh pr checkout 42 --repo octo-org/cli-sandbox --branch review-42",
+        "risk": "write",
+        "tags": [
+          "pr",
+          "checkout"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_pr_checkout",
+        "warning": "Thay đổi nhánh/thư mục làm việc; --force có thể đặt lại nhánh local và làm mất thay đổi. Không tự chạy mã hoặc hook/script chưa tin cậy từ nội dung vừa tải.",
+        "options": [
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          },
+          {
+            "flag": "-b, --branch <string>",
+            "description": "Tên nhánh local dùng để checkout PR"
+          },
+          {
+            "flag": "--detach",
+            "description": "Checkout với HEAD tách rời, không chuyển sang nhánh"
+          },
+          {
+            "flag": "-f, --force",
+            "description": "Đặt lại nhánh local hiện có theo trạng thái PR mới nhất"
+          },
+          {
+            "flag": "--worktree <path>",
+            "description": "Checkout PR vào một Git worktree ở đường dẫn được chỉ định"
+          }
+        ]
+      },
+      {
+        "id": "gh-pr-checks",
+        "canonicalCommand": "gh pr checks",
+        "title": "Xem và theo dõi CI của PR",
+        "command": "gh pr checks [<number> | <url> | <branch>] [flags]",
+        "description": "Hiển thị kết quả kiểm tra CI; mã thoát 8 nghĩa là còn kiểm tra đang chờ.",
+        "example": "gh pr checks 42 --repo octo-org/cli-sandbox --required --watch --interval 15",
+        "risk": "read",
+        "tags": [
+          "pr",
+          "checks"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_pr_checks",
+        "options": [
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          },
+          {
+            "flag": "--required",
+            "description": "Chỉ hiện các kiểm tra bắt buộc"
+          },
+          {
+            "flag": "--watch",
+            "description": "Theo dõi cho tới khi các kiểm tra hoàn tất"
+          },
+          {
+            "flag": "-i, --interval <int> (default 10)",
+            "description": "Khoảng làm mới khi theo dõi, tính bằng giây; mặc định 10"
+          },
+          {
+            "flag": "--fail-fast",
+            "description": "Dừng chế độ theo dõi ngay khi có kiểm tra thất bại"
+          },
+          {
+            "flag": "--json <fields>",
+            "description": "Xuất JSON với các trường được chỉ định"
+          }
+        ]
+      },
+      {
+        "id": "gh-pr-close",
+        "canonicalCommand": "gh pr close",
+        "title": "Đóng pull request",
+        "command": "gh pr close {<number> | <url> | <branch>} [flags]",
+        "description": "Đóng PR mà không merge; có thể kèm bình luận hoặc xóa nhánh.",
+        "example": "gh pr close 42 --repo octo-org/cli-sandbox --comment \"Superseded by #43\"",
+        "risk": "write",
+        "tags": [
+          "pr",
+          "close"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_pr_close",
+        "warning": "Đóng PR trên GitHub; --delete-branch còn xóa nhánh local và remote.",
+        "options": [
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          },
+          {
+            "flag": "-c, --comment <string>",
+            "description": "Kèm một bình luận khi đổi trạng thái"
+          },
+          {
+            "flag": "-d, --delete-branch",
+            "description": "Xóa cả nhánh local và remote sau khi đóng PR"
+          }
+        ]
+      },
+      {
+        "id": "gh-pr-comment",
+        "canonicalCommand": "gh pr comment",
+        "title": "Bình luận trên PR",
+        "command": "gh pr comment [<number> | <url> | <branch>] [flags]",
+        "description": "Thêm bình luận, đính kèm ảnh/video hoặc sửa/xóa bình luận cuối của chính mình.",
+        "example": "gh pr comment 42 --repo octo-org/cli-sandbox --body \"Tests pass locally; ready for another review.\"",
+        "risk": "write",
+        "tags": [
+          "pr",
+          "comment"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_pr_comment",
+        "warning": "Đăng nội dung và tệp đính kèm lên GitHub; --delete-last xóa bình luận cuối của bạn.",
+        "options": [
+          {
+            "flag": "-b, --body <text>",
+            "description": "Nội dung văn bản gửi lên GitHub"
+          },
+          {
+            "flag": "-F, --body-file <file>",
+            "description": "Đọc nội dung từ tệp; dùng - để lấy từ stdin"
+          },
+          {
+            "flag": "--attach <file>",
+            "description": "Tải ảnh/video lên GitHub; dùng đường-dẫn#văn-bản-thay-thế cho ảnh"
+          },
+          {
+            "flag": "--edit-last",
+            "description": "Sửa bình luận gần nhất của người dùng hiện tại"
+          },
+          {
+            "flag": "--delete-last",
+            "description": "Xóa bình luận gần nhất của người dùng hiện tại"
+          },
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          }
+        ]
+      },
+      {
+        "id": "gh-pr-create",
+        "canonicalCommand": "gh pr create",
+        "title": "Tạo pull request",
+        "command": "gh pr create [flags]",
+        "description": "Tạo PR từ nhánh nguồn tới nhánh đích; dùng --head để tránh luồng tự push hoặc tạo fork.",
+        "example": "gh pr create --repo octo-org/cli-sandbox --base main --head fix/login --title \"Fix login redirect\" --body \"Fixes #12\" --draft",
+        "risk": "write",
+        "tags": [
+          "pr",
+          "create"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_pr_create",
+        "warning": "Có thể push nhánh hoặc tạo fork khi chạy tương tác. --dry-run vẫn có thể push Git. Nếu tải một số tệp thất bại, PR vẫn có thể đã được tạo.",
+        "options": [
+          {
+            "flag": "-B, --base <branch>",
+            "description": "Nhánh đích nhận các thay đổi"
+          },
+          {
+            "flag": "-H, --head <branch>",
+            "description": "Nhánh nguồn; hỗ trợ user:branch nhưng không hỗ trợ tổ chức ở phần user"
+          },
+          {
+            "flag": "-t, --title <string>",
+            "description": "Tiêu đề mới"
+          },
+          {
+            "flag": "-b, --body <string>",
+            "description": "Nội dung văn bản gửi lên GitHub"
+          },
+          {
+            "flag": "-d, --draft",
+            "description": "Tạo PR nháp"
+          },
+          {
+            "flag": "--dry-run",
+            "description": "In thông tin thay vì tạo PR; vẫn có thể push thay đổi Git"
+          }
+        ]
+      },
+      {
+        "id": "gh-pr-diff",
+        "canonicalCommand": "gh pr diff",
+        "title": "Xem diff của PR",
+        "command": "gh pr diff [<number> | <url> | <branch>] [flags]",
+        "description": "Đọc thay đổi của PR; khi bỏ đối số, dùng PR của nhánh hiện tại.",
+        "example": "gh pr diff 42 --repo octo-org/cli-sandbox --exclude \"package-lock.json\" --color never",
+        "risk": "read",
+        "tags": [
+          "pr",
+          "diff"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_pr_diff",
+        "warning": "--allow-escape-sequences có thể in chuỗi điều khiển terminal từ nội dung không tin cậy.",
+        "options": [
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          },
+          {
+            "flag": "--name-only",
+            "description": "Chỉ in tên các tệp thay đổi"
+          },
+          {
+            "flag": "--patch",
+            "description": "Xuất diff theo định dạng patch"
+          },
+          {
+            "flag": "-e, --exclude <patterns>",
+            "description": "Bỏ tệp khớp glob; có thể lặp cờ và dùng / làm dấu phân cách"
+          },
+          {
+            "flag": "--color <string> (default \"auto\")",
+            "description": "Màu đầu ra: always, never hoặc auto"
+          },
+          {
+            "flag": "--allow-escape-sequences",
+            "description": "In nguyên chuỗi điều khiển terminal; mặc định chúng được vô hiệu hóa"
+          }
+        ]
+      },
+      {
+        "id": "gh-pr-edit",
+        "canonicalCommand": "gh pr edit",
+        "title": "Sửa thông tin PR",
+        "command": "gh pr edit [<number> | <url> | <branch>] [flags]",
+        "description": "Sửa tiêu đề, nội dung, nhánh đích, nhãn, người phụ trách hoặc người review của PR.",
+        "example": "gh pr edit 42 --repo octo-org/cli-sandbox --add-label bug --add-reviewer octocat",
+        "risk": "write",
+        "tags": [
+          "pr",
+          "edit"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_pr_edit",
+        "warning": "Cập nhật PR và có thể gửi yêu cầu review/thông báo. Khi tải tệp thất bại một phần, PR vẫn có thể đã được sửa.",
+        "options": [
+          {
+            "flag": "-t, --title <string>",
+            "description": "Tiêu đề mới"
+          },
+          {
+            "flag": "-F, --body-file <file>",
+            "description": "Đọc nội dung từ tệp; dùng - để lấy từ stdin"
+          },
+          {
+            "flag": "-B, --base <branch>",
+            "description": "Đổi nhánh đích của PR"
+          },
+          {
+            "flag": "--add-reviewer <login>",
+            "description": "Thêm hoặc yêu cầu review lại; hỗ trợ @copilot trên GitHub.com"
+          },
+          {
+            "flag": "--add-label <name>",
+            "description": "Thêm nhãn theo tên"
+          },
+          {
+            "flag": "--attach <file>",
+            "description": "Tải ảnh/video lên GitHub; dùng đường-dẫn#văn-bản-thay-thế cho ảnh"
+          }
+        ]
+      },
+      {
+        "id": "gh-pr-list",
+        "canonicalCommand": "gh pr list",
+        "title": "Liệt kê pull request",
+        "command": "gh pr list [flags]",
+        "description": "Liệt kê PR trong một kho, mặc định chỉ các PR đang mở.",
+        "example": "gh pr list --repo octo-org/cli-sandbox --search \"is:open review:required\" --limit 50",
+        "risk": "read",
+        "tags": [
+          "pr",
+          "list"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_pr_list",
+        "options": [
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          },
+          {
+            "flag": "-s, --state <string> (default \"open\")",
+            "description": "Lọc trạng thái: open, closed, merged hoặc all"
+          },
+          {
+            "flag": "-A, --author <string>",
+            "description": "Lọc theo tác giả; @me là chính mình"
+          },
+          {
+            "flag": "-S, --search <query>",
+            "description": "Lọc bằng cú pháp tìm kiếm issue/PR của GitHub"
+          },
+          {
+            "flag": "-L, --limit <int> (default 30)",
+            "description": "Số kết quả tối đa cần lấy, mặc định 30"
+          },
+          {
+            "flag": "--json <fields>",
+            "description": "Xuất JSON với các trường được chỉ định"
+          }
+        ]
+      },
+      {
+        "id": "gh-pr-lock",
+        "canonicalCommand": "gh pr lock",
+        "title": "Khóa thảo luận PR",
+        "command": "gh pr lock {<number> | <url>} [flags]",
+        "description": "Khóa cuộc thảo luận của một PR với lý do tùy chọn.",
+        "example": "gh pr lock 42 --repo octo-org/cli-sandbox --reason resolved",
+        "risk": "write",
+        "tags": [
+          "pr",
+          "lock"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_pr_lock",
+        "warning": "Hạn chế người dùng tiếp tục bình luận trên PR; kiểm tra lý do và quyền quản trị trước khi dùng.",
+        "options": [
+          {
+            "flag": "-r, --reason <string>",
+            "description": "Lý do khóa: off_topic, resolved, spam hoặc too_heated"
+          },
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          }
+        ]
+      },
+      {
+        "id": "gh-pr-merge",
+        "canonicalCommand": "gh pr merge",
+        "title": "Merge pull request",
+        "command": "gh pr merge [<number> | <url> | <branch>] [flags]",
+        "description": "Merge PR hoặc bật tự merge; nhánh yêu cầu merge queue sẽ được xử lý theo quy tắc hàng đợi.",
+        "example": "gh pr merge 42 --repo octo-org/cli-sandbox --squash --auto",
+        "risk": "write",
+        "tags": [
+          "pr",
+          "merge"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_pr_merge",
+        "warning": "Thay đổi nhánh đích khi merge; --delete-branch xóa nhánh và --admin có thể bỏ qua yêu cầu bảo vệ hoặc hàng đợi.",
+        "options": [
+          {
+            "flag": "-s, --squash",
+            "description": "Gộp các commit thành một commit khi merge"
+          },
+          {
+            "flag": "-m, --merge",
+            "description": "Giữ các commit và tạo merge commit"
+          },
+          {
+            "flag": "-r, --rebase",
+            "description": "Rebase các commit lên nhánh đích"
+          },
+          {
+            "flag": "--auto",
+            "description": "Chỉ tự merge sau khi đáp ứng các yêu cầu bắt buộc"
+          },
+          {
+            "flag": "--match-head-commit <SHA>",
+            "description": "Chỉ cho phép merge nếu SHA của head vẫn khớp giá trị đã kiểm tra"
+          },
+          {
+            "flag": "-d, --delete-branch",
+            "description": "Xóa nhánh local và remote sau khi merge"
+          }
+        ]
+      },
+      {
+        "id": "gh-pr-ready",
+        "canonicalCommand": "gh pr ready",
+        "title": "Đánh dấu PR sẵn sàng review",
+        "command": "gh pr ready [<number> | <url> | <branch>] [flags]",
+        "description": "Chuyển PR nháp sang sẵn sàng review hoặc đổi ngược về draft.",
+        "example": "gh pr ready 42 --repo octo-org/cli-sandbox",
+        "risk": "write",
+        "tags": [
+          "pr",
+          "ready"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_pr_ready",
+        "warning": "Đổi trạng thái PR và có thể kích hoạt thông báo/quy trình review.",
+        "options": [
+          {
+            "flag": "--undo",
+            "description": "Chuyển PR về draft nếu gói GitHub hỗ trợ"
+          },
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          }
+        ]
+      },
+      {
+        "id": "gh-pr-reopen",
+        "canonicalCommand": "gh pr reopen",
+        "title": "Mở lại pull request",
+        "command": "gh pr reopen {<number> | <url> | <branch>} [flags]",
+        "description": "Mở lại một PR đã đóng và tùy chọn gửi bình luận.",
+        "example": "gh pr reopen 42 --repo octo-org/cli-sandbox --comment \"Continuing the fix.\"",
+        "risk": "write",
+        "tags": [
+          "pr",
+          "reopen"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_pr_reopen",
+        "warning": "Mở lại PR trên GitHub; bình luận và thay đổi trạng thái có thể gửi thông báo.",
+        "options": [
+          {
+            "flag": "-c, --comment <string>",
+            "description": "Kèm một bình luận khi đổi trạng thái"
+          },
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          }
+        ]
+      },
+      {
+        "id": "gh-pr-revert",
+        "canonicalCommand": "gh pr revert",
+        "title": "Tạo PR hoàn tác",
+        "command": "gh pr revert {<number> | <url> | <branch>} [flags]",
+        "description": "Tạo pull request chứa thay đổi hoàn tác một PR đã merge.",
+        "example": "gh pr revert 42 --repo octo-org/cli-sandbox --draft --title \"Revert login redirect change\" --body \"Investigate a regression before restoring this change.\"",
+        "risk": "write",
+        "tags": [
+          "pr",
+          "revert"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_pr_revert",
+        "warning": "Tạo thay đổi và PR hoàn tác; cần review/test trước khi merge vì có thể loại bỏ tính năng đã triển khai.",
+        "options": [
+          {
+            "flag": "-d, --draft",
+            "description": "Tạo PR hoàn tác ở trạng thái nháp"
+          },
+          {
+            "flag": "-t, --title <string>",
+            "description": "Tiêu đề mới"
+          },
+          {
+            "flag": "-b, --body <string>",
+            "description": "Nội dung văn bản gửi lên GitHub"
+          },
+          {
+            "flag": "-F, --body-file <file>",
+            "description": "Đọc nội dung từ tệp; dùng - để lấy từ stdin"
+          },
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          }
+        ]
+      },
+      {
+        "id": "gh-pr-review",
+        "canonicalCommand": "gh pr review",
+        "title": "Gửi review cho PR",
+        "command": "gh pr review [<number> | <url> | <branch>] [flags]",
+        "description": "Gửi nhận xét, phê duyệt hoặc yêu cầu thay đổi cho một PR.",
+        "example": "gh pr review 42 --repo octo-org/cli-sandbox --comment --body \"Please add a regression test for expired sessions.\"",
+        "risk": "write",
+        "tags": [
+          "pr",
+          "review"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_pr_review",
+        "warning": "Review được đăng dưới danh tính tài khoản đang đăng nhập và có thể ảnh hưởng điều kiện merge.",
+        "options": [
+          {
+            "flag": "-a, --approve",
+            "description": "Gửi review phê duyệt PR"
+          },
+          {
+            "flag": "-r, --request-changes",
+            "description": "Gửi review yêu cầu thay đổi"
+          },
+          {
+            "flag": "-c, --comment",
+            "description": "Gửi nhận xét review, không phê duyệt hay yêu cầu thay đổi"
+          },
+          {
+            "flag": "-b, --body <string>",
+            "description": "Nội dung văn bản gửi lên GitHub"
+          },
+          {
+            "flag": "-F, --body-file <file>",
+            "description": "Đọc nội dung từ tệp; dùng - để lấy từ stdin"
+          },
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          }
+        ]
+      },
+      {
+        "id": "gh-pr-status",
+        "canonicalCommand": "gh pr status",
+        "title": "Xem PR liên quan đến bạn",
+        "command": "gh pr status [flags]",
+        "description": "Tổng hợp PR ở nhánh hiện tại, PR bạn tạo và PR yêu cầu bạn review.",
+        "example": "gh pr status --repo octo-org/cli-sandbox --conflict-status",
+        "risk": "read",
+        "tags": [
+          "pr",
+          "status"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_pr_status",
+        "options": [
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          },
+          {
+            "flag": "-c, --conflict-status",
+            "description": "Hiển thị tình trạng xung đột merge của từng PR"
+          },
+          {
+            "flag": "--json <fields>",
+            "description": "Xuất JSON với các trường được chỉ định"
+          },
+          {
+            "flag": "-q, --jq <expression>",
+            "description": "Lọc đầu ra JSON bằng biểu thức jq"
+          }
+        ]
+      },
+      {
+        "id": "gh-pr-unlock",
+        "canonicalCommand": "gh pr unlock",
+        "title": "Mở khóa thảo luận PR",
+        "command": "gh pr unlock {<number> | <url>}",
+        "description": "Gỡ khóa cuộc thảo luận của một PR.",
+        "example": "gh pr unlock 42 --repo octo-org/cli-sandbox",
+        "risk": "write",
+        "tags": [
+          "pr",
+          "unlock"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_pr_unlock",
+        "warning": "Cho phép người dùng đủ quyền tiếp tục bình luận trên PR.",
+        "options": [
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          }
+        ]
+      },
+      {
+        "id": "gh-pr-update-branch",
+        "canonicalCommand": "gh pr update-branch",
+        "title": "Cập nhật nhánh PR",
+        "command": "gh pr update-branch [<number> | <url> | <branch>] [flags]",
+        "description": "Đưa thay đổi mới nhất của nhánh đích vào nhánh PR; mặc định dùng merge commit.",
+        "example": "gh pr update-branch 42 --repo octo-org/cli-sandbox",
+        "risk": "write",
+        "tags": [
+          "pr",
+          "update-branch"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_pr_update-branch",
+        "warning": "Cập nhật nhánh PR trên GitHub; --rebase viết lại commit và có thể ảnh hưởng người đang dùng nhánh.",
+        "options": [
+          {
+            "flag": "--rebase",
+            "description": "Rebase nhánh PR lên nhánh đích mới nhất thay vì tạo merge commit"
+          },
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          }
+        ]
+      },
+      {
+        "id": "gh-pr-view",
+        "canonicalCommand": "gh pr view",
+        "title": "Xem chi tiết PR",
+        "command": "gh pr view [<number> | <url> | <branch>] [flags]",
+        "description": "Đọc tiêu đề, nội dung, bình luận và metadata của PR; bỏ đối số để dùng PR của nhánh hiện tại.",
+        "example": "gh pr view 42 --repo octo-org/cli-sandbox --comments",
+        "risk": "read",
+        "tags": [
+          "pr",
+          "view"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_pr_view",
+        "options": [
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          },
+          {
+            "flag": "-c, --comments",
+            "description": "Hiển thị thêm bình luận"
+          },
+          {
+            "flag": "--json <fields>",
+            "description": "Xuất JSON với các trường được chỉ định"
+          },
+          {
+            "flag": "-q, --jq <expression>",
+            "description": "Lọc đầu ra JSON bằng biểu thức jq"
+          },
+          {
+            "flag": "-w, --web",
+            "description": "Mở nội dung tương ứng trong trình duyệt"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "discussion",
+    "title": "Discussions",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-discussion-create",
+        "canonicalCommand": "gh discussion create",
+        "title": "Tạo Discussion",
+        "command": "gh discussion create [flags]",
+        "description": "Đăng chủ đề thảo luận vào category có sẵn của repository.",
+        "example": "gh discussion create --repo octo-org/cli-sandbox --title \"Trao đổi tài liệu\" --category General --body \"Đề xuất thêm ví dụ sử dụng.\"",
+        "risk": "write",
+        "tags": [
+          "discussion",
+          "create"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_discussion_create",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--title",
+            "description": "Chỉ định tiêu đề."
+          },
+          {
+            "flag": "--body",
+            "description": "Cung cấp nội dung trực tiếp; đừng đưa bí mật vào dòng lệnh."
+          },
+          {
+            "flag": "--body-file",
+            "description": "Đọc nội dung từ file; dấu - dùng đầu vào chuẩn."
+          },
+          {
+            "flag": "--category",
+            "description": "Tên hoặc slug của category."
+          },
+          {
+            "flag": "--label",
+            "description": "Lọc hoặc gán nhãn theo chức năng của lệnh."
+          }
+        ],
+        "warning": "Thay đổi dữ liệu thật trên GitHub và có thể gửi thông báo. Kiểm tra đúng tài khoản, repository và nội dung trước khi chạy. Tính năng preview có thể thay đổi mà không báo trước.",
+        "status": "preview"
+      },
+      {
+        "id": "gh-discussion-comment",
+        "canonicalCommand": "gh discussion comment",
+        "title": "Bình luận hoặc trả lời Discussion",
+        "command": "gh discussion comment {<number> | <discussion-url> | <comment-id> | <comment-url>} [flags]",
+        "description": "Thêm bình luận vào discussion; dùng URL/ID bình luận để trả lời, sửa hoặc xóa bình luận.",
+        "example": "gh discussion comment 8 --repo octo-org/cli-sandbox --body \"Mình đã bổ sung ví dụ trong PR.\"",
+        "risk": "write",
+        "tags": [
+          "discussion",
+          "comment"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_discussion_comment",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--body",
+            "description": "Cung cấp nội dung trực tiếp; đừng đưa bí mật vào dòng lệnh."
+          },
+          {
+            "flag": "--body-file",
+            "description": "Đọc nội dung từ file; dấu - dùng đầu vào chuẩn."
+          },
+          {
+            "flag": "--edit",
+            "description": "Sửa bình luận đích."
+          },
+          {
+            "flag": "--delete",
+            "description": "Xóa bình luận đích; kiểm tra ID trước."
+          }
+        ],
+        "warning": "Thay đổi dữ liệu thật trên GitHub và có thể gửi thông báo. Kiểm tra đúng tài khoản, repository và nội dung trước khi chạy. --delete xóa nội dung, không phải chỉ đóng thảo luận. Tính năng preview có thể thay đổi mà không báo trước.",
+        "status": "preview"
+      },
+      {
+        "id": "gh-discussion-edit",
+        "canonicalCommand": "gh discussion edit",
+        "title": "Sửa Discussion",
+        "command": "gh discussion edit {<number> | <discussion-url>} [flags]",
+        "description": "Thay đổi tiêu đề, nội dung, category hoặc nhãn của một Discussion.",
+        "example": "gh discussion edit 8 --repo octo-org/cli-sandbox --title \"Cập nhật hướng dẫn sử dụng\"",
+        "risk": "write",
+        "tags": [
+          "discussion",
+          "edit"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_discussion_edit",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--title",
+            "description": "Chỉ định tiêu đề."
+          },
+          {
+            "flag": "--body-file",
+            "description": "Đọc nội dung từ file; dấu - dùng đầu vào chuẩn."
+          },
+          {
+            "flag": "--category",
+            "description": "Đổi category."
+          },
+          {
+            "flag": "--add-label",
+            "description": "Thêm nhãn theo tên."
+          },
+          {
+            "flag": "--remove-label",
+            "description": "Gỡ nhãn theo tên."
+          }
+        ],
+        "warning": "Thay đổi dữ liệu thật trên GitHub và có thể gửi thông báo. Kiểm tra đúng tài khoản, repository và nội dung trước khi chạy. Tính năng preview có thể thay đổi mà không báo trước.",
+        "status": "preview"
+      },
+      {
+        "id": "gh-discussion-list",
+        "canonicalCommand": "gh discussion list",
+        "title": "Liệt kê Discussion",
+        "command": "gh discussion list [flags]",
+        "description": "Xem Discussion theo trạng thái, category, nhãn hoặc từ khóa.",
+        "example": "gh discussion list --repo cli/cli --state all --limit 30",
+        "risk": "read",
+        "tags": [
+          "discussion",
+          "list"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_discussion_list",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--state",
+            "description": "Lọc trạng thái; xem các giá trị được hỗ trợ trong tài liệu."
+          },
+          {
+            "flag": "--category",
+            "description": "Lọc theo category."
+          },
+          {
+            "flag": "--answered",
+            "description": "Lọc đã trả lời; --answered=false cho chưa trả lời."
+          },
+          {
+            "flag": "--search",
+            "description": "Bổ sung biểu thức tìm kiếm."
+          },
+          {
+            "flag": "--limit",
+            "description": "Giới hạn số kết quả lấy về."
+          }
+        ],
+        "status": "preview",
+        "warning": "Tính năng preview có thể thay đổi mà không báo trước."
+      },
+      {
+        "id": "gh-discussion-view",
+        "canonicalCommand": "gh discussion view",
+        "title": "Đọc Discussion và trả lời",
+        "command": "gh discussion view {<number> | <discussion-url> | <comment-id> | <comment-url>} [flags]",
+        "description": "Xem chủ đề, bình luận hoặc toàn bộ chuỗi trả lời của một bình luận cụ thể.",
+        "example": "gh discussion view 8 --repo octo-org/cli-sandbox --comments --limit 20",
+        "risk": "read",
+        "tags": [
+          "discussion",
+          "view"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_discussion_view",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--comments",
+            "description": "Kèm bình luận."
+          },
+          {
+            "flag": "--limit",
+            "description": "Giới hạn số kết quả lấy về."
+          },
+          {
+            "flag": "--after",
+            "description": "Cursor lấy trang tiếp theo."
+          },
+          {
+            "flag": "--order",
+            "description": "Thứ tự oldest hoặc newest."
+          },
+          {
+            "flag": "--web",
+            "description": "Mở nội dung hoặc luồng tương ứng trong trình duyệt."
+          }
+        ],
+        "status": "preview",
+        "warning": "Tính năng preview có thể thay đổi mà không báo trước."
+      }
+    ]
+  }
+]

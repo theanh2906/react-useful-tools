@@ -1,0 +1,1199 @@
+[
+  {
+    "id": "git-interop",
+    "title": "Nâng cao · Nhập/xuất & hệ quản lý khác",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "git-full-svn-clone",
+        "canonicalCommand": "git svn",
+        "title": "Nhập Subversion vào Git",
+        "command": "git svn clone [OPTIONS] URL [DIRECTORY]",
+        "description": "Tạo repository Git cùng metadata theo dõi SVN; cần gói git-svn và quyền tới nguồn.",
+        "example": "git svn clone --stdlayout --prefix=svn/ https://svn.example.org/project svn-study",
+        "risk": "write",
+        "tags": [
+          "svn",
+          "git-interop",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-svn",
+        "options": [
+          {
+            "flag": "--stdlayout / -s",
+            "description": "Cấu trúc trunk/tags/branches chuẩn"
+          },
+          {
+            "flag": "--trunk / --tags / --branches",
+            "description": "Chỉ rõ bố cục khác"
+          },
+          {
+            "flag": "--prefix=PREFIX/",
+            "description": "Namespace các ref theo dõi SVN"
+          },
+          {
+            "flag": "--authors-file=FILE",
+            "description": "Ánh xạ danh tính SVN sang Git"
+          },
+          {
+            "flag": "--revision=RANGE",
+            "description": "Giới hạn revision nhập"
+          }
+        ],
+        "warning": "URL minh họa; nhập có thể rất lâu. Không dùng --no-metadata nếu còn cần tương tác hai chiều."
+      },
+      {
+        "id": "git-full-svn-fetch",
+        "canonicalCommand": "git svn",
+        "title": "Lấy revision mới từ SVN",
+        "command": "git svn fetch [OPTIONS] [REMOTE]",
+        "description": "Nhập các revision SVN chưa có vào refs Git theo dõi SVN; không tự rebase nhánh làm việc.",
+        "example": "git svn fetch",
+        "risk": "write",
+        "tags": [
+          "svn",
+          "git-interop",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-svn",
+        "options": [
+          {
+            "flag": "--parent",
+            "description": "Chỉ fetch nhánh SVN là cha của HEAD"
+          },
+          {
+            "flag": "--ignore-paths=REGEX",
+            "description": "Bỏ qua đường dẫn theo regex"
+          },
+          {
+            "flag": "--include-paths=REGEX",
+            "description": "Giới hạn đường dẫn cần nhập"
+          }
+        ],
+        "warning": "Thay object/metadata và dùng mạng. Chạy trong kho đã được git svn init/clone cấu hình."
+      },
+      {
+        "id": "git-full-svn-rebase",
+        "canonicalCommand": "git svn",
+        "title": "Rebase theo revision SVN",
+        "command": "git svn rebase [OPTIONS]",
+        "description": "Fetch từ SVN rồi phát lại commit Git local lên lịch sử SVN mới.",
+        "example": "git svn rebase",
+        "risk": "destructive",
+        "tags": [
+          "svn",
+          "git-interop",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-svn",
+        "options": [
+          {
+            "flag": "--local",
+            "description": "Không fetch mạng, dùng revision đã có"
+          },
+          {
+            "flag": "--dry-run",
+            "description": "Xem phạm vi được áp dụng ở subcommand hỗ trợ theo manual"
+          }
+        ],
+        "warning": "Viết lại lịch sử local; commit mới có ID mới. Sao lưu và phối hợp trước nếu lịch sử đã chia sẻ. Tránh merge commit trong luồng SVN vì mô hình SVN khác Git."
+      },
+      {
+        "id": "git-full-svn-dcommit",
+        "canonicalCommand": "git svn",
+        "title": "Xem trước commit gửi SVN",
+        "command": "git svn dcommit [OPTIONS]",
+        "description": "Chuyển commit Git local thành revision SVN; dry-run chỉ liệt kê diff command dự định dùng.",
+        "example": "git svn dcommit --dry-run",
+        "risk": "read",
+        "tags": [
+          "svn",
+          "git-interop",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-svn",
+        "options": [
+          {
+            "flag": "--dry-run / -n",
+            "description": "Không commit SVN"
+          },
+          {
+            "flag": "--no-rebase",
+            "description": "Không rebase sau commit"
+          },
+          {
+            "flag": "--interactive",
+            "description": "Hỏi từng commit"
+          },
+          {
+            "flag": "--commit-url URL",
+            "description": "Ghi lên URL khác, thay đích có rủi ro"
+          }
+        ],
+        "warning": "Bỏ --dry-run ghi revision thật lên SVN và có thể rebase/reset lịch sử Git local. Cần kiểm tra đích và dữ liệu."
+      },
+      {
+        "id": "git-full-svn-inspect",
+        "canonicalCommand": "git svn",
+        "title": "Tra thông tin SVN từ Git",
+        "command": "git svn info [PATH]",
+        "description": "Xem metadata giống svn info của đường dẫn; các tiện ích đọc khác giúp đối chiếu Git với SVN.",
+        "example": "git svn info",
+        "risk": "read",
+        "tags": [
+          "svn",
+          "git-interop",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-svn",
+        "options": [
+          {
+            "flag": "log",
+            "description": "Xem log theo kiểu SVN"
+          },
+          {
+            "flag": "find-rev rN",
+            "description": "Đổi SVN revision thành Git commit hoặc ngược lại"
+          },
+          {
+            "flag": "blame FILE",
+            "description": "Blame theo revision SVN"
+          },
+          {
+            "flag": "show-ignore",
+            "description": "In quy tắc ignore phía SVN"
+          },
+          {
+            "flag": "show-externals",
+            "description": "In svn:externals"
+          },
+          {
+            "flag": "propget NAME PATH",
+            "description": "Đọc property"
+          },
+          {
+            "flag": "proplist PATH",
+            "description": "Liệt kê properties"
+          }
+        ]
+      },
+      {
+        "id": "git-full-svn-maintenance",
+        "canonicalCommand": "git svn",
+        "title": "Khởi tạo và quản trị cầu nối SVN",
+        "command": "git svn init [OPTIONS] URL [DIRECTORY]",
+        "description": "Tạo kho và metadata SVN mà chưa nhập revision; các subcommand quản trị khác có mục đích riêng cần xem manual.",
+        "example": "git svn init --stdlayout --prefix=svn/ https://svn.example.org/project svn-study",
+        "risk": "write",
+        "tags": [
+          "svn",
+          "git-interop",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-svn",
+        "options": [
+          {
+            "flag": "branch NAME / tag NAME",
+            "description": "Tạo nhánh/tag trên SVN"
+          },
+          {
+            "flag": "commit-diff A B URL",
+            "description": "Gửi diff tới SVN"
+          },
+          {
+            "flag": "set-tree COMMIT",
+            "description": "Gửi snapshot cây tới SVN"
+          },
+          {
+            "flag": "create-ignore",
+            "description": "Tạo .gitignore từ SVN properties"
+          },
+          {
+            "flag": "mkdirs",
+            "description": "Tạo thư mục trống theo SVN"
+          },
+          {
+            "flag": "reset -r N",
+            "description": "Lùi metadata revision mapping, dùng khi sửa lỗi"
+          },
+          {
+            "flag": "gc",
+            "description": "Dọn metadata nội bộ git-svn"
+          }
+        ],
+        "warning": "Chỉ dùng URL/đích đã kiểm tra. Branch/tag/commit-diff/set-tree/mkdirs/reset có thể ghi server hoặc lịch sử local, không phải lệnh đọc."
+      }
+    ]
+  },
+  {
+    "id": "git-graphical",
+    "title": "Tiện ích chính thức · GUI, gitweb & Scalar",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "git-full-gui",
+        "canonicalCommand": "git gui",
+        "title": "Mở giao diện Git GUI",
+        "command": "git gui [COMMAND] [ARGS...]",
+        "description": "Mở ứng dụng Tcl/Tk để xem thay đổi, stage và tạo commit; phụ thuộc gói GUI được cài.",
+        "example": "git gui",
+        "risk": "write",
+        "tags": [
+          "gui",
+          "git-graphical",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-gui",
+        "options": [
+          {
+            "flag": "blame FILE",
+            "description": "Mở trình xem blame"
+          },
+          {
+            "flag": "browser REV",
+            "description": "Duyệt cây file tại commit"
+          },
+          {
+            "flag": "citool",
+            "description": "Tạo một commit qua giao diện"
+          },
+          {
+            "flag": "version",
+            "description": "Xem phiên bản Git GUI"
+          }
+        ],
+        "warning": "Giao diện cho phép sửa index/commit. Kiểm tra hành động bạn chọn; không phải chế độ chỉ đọc."
+      },
+      {
+        "id": "git-full-citool",
+        "canonicalCommand": "git citool",
+        "title": "Commit bằng giao diện",
+        "command": "git citool",
+        "description": "Alias chuẩn của git gui citool để review thay đổi, stage và ghi đúng một commit.",
+        "example": "git citool",
+        "risk": "write",
+        "tags": [
+          "citool",
+          "git-graphical",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-citool",
+        "options": [],
+        "warning": "Cần Git GUI/Tcl/Tk. Chỉ commit sau khi review index, tác giả và thông điệp; việc mở GUI chưa đồng nghĩa đã commit."
+      },
+      {
+        "id": "git-full-gitk",
+        "canonicalCommand": "gitk",
+        "title": "Duyệt đồ thị lịch sử bằng GUI",
+        "command": "gitk [OPTIONS] [REVISION_RANGE] [-- PATH...]",
+        "description": "Mở trình xem lịch sử Tcl/Tk để khám phá đồ thị nhánh và diff.",
+        "example": "gitk --all -- README.md",
+        "risk": "read",
+        "tags": [
+          "gitk",
+          "git-graphical",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/gitk",
+        "options": [
+          {
+            "flag": "--all",
+            "description": "Hiện mọi refs"
+          },
+          {
+            "flag": "--since=DATE",
+            "description": "Lọc theo thời gian"
+          },
+          {
+            "flag": "--author=PATTERN",
+            "description": "Lọc tác giả"
+          },
+          {
+            "flag": "--max-count=N",
+            "description": "Giới hạn commit"
+          }
+        ],
+        "warning": "Phụ thuộc gitk/Tcl/Tk được cài. Menu GUI có thể có hành động ghi; ví dụ chỉ mở chế độ duyệt."
+      },
+      {
+        "id": "git-full-instaweb",
+        "canonicalCommand": "git instaweb",
+        "title": "Mở gitweb trên localhost",
+        "command": "git instaweb [OPTIONS]",
+        "description": "Cấu hình và chạy web server tạm phục vụ gitweb cho repository hiện tại, rồi mở trình duyệt.",
+        "example": "git instaweb --local --port=1234",
+        "risk": "write",
+        "tags": [
+          "instaweb",
+          "git-graphical",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-instaweb",
+        "options": [
+          {
+            "flag": "--local",
+            "description": "Chỉ bind địa chỉ local"
+          },
+          {
+            "flag": "--port=N",
+            "description": "Cổng phục vụ"
+          },
+          {
+            "flag": "--httpd=SERVER",
+            "description": "Chọn web server hỗ trợ đã cài"
+          },
+          {
+            "flag": "--start / --stop / --restart",
+            "description": "Quản lý server"
+          },
+          {
+            "flag": "--browser=BROWSER",
+            "description": "Chọn trình duyệt"
+          }
+        ],
+        "warning": "Mở dịch vụ local; chỉ bind localhost và dùng nguồn/httpd tin cậy. Nội dung lịch sử có thể được trình duyệt truy cập."
+      },
+      {
+        "id": "git-full-gitweb",
+        "canonicalCommand": "gitweb",
+        "title": "Giao diện web chính thức Gitweb",
+        "command": "git instaweb --local [OPTIONS]",
+        "description": "Gitweb là chương trình CGI/web frontend, không phải subcommand git web. Manual hướng dẫn khởi chạy qua git instaweb trong repository.",
+        "example": "git instaweb --local --port=1235",
+        "risk": "write",
+        "tags": [
+          "gitweb",
+          "git-graphical",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/gitweb",
+        "options": [
+          {
+            "flag": "git instaweb --stop",
+            "description": "Dừng instance local đã mở"
+          },
+          {
+            "flag": "gitweb.conf",
+            "description": "File cấu hình CGI, không phải cờ CLI"
+          },
+          {
+            "flag": "GITWEB_CONFIG",
+            "description": "Biến chọn file cấu hình khi triển khai CGI"
+          }
+        ],
+        "warning": "Đây là launcher được manual gitweb chỉ định, không bịa cú pháp gitweb CLI. Server expose lịch sử; dùng localhost và kiểm soát repository được export."
+      },
+      {
+        "id": "git-full-scalar-list",
+        "canonicalCommand": "scalar",
+        "title": "Xem repository do Scalar quản lý",
+        "command": "scalar list",
+        "description": "Liệt kê enlistment của công cụ quản lý repository lớn đi kèm Git. Scalar là executable riêng, không gọi git scalar.",
+        "example": "scalar list",
+        "risk": "read",
+        "tags": [
+          "scalar",
+          "git-graphical",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/scalar",
+        "options": [
+          {
+            "flag": "-C DIR",
+            "description": "Đặt trước subcommand để chọn thư mục"
+          },
+          {
+            "flag": "-c KEY=VALUE",
+            "description": "Đặt trước subcommand để cấu hình tạm"
+          }
+        ]
+      },
+      {
+        "id": "git-full-scalar-clone",
+        "canonicalCommand": "scalar",
+        "title": "Clone kho lớn bằng Scalar",
+        "command": "scalar clone [OPTIONS] URL [ENLISTMENT]",
+        "description": "Clone dạng blobless/sparse và thiết lập mặc định tối ưu cho kho lớn; working tree mặc định trong src/.",
+        "example": "scalar clone --no-maintenance https://github.com/git/git.git git-large-study",
+        "risk": "write",
+        "tags": [
+          "scalar",
+          "git-graphical",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/scalar",
+        "options": [
+          {
+            "flag": "--full-clone",
+            "description": "Không khởi tạo sparse-checkout"
+          },
+          {
+            "flag": "--single-branch",
+            "description": "Chỉ lấy một nhánh"
+          },
+          {
+            "flag": "--branch NAME",
+            "description": "Nhánh checkout ban đầu"
+          },
+          {
+            "flag": "--no-src",
+            "description": "Không đặt working tree trong thư mục src"
+          },
+          {
+            "flag": "--no-maintenance",
+            "description": "Không cấu hình bảo trì nền khi clone"
+          },
+          {
+            "flag": "--no-tags",
+            "description": "Không tải tag mặc định"
+          }
+        ],
+        "warning": "Ghi file và đổi cấu hình repo. Mặc định Scalar còn bật bảo trì nền; ví dụ tắt bước đăng ký lịch mới bằng --no-maintenance."
+      },
+      {
+        "id": "git-full-scalar-register",
+        "canonicalCommand": "scalar",
+        "title": "Đưa kho vào quản lý Scalar",
+        "command": "scalar register [--no-maintenance] [ENLISTMENT]",
+        "description": "Đăng ký repository và áp cấu hình tối ưu theo Scalar.",
+        "example": "scalar register --no-maintenance ./git-large-study",
+        "risk": "write",
+        "tags": [
+          "scalar",
+          "git-graphical",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/scalar",
+        "options": [
+          {
+            "flag": "--maintenance / --no-maintenance",
+            "description": "Có/không cấu hình bảo trì nền"
+          }
+        ],
+        "warning": "Thay cấu hình và danh sách đăng ký; --no-maintenance không tắt bảo trì đã bật bằng cách khác."
+      },
+      {
+        "id": "git-full-scalar-unregister",
+        "canonicalCommand": "scalar",
+        "title": "Bỏ quản lý Scalar",
+        "command": "scalar unregister [ENLISTMENT]",
+        "description": "Bỏ đăng ký repository với Scalar và bảo trì nền của enlistment đó.",
+        "example": "scalar unregister ./git-large-study",
+        "risk": "write",
+        "tags": [
+          "scalar",
+          "git-graphical",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/scalar",
+        "options": [],
+        "warning": "Không xóa nội dung repository; các cấu hình đã được áp có thể còn."
+      },
+      {
+        "id": "git-full-scalar-run",
+        "canonicalCommand": "scalar",
+        "title": "Chạy tác vụ Scalar cụ thể",
+        "command": "scalar run TASK [ENLISTMENT]",
+        "description": "Thực hiện thủ công một tác vụ tối ưu hoặc fetch trên enlistment đã chọn.",
+        "example": "scalar run commit-graph ./git-large-study",
+        "risk": "write",
+        "tags": [
+          "scalar",
+          "git-graphical",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/scalar",
+        "options": [
+          {
+            "flag": "all",
+            "description": "Chạy các tác vụ"
+          },
+          {
+            "flag": "config",
+            "description": "Áp cấu hình được Scalar khuyến nghị"
+          },
+          {
+            "flag": "commit-graph",
+            "description": "Cập nhật graph"
+          },
+          {
+            "flag": "fetch",
+            "description": "Prefetch"
+          },
+          {
+            "flag": "loose-objects / pack-files",
+            "description": "Tối ưu object/pack"
+          }
+        ],
+        "warning": "Tác vụ fetch dùng mạng; all hoặc config có thể đổi nhiều cấu hình/dữ liệu."
+      },
+      {
+        "id": "git-full-scalar-reconfigure",
+        "canonicalCommand": "scalar",
+        "title": "Áp lại cấu hình Scalar",
+        "command": "scalar reconfigure [OPTIONS] [ENLISTMENT]",
+        "description": "Cập nhật cấu hình theo khuyến nghị của bản Scalar hiện tại.",
+        "example": "scalar reconfigure --maintenance=keep ./git-large-study",
+        "risk": "write",
+        "tags": [
+          "scalar",
+          "git-graphical",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/scalar",
+        "options": [
+          {
+            "flag": "--all",
+            "description": "Mọi enlistment"
+          },
+          {
+            "flag": "--maintenance=enable|disable|keep",
+            "description": "Bật/tắt/giữ cấu hình bảo trì nền"
+          }
+        ],
+        "warning": "Thay nhiều cấu hình repository. --all tác động mọi enlistment đã đăng ký."
+      },
+      {
+        "id": "git-full-scalar-diagnose",
+        "canonicalCommand": "scalar",
+        "title": "Thu chẩn đoán Scalar",
+        "command": "scalar diagnose [ENLISTMENT]",
+        "description": "Tạo ZIP chứa log và thống kê để điều tra repository lớn.",
+        "example": "scalar diagnose ./git-large-study",
+        "risk": "write",
+        "tags": [
+          "scalar",
+          "git-graphical",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/scalar",
+        "options": [],
+        "warning": "Archive có thể chứa metadata nội bộ; xem và ẩn thông tin nhạy cảm trước khi gửi."
+      },
+      {
+        "id": "git-full-scalar-delete",
+        "canonicalCommand": "scalar",
+        "title": "Xóa một Scalar enlistment",
+        "command": "scalar delete ENLISTMENT",
+        "description": "Hủy đăng ký và xóa enlistment khỏi filesystem local.",
+        "example": "scalar delete ./git-large-study",
+        "risk": "destructive",
+        "tags": [
+          "scalar",
+          "git-graphical",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/scalar",
+        "options": [],
+        "warning": "Có thể mất toàn bộ repository local và công việc chưa push. Xác minh đường dẫn, sao lưu và xem trạng thái trước; không dùng để chỉ bỏ quản lý Scalar."
+      }
+    ]
+  },
+  {
+    "id": "git-documented-helpers",
+    "title": "Bổ sung chính thức · Alias & helper có manual",
+    "level": "plumbing",
+    "commands": [
+      {
+        "id": "git-full-fsmonitor-daemon",
+        "canonicalCommand": "git fsmonitor--daemon",
+        "title": "Theo dõi thay đổi filesystem",
+        "command": "git fsmonitor--daemon (start | run | stop | status)",
+        "description": "Quản lý daemon tích hợp để Git biết file/thư mục thay đổi mà không quét toàn bộ working tree. Ví dụ chỉ kiểm tra daemon đang chạy.",
+        "example": "git fsmonitor--daemon status",
+        "risk": "read",
+        "tags": [
+          "fsmonitor--daemon",
+          "git-documented-helpers",
+          "plumbing"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-fsmonitor--daemon",
+        "options": [
+          {
+            "flag": "status",
+            "description": "Mã thoát 0 khi daemon đang theo dõi working tree"
+          },
+          {
+            "flag": "start",
+            "description": "Khởi chạy daemon nền"
+          },
+          {
+            "flag": "run",
+            "description": "Chạy foreground"
+          },
+          {
+            "flag": "stop",
+            "description": "Dừng daemon của working tree"
+          },
+          {
+            "flag": "core.fsmonitor=true",
+            "description": "Cấu hình bật tích hợp; lệnh như status có thể tự khởi động daemon"
+          }
+        ],
+        "warning": "start/run tạo tiến trình theo dõi và socket; hỗ trợ tùy nền tảng/build. Kho trên network filesystem có hạn chế, không tự thay cấu hình hệ thống để vượt giới hạn."
+      },
+      {
+        "id": "git-full-credential-cache-daemon",
+        "canonicalCommand": "git credential-cache--daemon",
+        "title": "Daemon của bộ nhớ credential",
+        "command": "git credential-cache--daemon [--debug] SOCKET_PATH",
+        "description": "Helper nghe trên Unix socket và giữ credential tạm trong bộ nhớ. Thường do git credential-cache tự khởi chạy. Ví dụ minh họa cho quản trị helper, không nạp hay in credential.",
+        "example": "git credential-cache--daemon \"$HOME/.cache/git/credential/socket\"",
+        "risk": "write",
+        "tags": [
+          "credential-cache--daemon",
+          "git-documented-helpers",
+          "plumbing"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-credential-cache--daemon",
+        "options": [
+          {
+            "flag": "--debug",
+            "description": "Giữ stderr để chẩn đoán; có thể lộ metadata trong log"
+          },
+          {
+            "flag": "SOCKET_PATH",
+            "description": "Socket trong thư mục riêng của tài khoản"
+          }
+        ],
+        "warning": "Không thường gọi thủ công. Thư mục socket phải riêng tư và không trùng daemon đang hoạt động; không chia sẻ socket, log hoặc dữ liệu giao thức có chứa credential."
+      },
+      {
+        "id": "git-full-fsck-objects",
+        "canonicalCommand": "git fsck-objects",
+        "title": "Alias kiểm tra object cũ",
+        "command": "git fsck-objects [FSCK_OPTIONS]",
+        "description": "Tên tương đương của git fsck còn có manual chính thức; chọn fsck cho workflow mới.",
+        "example": "git fsck-objects --full",
+        "risk": "read",
+        "tags": [
+          "fsck-objects",
+          "git-documented-helpers",
+          "plumbing"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-fsck-objects",
+        "options": [
+          {
+            "flag": "--full",
+            "description": "Kiểm tra object trong packs và alternates"
+          },
+          {
+            "flag": "--strict",
+            "description": "Kiểm tra nghiêm ngặt"
+          },
+          {
+            "flag": "--unreachable",
+            "description": "Hiện object không reachable"
+          },
+          {
+            "flag": "--lost-found",
+            "description": "Chế độ này ghi file cứu hộ local"
+          }
+        ]
+      },
+      {
+        "id": "git-full-init-db",
+        "canonicalCommand": "git init-db",
+        "title": "Alias khởi tạo repository",
+        "command": "git init-db [INIT_OPTIONS] [DIRECTORY]",
+        "description": "Tên tương đương của git init, được giữ vì tương thích. Ví dụ tạo repository mới trong thư mục riêng.",
+        "example": "git init-db --initial-branch=main legacy-study",
+        "risk": "write",
+        "tags": [
+          "init-db",
+          "git-documented-helpers",
+          "plumbing"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-init-db",
+        "options": [
+          {
+            "flag": "--bare",
+            "description": "Tạo repository không có working tree"
+          },
+          {
+            "flag": "--initial-branch=NAME",
+            "description": "Tên nhánh ban đầu"
+          },
+          {
+            "flag": "--template=DIR",
+            "description": "Dùng template directory đã tin cậy"
+          },
+          {
+            "flag": "--shared",
+            "description": "Thiết lập quyền kho dùng chung"
+          }
+        ],
+        "warning": "Chọn thư mục mới. Đây là alias chính thức; cú pháp chi tiết theo git init."
+      },
+      {
+        "id": "git-full-mergetool-lib",
+        "canonicalCommand": "git mergetool--lib",
+        "title": "Thư viện shell cho công cụ merge",
+        "command": "TOOL_MODE=diff; . \"$(git --exec-path)/git-mergetool--lib\"",
+        "description": "Scriptlet chính thức được source bởi script Git; không phải lệnh người dùng chạy độc lập. Ví dụ nạp hàm rồi xác định công cụ diff đã cấu hình.",
+        "example": "TOOL_MODE=diff; . \"$(git --exec-path)/git-mergetool--lib\"; get_merge_tool",
+        "risk": "read",
+        "tags": [
+          "mergetool--lib",
+          "git-documented-helpers",
+          "plumbing"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-mergetool--lib",
+        "options": [
+          {
+            "flag": "TOOL_MODE=diff|merge",
+            "description": "Phải đặt trước khi source"
+          },
+          {
+            "flag": "get_merge_tool",
+            "description": "Trả tên công cụ; mã1 có thể chỉ công cụ được đoán"
+          },
+          {
+            "flag": "get_merge_tool_cmd / get_merge_tool_path",
+            "description": "Đọc lệnh/đường dẫn của công cụ"
+          },
+          {
+            "flag": "initialize_merge_tool",
+            "description": "Nạp hàm riêng cho công cụ"
+          },
+          {
+            "flag": "run_merge_tool",
+            "description": "Chạy công cụ với MERGED, LOCAL, REMOTE, BASE đã đặt"
+          }
+        ],
+        "warning": "Chỉ dành cho tác giả script hiểu môi trường shell. Source thay đổi hàm/biến của shell; run_merge_tool có thể mở chương trình và sửa file."
+      },
+      {
+        "id": "git-full-remote-ext",
+        "canonicalCommand": "git remote-ext",
+        "title": "Giao vận qua chương trình bên ngoài",
+        "command": "git remote add NAME \"ext::COMMAND ARGUMENTS\"",
+        "description": "Remote helper dùng URL ext:: để nối giao thức Git với chương trình được chỉ định. Ví dụ chỉ đăng ký launcher local, chưa chạy fetch.",
+        "example": "git remote add local-ext \"ext::git %s /srv/git/sandbox.git\"",
+        "risk": "write",
+        "tags": [
+          "remote-ext",
+          "git-documented-helpers",
+          "plumbing"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-remote-ext",
+        "options": [
+          {
+            "flag": "ext::COMMAND ARGS",
+            "description": "Cú pháp URL để Git gọi helper"
+          },
+          {
+            "flag": "%s / %S",
+            "description": "Tên service ngắn/dài mà Git cần"
+          },
+          {
+            "flag": "%% / % ",
+            "description": "Ký tự phần trăm / khoảng trắng literal trong đối số"
+          },
+          {
+            "flag": "%G / %V",
+            "description": "Thông tin repository/vhost cho git:// service request"
+          }
+        ],
+        "warning": "Các lần fetch/push có thể chạy COMMAND với quyền của bạn. ext bị hạn chế theo protocol policy; không bật rộng hoặc dùng URL từ nguồn không tin cậy."
+      },
+      {
+        "id": "git-full-remote-fd",
+        "canonicalCommand": "git remote-fd",
+        "title": "Giao vận qua file descriptor đã mở",
+        "command": "git fetch \"fd::INFD[,OUTFD][/LABEL]\" BRANCH",
+        "description": "Helper dùng socket/pipe do chương trình gọi đã mở và hoàn tất handshake. Ví dụ yêu cầu descriptor17 đang kết nối git-upload-pack tin cậy; không phải lệnh chạy được ở shell mới.",
+        "example": "git fetch fd::17/local-sandbox main",
+        "risk": "write",
+        "tags": [
+          "remote-fd",
+          "git-documented-helpers",
+          "plumbing"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-remote-fd",
+        "options": [
+          {
+            "flag": "INFD",
+            "description": "Socket hai chiều hoặc pipe đầu vào đã mở"
+          },
+          {
+            "flag": "OUTFD",
+            "description": "Pipe đầu ra riêng khi cần"
+          },
+          {
+            "flag": "/LABEL",
+            "description": "Nhãn tùy ý cho dễ đọc, helper bỏ qua"
+          },
+          {
+            "flag": "GIT_TRANSLOOP_DEBUG",
+            "description": "Bật chẩn đoán I/O; không chia sẻ log chứa dữ liệu nội bộ"
+          }
+        ],
+        "warning": "Chỉ dành cho chương trình tích hợp, không tự mở kết nối. Nhầm descriptor có thể gửi/đọc sai dữ liệu. Fetch nhập object local; push qua helper có thể ghi remote."
+      },
+      {
+        "id": "git-full-sh-i18n-envsubst",
+        "canonicalCommand": "git sh-i18n--envsubst",
+        "title": "Helper nội bộ nội suy biến",
+        "command": "git sh-i18n--envsubst --variables FORMAT",
+        "description": "Bản envsubst tối giản dùng cho fallback i18n của Git. Ví dụ chỉ in tên biến tham chiếu trong format, không đọc giá trị bí mật.",
+        "example": "git sh-i18n--envsubst --variables '$name'",
+        "risk": "read",
+        "tags": [
+          "sh-i18n--envsubst",
+          "git-documented-helpers",
+          "plumbing"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-sh-i18n--envsubst",
+        "options": [
+          {
+            "flag": "--variables FORMAT",
+            "description": "In tên các biến có trong format"
+          },
+          {
+            "flag": "FORMAT",
+            "description": "Khi không dùng --variables, xử lý nội suy theo giao thức helper"
+          }
+        ],
+        "warning": "Manual nói không dùng giao diện này trong phần mềm người dùng: có thể đổi hoặc biến mất không báo trước. Dùng gettext/envsubst phù hợp cho script mới."
+      },
+      {
+        "id": "git-full-web-browse",
+        "canonicalCommand": "git web--browse",
+        "title": "Mở tài liệu trong trình duyệt",
+        "command": "git web--browse [OPTIONS] URL_OR_FILE...",
+        "description": "Helper mở URL hoặc HTML file qua trình duyệt đã cấu hình.",
+        "example": "git web--browse https://git-scm.com/docs/git",
+        "risk": "write",
+        "tags": [
+          "web--browse",
+          "git-documented-helpers",
+          "plumbing"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-web--browse",
+        "options": [
+          {
+            "flag": "--browser=NAME / -b NAME",
+            "description": "Chọn trình duyệt hỗ trợ"
+          },
+          {
+            "flag": "--tool=NAME / -t NAME",
+            "description": "Alias của --browser"
+          },
+          {
+            "flag": "--config=KEY / -c KEY",
+            "description": "Đọc tên trình duyệt từ khóa cấu hình"
+          },
+          {
+            "flag": "web.browser",
+            "description": "Trình duyệt mặc định nếu không có cờ"
+          }
+        ],
+        "warning": "Khởi chạy ứng dụng ngoài và mở trang mạng. Chỉ mở URL/file tin cậy; cấu hình browser.*.cmd có thể là chương trình tùy chỉnh."
+      }
+    ]
+  },
+  {
+    "id": "plumbingmanipulators",
+    "title": "Plumbing: tạo và sửa đối tượng",
+    "level": "plumbing",
+    "commands": [
+      {
+        "id": "git-apply",
+        "canonicalCommand": "git apply",
+        "title": "Kiểm tra và áp dụng patch",
+        "command": "git apply --check <patch>",
+        "description": "Kiểm tra patch có áp dụng sạch vào working tree hay không. Bỏ --check để sửa tệp; lệnh này không tự tạo commit. Ví dụ giả định fix.patch đã có sẵn.",
+        "example": "git apply --check fix.patch",
+        "risk": "read",
+        "tags": [
+          "apply",
+          "plumbing",
+          "patch",
+          "index"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-apply",
+        "options": [
+          {
+            "flag": "--check",
+            "description": "Chỉ kiểm tra khả năng áp dụng, không sửa tệp"
+          },
+          {
+            "flag": "--stat / --numstat / --summary",
+            "description": "In thống kê hoặc tóm tắt thay đổi; không áp dụng trừ khi thêm --apply"
+          },
+          {
+            "flag": "--index",
+            "description": "Áp dụng vào cả working tree và index; yêu cầu hai nơi khớp nhau"
+          },
+          {
+            "flag": "--cached",
+            "description": "Chỉ áp dụng vào index"
+          },
+          {
+            "flag": "--3way",
+            "description": "Thử merge ba phía khi patch có thông tin blob và blob gốc tồn tại; thường ngầm bật --index"
+          },
+          {
+            "flag": "--ours / --theirs / --union",
+            "description": "Với --3way, tự giải quyết phần xung đột theo phía được chọn hoặc ghép cả hai"
+          },
+          {
+            "flag": "-R / --reverse",
+            "description": "Áp dụng patch theo chiều ngược"
+          },
+          {
+            "flag": "--reject",
+            "description": "Áp dụng phần hợp lệ và ghi phần bị từ chối vào .rej; không dùng chung --3way"
+          },
+          {
+            "flag": "-p<n>",
+            "description": "Bỏ n thành phần đầu của đường dẫn; mặc định -p1"
+          },
+          {
+            "flag": "--directory=<root>",
+            "description": "Thêm tiền tố thư mục vào đường dẫn của patch"
+          },
+          {
+            "flag": "--include=<path> / --exclude=<path>",
+            "description": "Chọn hoặc loại đường dẫn theo mẫu"
+          },
+          {
+            "flag": "--whitespace=fix",
+            "description": "Sửa lỗi khoảng trắng khi áp dụng"
+          },
+          {
+            "flag": "--ignore-whitespace",
+            "description": "Bỏ qua thay đổi khoảng trắng trong các dòng ngữ cảnh"
+          },
+          {
+            "flag": "--intent-to-add",
+            "description": "Đánh dấu tệp mới là intent-to-add khi chỉ áp dụng vào working tree"
+          },
+          {
+            "flag": "--allow-empty",
+            "description": "Cho phép patch rỗng hoặc chỉ có nội dung không phải diff"
+          }
+        ],
+        "warning": "--index, --cached, -R và các chế độ giải xung đột tự động có thể thay đổi nội dung đã stage. Kiểm tra diff sau khi áp dụng; tránh --unsafe-paths với patch không tin cậy."
+      },
+      {
+        "id": "git-checkout-index",
+        "canonicalCommand": "git checkout-index",
+        "title": "Xuất nội dung index ra thư mục khác",
+        "command": "git checkout-index --all --prefix=<directory>/",
+        "description": "Chép phiên bản đã stage của các tệp vào một thư mục xuất. Ví dụ dùng ../index-export/ dành riêng cho việc xuất, không phải nội dung chưa stage.",
+        "example": "git checkout-index --all --prefix=../index-export/",
+        "risk": "write",
+        "tags": [
+          "checkout-index",
+          "plumbing",
+          "index",
+          "export"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-checkout-index",
+        "options": [
+          {
+            "flag": "-a / --all",
+            "description": "Xuất mọi tệp trong index; không mặc định chọn tất cả khi thiếu tên tệp"
+          },
+          {
+            "flag": "--prefix=<string>",
+            "description": "Thêm tiền tố trước từng đường dẫn; nhớ dấu / cuối nếu là thư mục"
+          },
+          {
+            "flag": "-f / --force",
+            "description": "Ghi đè tệp đã tồn tại, có thể làm mất thay đổi"
+          },
+          {
+            "flag": "-n / --no-create",
+            "description": "Không tạo tệp mới; chỉ cập nhật tệp đã tồn tại"
+          },
+          {
+            "flag": "-u / --index",
+            "description": "Cập nhật thông tin stat của index sau khi checkout"
+          },
+          {
+            "flag": "--stage=<number>",
+            "description": "Chọn stage 1, 2 hoặc 3 của tệp chưa merge"
+          },
+          {
+            "flag": "--stage=all",
+            "description": "Xuất cả ba stage ra tệp tạm và báo đường dẫn"
+          },
+          {
+            "flag": "--temp",
+            "description": "Ghi ra tệp tạm thay vì đường dẫn working tree"
+          },
+          {
+            "flag": "--stdin / -z",
+            "description": "Đọc tên tệp từ stdin; -z dùng phân cách NUL"
+          },
+          {
+            "flag": "--ignore-skip-worktree-bits",
+            "description": "Bỏ qua cờ skip-worktree khi chọn nội dung"
+          }
+        ],
+        "warning": "-f ghi đè tệp. --prefix chỉ thêm chuỗi, không tự thêm dấu /; dùng thư mục xuất riêng."
+      },
+      {
+        "id": "git-commit-graph",
+        "canonicalCommand": "git commit-graph",
+        "title": "Ghi chỉ mục đồ thị commit",
+        "command": "git commit-graph write --reachable --changed-paths",
+        "description": "Tạo commit-graph để tăng tốc duyệt lịch sử; --changed-paths tạo Bloom filter cho truy vấn theo đường dẫn. Không tạo commit hay thay đổi nhánh.",
+        "example": "git commit-graph write --reachable --changed-paths",
+        "risk": "write",
+        "tags": [
+          "commit-graph",
+          "plumbing",
+          "performance",
+          "maintenance"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-commit-graph",
+        "options": [
+          {
+            "flag": "write",
+            "description": "Tạo hoặc cập nhật commit-graph"
+          },
+          {
+            "flag": "verify",
+            "description": "Kiểm tra tính hợp lệ của commit-graph hiện có",
+            "example": "git commit-graph verify"
+          },
+          {
+            "flag": "write --reachable",
+            "description": "Lấy các commit có thể tới từ ref hiện có"
+          },
+          {
+            "flag": "write --stdin-commits",
+            "description": "Đọc các commit đầu mút từ stdin"
+          },
+          {
+            "flag": "write --stdin-packs",
+            "description": "Đọc tên pack index từ stdin"
+          },
+          {
+            "flag": "write --append",
+            "description": "Bổ sung commit mới vào graph hiện có"
+          },
+          {
+            "flag": "write --split[=<strategy>]",
+            "description": "Ghi chuỗi commit-graph tách lớp; chiến lược như no-merge hoặc replace"
+          },
+          {
+            "flag": "write --changed-paths",
+            "description": "Tính Bloom filter đường dẫn thay đổi"
+          },
+          {
+            "flag": "write --max-new-filters=<n>",
+            "description": "Giới hạn số Bloom filter mới được tính"
+          },
+          {
+            "flag": "--object-dir=<dir>",
+            "description": "Dùng object directory khác"
+          },
+          {
+            "flag": "verify --shallow",
+            "description": "Chỉ xác minh lớp đầu của chuỗi split graph"
+          },
+          {
+            "flag": "--no-progress",
+            "description": "Không hiện tiến độ"
+          }
+        ]
+      },
+      {
+        "id": "git-commit-tree",
+        "canonicalCommand": "git commit-tree",
+        "title": "Tạo commit từ một tree",
+        "command": "git commit-tree <tree> -p <parent> -m <message>",
+        "description": "Tạo object commit và in OID, nhưng không di chuyển nhánh hay sửa working tree. Ví dụ tạo commit mới dùng cùng tree với HEAD và HEAD làm cha.",
+        "example": "git commit-tree HEAD^{tree} -p HEAD -m \"Snapshot from plumbing\"",
+        "risk": "write",
+        "tags": [
+          "commit-tree",
+          "plumbing",
+          "object",
+          "commit"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-commit-tree",
+        "options": [
+          {
+            "flag": "-p <parent>",
+            "description": "Thêm commit cha; lặp lại để tạo merge commit"
+          },
+          {
+            "flag": "-m <message>",
+            "description": "Thêm đoạn thông điệp; có thể lặp nhiều lần"
+          },
+          {
+            "flag": "-F <file>",
+            "description": "Đọc thông điệp từ tệp; dùng - để đọc stdin"
+          },
+          {
+            "flag": "-S[<keyid>]",
+            "description": "Ký commit bằng khóa cấu hình hoặc khóa được chọn"
+          },
+          {
+            "flag": "--no-gpg-sign",
+            "description": "Hủy yêu cầu ký trước đó"
+          },
+          {
+            "flag": "<tree>",
+            "description": "OID hoặc biểu thức trỏ đến tree đã tồn tại"
+          }
+        ],
+        "warning": "Commit mới chưa có ref giữ lại; có thể bị thu gom khi không còn reachable. Chỉ cập nhật ref sau khi đã kiểm tra OID và commit."
+      },
+      {
+        "id": "git-hash-object",
+        "canonicalCommand": "git hash-object",
+        "title": "Tính OID hoặc ghi blob",
+        "command": "git hash-object [--no-filters] <file>",
+        "description": "Tính mã object Git của nội dung tệp. Ví dụ chỉ tính OID, không ghi object; dùng -w khi cần lưu vào object database.",
+        "example": "git hash-object --no-filters README.md",
+        "risk": "read",
+        "tags": [
+          "hash-object",
+          "plumbing",
+          "object",
+          "hash"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-hash-object",
+        "options": [
+          {
+            "flag": "-w",
+            "description": "Ghi object vào object database; nếu bỏ thì chỉ tính hash"
+          },
+          {
+            "flag": "-t <type>",
+            "description": "Chọn blob, tree, commit hoặc tag; mặc định blob"
+          },
+          {
+            "flag": "--stdin",
+            "description": "Đọc nội dung từ stdin",
+            "example": "printf hello | git hash-object --stdin"
+          },
+          {
+            "flag": "--stdin-paths",
+            "description": "Đọc danh sách đường dẫn từ stdin"
+          },
+          {
+            "flag": "--path=<file>",
+            "description": "Áp dụng filter theo đường dẫn logic này"
+          },
+          {
+            "flag": "--no-filters",
+            "description": "Băm dữ liệu nguyên bản, không áp dụng clean filter hay chuyển EOL"
+          },
+          {
+            "flag": "--literally",
+            "description": "Với --stdin, cho phép object không qua kiểm tra cấu trúc; chỉ phục vụ thử nghiệm"
+          }
+        ],
+        "warning": "--literally -w có thể ghi object sai định dạng. Filter tùy chỉnh có thể chạy chương trình bên ngoài; chỉ dùng cấu hình kho tin cậy."
+      }
+    ]
+  }
+]

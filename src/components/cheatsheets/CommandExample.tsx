@@ -31,9 +31,11 @@ export function ShellCommand({ command }: { command: string }) {
 export default function CommandExample({
   example,
   title,
+  kind = 'usage',
 }: {
   example: string;
   title: string;
+  kind?: 'usage' | 'template' | 'discovery';
 }) {
   const { t } = useTranslation();
   const [copyState, setCopyState] = useState<'idle' | 'copied' | 'error'>(
@@ -60,14 +62,22 @@ export default function CommandExample({
         <span className={styles.prompt} aria-hidden="true">
           $
         </span>
-        <pre tabIndex={0} aria-label={`${t('cheatsheets.example')}: ${title}`}>
+        <pre
+          tabIndex={0}
+          aria-label={`${t(kind === 'discovery' ? 'cheatsheets.inputHelp' : 'cheatsheets.example')}: ${title}`}
+        >
           <ShellCommand command={example} />
         </pre>
         <button
           type="button"
           onClick={() => void copyExample()}
           className={styles.copyButton}
-          aria-label={t('cheatsheets.copyCommand', { title })}
+          aria-label={t(
+            kind === 'discovery'
+              ? 'cheatsheets.copyInputHelp'
+              : 'cheatsheets.copyCommand',
+            { title }
+          )}
           title={t(copyState === 'copied' ? 'common.copied' : 'common.copy')}
         >
           {copyState === 'copied' ? <Check size={15} /> : <Copy size={15} />}

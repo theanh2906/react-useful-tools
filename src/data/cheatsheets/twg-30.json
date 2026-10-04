@@ -1,0 +1,1270 @@
+[
+  {
+    "id": "loom-space",
+    "title": "Loom · space",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-loom-space-query",
+        "canonicalCommand": "twg loom space query",
+        "title": "Tra cứu space của Loom",
+        "command": "twg loom space query",
+        "description": "Tra cứu space của Loom.",
+        "example": "twg loom space query",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "loom",
+          "space",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--query <query>",
+            "description": "Chuỗi truy vấn theo lệnh",
+            "example": "--query onboarding"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "loom-video",
+    "title": "Loom · video",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-loom-video-action-item-list",
+        "canonicalCommand": "twg loom video action-item list",
+        "title": "Liệt kê action-item của video của Loom",
+        "command": "twg loom video action-item list <id>",
+        "description": "Liệt kê action-item của video của Loom.",
+        "example": "twg loom video action-item list ID -o json",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "loom",
+          "video",
+          "action-item",
+          "list"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      },
+      {
+        "id": "twg-loom-video-agent-brief-list",
+        "canonicalCommand": "twg loom video agent-brief list",
+        "title": "Liệt kê agent-brief của video của Loom",
+        "command": "twg loom video agent-brief list <id>",
+        "description": "Liệt kê agent-brief của video của Loom.",
+        "example": "twg loom video agent-brief list ID -o json",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "loom",
+          "video",
+          "agent-brief",
+          "list"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      },
+      {
+        "id": "twg-loom-video-comment-create",
+        "canonicalCommand": "twg loom video comment create",
+        "title": "Tạo bình luận của video của Loom",
+        "command": "twg loom video comment create <id> --timestamp <seconds> --content <text>",
+        "description": "Tạo bình luận của video của Loom.",
+        "example": "twg loom video comment create ID --timestamp 42 --content \"Follow up here\"",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "loom",
+          "video",
+          "comment",
+          "create"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--timestamp <seconds>",
+            "description": "Tham số timestamp; bắt buộc",
+            "example": "--timestamp TIMESTAMP"
+          },
+          {
+            "flag": "--content <text>",
+            "description": "Nội dung; bắt buộc",
+            "example": "--content CONTENT"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-loom-video-comments",
+        "canonicalCommand": "twg loom video comments",
+        "title": "Xem bình luận của video của Loom",
+        "command": "twg loom video comments <id>",
+        "description": "Xem bình luận của video của Loom.",
+        "example": "twg loom video comments https://www.loom.com/share/ID -o json",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "loom",
+          "video",
+          "comments"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--limit <n>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh; mặc định: \"100\"",
+            "example": "--limit 10"
+          },
+          {
+            "flag": "--page-size <n>",
+            "description": "Kích thước trang; mặc định: \"50\"",
+            "example": "--page-size 10"
+          },
+          {
+            "flag": "--after <cursor>",
+            "description": "Con trỏ hoặc mốc bắt đầu theo lệnh",
+            "example": "--after AFTER"
+          }
+        ]
+      },
+      {
+        "id": "twg-loom-video-delete",
+        "canonicalCommand": "twg loom video delete",
+        "title": "Xóa video của Loom",
+        "command": "twg loom video delete --id <id>",
+        "description": "Xóa video của Loom.",
+        "example": "twg loom video delete --id loom-id-1",
+        "exampleKind": "usage",
+        "risk": "destructive",
+        "tags": [
+          "loom",
+          "video",
+          "delete"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên; bắt buộc; có thể nhập nhiều giá trị",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể xóa dữ liệu, thu hồi quyền hoặc gỡ cấu hình. Đọc lại đối tượng và khả năng khôi phục; ưu tiên --dry-run nếu lệnh hỗ trợ. Không thêm --yes khi chưa kiểm tra."
+      },
+      {
+        "id": "twg-loom-video-get",
+        "canonicalCommand": "twg loom video get",
+        "title": "Đọc video của Loom",
+        "command": "twg loom video get <id...>",
+        "description": "Đọc video của Loom.",
+        "example": "twg loom video get loom-id-1",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "loom",
+          "video",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--batch-concurrency <n>",
+            "description": "Giới hạn số yêu cầu chi tiết chạy đồng thời",
+            "example": "--batch-concurrency 10"
+          },
+          {
+            "flag": "--strict",
+            "description": "Báo lỗi khi một phần của truy vấn nhiều mục thất bại",
+            "example": "--strict"
+          }
+        ]
+      },
+      {
+        "id": "twg-loom-video-move",
+        "canonicalCommand": "twg loom video move",
+        "title": "Di chuyển video của Loom",
+        "command": "twg loom video move <id> --folder <folder-ari>",
+        "description": "Di chuyển video của Loom.",
+        "example": "twg loom video move ID --folder FOLDER_ARI",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "loom",
+          "video",
+          "move"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--folder <folder-ari>",
+            "description": "Thư mục; bắt buộc",
+            "example": "--folder RESOURCE_ARI"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-loom-video-reaction-add",
+        "canonicalCommand": "twg loom video reaction add",
+        "title": "Thêm biểu cảm của video của Loom",
+        "command": "twg loom video reaction add <id> --timestamp-ms <milliseconds> --name <reaction>",
+        "description": "Thêm biểu cảm của video của Loom.",
+        "example": "twg loom video reaction add ID --timestamp-ms 90000 --name love",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "loom",
+          "video",
+          "reaction",
+          "add"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--timestamp-ms <milliseconds>",
+            "description": "Tham số timestamp-ms; bắt buộc",
+            "example": "--timestamp-ms TIMESTAMP_MS"
+          },
+          {
+            "flag": "--name <reaction>",
+            "description": "Tên; bắt buộc",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--type <type>",
+            "description": "Loại tài nguyên hoặc nội dung theo lệnh; mặc định: \"LOOM\"",
+            "example": "--type TYPE"
+          },
+          {
+            "flag": "--category <category>",
+            "description": "Tham số category",
+            "example": "--category CATEGORY"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-loom-video-recover",
+        "canonicalCommand": "twg loom video recover",
+        "title": "Khôi phục video của Loom",
+        "command": "twg loom video recover <id>",
+        "description": "Khôi phục video của Loom.",
+        "example": "twg loom video recover ID",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "loom",
+          "video",
+          "recover"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--force",
+            "description": "Ép thực hiện theo quy tắc của lệnh; đọc tài liệu trước khi dùng",
+            "example": "--force"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-loom-video-rename",
+        "canonicalCommand": "twg loom video rename",
+        "title": "Đổi tên video của Loom",
+        "command": "twg loom video rename <id> --title <title>",
+        "description": "Đổi tên video của Loom.",
+        "example": "twg loom video rename ID --title \"Weekly update\"",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "loom",
+          "video",
+          "rename"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--title <title>",
+            "description": "Tiêu đề; bắt buộc",
+            "example": "--title 'Ví dụ trong môi trường thử nghiệm'"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-loom-video-share",
+        "canonicalCommand": "twg loom video share",
+        "title": "Chia sẻ video của Loom",
+        "command": "twg loom video share <id> --recipient <user-ari>",
+        "description": "Chia sẻ video của Loom.",
+        "example": "twg loom video share ID --recipient ari:cloud:identity::user/ACCOUNT_ID",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "loom",
+          "video",
+          "share"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--recipient <user-ari>",
+            "description": "Tham số recipient; có thể nhập nhiều giá trị",
+            "example": "--recipient RESOURCE_ARI"
+          },
+          {
+            "flag": "--message <message>",
+            "description": "Nội dung thông báo",
+            "example": "--message 'Ví dụ trong môi trường thử nghiệm'"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-loom-video-transcript",
+        "canonicalCommand": "twg loom video transcript",
+        "title": "Xem bản chép lời của video của Loom",
+        "command": "twg loom video transcript <id>",
+        "description": "Xem bản chép lời của video của Loom.",
+        "example": "twg loom video transcript ID",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "loom",
+          "video",
+          "transcript"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--preview-phrases <number>",
+            "description": "Tham số preview-phrases; mặc định: \"40\"",
+            "example": "--preview-phrases 10"
+          },
+          {
+            "flag": "--full",
+            "description": "Yêu cầu chi tiết đầy đủ theo lệnh; có thể tăng lượng dữ liệu và số yêu cầu",
+            "example": "--full"
+          }
+        ]
+      },
+      {
+        "id": "twg-loom-video-upload",
+        "canonicalCommand": "twg loom video upload",
+        "title": "Tải lên video của Loom",
+        "command": "twg loom video upload <file>",
+        "description": "Tải lên video của Loom.",
+        "example": "twg loom video upload ./demo.mp4 --title \"Product demo\"",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "loom",
+          "video",
+          "upload"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--title <title>",
+            "description": "Tiêu đề",
+            "example": "--title 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--content-type <mime>",
+            "description": "Tham số content-type",
+            "example": "--content-type page"
+          },
+          {
+            "flag": "--folder <folder-ari>",
+            "description": "Thư mục",
+            "example": "--folder RESOURCE_ARI"
+          },
+          {
+            "flag": "--space <space-ari>",
+            "description": "Space",
+            "example": "--space DEMO"
+          },
+          {
+            "flag": "--video-properties-json <json>",
+            "description": "JSON cho video-properties",
+            "example": "--video-properties-json '{}'"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-loom-video-visibility-set",
+        "canonicalCommand": "twg loom video visibility set",
+        "title": "Đặt phạm vi hiển thị của video của Loom",
+        "command": "twg loom video visibility set <id> --visibility <visibility>",
+        "description": "Đặt phạm vi hiển thị của video của Loom.",
+        "example": "twg loom video visibility set ID --visibility workspace",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "loom",
+          "video",
+          "visibility",
+          "set"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--visibility <visibility>",
+            "description": "Phạm vi hiển thị; bắt buộc",
+            "example": "--visibility VISIBILITY"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      }
+    ]
+  },
+  {
+    "id": "loom-workspace",
+    "title": "Loom · workspace",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-loom-workspace-join",
+        "canonicalCommand": "twg loom workspace join",
+        "title": "Tham gia workspace của Loom",
+        "command": "twg loom workspace join <workspaceId>",
+        "description": "Tham gia workspace của Loom.",
+        "example": "twg loom workspace join abc123",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "loom",
+          "workspace",
+          "join"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      }
+    ]
+  },
+  {
+    "id": "notifications",
+    "title": "Thông báo",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-notifications",
+        "canonicalCommand": "twg notifications",
+        "title": "Đọc thông báo",
+        "command": "twg notifications",
+        "description": "Đọc thông báo.",
+        "example": "twg notifications",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "notifications"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--direct",
+            "description": "Tham số direct",
+            "example": "--direct"
+          },
+          {
+            "flag": "--watching",
+            "description": "Tham số watching; không dùng cùng --direct",
+            "example": "--watching"
+          },
+          {
+            "flag": "--unread",
+            "description": "Tham số unread",
+            "example": "--unread"
+          },
+          {
+            "flag": "--expand-groups",
+            "description": "Tham số expand-groups",
+            "example": "--expand-groups"
+          },
+          {
+            "flag": "--expand-content",
+            "description": "Tham số expand-content",
+            "example": "--expand-content"
+          },
+          {
+            "flag": "--first <n>",
+            "description": "Số phần tử của trang đầu/tiếp theo",
+            "example": "--first 10"
+          },
+          {
+            "flag": "--limit <n>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh",
+            "example": "--limit 10"
+          },
+          {
+            "flag": "--after <cursor>",
+            "description": "Con trỏ hoặc mốc bắt đầu theo lệnh",
+            "example": "--after AFTER"
+          },
+          {
+            "flag": "--since <duration>",
+            "description": "Mốc hoặc khoảng thời gian bắt đầu; không dùng cùng --from",
+            "example": "--since 7d"
+          },
+          {
+            "flag": "--from <date>",
+            "description": "Tham số from",
+            "example": "--from 1"
+          },
+          {
+            "flag": "--to <date>",
+            "description": "Tham số to",
+            "example": "--to 1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "resolve",
+    "title": "Resolve",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-resolve",
+        "canonicalCommand": "twg resolve",
+        "title": "Phân giải URL hoặc định danh",
+        "command": "twg resolve [query...]",
+        "description": "Phân giải URL hoặc định danh.",
+        "example": "twg resolve --query \"Alice\"",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "resolve"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--query <text>",
+            "description": "Chuỗi truy vấn theo lệnh",
+            "example": "--query onboarding"
+          },
+          {
+            "flag": "--type <kind>",
+            "description": "Loại tài nguyên hoặc nội dung theo lệnh; nhận: jira-workitem, atlas-project, atlas-goal",
+            "example": "--type jira-workitem"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "spaces",
+    "title": "Space",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-spaces-get",
+        "canonicalCommand": "twg spaces get",
+        "title": "Đọc space",
+        "command": "twg spaces get <id-or-key-or-ari>",
+        "description": "Đọc space.",
+        "example": "twg spaces get GQLGW",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "spaces",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      },
+      {
+        "id": "twg-spaces-query",
+        "canonicalCommand": "twg spaces query",
+        "title": "Tra cứu space",
+        "command": "twg spaces query",
+        "description": "Tra cứu space.",
+        "example": "twg spaces query -n 50 -o json",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "spaces",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--keyword <text>",
+            "description": "Tham số keyword; mặc định: \"\"",
+            "example": "--keyword onboarding"
+          },
+          {
+            "flag": "-n, --limit <number>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh; mặc định: \"25\"",
+            "example": "--limit 10"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "talent",
+    "title": "Talent",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-talent-position-get",
+        "canonicalCommand": "twg talent position get",
+        "title": "Đọc vị trí của Talent",
+        "command": "twg talent position get [id...]",
+        "description": "Đọc vị trí của Talent.",
+        "example": "twg talent position get P-3007",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "talent",
+          "position",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "--fields <fields>",
+            "description": "Các trường cần lấy, thường ngăn cách bằng dấu phẩy; có thể nhập nhiều giá trị",
+            "example": "--fields FIELDS"
+          },
+          {
+            "flag": "--batch-concurrency <n>",
+            "description": "Giới hạn số yêu cầu chi tiết chạy đồng thời",
+            "example": "--batch-concurrency 10"
+          },
+          {
+            "flag": "--strict",
+            "description": "Báo lỗi khi một phần của truy vấn nhiều mục thất bại",
+            "example": "--strict"
+          }
+        ]
+      },
+      {
+        "id": "twg-talent-position-me",
+        "canonicalCommand": "twg talent position me",
+        "title": "Xem tài khoản hiện tại của vị trí của Talent",
+        "command": "twg talent position me",
+        "description": "Xem tài khoản hiện tại của vị trí của Talent.",
+        "example": "twg talent position me -o json",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "talent",
+          "position",
+          "me"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--fields <fields>",
+            "description": "Các trường cần lấy, thường ngăn cách bằng dấu phẩy; có thể nhập nhiều giá trị",
+            "example": "--fields FIELDS"
+          }
+        ]
+      },
+      {
+        "id": "twg-talent-position-query",
+        "canonicalCommand": "twg talent position query",
+        "title": "Tra cứu vị trí của Talent",
+        "command": "twg talent position query",
+        "description": "Tra cứu vị trí của Talent.",
+        "example": "twg talent position query --group-by focusArea",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "talent",
+          "position",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--rql <query>",
+            "description": "Tham số rql",
+            "example": "--rql RQL"
+          },
+          {
+            "flag": "--first <number>",
+            "description": "Số phần tử của trang đầu/tiếp theo",
+            "example": "--first 10"
+          },
+          {
+            "flag": "--after <cursor>",
+            "description": "Con trỏ hoặc mốc bắt đầu theo lệnh",
+            "example": "--after AFTER"
+          },
+          {
+            "flag": "--fields <fields>",
+            "description": "Các trường cần lấy, thường ngăn cách bằng dấu phẩy; có thể nhập nhiều giá trị",
+            "example": "--fields FIELDS"
+          },
+          {
+            "flag": "--group-by <field>",
+            "description": "Tham số group-by; có thể nhập nhiều giá trị",
+            "example": "--group-by GROUP_BY"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "trello-board",
+    "title": "Trello · bảng",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-trello-board-close",
+        "canonicalCommand": "twg trello board close",
+        "title": "Đóng bảng của Trello",
+        "command": "twg trello board close --board <id>",
+        "description": "Đóng bảng của Trello.",
+        "example": "twg trello board close --board abc123",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "trello",
+          "board",
+          "close"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--board <id>",
+            "description": "Bảng; bắt buộc",
+            "example": "--board BOARD"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng; mặc định: false",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-trello-board-get",
+        "canonicalCommand": "twg trello board get",
+        "title": "Đọc bảng của Trello",
+        "command": "twg trello board get --board <id>",
+        "description": "Đọc bảng của Trello.",
+        "example": "twg trello board get --board ari:cloud:trello::board/workspace/{workspaceId}/{boardId}",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "trello",
+          "board",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--board <id>",
+            "description": "Bảng; bắt buộc",
+            "example": "--board BOARD"
+          },
+          {
+            "flag": "--include-custom-fields",
+            "description": "Kèm custom-fields; mặc định: false",
+            "example": "--include-custom-fields"
+          },
+          {
+            "flag": "--include-labels",
+            "description": "Kèm nhãn; mặc định: false",
+            "example": "--include-labels"
+          },
+          {
+            "flag": "--include-power-ups",
+            "description": "Kèm power-ups; mặc định: false",
+            "example": "--include-power-ups"
+          },
+          {
+            "flag": "--include-prefs",
+            "description": "Kèm prefs; mặc định: false",
+            "example": "--include-prefs"
+          }
+        ]
+      },
+      {
+        "id": "twg-trello-board-list-query",
+        "canonicalCommand": "twg trello board list query",
+        "title": "Tra cứu list của bảng của Trello",
+        "command": "twg trello board list query --board <ari>",
+        "description": "Tra cứu list của bảng của Trello.",
+        "example": "twg trello board list query --board ari:cloud:trello::board/workspace/{workspaceId}/{boardId}",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "trello",
+          "board",
+          "list",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--board <ari>",
+            "description": "Bảng; bắt buộc",
+            "example": "--board RESOURCE_ARI"
+          },
+          {
+            "flag": "--closed <closed>",
+            "description": "Tham số closed",
+            "example": "--closed CLOSED"
+          },
+          {
+            "flag": "--first <number>",
+            "description": "Số phần tử của trang đầu/tiếp theo; mặc định: \"20\"",
+            "example": "--first 10"
+          },
+          {
+            "flag": "--after <after>",
+            "description": "Con trỏ hoặc mốc bắt đầu theo lệnh",
+            "example": "--after AFTER"
+          }
+        ]
+      },
+      {
+        "id": "twg-trello-board-member-query",
+        "canonicalCommand": "twg trello board member query",
+        "title": "Tra cứu thành viên của bảng của Trello",
+        "command": "twg trello board member query --board <ari>",
+        "description": "Tra cứu thành viên của bảng của Trello.",
+        "example": "twg trello board member query --board ari:cloud:trello::board/workspace/{workspaceId}/{boardId}",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "trello",
+          "board",
+          "member",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--board <ari>",
+            "description": "Bảng; bắt buộc",
+            "example": "--board RESOURCE_ARI"
+          },
+          {
+            "flag": "--member-id <memberId>",
+            "description": "ID thành viên",
+            "example": "--member-id 12345"
+          },
+          {
+            "flag": "--type <type>",
+            "description": "Loại tài nguyên hoặc nội dung theo lệnh",
+            "example": "--type TYPE"
+          },
+          {
+            "flag": "--first <number>",
+            "description": "Số phần tử của trang đầu/tiếp theo; mặc định: \"20\"",
+            "example": "--first 10"
+          },
+          {
+            "flag": "--after <after>",
+            "description": "Con trỏ hoặc mốc bắt đầu theo lệnh",
+            "example": "--after AFTER"
+          }
+        ]
+      },
+      {
+        "id": "twg-trello-board-reopen",
+        "canonicalCommand": "twg trello board reopen",
+        "title": "Mở lại bảng của Trello",
+        "command": "twg trello board reopen --board <id> --keep-billable-guests <keepBillableGuests>",
+        "description": "Mở lại bảng của Trello.",
+        "example": "twg trello board reopen --board abc123",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "trello",
+          "board",
+          "reopen"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--board <id>",
+            "description": "Bảng; bắt buộc",
+            "example": "--board BOARD"
+          },
+          {
+            "flag": "--keep-billable-guests <keepBillableGuests>",
+            "description": "Tham số keep-billable-guests; bắt buộc",
+            "example": "--keep-billable-guests KEEP_BILLABLE_GUESTS"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng; mặc định: false",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-trello-board-update",
+        "canonicalCommand": "twg trello board update",
+        "title": "Cập nhật bảng của Trello",
+        "command": "twg trello board update --board <id>",
+        "description": "Cập nhật bảng của Trello.",
+        "example": "twg trello board update --board abc123 --name \"Renamed Board\"",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "trello",
+          "board",
+          "update"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--board <id>",
+            "description": "Bảng; bắt buộc",
+            "example": "--board BOARD"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Tên",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--description <description>",
+            "description": "Mô tả",
+            "example": "--description 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng; mặc định: false",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      }
+    ]
+  },
+  {
+    "id": "trello-card",
+    "title": "Trello · thẻ",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-trello-card-add-label",
+        "canonicalCommand": "twg trello card add-label",
+        "title": "Thêm nhãn thẻ của Trello",
+        "command": "twg trello card add-label --card <id>",
+        "description": "Thêm nhãn thẻ của Trello.",
+        "example": "twg trello card add-label --card abc123 --label-id xyz789",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "trello",
+          "card",
+          "add-label"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--card <id>",
+            "description": "Thẻ; bắt buộc",
+            "example": "--card CARD"
+          },
+          {
+            "flag": "--label-id <labelId>",
+            "description": "ID nhãn; có thể nhập nhiều giá trị; mặc định: []",
+            "example": "--label-id 12345"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng; mặc định: false",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      }
+    ]
+  }
+]

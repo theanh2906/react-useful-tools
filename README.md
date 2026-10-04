@@ -28,7 +28,7 @@ A beautiful, modern React application for pregnancy tracking and productivity to
 
 ### Development
 
-- **CLI Cheatsheets** - Read-only, colorful references for GitHub CLI (`gh`), Teamwork Graph CLI (`twg`), and Git, with topic filters, accent-insensitive search, practical examples, copy controls, and official sources at `/cheatsheets`
+- **CLI Cheatsheets** - Read-only, colorful references for GitHub CLI (`gh`), Teamwork Graph CLI (`twg`), and Git, with version-bound full inventories, key options, topic filters, accent-insensitive full-dataset search, pagination/Show all, copyable examples and templates, and official sources at `/cheatsheets`
 
 ### Utilities
 
@@ -169,4 +169,4 @@ For growing families everywhere. Track your pregnancy journey with beautiful, in
 
 ## CLI Cheatsheet checks
 
-Run `npm run test:cheatsheets` for reference-data and search/filter regression tests. Commands in examples are never executed by these tests or the page. Source notes live in `docs/cheatsheets-reference.md`.
+Run `npm run test:cheatsheets` for reference-data, search/filter, pagination, and exact-inventory coverage regression tests. Commands in examples are never executed by these tests or the page. Source notes live in `docs/cheatsheets-reference.md`.

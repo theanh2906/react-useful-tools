@@ -1,12 +1,26 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
+import { gunzipSync } from 'node:zlib';
 import ts from 'typescript';
 
 // Transpile the two dependency-free modules with the project's TypeScript,
 // so these tests also run on the README's supported Node 18+ runtimes.
 async function loadTypeScript(relativePath) {
-  const source = await readFile(new URL(relativePath, import.meta.url), 'utf8');
+  const sourceUrl = new URL(relativePath, import.meta.url);
+  let source = await readFile(sourceUrl, 'utf8');
+  // Resolve the reference's small static JSON modules without a runtime test dependency.
+  for (const match of [
+    ...source.matchAll(/^import (\w+) from '([^']+\.json)';$/gm),
+  ]) {
+    const json = JSON.parse(
+      await readFile(new URL(match[2], sourceUrl), 'utf8')
+    );
+    source = source.replace(
+      match[0],
+      `const ${match[1]} = ${JSON.stringify(json)};`
+    );
+  }
   const { outputText } = ts.transpileModule(source, {
     compilerOptions: {
       module: ts.ModuleKind.ESNext,
@@ -60,6 +74,14 @@ test('all three references have unique groups, commands, examples, and official 
         if (command.risk === 'destructive')
           assert.ok(command.warning?.length > 0);
         assert.equal(new URL(command.sourceUrl).protocol, 'https:');
+        if (command.canonicalCommand)
+          assert.ok(command.canonicalCommand.trim());
+        if (command.status)
+          assert.ok(['preview', 'deprecated'].includes(command.status));
+        for (const option of command.options ?? []) {
+          assert.ok(option.flag.trim());
+          assert.ok(option.description.trim());
+        }
       }
     }
   }
@@ -91,6 +113,11 @@ test('search matches example flags and requires all query words', () => {
             command.description,
             command.example,
             ...command.tags,
+            ...(command.options ?? []).flatMap((option) => [
+              option.flag,
+              option.description,
+              option.example ?? '',
+            ]),
           ].join(' ')
         ).includes('--web')
       )
@@ -125,4 +152,122 @@ test('TWG enriched commands disclose billing implications', () => {
       .flatMap((group) => group.commands)
       .some((command) => command.billingNote)
   );
+});
+
+test('pagination preserves grouping and searches still cover off-page entries', async () => {
+  const { CHEATSHEET_PAGE_SIZE, paginateCheatsheetGroups } =
+    await loadTypeScript('../src/lib/cheatsheets.ts');
+  const groups = Array.from({ length: 3 }, (_, groupIndex) => ({
+    id: `fixture-${groupIndex}`,
+    title: `Fixture ${groupIndex}`,
+    level: groupIndex === 2 ? 'plumbing' : 'core',
+    commands: Array.from({ length: 40 }, (_, index) => ({
+      id: `fixture-${groupIndex}-${index}`,
+      title: `Command ${groupIndex}-${index}`,
+      command: `tool action-${groupIndex}-${index}`,
+      example: `tool action-${groupIndex}-${index} --value example`,
+      description: 'A test command',
+      risk: 'read',
+      tags: ['fixture'],
+      sourceUrl: 'https://example.com/',
+      options: [
+        { flag: '--advanced-filter', description: 'Unique searchable option' },
+      ],
+    })),
+  }));
+  const before = JSON.stringify(groups);
+  const count = (items) =>
+    items.reduce((sum, group) => sum + group.commands.length, 0);
+  const first = paginateCheatsheetGroups(groups, 1);
+  const second = paginateCheatsheetGroups(groups, 2);
+  const third = paginateCheatsheetGroups(groups, 3);
+  assert.equal(count(first), CHEATSHEET_PAGE_SIZE);
+  assert.equal(first[1].commands.length, 8);
+  assert.equal(second[0].commands[0].id, 'fixture-1-8');
+  assert.equal(count(second), CHEATSHEET_PAGE_SIZE);
+  assert.equal(count(third), 24);
+  assert.equal(third[0].level, 'plumbing');
+  assert.equal(
+    new Set(
+      [...first, ...second, ...third].flatMap((group) =>
+        group.commands.map((command) => command.id)
+      )
+    ).size,
+    120
+  );
+  assert.equal(count(filterCheatsheetGroups(groups, 'action-2-39')), 1);
+  assert.equal(count(filterCheatsheetGroups(groups, '--advanced-filter')), 120);
+  assert.deepEqual(paginateCheatsheetGroups(groups, 4), []);
+  assert.deepEqual(paginateCheatsheetGroups(groups, 1, 0), []);
+  assert.deepEqual(paginateCheatsheetGroups(groups, 0), first);
+  assert.equal(JSON.stringify(groups), before);
+});
+
+test('declared coverage exactly matches pinned inventories, independently of recipe counts', async () => {
+  const manifest = JSON.parse(
+    await readFile(
+      new URL('../docs/cheatsheets-coverage.json', import.meta.url),
+      'utf8'
+    )
+  );
+  assert.equal(manifest.schemaVersion, 1);
+  assert.deepEqual(manifest.tools.map((tool) => tool.id).sort(), [
+    'gh',
+    'git',
+    'twg',
+  ]);
+  for (const reference of manifest.tools) {
+    const sheet = cheatsheets.find((tool) => tool.id === reference.id);
+    const entries = sheet.groups.flatMap((group) => group.commands);
+    const actual = [
+      ...new Set(entries.map((command) => command.canonicalCommand)),
+    ].sort();
+    assert.ok(
+      actual.every(
+        (command) => typeof command === 'string' && command.length > 0
+      )
+    );
+    const expected = [...reference.canonicalCommands].sort();
+    assert.equal(
+      new Set(expected).size,
+      expected.length,
+      `${sheet.id}: duplicate inventory entry`
+    );
+    assert.deepEqual(
+      actual,
+      expected,
+      `${sheet.id}: missing or unexplained canonical command`
+    );
+    assert.equal(sheet.coverage.totalCommands, expected.length);
+    assert.equal(sheet.coverage.coveredCommands, actual.length);
+    assert.equal(reference.displayEntries, entries.length);
+    assert.equal(sheet.coverage.inventoryVersion, reference.inventoryVersion);
+    assert.equal(new URL(reference.referenceUrl).protocol, 'https:');
+    const sourceBytes = await readFile(
+      new URL(`../docs/${reference.sourceManifest}`, import.meta.url)
+    );
+    const sourceManifest = JSON.parse(
+      (reference.sourceManifest.endsWith('.gz')
+        ? gunzipSync(sourceBytes)
+        : sourceBytes
+      ).toString('utf8')
+    );
+    assert.equal(sourceManifest.tool, reference.id);
+    assert.ok(sourceManifest.inventory?.length > 0);
+    for (const command of entries) {
+      if (command.exampleKind)
+        assert.ok(
+          ['usage', 'template', 'discovery'].includes(command.exampleKind)
+        );
+      if (
+        command.exampleKind === 'template' ||
+        command.exampleKind === 'discovery'
+      ) {
+        assert.ok(
+          command.warning?.length > 0,
+          `${command.id}: a partial template must explain required input`
+        );
+      }
+    }
+  }
 });

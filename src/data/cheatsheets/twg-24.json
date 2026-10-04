@@ -1,0 +1,1213 @@
+[
+  {
+    "id": "jira-space",
+    "title": "Jira · space",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-jira-space-update",
+        "canonicalCommand": "twg jira space update",
+        "title": "Cập nhật space của Jira",
+        "command": "twg jira space update",
+        "description": "Cập nhật space của Jira.",
+        "example": "twg jira space update --id-or-key PROJ --name 'Platform Project' --description 'Delivery project' --site demo",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jira",
+          "space",
+          "update"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn; không dùng cùng --input-json",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "--input-json <json>",
+            "description": "Payload JSON theo schema của lệnh; không dùng cùng --variables-json",
+            "example": "--input-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--id-or-key <idOrKey>",
+            "description": "Tham số id-or-key",
+            "example": "--id-or-key DEMO"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Tên",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--key <key>",
+            "description": "Mã tài nguyên",
+            "example": "--key DEMO-123"
+          },
+          {
+            "flag": "--lead-account-id <accountId>",
+            "description": "ID lead-account",
+            "example": "--lead-account-id ACCOUNT_ID"
+          },
+          {
+            "flag": "--description <description>",
+            "description": "Mô tả",
+            "example": "--description 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--url <url>",
+            "description": "URL của tài nguyên",
+            "example": "--url https://example.atlassian.net/browse/DEMO-123"
+          },
+          {
+            "flag": "--assignee-type <assigneeType>",
+            "description": "Tham số assignee-type",
+            "example": "--assignee-type ASSIGNEE_TYPE"
+          },
+          {
+            "flag": "--category-id <categoryId>",
+            "description": "ID category",
+            "example": "--category-id 12345"
+          },
+          {
+            "flag": "--expand <expand>",
+            "description": "Tham số expand",
+            "example": "--expand EXPAND"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-jira-space-version-counts",
+        "canonicalCommand": "twg jira space version counts",
+        "title": "Xem số lượng của phiên bản của space của Jira",
+        "command": "twg jira space version counts",
+        "description": "Xem số lượng của phiên bản của space của Jira.",
+        "example": "twg jira space version counts",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jira",
+          "space",
+          "version",
+          "counts"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên",
+            "example": "--id 12345"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-space-version-create",
+        "canonicalCommand": "twg jira space version create",
+        "title": "Tạo phiên bản của space của Jira",
+        "command": "twg jira space version create",
+        "description": "Tạo phiên bản của space của Jira.",
+        "example": "twg jira space version create --key DEMO --name 'v0.1-demo' --release-date 2026-10-30",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jira",
+          "space",
+          "version",
+          "create"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--key <key>",
+            "description": "Mã tài nguyên",
+            "example": "--key DEMO-123"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Tên",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--description <description>",
+            "description": "Mô tả",
+            "example": "--description 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--start-date <date>",
+            "description": "Tham số start-date",
+            "example": "--start-date 2026-10-01"
+          },
+          {
+            "flag": "--release-date <date>",
+            "description": "Tham số release-date",
+            "example": "--release-date 2026-10-01"
+          },
+          {
+            "flag": "--released <boolean>",
+            "description": "Tham số released",
+            "example": "--released RELEASED"
+          },
+          {
+            "flag": "--archived <boolean>",
+            "description": "Tham số archived",
+            "example": "--archived ARCHIVED"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-space-version-delete",
+        "canonicalCommand": "twg jira space version delete",
+        "title": "Xóa phiên bản của space của Jira",
+        "command": "twg jira space version delete",
+        "description": "Xóa phiên bản của space của Jira.",
+        "example": "twg jira space version delete --id 12345",
+        "exampleKind": "usage",
+        "risk": "destructive",
+        "tags": [
+          "jira",
+          "space",
+          "version",
+          "delete"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--move-fix-issues-to <versionId>",
+            "description": "Tham số move-fix-issues-to",
+            "example": "--move-fix-issues-to MOVE_FIX_ISSUES_TO"
+          },
+          {
+            "flag": "--move-affected-issues-to <versionId>",
+            "description": "Tham số move-affected-issues-to",
+            "example": "--move-affected-issues-to MOVE_AFFECTED_ISSUES_TO"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên",
+            "example": "--id 12345"
+          }
+        ],
+        "warning": "Có thể xóa dữ liệu, thu hồi quyền hoặc gỡ cấu hình. Đọc lại đối tượng và khả năng khôi phục; ưu tiên --dry-run nếu lệnh hỗ trợ. Không thêm --yes khi chưa kiểm tra. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-space-version-get",
+        "canonicalCommand": "twg jira space version get",
+        "title": "Đọc phiên bản của space của Jira",
+        "command": "twg jira space version get <id>",
+        "description": "Đọc phiên bản của space của Jira.",
+        "example": "twg jira space version get 12345",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jira",
+          "space",
+          "version",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-space-version-merge",
+        "canonicalCommand": "twg jira space version merge",
+        "title": "Merge phiên bản của space của Jira",
+        "command": "twg jira space version merge",
+        "description": "Merge phiên bản của space của Jira.",
+        "example": "twg jira space version merge --id 12345 --move-issues-to 67890",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jira",
+          "space",
+          "version",
+          "merge"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--move-issues-to <versionId>",
+            "description": "Tham số move-issues-to",
+            "example": "--move-issues-to MOVE_ISSUES_TO"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên",
+            "example": "--id 12345"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-space-version-move",
+        "canonicalCommand": "twg jira space version move",
+        "title": "Di chuyển phiên bản của space của Jira",
+        "command": "twg jira space version move",
+        "description": "Di chuyển phiên bản của space của Jira.",
+        "example": "twg jira space version move --id 12345 --position Last",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jira",
+          "space",
+          "version",
+          "move"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--after <versionUrl>",
+            "description": "Con trỏ hoặc mốc bắt đầu theo lệnh",
+            "example": "--after AFTER"
+          },
+          {
+            "flag": "--position <position>",
+            "description": "Vị trí",
+            "example": "--position POSITION"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên",
+            "example": "--id 12345"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-space-version-update",
+        "canonicalCommand": "twg jira space version update",
+        "title": "Cập nhật phiên bản của space của Jira",
+        "command": "twg jira space version update",
+        "description": "Cập nhật phiên bản của space của Jira.",
+        "example": "twg jira space version update --id 12345 --name 'v0.2-demo'",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jira",
+          "space",
+          "version",
+          "update"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Tên",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--description <description>",
+            "description": "Mô tả",
+            "example": "--description 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--start-date <date>",
+            "description": "Tham số start-date",
+            "example": "--start-date 2026-10-01"
+          },
+          {
+            "flag": "--release-date <date>",
+            "description": "Tham số release-date",
+            "example": "--release-date 2026-10-01"
+          },
+          {
+            "flag": "--released <boolean>",
+            "description": "Tham số released",
+            "example": "--released RELEASED"
+          },
+          {
+            "flag": "--archived <boolean>",
+            "description": "Tham số archived",
+            "example": "--archived ARCHIVED"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên",
+            "example": "--id 12345"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-space-versions-query",
+        "canonicalCommand": "twg jira space versions query",
+        "title": "Tra cứu phiên bản của space của Jira",
+        "command": "twg jira space versions query",
+        "description": "Tra cứu phiên bản của space của Jira.",
+        "example": "twg jira space versions query",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jira",
+          "space",
+          "versions",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--after <after>",
+            "description": "Con trỏ hoặc mốc bắt đầu theo lệnh",
+            "example": "--after AFTER"
+          },
+          {
+            "flag": "--filter <filter>",
+            "description": "Bộ lọc",
+            "example": "--filter FILTER"
+          },
+          {
+            "flag": "--search-string <searchString>",
+            "description": "Tham số search-string",
+            "example": "--search-string SEARCH_STRING"
+          },
+          {
+            "flag": "--sort-by <sortBy>",
+            "description": "Tham số sort-by",
+            "example": "--sort-by SORT_BY"
+          },
+          {
+            "flag": "--key <key>",
+            "description": "Mã tài nguyên",
+            "example": "--key DEMO-123"
+          },
+          {
+            "flag": "--limit <limit>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh",
+            "example": "--limit 10"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      }
+    ]
+  },
+  {
+    "id": "jira-sprint",
+    "title": "Jira · sprint",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-jira-sprint-complete",
+        "canonicalCommand": "twg jira sprint complete",
+        "title": "Hoàn thành sprint của Jira",
+        "command": "twg jira sprint complete",
+        "description": "Hoàn thành sprint của Jira.",
+        "example": "twg jira sprint complete --id 17 --site demo",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jira",
+          "sprint",
+          "complete"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--input-json <json>",
+            "description": "Payload JSON theo schema của lệnh",
+            "example": "--input-json '{}'"
+          },
+          {
+            "flag": "--board-id <boardId>",
+            "description": "ID bảng",
+            "example": "--board-id 12345"
+          },
+          {
+            "flag": "--end-date <endDate>",
+            "description": "Tham số end-date",
+            "example": "--end-date 2026-10-01"
+          },
+          {
+            "flag": "--goal <goal>",
+            "description": "Mục tiêu",
+            "example": "--goal GOAL"
+          },
+          {
+            "flag": "--incomplete-issues-destination-id <incompleteIssuesDestinationId>",
+            "description": "ID incomplete-issues-destination",
+            "example": "--incomplete-issues-destination-id 12345"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Tên",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--start-date <startDate>",
+            "description": "Tham số start-date",
+            "example": "--start-date 2026-10-01"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên",
+            "example": "--id 12345"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-jira-sprint-create",
+        "canonicalCommand": "twg jira sprint create",
+        "title": "Tạo sprint của Jira",
+        "command": "twg jira sprint create",
+        "description": "Tạo sprint của Jira.",
+        "example": "twg jira sprint create --board-id 42 --name 'Sprint 2026-Q2-W3' --goal 'Ship checkout v2' --site demo",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jira",
+          "sprint",
+          "create"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--input-json <json>",
+            "description": "Payload JSON theo schema của lệnh",
+            "example": "--input-json '{}'"
+          },
+          {
+            "flag": "--board-id <boardId>",
+            "description": "ID bảng",
+            "example": "--board-id 12345"
+          },
+          {
+            "flag": "--end-date <endDate>",
+            "description": "Tham số end-date",
+            "example": "--end-date 2026-10-01"
+          },
+          {
+            "flag": "--goal <goal>",
+            "description": "Mục tiêu",
+            "example": "--goal GOAL"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Tên",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--start-date <startDate>",
+            "description": "Tham số start-date",
+            "example": "--start-date 2026-10-01"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-jira-sprint-delete",
+        "canonicalCommand": "twg jira sprint delete",
+        "title": "Xóa sprint của Jira",
+        "command": "twg jira sprint delete",
+        "description": "Xóa sprint của Jira.",
+        "example": "twg jira sprint delete --id 17 --site demo",
+        "exampleKind": "usage",
+        "risk": "destructive",
+        "tags": [
+          "jira",
+          "sprint",
+          "delete"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--input-json <json>",
+            "description": "Payload JSON theo schema của lệnh",
+            "example": "--input-json '{}'"
+          },
+          {
+            "flag": "--board-id <boardId>",
+            "description": "ID bảng",
+            "example": "--board-id 12345"
+          },
+          {
+            "flag": "--sprint-id <sprintId>",
+            "description": "ID sprint",
+            "example": "--sprint-id 12345"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên",
+            "example": "--id 12345"
+          }
+        ],
+        "warning": "Có thể xóa dữ liệu, thu hồi quyền hoặc gỡ cấu hình. Đọc lại đối tượng và khả năng khôi phục; ưu tiên --dry-run nếu lệnh hỗ trợ. Không thêm --yes khi chưa kiểm tra."
+      },
+      {
+        "id": "twg-jira-sprint-get",
+        "canonicalCommand": "twg jira sprint get",
+        "title": "Đọc sprint của Jira",
+        "command": "twg jira sprint get <id>",
+        "description": "Đọc sprint của Jira.",
+        "example": "twg jira sprint get 12345",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jira",
+          "sprint",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-sprint-snapshot",
+        "canonicalCommand": "twg jira sprint snapshot",
+        "title": "Xem snapshot của sprint của Jira",
+        "command": "twg jira sprint snapshot",
+        "description": "Xem snapshot của sprint của Jira.",
+        "example": "twg jira sprint snapshot",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jira",
+          "sprint",
+          "snapshot"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--board-id <boardId>",
+            "description": "ID bảng",
+            "example": "--board-id 12345"
+          },
+          {
+            "flag": "--start-at <startAt>",
+            "description": "Tham số start-at",
+            "example": "--start-at 1"
+          },
+          {
+            "flag": "--max-results <maxResults>",
+            "description": "Tham số max-results",
+            "example": "--max-results 10"
+          },
+          {
+            "flag": "--jql <jql>",
+            "description": "Bộ lọc Jira bằng JQL",
+            "example": "--jql 'project = DEMO ORDER BY updated DESC'"
+          },
+          {
+            "flag": "--stale-days <staleDays>",
+            "description": "Tham số stale-days",
+            "example": "--stale-days STALE_DAYS"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-sprint-start",
+        "canonicalCommand": "twg jira sprint start",
+        "title": "Bắt đầu sprint của Jira",
+        "command": "twg jira sprint start",
+        "description": "Bắt đầu sprint của Jira.",
+        "example": "twg jira sprint start --id 12345 --name 'Demo sprint' --start-date 2026-10-05T09:00:00Z --end-date 2026-10-16T17:00:00Z",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jira",
+          "sprint",
+          "start"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--input-json <json>",
+            "description": "Payload JSON theo schema của lệnh",
+            "example": "--input-json '{}'"
+          },
+          {
+            "flag": "--board-id <boardId>",
+            "description": "ID bảng",
+            "example": "--board-id 12345"
+          },
+          {
+            "flag": "--end-date <endDate>",
+            "description": "Tham số end-date",
+            "example": "--end-date 2026-10-01"
+          },
+          {
+            "flag": "--goal <goal>",
+            "description": "Mục tiêu",
+            "example": "--goal GOAL"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Tên",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--start-date <startDate>",
+            "description": "Tham số start-date",
+            "example": "--start-date 2026-10-01"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên",
+            "example": "--id 12345"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-sprint-update",
+        "canonicalCommand": "twg jira sprint update",
+        "title": "Cập nhật sprint của Jira",
+        "command": "twg jira sprint update",
+        "description": "Cập nhật sprint của Jira.",
+        "example": "twg jira sprint update --id 17 --name 'Sprint 2026-Q2-W3' --goal 'Updated goal' --site demo",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jira",
+          "sprint",
+          "update"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--input-json <json>",
+            "description": "Payload JSON theo schema của lệnh",
+            "example": "--input-json '{}'"
+          },
+          {
+            "flag": "--board-id <boardId>",
+            "description": "ID bảng",
+            "example": "--board-id 12345"
+          },
+          {
+            "flag": "--end-date <endDate>",
+            "description": "Tham số end-date",
+            "example": "--end-date 2026-10-01"
+          },
+          {
+            "flag": "--goal <goal>",
+            "description": "Mục tiêu",
+            "example": "--goal GOAL"
+          },
+          {
+            "flag": "--incomplete-issues-destination-id <incompleteIssuesDestinationId>",
+            "description": "ID incomplete-issues-destination",
+            "example": "--incomplete-issues-destination-id 12345"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Tên",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--state <state>",
+            "description": "Trạng thái; dùng đúng giá trị được lệnh hỗ trợ",
+            "example": "--state open"
+          },
+          {
+            "flag": "--start-date <startDate>",
+            "description": "Tham số start-date",
+            "example": "--start-date 2026-10-01"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên",
+            "example": "--id 12345"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-jira-sprint-workitems-query",
+        "canonicalCommand": "twg jira sprint workitems query",
+        "title": "Tra cứu ticket của sprint của Jira",
+        "command": "twg jira sprint workitems query",
+        "description": "Tra cứu ticket của sprint của Jira.",
+        "example": "twg jira sprint workitems query",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jira",
+          "sprint",
+          "workitems",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--sprint-id <sprintId>",
+            "description": "ID sprint",
+            "example": "--sprint-id 12345"
+          },
+          {
+            "flag": "--start-at <startAt>",
+            "description": "Tham số start-at",
+            "example": "--start-at 1"
+          },
+          {
+            "flag": "--max-results <maxResults>",
+            "description": "Tham số max-results",
+            "example": "--max-results 10"
+          },
+          {
+            "flag": "--jql <jql>",
+            "description": "Bộ lọc Jira bằng JQL",
+            "example": "--jql 'project = DEMO ORDER BY updated DESC'"
+          },
+          {
+            "flag": "--fields <fields>",
+            "description": "Các trường cần lấy, thường ngăn cách bằng dấu phẩy",
+            "example": "--fields FIELDS"
+          },
+          {
+            "flag": "--expand <expand>",
+            "description": "Tham số expand",
+            "example": "--expand EXPAND"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên",
+            "example": "--id 12345"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      }
+    ]
+  },
+  {
+    "id": "jsm-agents",
+    "title": "JSM · agent",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "twg-jsm-agents-availability-get",
+        "canonicalCommand": "twg jsm agents availability get",
+        "title": "Đọc trạng thái sẵn sàng của agent của JSM",
+        "command": "twg jsm agents availability get",
+        "description": "Đọc trạng thái sẵn sàng của agent của JSM.",
+        "example": "twg jsm agents availability get --site demo",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "agents",
+          "availability",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--project <keyOrId>",
+            "description": "Dự án",
+            "example": "--project DEMO"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      },
+      {
+        "id": "twg-jsm-agents-availability-list",
+        "canonicalCommand": "twg jsm agents availability list",
+        "title": "Liệt kê trạng thái sẵn sàng của agent của JSM",
+        "command": "twg jsm agents availability list --project <keyOrId>",
+        "description": "Liệt kê trạng thái sẵn sàng của agent của JSM.",
+        "example": "twg jsm agents availability list --project TSM --site demo",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "agents",
+          "availability",
+          "list"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--project <keyOrId>",
+            "description": "Dự án; bắt buộc",
+            "example": "--project DEMO"
+          },
+          {
+            "flag": "--status <status>",
+            "description": "Trạng thái; giá trị và ý nghĩa phụ thuộc lệnh; có thể nhập nhiều giá trị",
+            "example": "--status open"
+          },
+          {
+            "flag": "--team-id <id>",
+            "description": "Id đội nhóm; có thể nhập nhiều giá trị",
+            "example": "--team-id 12345"
+          },
+          {
+            "flag": "--team-ari <ari>",
+            "description": "ARI đội nhóm; có thể nhập nhiều giá trị",
+            "example": "--team-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--first <number>",
+            "description": "Số phần tử của trang đầu/tiếp theo",
+            "example": "--first 10"
+          },
+          {
+            "flag": "--after <cursor>",
+            "description": "Con trỏ hoặc mốc bắt đầu theo lệnh",
+            "example": "--after AFTER"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      },
+      {
+        "id": "twg-jsm-agents-availability-set",
+        "canonicalCommand": "twg jsm agents availability set",
+        "title": "Đặt trạng thái sẵn sàng của agent của JSM",
+        "command": "twg jsm agents availability set --project <keyOrId> --status <status>",
+        "description": "Đặt trạng thái sẵn sàng của agent của JSM.",
+        "example": "twg jsm agents availability set --project TSM --status away --site demo",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jsm",
+          "agents",
+          "availability",
+          "set"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--project <keyOrId>",
+            "description": "Dự án; bắt buộc",
+            "example": "--project DEMO"
+          },
+          {
+            "flag": "--status <status>",
+            "description": "Trạng thái; giá trị và ý nghĩa phụ thuộc lệnh; bắt buộc",
+            "example": "--status open"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      }
+    ]
+  }
+]

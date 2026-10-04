@@ -1,0 +1,1273 @@
+[
+  {
+    "id": "git-multi-worktree",
+    "title": "Porcelain · Worktree, submodule & sparse",
+    "level": "core",
+    "commands": [
+      {
+        "id": "git-full-worktree-prune",
+        "canonicalCommand": "git worktree",
+        "title": "Xem metadata worktree lỗi thời",
+        "command": "git worktree prune --dry-run [--verbose]",
+        "description": "Xem metadata của worktree đã mất thư mục dự kiến sẽ được dọn.",
+        "example": "git worktree prune --dry-run --verbose",
+        "risk": "read",
+        "tags": [
+          "worktree",
+          "git-multi-worktree",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-worktree",
+        "options": [
+          {
+            "flag": "--dry-run / -n",
+            "description": "Chỉ xem trước"
+          },
+          {
+            "flag": "--expire TIME",
+            "description": "Chỉ dọn worktree thiếu lâu hơn mốc"
+          },
+          {
+            "flag": "--verbose / -v",
+            "description": "Hiện chi tiết"
+          }
+        ],
+        "warning": "Bỏ --dry-run sẽ xóa metadata; worktree tạm không mount nên được lock trước."
+      },
+      {
+        "id": "git-full-worktree-remove",
+        "canonicalCommand": "git worktree",
+        "title": "Gỡ linked worktree",
+        "command": "git worktree remove WORKTREE",
+        "description": "Xóa thư mục và metadata linked worktree sạch. Nhánh vẫn còn trừ khi xóa riêng.",
+        "example": "git worktree remove ../urgent-fix",
+        "risk": "destructive",
+        "tags": [
+          "worktree",
+          "git-multi-worktree",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-worktree",
+        "options": [
+          {
+            "flag": "--force / -f",
+            "description": "Ép gỡ cả worktree không sạch, nguy hiểm"
+          }
+        ],
+        "warning": "Kiểm tra thay đổi tracked và untracked. --force có thể xóa cả dữ liệu chưa lưu; main worktree không được gỡ bằng lệnh này."
+      },
+      {
+        "id": "git-full-worktree-repair",
+        "canonicalCommand": "git worktree",
+        "title": "Sửa liên kết worktree",
+        "command": "git worktree repair [PATH...]",
+        "description": "Khôi phục đường dẫn metadata sau khi main/linked worktree bị di chuyển ngoài Git.",
+        "example": "git worktree repair ../urgent-fix-renamed",
+        "risk": "write",
+        "tags": [
+          "worktree",
+          "git-multi-worktree",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-worktree",
+        "options": [
+          {
+            "flag": "--relative-paths / --no-relative-paths",
+            "description": "Chọn liên kết tương đối hoặc tuyệt đối"
+          }
+        ],
+        "warning": "Chạy từ kho đúng và chỉ truyền vị trí thực tế; sao lưu metadata nếu kho đang hỏng."
+      },
+      {
+        "id": "git-full-submodule-status",
+        "canonicalCommand": "git submodule",
+        "title": "Xem trạng thái submodule",
+        "command": "git submodule status [--recursive] [-- PATH...]",
+        "description": "Hiện commit mà mỗi submodule đang checkout và dấu chỉ sai khác với gitlink trong superproject.",
+        "example": "git submodule status --recursive",
+        "risk": "read",
+        "tags": [
+          "submodule",
+          "git-multi-worktree",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-submodule",
+        "options": [
+          {
+            "flag": "--recursive",
+            "description": "Đi qua submodule lồng nhau"
+          },
+          {
+            "flag": "--cached",
+            "description": "Dùng commit ghi trong index superproject"
+          },
+          {
+            "flag": "--quiet",
+            "description": "Giảm thông báo"
+          }
+        ]
+      },
+      {
+        "id": "git-full-submodule-add",
+        "canonicalCommand": "git submodule",
+        "title": "Thêm submodule",
+        "command": "git submodule add [OPTIONS] URL PATH",
+        "description": "Clone repository con và ghi .gitmodules cùng gitlink vào index của superproject.",
+        "example": "git submodule add https://github.com/git/git.git vendor/git",
+        "risk": "write",
+        "tags": [
+          "submodule",
+          "git-multi-worktree",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-submodule",
+        "options": [
+          {
+            "flag": "-b BRANCH",
+            "description": "Ghi nhánh theo dõi cho update --remote"
+          },
+          {
+            "flag": "--depth N",
+            "description": "Shallow clone submodule"
+          },
+          {
+            "flag": "--name NAME",
+            "description": "Đặt tên logical khác đường dẫn"
+          }
+        ],
+        "warning": "Tăng phụ thuộc nguồn bên ngoài. Xem .gitmodules và commit submodule trước khi commit superproject."
+      },
+      {
+        "id": "git-full-submodule-init",
+        "canonicalCommand": "git submodule",
+        "title": "Khởi tạo cấu hình submodule",
+        "command": "git submodule init [-- PATH...]",
+        "description": "Sao chép thông tin submodule đã khai báo vào cấu hình local; chưa checkout nội dung.",
+        "example": "git submodule init -- vendor/git",
+        "risk": "write",
+        "tags": [
+          "submodule",
+          "git-multi-worktree",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-submodule",
+        "options": [],
+        "warning": "Xem URL trong .gitmodules trước khi update/clone."
+      },
+      {
+        "id": "git-full-submodule-update",
+        "canonicalCommand": "git submodule",
+        "title": "Checkout đúng commit submodule",
+        "command": "git submodule update [OPTIONS] [-- PATH...]",
+        "description": "Clone khi cần và cập nhật submodule tới commit mà superproject ghi nhận.",
+        "example": "git submodule update --init --recursive",
+        "risk": "write",
+        "tags": [
+          "submodule",
+          "git-multi-worktree",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-submodule",
+        "options": [
+          {
+            "flag": "--init",
+            "description": "Khởi tạo submodule chưa có cấu hình"
+          },
+          {
+            "flag": "--recursive",
+            "description": "Cập nhật cả submodule lồng nhau"
+          },
+          {
+            "flag": "--checkout / --merge / --rebase",
+            "description": "Chọn cách tích hợp commit đích"
+          },
+          {
+            "flag": "--remote",
+            "description": "Dùng upstream remote thay gitlink đã ghim"
+          },
+          {
+            "flag": "--jobs N",
+            "description": "Số clone song song"
+          },
+          {
+            "flag": "--force",
+            "description": "Có thể bỏ thay đổi local"
+          }
+        ],
+        "warning": "Có thể tải và checkout mã từ URL .gitmodules. --remote lấy đầu nhánh ngoài commit đã ghim; không dùng nếu cần build tái lập."
+      },
+      {
+        "id": "git-full-submodule-deinit",
+        "canonicalCommand": "git submodule",
+        "title": "Ngừng checkout submodule local",
+        "command": "git submodule deinit [--all | -- PATH...]",
+        "description": "Gỡ đăng ký và working tree submodule local; không xóa khai báo của dự án.",
+        "example": "git submodule deinit -- vendor/git",
+        "risk": "destructive",
+        "tags": [
+          "submodule",
+          "git-multi-worktree",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-submodule",
+        "options": [
+          {
+            "flag": "--all",
+            "description": "Áp dụng mọi submodule"
+          },
+          {
+            "flag": "--force / -f",
+            "description": "Ép gỡ dù có thay đổi local"
+          }
+        ],
+        "warning": "Có thể xóa thư mục làm việc của submodule. Lưu thay đổi trong submodule; --force bỏ bảo vệ."
+      },
+      {
+        "id": "git-full-submodule-set-branch",
+        "canonicalCommand": "git submodule",
+        "title": "Đặt nhánh theo dõi submodule",
+        "command": "git submodule set-branch (--branch BRANCH | --default) -- PATH",
+        "description": "Sửa nhánh mà update --remote dùng cho submodule.",
+        "example": "git submodule set-branch --branch main -- vendor/git",
+        "risk": "write",
+        "tags": [
+          "submodule",
+          "git-multi-worktree",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-submodule",
+        "options": [
+          {
+            "flag": "--branch / -b BRANCH",
+            "description": "Nhánh cụ thể"
+          },
+          {
+            "flag": "--default / -d",
+            "description": "Bỏ ghi đè, dùng nhánh mặc định remote"
+          }
+        ],
+        "warning": "Thay .gitmodules; kiểm tra/commit cấu hình sau khi sửa."
+      },
+      {
+        "id": "git-full-submodule-set-url",
+        "canonicalCommand": "git submodule",
+        "title": "Đổi nguồn submodule",
+        "command": "git submodule set-url -- PATH URL",
+        "description": "Sửa URL submodule và đồng bộ cấu hình remote liên quan.",
+        "example": "git submodule set-url -- vendor/git https://github.com/git/git.git",
+        "risk": "write",
+        "tags": [
+          "submodule",
+          "git-multi-worktree",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-submodule",
+        "options": [],
+        "warning": "Xác minh nguồn tin cậy, .gitmodules và cấu hình trước lần tải tiếp theo."
+      },
+      {
+        "id": "git-full-submodule-sync",
+        "canonicalCommand": "git submodule",
+        "title": "Đồng bộ URL từ .gitmodules",
+        "command": "git submodule sync [--recursive] [-- PATH...]",
+        "description": "Áp URL đã khai báo trong .gitmodules vào cấu hình submodule đã đăng ký.",
+        "example": "git submodule sync --recursive",
+        "risk": "write",
+        "tags": [
+          "submodule",
+          "git-multi-worktree",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-submodule",
+        "options": [
+          {
+            "flag": "--recursive",
+            "description": "Đồng bộ các submodule lồng nhau"
+          }
+        ],
+        "warning": "Xem diff .gitmodules trước; thay URL có thể đổi nơi fetch/push."
+      },
+      {
+        "id": "git-full-submodule-summary",
+        "canonicalCommand": "git submodule",
+        "title": "Tóm tắt commit lệch ở submodule",
+        "command": "git submodule summary [OPTIONS] [-- PATH...]",
+        "description": "Hiện các commit khác giữa gitlink và checkout/index của submodule.",
+        "example": "git submodule summary --summary-limit=10",
+        "risk": "read",
+        "tags": [
+          "submodule",
+          "git-multi-worktree",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-submodule",
+        "options": [
+          {
+            "flag": "--cached",
+            "description": "So sánh commit với index"
+          },
+          {
+            "flag": "--files",
+            "description": "So index với working tree"
+          },
+          {
+            "flag": "--summary-limit=N",
+            "description": "Giới hạn số commit"
+          }
+        ]
+      },
+      {
+        "id": "git-full-submodule-foreach",
+        "canonicalCommand": "git submodule",
+        "title": "Chạy lệnh trong từng submodule",
+        "command": "git submodule foreach [--recursive] COMMAND",
+        "description": "Chạy một chuỗi shell trong các submodule đã checkout; ví dụ chỉ đọc trạng thái.",
+        "example": "git submodule foreach --recursive \"git status --short\"",
+        "risk": "read",
+        "tags": [
+          "submodule",
+          "git-multi-worktree",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-submodule",
+        "options": [
+          {
+            "flag": "--recursive",
+            "description": "Đi qua submodule lồng nhau"
+          },
+          {
+            "flag": "$name / $sm_path / $toplevel",
+            "description": "Biến ngữ cảnh có sẵn trong lệnh"
+          }
+        ],
+        "warning": "Rủi ro phụ thuộc COMMAND: lệnh ghi/xóa sẽ tác động hàng loạt. Shell xử lý chuỗi, không dùng đầu vào không tin cậy."
+      },
+      {
+        "id": "git-full-submodule-absorbgitdirs",
+        "canonicalCommand": "git submodule",
+        "title": "Chuẩn hóa thư mục Git của submodule",
+        "command": "git submodule absorbgitdirs [-- PATH...]",
+        "description": "Chuyển git directory nằm trong submodule vào metadata superproject và để lại file liên kết.",
+        "example": "git submodule absorbgitdirs -- vendor/git",
+        "risk": "write",
+        "tags": [
+          "submodule",
+          "git-multi-worktree",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-submodule",
+        "options": [],
+        "warning": "Thay vị trí metadata; dùng khi chuyển cấu trúc submodule cũ, sao lưu trước nếu cấu hình bất thường."
+      },
+      {
+        "id": "git-full-sparse-list",
+        "canonicalCommand": "git sparse-checkout",
+        "title": "Xem phạm vi sparse-checkout",
+        "command": "git sparse-checkout list",
+        "description": "Liệt kê thư mục hoặc pattern đang được giữ trong working tree.",
+        "example": "git sparse-checkout list",
+        "risk": "read",
+        "tags": [
+          "sparse-checkout",
+          "git-multi-worktree",
+          "core",
+          "experimental"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-sparse-checkout",
+        "options": [],
+        "warning": "Tính năng sparse-checkout còn được manual đánh dấu experimental; công cụ bên ngoài có thể không hiểu sparse index."
+      },
+      {
+        "id": "git-full-sparse-set",
+        "canonicalCommand": "git sparse-checkout",
+        "title": "Chỉ checkout phần cần làm",
+        "command": "git sparse-checkout set [OPTIONS] DIRECTORY...",
+        "description": "Bật/cập nhật sparse-checkout để working tree chỉ giữ các thư mục chọn và file cần thiết theo cone mode.",
+        "example": "git sparse-checkout set --cone src docs",
+        "risk": "write",
+        "tags": [
+          "sparse-checkout",
+          "git-multi-worktree",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-sparse-checkout",
+        "options": [
+          {
+            "flag": "--cone",
+            "description": "Danh sách thư mục, được khuyến nghị"
+          },
+          {
+            "flag": "--sparse-index",
+            "description": "Dùng sparse index; kiểm tra tương thích công cụ"
+          },
+          {
+            "flag": "--stdin",
+            "description": "Đọc danh sách từ stdin"
+          },
+          {
+            "flag": "--no-cone",
+            "description": "Dùng pattern tổng quát, có hạn chế về hiệu năng"
+          },
+          {
+            "flag": "init",
+            "description": "Cú pháp cũ deprecated; set tự khởi tạo cấu hình"
+          }
+        ],
+        "warning": "Thay working tree, index và cấu hình. Có thể xóa ignored file trong thư mục bị loại; sao lưu file build/ignored cần giữ."
+      },
+      {
+        "id": "git-full-sparse-add",
+        "canonicalCommand": "git sparse-checkout",
+        "title": "Mở rộng sparse-checkout",
+        "command": "git sparse-checkout add [--stdin] DIRECTORY...",
+        "description": "Thêm thư mục vào phạm vi hiện tại mà không thay danh sách cũ.",
+        "example": "git sparse-checkout add tests",
+        "risk": "write",
+        "tags": [
+          "sparse-checkout",
+          "git-multi-worktree",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-sparse-checkout",
+        "options": [
+          {
+            "flag": "--stdin",
+            "description": "Đọc danh sách từ stdin"
+          }
+        ],
+        "warning": "Yêu cầu sparse-checkout đã bật. File mới được checkout có thể cần tải blob qua mạng."
+      },
+      {
+        "id": "git-full-sparse-reapply",
+        "canonicalCommand": "git sparse-checkout",
+        "title": "Áp lại quy tắc sparse",
+        "command": "git sparse-checkout reapply [OPTIONS]",
+        "description": "Dọn hình dạng working tree sau merge/rebase hoặc thay đổi khiến file ngoài phạm vi được xuất hiện.",
+        "example": "git sparse-checkout reapply",
+        "risk": "write",
+        "tags": [
+          "sparse-checkout",
+          "git-multi-worktree",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-sparse-checkout",
+        "options": [
+          {
+            "flag": "--no-sparse-index",
+            "description": "Trở về index đầy đủ để tương thích"
+          },
+          {
+            "flag": "--cone / --no-cone",
+            "description": "Đổi cách hiểu quy tắc"
+          }
+        ],
+        "warning": "Giải quyết xung đột và lưu thay đổi trước; kiểm tra file ignored cần giữ."
+      },
+      {
+        "id": "git-full-sparse-disable",
+        "canonicalCommand": "git sparse-checkout",
+        "title": "Checkout lại toàn bộ file",
+        "command": "git sparse-checkout disable",
+        "description": "Tắt sparse-checkout và phục hồi đầy đủ file tracked trong working tree.",
+        "example": "git sparse-checkout disable",
+        "risk": "write",
+        "tags": [
+          "sparse-checkout",
+          "git-multi-worktree",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-sparse-checkout",
+        "options": [],
+        "warning": "Có thể cần nhiều dung lượng và tải nhiều blob của partial clone."
+      },
+      {
+        "id": "git-full-sparse-check-rules",
+        "canonicalCommand": "git sparse-checkout",
+        "title": "Kiểm tra path theo sparse rules",
+        "command": "git sparse-checkout check-rules [OPTIONS]",
+        "description": "Đọc path từ stdin và chỉ in những path được quy tắc hiện tại chọn.",
+        "example": "printf \"src/app.js\ndocs/README.md\n\" | git sparse-checkout check-rules",
+        "risk": "read",
+        "tags": [
+          "sparse-checkout",
+          "git-multi-worktree",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-sparse-checkout",
+        "options": [
+          {
+            "flag": "--rules-file FILE",
+            "description": "Thử với file danh sách/quy tắc khác"
+          },
+          {
+            "flag": "--no-cone",
+            "description": "Đọc file quy tắc ở dạng pattern"
+          },
+          {
+            "flag": "-z",
+            "description": "Path vào/ra được phân tách NUL"
+          }
+        ]
+      },
+      {
+        "id": "git-full-sparse-clean",
+        "canonicalCommand": "git sparse-checkout",
+        "title": "Xem phần ngoài sparse có thể dọn",
+        "command": "git sparse-checkout clean --dry-run [--verbose]",
+        "description": "Xem thư mục/file ngoài định nghĩa sparse mà lệnh clean có thể gỡ; yêu cầu cone mode.",
+        "example": "git sparse-checkout clean --dry-run --verbose",
+        "risk": "read",
+        "tags": [
+          "sparse-checkout",
+          "git-multi-worktree",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-sparse-checkout",
+        "options": [
+          {
+            "flag": "--dry-run",
+            "description": "Chỉ liệt kê"
+          },
+          {
+            "flag": "--verbose",
+            "description": "Hiện từng file"
+          },
+          {
+            "flag": "--force / -f",
+            "description": "Thực sự xóa theo quy tắc"
+          }
+        ],
+        "warning": "Bỏ --dry-run và thêm --force có thể xóa file ngoài phạm vi sparse, kể cả nội dung local. Đọc toàn bộ danh sách trước."
+      }
+    ]
+  },
+  {
+    "id": "git-transfer",
+    "title": "Porcelain · Patch, archive & ghi chú",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "git-full-archive",
+        "canonicalCommand": "git archive",
+        "title": "Xuất snapshot thành archive",
+        "command": "git archive [OPTIONS] TREE [PATH...]",
+        "description": "Tạo tar/zip từ snapshot tracked; không gồm lịch sử Git hoặc nội dung chưa commit.",
+        "example": "git archive --format=zip --output=release.zip HEAD",
+        "risk": "write",
+        "tags": [
+          "archive",
+          "git-transfer",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-archive",
+        "options": [
+          {
+            "flag": "--format=tar|zip",
+            "description": "Chọn định dạng"
+          },
+          {
+            "flag": "--output=FILE / -o FILE",
+            "description": "Ghi file thay stdout"
+          },
+          {
+            "flag": "--prefix=DIR/",
+            "description": "Bọc mọi đường dẫn trong thư mục"
+          },
+          {
+            "flag": "--list",
+            "description": "Liệt kê định dạng hỗ trợ"
+          },
+          {
+            "flag": "--remote=REPO",
+            "description": "Nhờ server tạo archive nếu hỗ trợ"
+          },
+          {
+            "flag": "--worktree-attributes",
+            "description": "Dùng attributes từ working tree"
+          }
+        ],
+        "warning": "File đầu ra có thể bị ghi đè. Kiểm tra export-ignore và dữ liệu được đóng gói trước khi chia sẻ."
+      },
+      {
+        "id": "git-full-bundle-create",
+        "canonicalCommand": "git bundle",
+        "title": "Đóng gói lịch sử Git offline",
+        "command": "git bundle create FILE REVISION_RANGE",
+        "description": "Ghi object và refs vào bundle để chuyển repository không cần kết nối trực tiếp.",
+        "example": "git bundle create backup.bundle --all",
+        "risk": "write",
+        "tags": [
+          "bundle",
+          "git-transfer",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-bundle",
+        "options": [
+          {
+            "flag": "--all",
+            "description": "Toàn bộ refs mà rev-list chọn"
+          },
+          {
+            "flag": "--branches / --tags",
+            "description": "Chỉ nhánh / tag"
+          },
+          {
+            "flag": "--version=N",
+            "description": "Chọn phiên bản định dạng bundle"
+          },
+          {
+            "flag": "--progress",
+            "description": "Hiện tiến độ"
+          }
+        ],
+        "warning": "--all có thể bao gồm refs nội bộ và dữ liệu nhạy cảm trong lịch sử. Bundle không chứa working tree chưa commit."
+      },
+      {
+        "id": "git-full-bundle-verify",
+        "canonicalCommand": "git bundle",
+        "title": "Xác minh bundle",
+        "command": "git bundle verify FILE",
+        "description": "Kiểm tra định dạng và các commit tiền đề mà repository hiện tại cần có để sử dụng bundle.",
+        "example": "git bundle verify backup.bundle",
+        "risk": "read",
+        "tags": [
+          "bundle",
+          "git-transfer",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-bundle",
+        "options": [
+          {
+            "flag": "--quiet / -q",
+            "description": "Giảm thông báo"
+          }
+        ]
+      },
+      {
+        "id": "git-full-bundle-list-heads",
+        "canonicalCommand": "git bundle",
+        "title": "Xem refs trong bundle",
+        "command": "git bundle list-heads FILE [REFNAME...]",
+        "description": "Liệt kê refs được bundle quảng bá mà không nhập object vào kho.",
+        "example": "git bundle list-heads backup.bundle",
+        "risk": "read",
+        "tags": [
+          "bundle",
+          "git-transfer",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-bundle",
+        "options": [
+          {
+            "flag": "REFNAME...",
+            "description": "Chỉ hiện ref chọn"
+          }
+        ]
+      },
+      {
+        "id": "git-full-bundle-unbundle",
+        "canonicalCommand": "git bundle",
+        "title": "Nhập object từ bundle",
+        "command": "git bundle unbundle FILE [REFNAME...]",
+        "description": "Nhập object vào repository và in các ref trong bundle; không tự tạo/cập nhật nhánh từ danh sách in ra.",
+        "example": "git bundle unbundle backup.bundle",
+        "risk": "write",
+        "tags": [
+          "bundle",
+          "git-transfer",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-bundle",
+        "options": [
+          {
+            "flag": "--progress",
+            "description": "Hiện tiến độ giải nén"
+          }
+        ],
+        "warning": "Để cập nhật một ref có kiểm soát, git fetch FILE REFSPEC thường phù hợp hơn. Kiểm tra nguồn bundle."
+      },
+      {
+        "id": "git-full-format-patch",
+        "canonicalCommand": "git format-patch",
+        "title": "Xuất commit thành patch email",
+        "command": "git format-patch [OPTIONS] REVISION_RANGE",
+        "description": "Tạo chuỗi patch chứa tác giả, thông điệp và diff để gửi review hoặc áp dụng bằng am.",
+        "example": "git format-patch --cover-letter -o patches main..feature/login",
+        "risk": "write",
+        "tags": [
+          "format-patch",
+          "git-transfer",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-format-patch",
+        "options": [
+          {
+            "flag": "-o DIR / --output-directory=DIR",
+            "description": "Thư mục đầu ra"
+          },
+          {
+            "flag": "--stdout",
+            "description": "Gộp mbox ra stdout"
+          },
+          {
+            "flag": "--cover-letter",
+            "description": "Tạo thư giới thiệu 0/N"
+          },
+          {
+            "flag": "-1 COMMIT",
+            "description": "Chỉ một commit"
+          },
+          {
+            "flag": "--base=COMMIT",
+            "description": "Ghi commit nền"
+          },
+          {
+            "flag": "--subject-prefix=TEXT",
+            "description": "Đổi tiền tố tiêu đề"
+          },
+          {
+            "flag": "--range-diff=RANGE",
+            "description": "Đính kèm đối chiếu phiên bản trước"
+          }
+        ],
+        "warning": "Ghi file patch local, chưa gửi email. Patch có thể chứa mã riêng tư hoặc bí mật."
+      },
+      {
+        "id": "git-full-am",
+        "canonicalCommand": "git am",
+        "title": "Nhập patch email thành commit",
+        "command": "git am [OPTIONS] MBOX_OR_PATCH...",
+        "description": "Áp chuỗi email patch và tạo commit giữ thông tin tác giả từ email.",
+        "example": "git am --3way patches/*.patch",
+        "risk": "write",
+        "tags": [
+          "am",
+          "git-transfer",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-am",
+        "options": [
+          {
+            "flag": "--3way",
+            "description": "Thử merge ba bên khi patch không áp sạch"
+          },
+          {
+            "flag": "--signoff",
+            "description": "Thêm Signed-off-by theo quy định dự án"
+          },
+          {
+            "flag": "--continue / --skip / --abort",
+            "description": "Điều khiển khi xung đột"
+          },
+          {
+            "flag": "--show-current-patch=diff",
+            "description": "Xem patch hiện tại"
+          },
+          {
+            "flag": "--retry",
+            "description": "Thử áp lại patch đang lỗi"
+          },
+          {
+            "flag": "--empty=stop|drop|keep",
+            "description": "Cách xử lý email không có patch"
+          }
+        ],
+        "warning": "Chỉ dùng patch đã review; hook và nội dung patch có thể ảnh hưởng workflow. Bắt đầu với working tree sạch."
+      },
+      {
+        "id": "git-full-request-pull",
+        "canonicalCommand": "git request-pull",
+        "title": "Soạn thông báo đề nghị kéo thay đổi",
+        "command": "git request-pull START URL [END]",
+        "description": "In bản tóm tắt commit cần tích hợp và địa chỉ người nhận có thể fetch; không tạo PR trên nền tảng hosting.",
+        "example": "git request-pull main https://github.com/example/cli-sandbox.git feature/login",
+        "risk": "read",
+        "tags": [
+          "request-pull",
+          "git-transfer",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-request-pull",
+        "options": [
+          {
+            "flag": "-p",
+            "description": "Thêm patch vào tóm tắt"
+          },
+          {
+            "flag": "END:REMOTE_REF",
+            "description": "Chỉ rõ tên ref tại remote nếu khác local"
+          }
+        ],
+        "warning": "URL minh họa phải thay bằng remote đã công bố đúng commit. Lệnh chỉ in văn bản; tự kiểm tra rồi mới gửi."
+      },
+      {
+        "id": "git-full-send-email",
+        "canonicalCommand": "git send-email",
+        "title": "Gửi chuỗi patch qua email",
+        "command": "git send-email [OPTIONS] PATCH...",
+        "description": "Gửi patch theo workflow email của dự án; ví dụ dry-run để kiểm tra người nhận và thông điệp trước.",
+        "example": "git send-email --dry-run --to=reviewer@example.com patches/*.patch",
+        "risk": "read",
+        "tags": [
+          "send-email",
+          "git-transfer",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-send-email",
+        "options": [
+          {
+            "flag": "--dry-run",
+            "description": "Xem kế hoạch gửi"
+          },
+          {
+            "flag": "--to ADDRESS / --cc ADDRESS",
+            "description": "Chọn người nhận"
+          },
+          {
+            "flag": "--confirm=always",
+            "description": "Hỏi trước khi gửi"
+          },
+          {
+            "flag": "--suppress-cc=all",
+            "description": "Không tự bổ sung Cc"
+          },
+          {
+            "flag": "--annotate",
+            "description": "Chỉnh thư trước khi gửi"
+          },
+          {
+            "flag": "--thread / --in-reply-to=ID",
+            "description": "Điều khiển chuỗi hội thoại"
+          },
+          {
+            "flag": "--smtp-server=HOST",
+            "description": "Chọn SMTP đã được cấu hình an toàn"
+          }
+        ],
+        "warning": "Ví dụ không gửi. Bỏ --dry-run sẽ gửi thật tới To/Cc và các địa chỉ Git suy ra; kiểm tra toàn bộ người nhận và nội dung."
+      },
+      {
+        "id": "git-full-imap-send",
+        "canonicalCommand": "git imap-send",
+        "title": "Đưa patch vào thư mục IMAP",
+        "command": "git imap-send [OPTIONS] < MBOX",
+        "description": "Tải mailbox patch vào thư mục IMAP đã cấu hình, thường để mở bằng email client trước khi gửi.",
+        "example": "git imap-send --draft --folder=Drafts < patches.mbox",
+        "risk": "write",
+        "tags": [
+          "imap-send",
+          "git-transfer",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-imap-send",
+        "options": [
+          {
+            "flag": "--folder=NAME / -f NAME",
+            "description": "Chọn đúng tên folder trên server"
+          },
+          {
+            "flag": "--draft",
+            "description": "Đặt cờ Draft; libcurl cần phiên bản hỗ trợ"
+          },
+          {
+            "flag": "--list",
+            "description": "Liệt kê folder IMAP"
+          },
+          {
+            "flag": "--curl / --no-curl",
+            "description": "Chọn backend kết nối nếu build hỗ trợ"
+          },
+          {
+            "flag": "-v / -q",
+            "description": "Tăng/giảm thông báo"
+          }
+        ],
+        "warning": "Truyền nội dung patch tới nhà cung cấp email. Xác minh cấu hình IMAP/đích và giữ xác minh TLS; không nhúng mật khẩu vào lệnh."
+      },
+      {
+        "id": "git-full-notes-show",
+        "canonicalCommand": "git notes",
+        "title": "Xem ghi chú gắn với object",
+        "command": "git notes [--ref=REF] show [OBJECT]",
+        "description": "Đọc annotation riêng gắn với commit mà không thay đổi ID commit đó.",
+        "example": "git notes show HEAD",
+        "risk": "read",
+        "tags": [
+          "notes",
+          "git-transfer",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-notes",
+        "options": [
+          {
+            "flag": "list [OBJECT]",
+            "description": "Liệt kê ánh xạ object/note"
+          },
+          {
+            "flag": "--ref=REF",
+            "description": "Chọn namespace notes"
+          },
+          {
+            "flag": "get-ref",
+            "description": "In tên ref notes có hiệu lực"
+          }
+        ]
+      },
+      {
+        "id": "git-full-notes-add",
+        "canonicalCommand": "git notes",
+        "title": "Thêm ghi chú commit",
+        "command": "git notes [--ref=REF] add -m MESSAGE [OBJECT]",
+        "description": "Tạo ghi chú riêng trong refs/notes; cần push/fetch notes riêng nếu muốn chia sẻ.",
+        "example": "git notes add -m \"Reviewed in local test run\" HEAD",
+        "risk": "write",
+        "tags": [
+          "notes",
+          "git-transfer",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-notes",
+        "options": [
+          {
+            "flag": "append -m MESSAGE OBJECT",
+            "description": "Thêm đoạn vào note"
+          },
+          {
+            "flag": "edit OBJECT",
+            "description": "Sửa note bằng editor"
+          },
+          {
+            "flag": "copy FROM TO",
+            "description": "Sao chép note sang object khác"
+          },
+          {
+            "flag": "-F FILE",
+            "description": "Đọc nội dung từ file"
+          },
+          {
+            "flag": "-f",
+            "description": "Thay note đã tồn tại"
+          }
+        ],
+        "warning": "Không thay commit gốc nhưng ghi lịch sử notes local. -f ghi đè note đã tồn tại."
+      },
+      {
+        "id": "git-full-notes-merge",
+        "canonicalCommand": "git notes",
+        "title": "Gộp hai lịch sử notes",
+        "command": "git notes merge [OPTIONS] NOTES_REF",
+        "description": "Gộp notes từ ref khác vào ref notes đang dùng.",
+        "example": "git notes merge refs/notes/review",
+        "risk": "write",
+        "tags": [
+          "notes",
+          "git-transfer",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-notes",
+        "options": [
+          {
+            "flag": "-s STRATEGY",
+            "description": "Chọn chiến lược notes merge"
+          },
+          {
+            "flag": "--commit",
+            "description": "Hoàn thành merge notes đã xử lý"
+          },
+          {
+            "flag": "--abort",
+            "description": "Hủy merge notes"
+          }
+        ],
+        "warning": "Có thể xung đột notes. Xem/giải quyết dữ liệu ghi chú trước khi commit kết quả."
+      },
+      {
+        "id": "git-full-notes-remove",
+        "canonicalCommand": "git notes",
+        "title": "Xóa ghi chú object",
+        "command": "git notes remove [OBJECT...]",
+        "description": "Bỏ annotation của object, không xóa commit/object gốc.",
+        "example": "git notes remove HEAD",
+        "risk": "destructive",
+        "tags": [
+          "notes",
+          "git-transfer",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-notes",
+        "options": [
+          {
+            "flag": "--ignore-missing",
+            "description": "Không lỗi khi thiếu note"
+          },
+          {
+            "flag": "--stdin",
+            "description": "Đọc object từ stdin"
+          }
+        ],
+        "warning": "Mất note hiện tại; kiểm tra nội dung và ref notes trước."
+      },
+      {
+        "id": "git-full-notes-prune",
+        "canonicalCommand": "git notes",
+        "title": "Xem note trỏ tới object đã mất",
+        "command": "git notes prune --dry-run [--verbose]",
+        "description": "Liệt kê note mồ côi có thể dọn khỏi lịch sử notes.",
+        "example": "git notes prune --dry-run --verbose",
+        "risk": "read",
+        "tags": [
+          "notes",
+          "git-transfer",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-notes",
+        "options": [
+          {
+            "flag": "--dry-run / -n",
+            "description": "Chỉ xem kế hoạch"
+          },
+          {
+            "flag": "--verbose / -v",
+            "description": "Hiện object/note liên quan"
+          }
+        ],
+        "warning": "Bỏ --dry-run sẽ ghi thay đổi/xóa notes được chọn."
+      },
+      {
+        "id": "git-full-difftool",
+        "canonicalCommand": "git difftool",
+        "title": "Đọc diff bằng công cụ bên ngoài",
+        "command": "git difftool [OPTIONS] [REV...] [-- PATH...]",
+        "description": "Mở công cụ diff đã cấu hình để so sánh file hoặc snapshot.",
+        "example": "git difftool --no-prompt HEAD~1 HEAD -- README.md",
+        "risk": "read",
+        "tags": [
+          "difftool",
+          "git-transfer",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-difftool",
+        "options": [
+          {
+            "flag": "--tool=TOOL",
+            "description": "Chọn công cụ"
+          },
+          {
+            "flag": "--tool-help",
+            "description": "Liệt kê công cụ hỗ trợ"
+          },
+          {
+            "flag": "--dir-diff",
+            "description": "So sánh hai thư mục tạm"
+          },
+          {
+            "flag": "--no-prompt",
+            "description": "Không hỏi từng file"
+          },
+          {
+            "flag": "--extcmd=COMMAND",
+            "description": "Dùng lệnh ngoài cụ thể; kiểm tra nội dung trước"
+          }
+        ],
+        "warning": "Chạy chương trình ngoài Git; công cụ có thể sửa file hoặc tạo file tạm. Chỉ dùng công cụ tin cậy."
+      }
+    ]
+  },
+  {
+    "id": "git-admin",
+    "title": "Nâng cao · Kiểm tra & bảo trì repository",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "git-full-count-objects",
+        "canonicalCommand": "git count-objects",
+        "title": "Đo object và dung lượng",
+        "command": "git count-objects [-v] [-H]",
+        "description": "Thống kê loose object, pack và dung lượng để đánh giá kích thước repository.",
+        "example": "git count-objects -vH",
+        "risk": "read",
+        "tags": [
+          "count-objects",
+          "git-admin",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-count-objects",
+        "options": [
+          {
+            "flag": "-v",
+            "description": "Chi tiết pack, garbage và alternate object directories"
+          },
+          {
+            "flag": "-H / --human-readable",
+            "description": "Đơn vị dung lượng dễ đọc"
+          }
+        ]
+      },
+      {
+        "id": "git-full-fsck",
+        "canonicalCommand": "git fsck",
+        "title": "Kiểm tra tính toàn vẹn object",
+        "command": "git fsck [OPTIONS] [OBJECT...]",
+        "description": "Kiểm tra liên kết và tính hợp lệ của object database; không phải công cụ tự sửa mọi lỗi.",
+        "example": "git fsck --full",
+        "risk": "read",
+        "tags": [
+          "fsck",
+          "git-admin",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-fsck",
+        "options": [
+          {
+            "flag": "--full",
+            "description": "Xét cả packs và alternate object stores"
+          },
+          {
+            "flag": "--strict",
+            "description": "Bật kiểm tra nghiêm ngặt hơn"
+          },
+          {
+            "flag": "--connectivity-only",
+            "description": "Chỉ kiểm tra kết nối, không kiểm nội dung blob"
+          },
+          {
+            "flag": "--unreachable",
+            "description": "Hiện object không reachable"
+          },
+          {
+            "flag": "--no-reflogs",
+            "description": "Không dùng reflog làm điểm gốc"
+          },
+          {
+            "flag": "--lost-found",
+            "description": "Ghi object dangling vào thư mục lost-found"
+          },
+          {
+            "flag": "--references",
+            "description": "Kiểm tra thêm cơ sở dữ liệu refs"
+          }
+        ],
+        "warning": "Object dangling không tự đồng nghĩa kho bị hỏng. --lost-found sẽ ghi file cứu hộ local."
+      },
+      {
+        "id": "git-full-gc",
+        "canonicalCommand": "git gc",
+        "title": "Dọn và tối ưu repository",
+        "command": "git gc [OPTIONS]",
+        "description": "Nén object và dọn metadata theo chính sách tuổi/cấu hình của kho.",
+        "example": "git gc --auto",
+        "risk": "write",
+        "tags": [
+          "gc",
+          "git-admin",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-gc",
+        "options": [
+          {
+            "flag": "--auto",
+            "description": "Chỉ làm việc nếu ngưỡng cho thấy cần"
+          },
+          {
+            "flag": "--aggressive",
+            "description": "Tính lại delta sâu, tốn thời gian; không luôn tốt hơn"
+          },
+          {
+            "flag": "--prune=DATE",
+            "description": "Mốc tuổi object loose được dọn"
+          },
+          {
+            "flag": "--no-prune",
+            "description": "Không dọn loose object"
+          },
+          {
+            "flag": "--cruft",
+            "description": "Giữ object chưa reachable trong cruft pack"
+          }
+        ],
+        "warning": "Dọn object không reachable có thể làm mất khả năng cứu dữ liệu. Tránh --prune=now, chạy đồng thời nhiều tác vụ ghi hoặc gc trên kho đang có sự cố."
+      },
+      {
+        "id": "git-full-maintenance-is-needed",
+        "canonicalCommand": "git maintenance",
+        "title": "Kiểm tra nhu cầu bảo trì",
+        "command": "git maintenance is-needed [OPTIONS]",
+        "description": "Kiểm tra điều kiện bảo trì mà không chạy công việc; mã 0 nghĩa là cần chạy, 1 nghĩa chưa cần.",
+        "example": "git maintenance is-needed --auto",
+        "risk": "read",
+        "tags": [
+          "maintenance",
+          "git-admin",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-maintenance",
+        "options": [
+          {
+            "flag": "--auto",
+            "description": "Kiểm tra ngưỡng tự động"
+          },
+          {
+            "flag": "--task=NAME",
+            "description": "Chỉ kiểm tra tác vụ cụ thể"
+          }
+        ]
+      },
+      {
+        "id": "git-full-maintenance-run",
+        "canonicalCommand": "git maintenance",
+        "title": "Chạy một công việc bảo trì",
+        "command": "git maintenance run [OPTIONS]",
+        "description": "Thực hiện các tác vụ tối ưu được chọn; ví dụ chỉ cập nhật commit-graph.",
+        "example": "git maintenance run --task=commit-graph",
+        "risk": "write",
+        "tags": [
+          "maintenance",
+          "git-admin",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-maintenance",
+        "options": [
+          {
+            "flag": "--task=NAME",
+            "description": "commit-graph, loose-objects, incremental-repack, prefetch, gc hoặc task khác đã hỗ trợ"
+          },
+          {
+            "flag": "--auto",
+            "description": "Chỉ chạy khi vượt ngưỡng"
+          },
+          {
+            "flag": "--schedule",
+            "description": "Chỉ chạy task tới hạn theo cấu hình"
+          },
+          {
+            "flag": "--quiet",
+            "description": "Giảm thông báo"
+          }
+        ],
+        "warning": "Một số task tải mạng hoặc dọn object. Tránh chạy tác vụ nặng khi thao tác ghi khác đang thực hiện."
+      },
+      {
+        "id": "git-full-maintenance-register",
+        "canonicalCommand": "git maintenance",
+        "title": "Đăng ký kho với bảo trì nền",
+        "command": "git maintenance register [OPTIONS]",
+        "description": "Đưa kho vào danh sách được lịch bảo trì hiện có xử lý và đặt cấu hình khuyến nghị.",
+        "example": "git maintenance register",
+        "risk": "write",
+        "tags": [
+          "maintenance",
+          "git-admin",
+          "advanced"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-maintenance",
+        "options": [
+          {
+            "flag": "--config-file FILE",
+            "description": "Dùng file đăng ký cụ thể"
+          }
+        ],
+        "warning": "Thay cấu hình global/local và hành vi bảo trì; bản thân register không tạo lịch hệ thống mới."
+      }
+    ]
+  }
+]

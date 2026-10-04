@@ -1,0 +1,1169 @@
+[
+  {
+    "id": "confluence-content",
+    "title": "Confluence · nội dung",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-confluence-content-watch",
+        "canonicalCommand": "twg confluence content watch",
+        "title": "Theo dõi nội dung của Confluence",
+        "command": "twg confluence content watch",
+        "description": "Theo dõi nội dung của Confluence.",
+        "example": "twg confluence content watch",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "confluence",
+          "content",
+          "watch"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng; mặc định: false",
+            "example": "--yes"
+          },
+          {
+            "flag": "--id <contentId>",
+            "description": "Định danh tài nguyên",
+            "example": "--id 12345"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      }
+    ]
+  },
+  {
+    "id": "confluence-remix",
+    "title": "Confluence · Remix",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-confluence-remix-maui-get",
+        "canonicalCommand": "twg confluence remix maui get",
+        "title": "Đọc nội dung Maui của Remix của Confluence",
+        "command": "twg confluence remix maui get --content-id <id> --maui-id <id>",
+        "description": "Đọc nội dung Maui của Remix của Confluence.",
+        "example": "twg confluence remix maui get --content-id 12345 --maui-id 12345",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "confluence",
+          "remix",
+          "maui",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--content-id <id>",
+            "description": "Id nội dung; bắt buộc",
+            "example": "--content-id 12345"
+          },
+          {
+            "flag": "--maui-id <id>",
+            "description": "ID nội dung Maui; bắt buộc",
+            "example": "--maui-id 12345"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl",
+            "example": "--output text"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      }
+    ]
+  },
+  {
+    "id": "confluence-search",
+    "title": "Confluence · search",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-confluence-search-query",
+        "canonicalCommand": "twg confluence search query",
+        "title": "Tra cứu search của Confluence",
+        "command": "twg confluence search query [cql...]",
+        "description": "Tra cứu search của Confluence.",
+        "example": "twg confluence search query --cql \"type=page AND space=ENG\" --site demo",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "confluence",
+          "search",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--cql <query>",
+            "description": "Bộ lọc Confluence bằng CQL",
+            "example": "--cql 'space = \"DEMO\" AND type = page'"
+          },
+          {
+            "flag": "--limit <n>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh; mặc định: \"25\"",
+            "example": "--limit 10"
+          },
+          {
+            "flag": "--cursor <cursor>",
+            "description": "Con trỏ lấy từ trang kết quả trước",
+            "example": "--cursor CURSOR"
+          },
+          {
+            "flag": "--excerpt",
+            "description": "Tham số excerpt",
+            "example": "--excerpt"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      },
+      {
+        "id": "twg-confluence-search-text",
+        "canonicalCommand": "twg confluence search text",
+        "title": "Xem văn bản của search của Confluence",
+        "command": "twg confluence search text <text...>",
+        "description": "Xem văn bản của search của Confluence.",
+        "example": "twg confluence search text \"launch plan\" --updated-since 7d --site demo",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "confluence",
+          "search",
+          "text"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--query <text>",
+            "description": "Chuỗi truy vấn theo lệnh",
+            "example": "--query onboarding"
+          },
+          {
+            "flag": "--limit <n>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh; mặc định: \"25\"",
+            "example": "--limit 10"
+          },
+          {
+            "flag": "--cursor <cursor>",
+            "description": "Con trỏ lấy từ trang kết quả trước",
+            "example": "--cursor CURSOR"
+          },
+          {
+            "flag": "--since <duration-or-date>",
+            "description": "Mốc hoặc khoảng thời gian bắt đầu",
+            "example": "--since 7d"
+          },
+          {
+            "flag": "--updated-since <duration-or-date>",
+            "description": "Lọc theo lần cập nhật từ mốc chỉ định",
+            "example": "--updated-since 2026-10-01"
+          },
+          {
+            "flag": "--created-since <duration-or-date>",
+            "description": "Tham số created-since",
+            "example": "--created-since 2026-10-01"
+          },
+          {
+            "flag": "--excerpt",
+            "description": "Tham số excerpt",
+            "example": "--excerpt"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      }
+    ]
+  },
+  {
+    "id": "confluence-space",
+    "title": "Confluence · space",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-confluence-space-archive",
+        "canonicalCommand": "twg confluence space archive",
+        "title": "Lưu trữ space của Confluence",
+        "command": "twg confluence space archive [id-or-key]",
+        "description": "Lưu trữ space của Confluence.",
+        "example": "twg confluence space archive --key OLDTEAM --site demo",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "confluence",
+          "space",
+          "archive"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--key <key>",
+            "description": "Mã tài nguyên",
+            "example": "--key DEMO-123"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra",
+            "example": "--output json"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-confluence-space-create",
+        "canonicalCommand": "twg confluence space create",
+        "title": "Tạo space của Confluence",
+        "command": "twg confluence space create --key <key>",
+        "description": "Tạo space của Confluence.",
+        "example": "twg confluence space create --key NEWSPACE --name \"New Space\"",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "confluence",
+          "space",
+          "create"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--key <key>",
+            "description": "Mã tài nguyên; bắt buộc",
+            "example": "--key DEMO-123"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Tên",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--description <description>",
+            "description": "Mô tả",
+            "example": "--description 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--private",
+            "description": "Chọn phạm vi riêng tư",
+            "example": "--private"
+          },
+          {
+            "flag": "--role-assignments-file <path>",
+            "description": "Tệp cho phân công vai trò",
+            "example": "--role-assignments-file ./request.json"
+          },
+          {
+            "flag": "--dry-run",
+            "description": "Chỉ kiểm tra hoặc xem trước thay đổi, theo hợp đồng của lệnh",
+            "example": "--dry-run"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra",
+            "example": "--output json"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-confluence-space-delete",
+        "canonicalCommand": "twg confluence space delete",
+        "title": "Xóa space của Confluence",
+        "command": "twg confluence space delete [id-or-key]",
+        "description": "Xóa space của Confluence.",
+        "example": "twg confluence space delete --key TEST --site demo",
+        "exampleKind": "usage",
+        "risk": "destructive",
+        "tags": [
+          "confluence",
+          "space",
+          "delete"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--key <key>",
+            "description": "Mã tài nguyên",
+            "example": "--key DEMO-123"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra",
+            "example": "--output json"
+          }
+        ],
+        "warning": "Có thể xóa dữ liệu, thu hồi quyền hoặc gỡ cấu hình. Đọc lại đối tượng và khả năng khôi phục; ưu tiên --dry-run nếu lệnh hỗ trợ. Không thêm --yes khi chưa kiểm tra."
+      },
+      {
+        "id": "twg-confluence-space-get",
+        "canonicalCommand": "twg confluence space get",
+        "title": "Đọc space của Confluence",
+        "command": "twg confluence space get [identifier]",
+        "description": "Đọc space của Confluence.",
+        "example": "twg confluence space get ENG --labels",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "confluence",
+          "space",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--labels",
+            "description": "Nhãn",
+            "example": "--labels"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra",
+            "example": "--output json"
+          }
+        ]
+      },
+      {
+        "id": "twg-confluence-space-instructions-get",
+        "canonicalCommand": "twg confluence space instructions get",
+        "title": "Đọc hướng dẫn của space của Confluence",
+        "command": "twg confluence space instructions get [id-or-key]",
+        "description": "Đọc hướng dẫn của space của Confluence.",
+        "example": "twg confluence space instructions get",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "confluence",
+          "space",
+          "instructions",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--body-format <format>",
+            "description": "Định dạng của nội dung; nhận: markdown, html; mặc định: \"markdown\"",
+            "example": "--body-format markdown"
+          },
+          {
+            "flag": "--key <key>",
+            "description": "Mã tài nguyên",
+            "example": "--key DEMO-123"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra",
+            "example": "--output json"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-confluence-space-instructions-set",
+        "canonicalCommand": "twg confluence space instructions set",
+        "title": "Đặt hướng dẫn của space của Confluence",
+        "command": "twg confluence space instructions set [id-or-key]",
+        "description": "Đặt hướng dẫn của space của Confluence.",
+        "example": "twg confluence space instructions set --body 'Ví dụ trong môi trường thử nghiệm'",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "confluence",
+          "space",
+          "instructions",
+          "set"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--key <key>",
+            "description": "Mã tài nguyên",
+            "example": "--key DEMO-123"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "--body <text>",
+            "description": "Nội dung; không dùng cùng --body-file",
+            "example": "--body 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--body-file <path>",
+            "description": "Đọc nội dung từ tệp; không dùng cùng --body",
+            "example": "--body-file ./example.txt"
+          },
+          {
+            "flag": "--body-format <format>",
+            "description": "Định dạng của nội dung; nhận: markdown, html; mặc định: \"markdown\"",
+            "example": "--body-format markdown"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra",
+            "example": "--output json"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-confluence-space-list",
+        "canonicalCommand": "twg confluence space list",
+        "title": "Liệt kê space của Confluence",
+        "command": "twg confluence space list",
+        "description": "Liệt kê space của Confluence.",
+        "example": "twg confluence space list --site demo",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "confluence",
+          "space",
+          "list"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--type <type>",
+            "description": "Loại tài nguyên hoặc nội dung theo lệnh",
+            "example": "--type TYPE"
+          },
+          {
+            "flag": "--status <status>",
+            "description": "Trạng thái; giá trị và ý nghĩa phụ thuộc lệnh",
+            "example": "--status open"
+          },
+          {
+            "flag": "--keys <keys>",
+            "description": "Tham số keys",
+            "example": "--keys DEMO"
+          },
+          {
+            "flag": "--limit <n>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh; mặc định: \"25\"",
+            "example": "--limit 10"
+          },
+          {
+            "flag": "--labels",
+            "description": "Nhãn",
+            "example": "--labels"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra",
+            "example": "--output json"
+          }
+        ]
+      },
+      {
+        "id": "twg-confluence-space-me",
+        "canonicalCommand": "twg confluence space me",
+        "title": "Xem tài khoản hiện tại của space của Confluence",
+        "command": "twg confluence space me",
+        "description": "Xem tài khoản hiện tại của space của Confluence.",
+        "example": "twg confluence space me --site demo",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "confluence",
+          "space",
+          "me"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra",
+            "example": "--output json"
+          }
+        ]
+      },
+      {
+        "id": "twg-confluence-space-permission-available",
+        "canonicalCommand": "twg confluence space permission available",
+        "title": "Xem khả dụng của quyền của space của Confluence",
+        "command": "twg confluence space permission available",
+        "description": "Xem khả dụng của quyền của space của Confluence.",
+        "example": "twg confluence space permission available",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "confluence",
+          "space",
+          "permission",
+          "available"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--limit <count>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh; mặc định: \"25\"",
+            "example": "--limit 10"
+          },
+          {
+            "flag": "--cursor <cursor>",
+            "description": "Con trỏ lấy từ trang kết quả trước",
+            "example": "--cursor CURSOR"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra",
+            "example": "--output json"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-confluence-space-permission-list",
+        "canonicalCommand": "twg confluence space permission list",
+        "title": "Liệt kê quyền của space của Confluence",
+        "command": "twg confluence space permission list --space <id-or-key>",
+        "description": "Liệt kê quyền của space của Confluence.",
+        "example": "twg confluence space permission list --space DEMO",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "confluence",
+          "space",
+          "permission",
+          "list"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--limit <count>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh; mặc định: \"25\"",
+            "example": "--limit 10"
+          },
+          {
+            "flag": "--cursor <cursor>",
+            "description": "Con trỏ lấy từ trang kết quả trước",
+            "example": "--cursor CURSOR"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra",
+            "example": "--output json"
+          },
+          {
+            "flag": "--space <id-or-key>",
+            "description": "Space; bắt buộc",
+            "example": "--space DEMO"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-confluence-space-role-assignment-list",
+        "canonicalCommand": "twg confluence space role assignment list",
+        "title": "Liệt kê phân công của vai trò của space của Confluence",
+        "command": "twg confluence space role assignment list --space <id-or-key>",
+        "description": "Liệt kê phân công của vai trò của space của Confluence.",
+        "example": "twg confluence space role assignment list --space DEMO",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "confluence",
+          "space",
+          "role",
+          "assignment",
+          "list"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--limit <count>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh; mặc định: \"25\"",
+            "example": "--limit 10"
+          },
+          {
+            "flag": "--cursor <cursor>",
+            "description": "Con trỏ lấy từ trang kết quả trước",
+            "example": "--cursor CURSOR"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra",
+            "example": "--output json"
+          },
+          {
+            "flag": "--space <id-or-key>",
+            "description": "Space; bắt buộc",
+            "example": "--space DEMO"
+          },
+          {
+            "flag": "--role-id <id>",
+            "description": "Id vai trò",
+            "example": "--role-id 12345"
+          },
+          {
+            "flag": "--role-type <type>",
+            "description": "Tham số role-type; nhận: SYSTEM, CUSTOM",
+            "example": "--role-type SYSTEM"
+          },
+          {
+            "flag": "--principal-type <type>",
+            "description": "Tham số principal-type; nhận: USER, GROUP, ACCESS_CLASS",
+            "example": "--principal-type USER"
+          },
+          {
+            "flag": "--principal-id <id>",
+            "description": "ID principal",
+            "example": "--principal-id 12345"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-confluence-space-role-create",
+        "canonicalCommand": "twg confluence space role create",
+        "title": "Tạo vai trò của space của Confluence",
+        "command": "twg confluence space role create --name <name> --description <text> --permission <id...>",
+        "description": "Tạo vai trò của space của Confluence.",
+        "example": "twg confluence space role create --name 'Ví dụ trong môi trường thử nghiệm' --description 'Ví dụ trong môi trường thử nghiệm' --permission PERMISSION --dry-run",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "confluence",
+          "space",
+          "role",
+          "create"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--name <name>",
+            "description": "Tên; bắt buộc",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--description <text>",
+            "description": "Mô tả; bắt buộc",
+            "example": "--description 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--permission <id...>",
+            "description": "Quyền; bắt buộc; có thể nhập nhiều giá trị",
+            "example": "--permission PERMISSION"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--dry-run",
+            "description": "Chỉ kiểm tra hoặc xem trước thay đổi, theo hợp đồng của lệnh",
+            "example": "--dry-run"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra",
+            "example": "--output json"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-confluence-space-role-get",
+        "canonicalCommand": "twg confluence space role get",
+        "title": "Đọc vai trò của space của Confluence",
+        "command": "twg confluence space role get --role-id <id>",
+        "description": "Đọc vai trò của space của Confluence.",
+        "example": "twg confluence space role get --role-id 12345",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "confluence",
+          "space",
+          "role",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--role-id <id>",
+            "description": "Id vai trò; bắt buộc",
+            "example": "--role-id 12345"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra",
+            "example": "--output json"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-confluence-space-role-list",
+        "canonicalCommand": "twg confluence space role list",
+        "title": "Liệt kê vai trò của space của Confluence",
+        "command": "twg confluence space role list",
+        "description": "Liệt kê vai trò của space của Confluence.",
+        "example": "twg confluence space role list",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "confluence",
+          "space",
+          "role",
+          "list"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--limit <count>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh; mặc định: \"25\"",
+            "example": "--limit 10"
+          },
+          {
+            "flag": "--cursor <cursor>",
+            "description": "Con trỏ lấy từ trang kết quả trước",
+            "example": "--cursor CURSOR"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra",
+            "example": "--output json"
+          },
+          {
+            "flag": "--space-id <id>",
+            "description": "ID space",
+            "example": "--space-id 12345"
+          },
+          {
+            "flag": "--role-type <type>",
+            "description": "Tham số role-type; nhận: SYSTEM, CUSTOM",
+            "example": "--role-type SYSTEM"
+          },
+          {
+            "flag": "--principal-type <type>",
+            "description": "Tham số principal-type; nhận: USER, GROUP, ACCESS_CLASS",
+            "example": "--principal-type USER"
+          },
+          {
+            "flag": "--principal-id <id>",
+            "description": "ID principal",
+            "example": "--principal-id 12345"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-confluence-space-role-mode",
+        "canonicalCommand": "twg confluence space role mode",
+        "title": "Xem chế độ của vai trò của space của Confluence",
+        "command": "twg confluence space role mode",
+        "description": "Xem chế độ của vai trò của space của Confluence.",
+        "example": "twg confluence space role mode",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "confluence",
+          "space",
+          "role",
+          "mode"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra",
+            "example": "--output json"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-confluence-space-role-update",
+        "canonicalCommand": "twg confluence space role update",
+        "title": "Cập nhật vai trò của space của Confluence",
+        "command": "twg confluence space role update --role-id <id> --name <name> --description <text> --permission <id...>",
+        "description": "Cập nhật vai trò của space của Confluence.",
+        "example": "twg confluence space role update --role-id 12345 --name 'Ví dụ trong môi trường thử nghiệm' --description 'Ví dụ trong môi trường thử nghiệm' --permission PERMISSION --dry-run",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "confluence",
+          "space",
+          "role",
+          "update"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--role-id <id>",
+            "description": "Id vai trò; bắt buộc",
+            "example": "--role-id 12345"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Tên; bắt buộc",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--description <text>",
+            "description": "Mô tả; bắt buộc",
+            "example": "--description 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--permission <id...>",
+            "description": "Quyền; bắt buộc; có thể nhập nhiều giá trị",
+            "example": "--permission PERMISSION"
+          },
+          {
+            "flag": "--anonymous-reassignment-role-id <id>",
+            "description": "ID anonymous-reassignment-role",
+            "example": "--anonymous-reassignment-role-id 12345"
+          },
+          {
+            "flag": "--guest-reassignment-role-id <id>",
+            "description": "ID guest-reassignment-role",
+            "example": "--guest-reassignment-role-id 12345"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--dry-run",
+            "description": "Chỉ kiểm tra hoặc xem trước thay đổi, theo hợp đồng của lệnh",
+            "example": "--dry-run"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra",
+            "example": "--output json"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-confluence-space-star",
+        "canonicalCommand": "twg confluence space star",
+        "title": "Đánh dấu sao space của Confluence",
+        "command": "twg confluence space star",
+        "description": "Đánh dấu sao space của Confluence.",
+        "example": "twg confluence space star",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "confluence",
+          "space",
+          "star"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          },
+          {
+            "flag": "--key <spaceKey>",
+            "description": "Mã tài nguyên; không dùng cùng --space-id",
+            "example": "--key DEMO-123"
+          },
+          {
+            "flag": "--space-id <spaceId>",
+            "description": "ID space; không dùng cùng --key",
+            "example": "--space-id 12345"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra",
+            "example": "--output json"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-confluence-space-unarchive",
+        "canonicalCommand": "twg confluence space unarchive",
+        "title": "Khôi phục space của Confluence",
+        "command": "twg confluence space unarchive [id-or-key]",
+        "description": "Khôi phục space của Confluence.",
+        "example": "twg confluence space unarchive --key OLDTEAM --site demo",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "confluence",
+          "space",
+          "unarchive"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--key <key>",
+            "description": "Mã tài nguyên",
+            "example": "--key DEMO-123"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra",
+            "example": "--output json"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-confluence-space-unstar",
+        "canonicalCommand": "twg confluence space unstar",
+        "title": "Bỏ đánh dấu sao space của Confluence",
+        "command": "twg confluence space unstar",
+        "description": "Bỏ đánh dấu sao space của Confluence.",
+        "example": "twg confluence space unstar",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "confluence",
+          "space",
+          "unstar"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          },
+          {
+            "flag": "--key <spaceKey>",
+            "description": "Mã tài nguyên; không dùng cùng --space-id",
+            "example": "--key DEMO-123"
+          },
+          {
+            "flag": "--space-id <spaceId>",
+            "description": "ID space; không dùng cùng --key",
+            "example": "--space-id 12345"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra",
+            "example": "--output json"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-confluence-space-unwatch",
+        "canonicalCommand": "twg confluence space unwatch",
+        "title": "Ngừng theo dõi space của Confluence",
+        "command": "twg confluence space unwatch",
+        "description": "Ngừng theo dõi space của Confluence.",
+        "example": "twg confluence space unwatch",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "confluence",
+          "space",
+          "unwatch"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          },
+          {
+            "flag": "--key <spaceKey>",
+            "description": "Mã tài nguyên; không dùng cùng --space-id",
+            "example": "--key DEMO-123"
+          },
+          {
+            "flag": "--space-id <spaceId>",
+            "description": "ID space; không dùng cùng --key",
+            "example": "--space-id 12345"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra",
+            "example": "--output json"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      }
+    ]
+  }
+]
