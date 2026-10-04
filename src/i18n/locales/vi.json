@@ -51,7 +51,8 @@
     "liveShare": "Chia sẻ",
     "adminAi": "Trợ lý AI Admin",
     "mealCheckIn": "Check-in ăn uống",
-    "periodTracker": "Theo dõi kinh nguyệt"
+    "periodTracker": "Theo dõi kinh nguyệt",
+    "cheatsheets": "Cheatsheets"
   },
   "categories": {
     "main": "Chính",
@@ -438,5 +439,37 @@
     "error": "Lỗi khi xử lý yêu cầu",
     "suggestedPrompts": "Gợi ý yêu cầu",
     "processingLogs": "Nhật ký xử lý"
+  },
+  "cheatsheets": {
+    "eyebrow": "Sổ tay dòng lệnh",
+    "subtitle": "Bớt tìm kiếm. Thêm tập trung. Lệnh thường dùng, ví dụ dễ hiểu, tra cứu nhanh trong một trang.",
+    "toolsCount": "{{count}} công cụ",
+    "examplesCount": "{{count}} ví dụ",
+    "readOnly": "Chỉ để tra cứu",
+    "terminalNote": "bớt một điều cần ghi nhớ",
+    "ready": "Tìm nhanh. Hiểu rõ. Dùng đúng.",
+    "selectTool": "Chọn cheatsheet CLI",
+    "commands": "lệnh",
+    "searchPlaceholder": "Tìm lệnh, tham số, chủ đề…",
+    "searchLabel": "Tìm lệnh {{tool}}",
+    "clearSearch": "Xóa tìm kiếm",
+    "categories": "Lọc theo chủ đề",
+    "allTopics": "Tất cả chủ đề",
+    "showing": "{{count}} / {{total}} lệnh",
+    "exampleHint": "Ví dụ thực tế · Bấm để sao chép",
+    "resetFilters": "Xóa bộ lọc",
+    "noResults": "Chưa tìm thấy lệnh phù hợp",
+    "noResultsHint": "Thử từ khóa khác hoặc xóa bộ lọc cho {{tool}}.",
+    "example": "Ví dụ",
+    "copyCommand": "Sao chép ví dụ: {{title}}",
+    "copyError": "Không thể sao chép. Hãy chọn ví dụ và sao chép thủ công.",
+    "docs": "Tài liệu",
+    "commandDocs": "Tài liệu chính thức: {{title}} (mở trong thẻ mới)",
+    "risk": {
+      "write": "Đổi dữ liệu",
+      "destructive": "Cẩn trọng"
+    },
+    "referenceNote": "Các ví dụ chỉ dùng để tham khảo, không được thực thi tại đây. Thay tên và ID mẫu trước khi chạy. Đọc kỹ các lệnh được đánh dấu “Đổi dữ liệu” hoặc “Cẩn trọng”.",
+    "sources": "Nguồn & phiên bản"
   }
 }

@@ -295,6 +295,14 @@ export const NAV_ITEMS: NavigationItem[] = [
     category: 'collaboration',
   },
   {
+    id: 'cheatsheets',
+    label: 'Cheatsheets',
+    labelKey: 'navigation.cheatsheets',
+    path: '/cheatsheets',
+    icon: 'BookOpen',
+    category: 'development',
+  },
+  {
     id: 'admin-ai',
     label: 'Admin AI Assistant',
     labelKey: 'navigation.adminAi',

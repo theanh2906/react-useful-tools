@@ -26,6 +26,10 @@ A beautiful, modern React application for pregnancy tracking and productivity to
 - **Spending Analyzer** - Import text-based Sacombank credit-card PDF statements locally, review and edit categories, compare billing periods or calendar months with interactive charts
 - **Live Share** - Real-time file/text sharing
 
+### Development
+
+- **CLI Cheatsheets** - Read-only, colorful references for GitHub CLI (`gh`), Teamwork Graph CLI (`twg`), and Git, with topic filters, accent-insensitive search, practical examples, copy controls, and official sources at `/cheatsheets`
+
 ### Utilities
 
 - **Weather** - 7-day forecast with Visual Crossing API
@@ -162,3 +166,7 @@ For growing families everywhere. Track your pregnancy journey with beautiful, in
 
 **Version**: 2.0.0  
 **Last Updated**: May 2026
+
+## CLI Cheatsheet checks
+
+Run `npm run test:cheatsheets` for reference-data and search/filter regression tests. Commands in examples are never executed by these tests or the page. Source notes live in `docs/cheatsheets-reference.md`.

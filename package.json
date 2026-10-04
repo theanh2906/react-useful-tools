@@ -6,7 +6,8 @@
     "dev": "node scripts/dev.mjs",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:cheatsheets": "node --test scripts/cheatsheets.test.mjs"
   },
   "dependencies": {
     "@azure/msal-browser": "^5.0.2",

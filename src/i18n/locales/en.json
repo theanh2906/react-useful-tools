@@ -51,7 +51,8 @@
     "liveShare": "Live Share",
     "adminAi": "Admin AI Assistant",
     "mealCheckIn": "Meal Check-In",
-    "periodTracker": "Period Tracker"
+    "periodTracker": "Period Tracker",
+    "cheatsheets": "Cheatsheets"
   },
   "categories": {
     "main": "Main",
@@ -438,5 +439,37 @@
     "error": "Error processing request",
     "suggestedPrompts": "Suggested Prompts",
     "processingLogs": "Execution Steps"
+  },
+  "cheatsheets": {
+    "eyebrow": "Your command-line field guide",
+    "subtitle": "Less searching. More doing. Everyday commands, clear examples, and the right flag at a glance.",
+    "toolsCount": "{{count}} tools",
+    "examplesCount": "{{count}} examples",
+    "readOnly": "Read-only reference",
+    "terminalNote": "a little less to remember",
+    "ready": "Find it. Understand it. Make it yours.",
+    "selectTool": "Choose a CLI cheatsheet",
+    "commands": "commands",
+    "searchPlaceholder": "Search commands, flags, topics…",
+    "searchLabel": "Search {{tool}} commands",
+    "clearSearch": "Clear search",
+    "categories": "Filter by topic",
+    "allTopics": "All topics",
+    "showing": "{{count}} of {{total}} commands",
+    "exampleHint": "Practical examples · Click to copy",
+    "resetFilters": "Reset filters",
+    "noResults": "No matching commands",
+    "noResultsHint": "Try another keyword or reset the filters for {{tool}}.",
+    "example": "Example",
+    "copyCommand": "Copy example: {{title}}",
+    "copyError": "Could not copy. Select the example and copy it manually.",
+    "docs": "Docs",
+    "commandDocs": "Official documentation: {{title}} (opens in a new tab)",
+    "risk": {
+      "write": "Changes data",
+      "destructive": "Destructive"
+    },
+    "referenceNote": "Examples are for reference and are never executed here. Replace sample names and IDs before running a command. Review commands marked “Changes data” or “Destructive” first.",
+    "sources": "Sources & version notes"
   }
 }
