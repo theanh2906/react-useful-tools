@@ -309,7 +309,7 @@
   letter-spacing: -0.4px;
 }
 .sectionIntro p {
-  font-size: 11px;
+  font-size: 12px;
   color: rgb(var(--color-muted));
   margin-top: 4px;
   line-height: 1.6;
@@ -337,7 +337,7 @@
   width: 100%;
   min-width: 0;
   background: transparent;
-  font-size: 11px;
+  font-size: 12px;
   color: rgb(var(--color-foreground));
   outline: none !important;
   box-shadow: none !important;
@@ -369,7 +369,7 @@
   gap: 7px;
   min-height: 34px;
   padding: 7px 10px;
-  font-size: 10px;
+  font-size: 11px;
   border-radius: 5px;
   border: 1px solid rgb(var(--color-border));
   background: rgb(var(--color-elevated));
@@ -407,7 +407,7 @@
   justify-content: space-between;
   gap: 15px;
   color: rgb(var(--color-muted));
-  font-size: 10px;
+  font-size: 11px;
   margin: 22px 0 12px;
 }
 .boardMeta > button {
@@ -467,19 +467,19 @@
   color: var(--group-color);
 }
 .groupHeader h3 {
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.6;
   font-weight: 700;
 }
 .groupNumber {
   font:
-    500 10px var(--font-jetbrains-mono),
+    500 11px var(--font-jetbrains-mono),
     monospace;
   opacity: 0.8;
 }
 .groupCount {
   font:
-    9px var(--font-jetbrains-mono),
+    10px var(--font-jetbrains-mono),
     monospace;
   margin-left: auto;
   border: 1px solid color-mix(in srgb, var(--group-color) 18%, transparent);
@@ -524,7 +524,7 @@
   border-radius: 5px;
   background: rgb(var(--color-elevated));
   color: var(--group-color);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
 }
 .groupFooter button:hover {
@@ -542,13 +542,13 @@
   margin-bottom: 5px;
 }
 .commandTitle h4 {
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.6;
   font-weight: 600;
 }
 .risk {
   flex-shrink: 0;
-  font-size: 8px;
+  font-size: 9px;
   font-weight: 500;
   white-space: nowrap;
   color: #946328;
@@ -563,14 +563,14 @@
 .syntax {
   display: block;
   font:
-    600 10px/1.7 var(--font-jetbrains-mono),
+    600 12px/1.7 var(--font-jetbrains-mono),
     monospace;
   color: var(--group-color);
   overflow-wrap: anywhere;
   margin-bottom: 5px;
 }
 .commandDescription {
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.75;
   color: rgb(var(--color-muted));
   margin-bottom: 9px;
@@ -592,7 +592,7 @@
   padding-top: 1px;
   color: #8d9bad;
   font:
-    10px/1.7 var(--font-jetbrains-mono),
+    12px/1.7 var(--font-jetbrains-mono),
     monospace;
   user-select: none;
 }
@@ -603,7 +603,7 @@
   white-space: pre-wrap;
   overflow-wrap: anywhere;
   font:
-    10px/1.75 var(--font-jetbrains-mono),
+    12px/1.75 var(--font-jetbrains-mono),
     monospace;
   color: rgb(var(--color-foreground));
 }
@@ -627,7 +627,7 @@
   display: block;
   color: #b44e4e;
   margin-top: 5px;
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.6;
 }
 .tokenProgram {
@@ -646,7 +646,7 @@
   gap: 5px;
   margin-top: 8px;
   color: #957031;
-  font-size: 9px;
+  font-size: 11px;
   line-height: 1.65;
 }
 .warning > svg {
@@ -658,7 +658,7 @@
   align-items: center;
   gap: 2px;
   color: rgb(var(--color-muted));
-  font-size: 8px;
+  font-size: 10px;
   line-height: 1.7;
   margin-top: 7px;
   text-decoration: none;
@@ -712,7 +712,7 @@
   color: rgb(var(--color-muted));
   padding: 15px 0;
   border-bottom: 1px solid rgb(var(--color-border));
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.8;
 }
 .referenceNote > svg {
@@ -720,7 +720,7 @@
   margin-top: 1px;
 }
 .sources {
-  font-size: 10px;
+  font-size: 11px;
   color: rgb(var(--color-muted));
 }
 .sources summary {
@@ -880,17 +880,17 @@
     margin-left: 8px;
   }
   .commandTitle h4 {
-    font-size: 12px;
+    font-size: 14px;
   }
   .commandDescription {
-    font-size: 11px;
+    font-size: 13px;
   }
   .syntax,
   .example pre {
-    font-size: 11px;
+    font-size: 13px;
   }
   .groupHeader h3 {
-    font-size: 12px;
+    font-size: 14px;
   }
 }
 @media (max-width: 1250px) {
@@ -987,7 +987,7 @@
     width: 100%;
   }
   .search input {
-    font-size: 12px;
+    font-size: 13px;
     padding: 11px 0;
   }
   .categories {
@@ -1011,30 +1011,30 @@
     padding: 16px 0 12px;
   }
   .commandTitle h4 {
-    font-size: 12px;
+    font-size: 14px;
   }
   .commandDescription {
-    font-size: 11px;
+    font-size: 13px;
   }
   .syntax,
   .example pre {
-    font-size: 11px;
+    font-size: 13px;
   }
   .groupHeader h3 {
-    font-size: 12px;
+    font-size: 14px;
   }
   .copyButton {
     width: 30px;
     height: 32px;
   }
   .risk {
-    font-size: 9px;
+    font-size: 10px;
   }
   .warning {
-    font-size: 10px;
+    font-size: 12px;
   }
   .commandDocs {
-    font-size: 10px;
+    font-size: 12px;
     padding: 4px 0;
   }
 }
@@ -1055,7 +1055,7 @@
     padding: 11px 9px;
   }
   .sectionIntro p {
-    font-size: 11px;
+    font-size: 12px;
   }
   .sources summary {
     flex-wrap: wrap;
@@ -1176,7 +1176,7 @@
 .groupLevel {
   margin: 0;
   padding: 7px 14px;
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 600;
   background: rgb(var(--color-surface));
   color: rgb(var(--color-muted));
@@ -1189,18 +1189,18 @@
   border: 1px solid rgb(var(--color-border));
   border-radius: 3px;
   color: rgb(var(--color-muted));
-  font-size: 9px;
+  font-size: 10px;
 }
 .commandOptions {
   margin-top: 9px;
-  font-size: 10px;
+  font-size: 12px;
   color: rgb(var(--color-muted));
   line-height: 1.7;
 }
 .commandOptions summary {
   cursor: pointer;
   color: var(--group-color);
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 600;
   padding: 5px 0;
 }
@@ -1214,7 +1214,7 @@
 .commandOptions dt {
   color: rgb(var(--color-foreground));
   font:
-    500 10px/1.7 var(--font-jetbrains-mono),
+    500 12px/1.7 var(--font-jetbrains-mono),
     monospace;
   overflow-wrap: anywhere;
 }
@@ -1225,7 +1225,7 @@
   display: block;
   margin-top: 4px;
   overflow-wrap: anywhere;
-  font-size: 10px;
+  font-size: 12px;
 }
 .boardRegion {
   scroll-margin-top: 88px;
@@ -1246,7 +1246,7 @@
 }
 .pagination p {
   color: rgb(var(--color-muted));
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.8;
 }
 .pagination > div {
@@ -1266,7 +1266,7 @@
   background: rgb(var(--color-elevated));
   border: 1px solid rgb(var(--color-border));
   border-radius: 5px;
-  font-size: 10px;
+  font-size: 11px;
 }
 .pagination button:hover:not(:disabled) {
   border-color: #5279be;
@@ -1278,7 +1278,7 @@
 .pagination span {
   color: rgb(var(--color-muted));
   font:
-    10px var(--font-jetbrains-mono),
+    11px var(--font-jetbrains-mono),
     monospace;
 }
 .pagination .showAll {
@@ -1316,7 +1316,7 @@
   padding: 7px 26px 7px 10px;
   background: rgb(var(--color-elevated));
   color: rgb(var(--color-foreground));
-  font-size: 10px;
+  font-size: 11px;
 }
 .discoveryLabel {
   display: flex;
@@ -1328,7 +1328,7 @@
   border-radius: 3px;
   background: rgb(var(--color-surface));
   color: rgb(var(--color-foreground));
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.7;
 }
 .discoveryLabel > svg {
