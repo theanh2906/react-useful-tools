@@ -51,7 +51,8 @@
     "liveShare": "Live Share",
     "adminAi": "Admin AI Assistant",
     "mealCheckIn": "Meal Check-In",
-    "periodTracker": "Period Tracker"
+    "periodTracker": "Period Tracker",
+    "cheatsheets": "Cheatsheets"
   },
   "categories": {
     "main": "Main",
@@ -438,5 +439,72 @@
     "error": "Error processing request",
     "suggestedPrompts": "Suggested Prompts",
     "processingLogs": "Execution Steps"
+  },
+  "cheatsheets": {
+    "eyebrow": "Your command-line field guide",
+    "subtitle": "From everyday workflows to advanced commands. Browse the full documented inventory, with examples and key options.",
+    "toolsCount": "{{count}} tools",
+    "examplesCount": "{{count}} reference entries",
+    "readOnly": "Read-only reference",
+    "terminalNote": "a little less to remember",
+    "ready": "Find it. Understand it. Make it yours.",
+    "selectTool": "Choose a CLI cheatsheet",
+    "commands": "commands",
+    "searchPlaceholder": "Search commands, flags, topics…",
+    "searchLabel": "Search {{tool}} commands",
+    "clearSearch": "Clear search",
+    "categories": "Filter by topic",
+    "allTopics": "All topics",
+    "showing": "{{count}} of {{total}} commands",
+    "exampleHint": "Examples & parameter help · Click to copy",
+    "resetFilters": "Reset filters",
+    "noResults": "No matching commands",
+    "noResultsHint": "Try another keyword or reset the filters for {{tool}}.",
+    "example": "Example",
+    "copyCommand": "Copy example: {{title}}",
+    "copyError": "Could not copy. Select the example and copy it manually.",
+    "docs": "Docs",
+    "commandDocs": "Official documentation: {{title}} (opens in a new tab)",
+    "risk": {
+      "write": "Changes data",
+      "destructive": "Destructive"
+    },
+    "referenceNote": "Examples are for reference and are never executed here. Replace sample names and IDs before running a command. Review commands marked “Changes data” or “Destructive” first.",
+    "sources": "Sources & version notes",
+    "searching": "Searching the complete reference…",
+    "showingRange": "{{start}}–{{end}} of {{count}} matches · {{total}} entries",
+    "overviewSummary": "Up to {{limit}} entries per topic · {{topics}} topics · {{total}} entries",
+    "showMore": "Show more (+{{count}})",
+    "showTopic": "Show all {{count}} entries in {{title}}",
+    "commandResults": "Command results",
+    "resultPages": "Command result pages",
+    "previousPage": "Previous command page",
+    "nextPage": "Next command page",
+    "pageNumber": "Page {{page}} / {{pages}}",
+    "fullSearchHint": "Search covers all {{count}} entries, including commands on other pages.",
+    "showAll": "Show all {{count}}",
+    "usePages": "Use pages",
+    "coverageLabel": "{{covered}} / {{total}} documented commands",
+    "outsideScope": "Scope notes and exclusions",
+    "inventorySource": "Official command inventory",
+    "importantOptions": "Key options ({{count}})",
+    "level": {
+      "core": "Everyday commands",
+      "advanced": "Advanced commands",
+      "plumbing": "Plumbing · low-level Git internals"
+    },
+    "commandStatus": {
+      "preview": "Preview / experimental",
+      "deprecated": "Deprecated"
+    },
+    "moreTopics": "More topics ({{count}})",
+    "fewerTopics": "Fewer topics",
+    "chooseTopic": "Choose from {{count}} topics",
+    "discoveryExample": "Input/schema help; operation example not yet verified",
+    "coverageDiscovery": "{{count}} entries currently provide input help only",
+    "inputHelp": "Input/schema lookup",
+    "copyInputHelp": "Copy input/schema lookup: {{title}}",
+    "coverageTemplates": "{{count}} templates require IDs or runtime schema",
+    "templateExample": "Template: fill in the IDs/schema before running"
   }
 }

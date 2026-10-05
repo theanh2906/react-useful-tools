@@ -1,0 +1,1184 @@
+[
+  {
+    "id": "codespace",
+    "title": "Codespaces",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-codespace-rebuild",
+        "canonicalCommand": "gh codespace rebuild",
+        "title": "Dựng lại Codespace",
+        "command": "gh codespace rebuild [flags]",
+        "description": "Tạo lại container từ devcontainer trong working directory, giữ mã và thay đổi hiện tại.",
+        "example": "gh codespace rebuild --codespace CODESPACE_NAME",
+        "risk": "write",
+        "tags": [
+          "codespace",
+          "rebuild"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_codespace_rebuild",
+        "options": [
+          {
+            "flag": "--codespace",
+            "description": "Chỉ rõ tên Codespace cần thao tác."
+          },
+          {
+            "flag": "--full",
+            "description": "Dựng lại toàn bộ và xóa cache Docker image."
+          }
+        ],
+        "warning": "Có thể khởi động Codespace và phát sinh chi phí tính toán/lưu trữ. Kiểm tra đúng Codespace và chính sách tổ chức. Có thể gián đoạn phiên; sao lưu dữ liệu nằm ngoài phạm vi được giữ lại và kiểm tra script devcontainer.",
+        "billingNote": "Có thể liên quan hạn mức hoặc chi phí GitHub Actions, Copilot hoặc Codespaces tùy dịch vụ, gói và tổ chức; kiểm tra tài khoản trước khi chạy."
+      },
+      {
+        "id": "gh-codespace-ssh",
+        "canonicalCommand": "gh codespace ssh",
+        "title": "SSH vào Codespace",
+        "command": "gh codespace ssh [<flags>...] [-- <ssh-flags>...] [<command>]",
+        "description": "Mở phiên SSH hoặc in cấu hình OpenSSH cho Codespace.",
+        "example": "gh codespace ssh --codespace CODESPACE_NAME",
+        "risk": "write",
+        "tags": [
+          "codespace",
+          "ssh"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_codespace_ssh",
+        "options": [
+          {
+            "flag": "--codespace",
+            "description": "Chỉ rõ tên Codespace cần thao tác."
+          },
+          {
+            "flag": "--config",
+            "description": "In cấu hình OpenSSH ra stdout."
+          },
+          {
+            "flag": "--profile",
+            "description": "Chọn profile SSH."
+          },
+          {
+            "flag": "--debug-file",
+            "description": "Đường dẫn ghi log chẩn đoán."
+          }
+        ],
+        "warning": "Có thể khởi động Codespace và phát sinh chi phí tính toán/lưu trữ. Kiểm tra đúng Codespace và chính sách tổ chức. Có thể tạo cặp khóa SSH trong ~/.ssh. Phiên từ xa cho phép chạy lệnh; không chạy mã chưa tin cậy.",
+        "billingNote": "Có thể liên quan hạn mức hoặc chi phí GitHub Actions, Copilot hoặc Codespaces tùy dịch vụ, gói và tổ chức; kiểm tra tài khoản trước khi chạy."
+      },
+      {
+        "id": "gh-codespace-stop",
+        "canonicalCommand": "gh codespace stop",
+        "title": "Dừng Codespace",
+        "command": "gh codespace stop [flags]",
+        "description": "Dừng máy ảo của Codespace đang chạy.",
+        "example": "gh codespace stop --codespace CODESPACE_NAME",
+        "risk": "write",
+        "tags": [
+          "codespace",
+          "stop"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_codespace_stop",
+        "options": [
+          {
+            "flag": "--codespace",
+            "description": "Chỉ rõ tên Codespace cần thao tác."
+          },
+          {
+            "flag": "--org",
+            "description": "Chọn tổ chức; một số thao tác đòi hỏi quyền quản trị."
+          },
+          {
+            "flag": "--user",
+            "description": "Chọn tài khoản người dùng."
+          }
+        ],
+        "warning": "Ngắt công việc và kết nối đang chạy. Dừng tính toán không tự xóa dữ liệu; chi phí lưu trữ có thể tiếp tục.",
+        "billingNote": "Có thể liên quan hạn mức hoặc chi phí GitHub Actions, Copilot hoặc Codespaces tùy dịch vụ, gói và tổ chức; kiểm tra tài khoản trước khi chạy."
+      },
+      {
+        "id": "gh-codespace-view",
+        "canonicalCommand": "gh codespace view",
+        "title": "Xem thông tin Codespace",
+        "command": "gh codespace view [flags]",
+        "description": "Xem loại máy, trạng thái, chủ sở hữu tính phí và metadata khác.",
+        "example": "gh codespace view --codespace CODESPACE_NAME --json displayName,machineDisplayName,state",
+        "risk": "read",
+        "tags": [
+          "codespace",
+          "view"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_codespace_view",
+        "options": [
+          {
+            "flag": "--codespace",
+            "description": "Chỉ rõ tên Codespace cần thao tác."
+          },
+          {
+            "flag": "--json",
+            "description": "Xuất các trường được chỉ định dưới dạng JSON."
+          },
+          {
+            "flag": "--jq",
+            "description": "Lọc đầu ra JSON bằng biểu thức jq."
+          },
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ruleset",
+    "title": "Rulesets & nhánh",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-ruleset-check",
+        "canonicalCommand": "gh ruleset check",
+        "title": "Xem luật áp dụng cho nhánh",
+        "command": "gh ruleset check [<branch>] [flags]",
+        "description": "Đọc mọi quy tắc áp dụng cho tên nhánh, kể cả khi nhánh chưa tồn tại.",
+        "example": "gh ruleset check main --repo octo-org/cli-sandbox",
+        "risk": "read",
+        "tags": [
+          "ruleset",
+          "check"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_ruleset_check",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--default",
+            "description": "Xem luật áp dụng cho nhánh mặc định."
+          },
+          {
+            "flag": "--web",
+            "description": "Mở nội dung hoặc luồng tương ứng trong trình duyệt."
+          }
+        ]
+      },
+      {
+        "id": "gh-ruleset-list",
+        "canonicalCommand": "gh ruleset list",
+        "title": "Liệt kê ruleset",
+        "command": "gh ruleset list [flags]",
+        "description": "Xem ruleset repository hoặc tổ chức, mặc định gồm các luật kế thừa áp dụng được.",
+        "example": "gh ruleset list --repo octo-org/cli-sandbox",
+        "risk": "read",
+        "tags": [
+          "ruleset",
+          "list"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_ruleset_list",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--org",
+            "description": "Chọn tổ chức; một số thao tác đòi hỏi quyền quản trị."
+          },
+          {
+            "flag": "--parents",
+            "description": "Bao gồm luật ở cấp cha; mặc định bật."
+          },
+          {
+            "flag": "--limit",
+            "description": "Giới hạn số kết quả lấy về."
+          },
+          {
+            "flag": "--web",
+            "description": "Mở nội dung hoặc luồng tương ứng trong trình duyệt."
+          }
+        ],
+        "warning": "Liệt kê cấp tổ chức có thể cần scope admin:org; chỉ mở rộng quyền khi cần và đã được phê duyệt."
+      },
+      {
+        "id": "gh-ruleset-view",
+        "canonicalCommand": "gh ruleset view",
+        "title": "Đọc một ruleset",
+        "command": "gh ruleset view [<ruleset-id>] [flags]",
+        "description": "Xem nội dung ruleset theo ID hoặc chọn tương tác.",
+        "example": "gh ruleset view 23 --repo octo-org/cli-sandbox",
+        "risk": "read",
+        "tags": [
+          "ruleset",
+          "view"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_ruleset_view",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--org",
+            "description": "Chọn tổ chức; một số thao tác đòi hỏi quyền quản trị."
+          },
+          {
+            "flag": "--parents",
+            "description": "Bao gồm ruleset kế thừa áp dụng được."
+          },
+          {
+            "flag": "--web",
+            "description": "Mở nội dung hoặc luồng tương ứng trong trình duyệt."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "secret",
+    "title": "Secrets",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-secret-list",
+        "canonicalCommand": "gh secret list",
+        "title": "Liệt kê metadata secret",
+        "command": "gh secret list [flags]",
+        "description": "Xem tên và metadata secret trong phạm vi chọn; không đọc được giá trị secret.",
+        "example": "gh secret list --repo octo-org/cli-sandbox",
+        "risk": "read",
+        "tags": [
+          "secret",
+          "list"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_secret_list",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--env",
+            "description": "Chọn môi trường triển khai trong repository."
+          },
+          {
+            "flag": "--org",
+            "description": "Chọn tổ chức; một số thao tác đòi hỏi quyền quản trị."
+          },
+          {
+            "flag": "--app",
+            "description": "Chọn actions, agents, codespaces hoặc dependabot."
+          },
+          {
+            "flag": "--user",
+            "description": "Liệt kê secret Codespaces của người dùng."
+          },
+          {
+            "flag": "--json",
+            "description": "Xuất các trường được chỉ định dưới dạng JSON."
+          }
+        ]
+      },
+      {
+        "id": "gh-secret-set",
+        "canonicalCommand": "gh secret set",
+        "title": "Tạo hoặc thay secret",
+        "command": "gh secret set <secret-name> [flags]",
+        "description": "Nhập secret qua prompt/stdin, mã hóa cục bộ rồi gửi tới GitHub trong phạm vi đã chọn.",
+        "example": "gh secret set EXAMPLE_TOKEN --repo octo-org/cli-sandbox",
+        "risk": "write",
+        "tags": [
+          "secret",
+          "set"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_secret_set",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--env",
+            "description": "Chọn môi trường triển khai trong repository."
+          },
+          {
+            "flag": "--org",
+            "description": "Chọn tổ chức; một số thao tác đòi hỏi quyền quản trị."
+          },
+          {
+            "flag": "--app",
+            "description": "Chọn actions, agents, codespaces hoặc dependabot."
+          },
+          {
+            "flag": "--repos",
+            "description": "Chỉ định danh sách repository được phép dùng."
+          },
+          {
+            "flag": "--visibility",
+            "description": "Chọn phạm vi hiển thị hoặc truy cập."
+          }
+        ],
+        "warning": "Truyền bí mật và có thể thay thế giá trị đang dùng. Tự nhập trong prompt bảo mật; đừng đặt token thật trong ví dụ, lịch sử shell hay chat. Kiểm tra ứng dụng và repository được phép truy cập."
+      },
+      {
+        "id": "gh-secret-delete",
+        "canonicalCommand": "gh secret delete",
+        "title": "Xóa secret",
+        "command": "gh secret delete <secret-name> [flags]",
+        "description": "Xóa secret trong repository, môi trường, tổ chức hoặc Codespaces người dùng.",
+        "example": "gh secret delete EXAMPLE_TOKEN --repo octo-org/cli-sandbox",
+        "risk": "destructive",
+        "tags": [
+          "secret",
+          "delete"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_secret_delete",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--env",
+            "description": "Chọn môi trường triển khai trong repository."
+          },
+          {
+            "flag": "--org",
+            "description": "Chọn tổ chức; một số thao tác đòi hỏi quyền quản trị."
+          },
+          {
+            "flag": "--app",
+            "description": "Chọn actions, agents, codespaces hoặc dependabot."
+          },
+          {
+            "flag": "--user",
+            "description": "Xóa secret Codespaces của người dùng."
+          }
+        ],
+        "warning": "Xóa dữ liệu đã chọn; có thể không khôi phục được bằng CLI. Kiểm tra ID, phạm vi và bản sao lưu trước khi xác nhận. Có thể khiến CI, agent hoặc dịch vụ không xác thực được. Xóa trên GitHub không thu hồi credential ở dịch vụ phát hành."
+      }
+    ]
+  },
+  {
+    "id": "variable",
+    "title": "Variables",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-variable-get",
+        "canonicalCommand": "gh variable get",
+        "title": "Đọc giá trị variable",
+        "command": "gh variable get <variable-name> [flags]",
+        "description": "Đọc giá trị và metadata biến cấu hình Actions/Dependabot.",
+        "example": "gh variable get APP_MODE --repo octo-org/cli-sandbox",
+        "risk": "read",
+        "tags": [
+          "variable",
+          "get"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_variable_get",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--env",
+            "description": "Chọn môi trường triển khai trong repository."
+          },
+          {
+            "flag": "--org",
+            "description": "Chọn tổ chức; một số thao tác đòi hỏi quyền quản trị."
+          },
+          {
+            "flag": "--json",
+            "description": "Xuất các trường được chỉ định dưới dạng JSON."
+          }
+        ]
+      },
+      {
+        "id": "gh-variable-list",
+        "canonicalCommand": "gh variable list",
+        "title": "Liệt kê variables",
+        "command": "gh variable list [flags]",
+        "description": "Xem biến cấu hình và giá trị ở repository, environment hoặc organization.",
+        "example": "gh variable list --repo octo-org/cli-sandbox",
+        "risk": "read",
+        "tags": [
+          "variable",
+          "list"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_variable_list",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--env",
+            "description": "Chọn môi trường triển khai trong repository."
+          },
+          {
+            "flag": "--org",
+            "description": "Chọn tổ chức; một số thao tác đòi hỏi quyền quản trị."
+          },
+          {
+            "flag": "--json",
+            "description": "Xuất các trường được chỉ định dưới dạng JSON."
+          }
+        ],
+        "warning": "Biến cấu hình không phải secret; giá trị có thể xuất hiện nguyên văn trong đầu ra."
+      },
+      {
+        "id": "gh-variable-set",
+        "canonicalCommand": "gh variable set",
+        "title": "Tạo hoặc thay variable",
+        "command": "gh variable set <variable-name> [flags]",
+        "description": "Gán biến cấu hình không bí mật hoặc nhập nhiều biến từ dotenv.",
+        "example": "gh variable set APP_MODE --repo octo-org/cli-sandbox --body staging",
+        "risk": "write",
+        "tags": [
+          "variable",
+          "set"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_variable_set",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--body",
+            "description": "Giá trị biến; không dùng cho mật khẩu/token."
+          },
+          {
+            "flag": "--env",
+            "description": "Chọn môi trường triển khai trong repository."
+          },
+          {
+            "flag": "--org",
+            "description": "Chọn tổ chức; một số thao tác đòi hỏi quyền quản trị."
+          },
+          {
+            "flag": "--env-file",
+            "description": "Nhập nhiều biến từ file dotenv."
+          },
+          {
+            "flag": "--repos",
+            "description": "Chỉ định danh sách repository được phép dùng."
+          }
+        ],
+        "warning": "Thay đổi cấu hình có thể ảnh hưởng CI/triển khai. Variables không dùng để bảo vệ bí mật; dùng secrets cho dữ liệu xác thực."
+      },
+      {
+        "id": "gh-variable-delete",
+        "canonicalCommand": "gh variable delete",
+        "title": "Xóa variable",
+        "command": "gh variable delete <variable-name> [flags]",
+        "description": "Gỡ biến cấu hình ở phạm vi được chọn.",
+        "example": "gh variable delete APP_MODE --repo octo-org/cli-sandbox",
+        "risk": "destructive",
+        "tags": [
+          "variable",
+          "delete"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_variable_delete",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--env",
+            "description": "Chọn môi trường triển khai trong repository."
+          },
+          {
+            "flag": "--org",
+            "description": "Chọn tổ chức; một số thao tác đòi hỏi quyền quản trị."
+          }
+        ],
+        "warning": "Xóa dữ liệu đã chọn; có thể không khôi phục được bằng CLI. Kiểm tra ID, phạm vi và bản sao lưu trước khi xác nhận. Kiểm tra workflow phụ thuộc vào biến trước."
+      }
+    ]
+  },
+  {
+    "id": "attestation",
+    "title": "Chứng thực artifact",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-attestation-download",
+        "canonicalCommand": "gh attestation download",
+        "title": "Tải chứng thực artifact",
+        "command": "gh attestation download [<file-path> | oci://<image-uri>] [--owner | --repo] [flags]",
+        "description": "Lưu bundle chứng thực gắn với artifact vào thư mục hiện tại để xác minh ngoại tuyến.",
+        "example": "gh attestation download ./dist/app.tar.gz --repo octo-org/cli-sandbox",
+        "risk": "write",
+        "tags": [
+          "attestation",
+          "download"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_attestation_download",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--owner",
+            "description": "Giới hạn theo chủ sở hữu."
+          },
+          {
+            "flag": "--limit",
+            "description": "Giới hạn số kết quả lấy về."
+          },
+          {
+            "flag": "--digest-alg",
+            "description": "Chọn thuật toán sha256 hoặc sha512."
+          },
+          {
+            "flag": "--predicate-type",
+            "description": "Lọc loại tuyên bố trong chứng thực."
+          }
+        ],
+        "warning": "Ghi file .jsonl theo digest vào thư mục hiện tại. Dùng gh từ 2.102.0 và thư mục đích an toàn, tránh symlink không tin cậy. Tải bundle chưa đồng nghĩa đã xác minh.",
+        "status": "preview"
+      },
+      {
+        "id": "gh-attestation-trusted-root",
+        "canonicalCommand": "gh attestation trusted-root",
+        "title": "Lấy trust root cho xác minh",
+        "command": "gh attestation trusted-root [--tuf-url <url> --tuf-root <file-path>] [--verify-only] [flags]",
+        "description": "In dữ liệu trusted root để dùng khi xác minh ngoại tuyến hoặc kiểm tra kho TUF cục bộ.",
+        "example": "gh attestation trusted-root",
+        "risk": "read",
+        "tags": [
+          "attestation",
+          "trusted-root"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_attestation_trusted-root",
+        "options": [
+          {
+            "flag": "--tuf-url",
+            "description": "Chọn mirror TUF tin cậy."
+          },
+          {
+            "flag": "--tuf-root",
+            "description": "Đường dẫn root.json đã xác thực qua kênh riêng."
+          },
+          {
+            "flag": "--verify-only",
+            "description": "Chỉ kiểm tra toàn vẹn TUF, không in trusted root."
+          }
+        ],
+        "warning": "Trust root quyết định gốc tin cậy. Không dùng root/mirror do bên không tin cậy cung cấp; chuyển hướng stdout sẽ ghi file cục bộ."
+      },
+      {
+        "id": "gh-attestation-verify",
+        "canonicalCommand": "gh attestation verify",
+        "title": "Xác minh nguồn gốc artifact",
+        "command": "gh attestation verify [<file-path> | oci://<image-uri>] [--owner | --repo] [flags]",
+        "description": "Kiểm tra chữ ký và danh tính nguồn tạo artifact theo repository/owner cùng chính sách bổ sung.",
+        "example": "gh attestation verify ./dist/app.tar.gz --repo octo-org/cli-sandbox --signer-workflow octo-org/cli-sandbox/.github/workflows/release.yml",
+        "risk": "read",
+        "tags": [
+          "attestation",
+          "verify"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_attestation_verify",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--signer-workflow",
+            "description": "Ràng buộc chính xác workflow ký chứng thực."
+          },
+          {
+            "flag": "--source-ref",
+            "description": "Ràng buộc Git ref nguồn mong đợi."
+          },
+          {
+            "flag": "--bundle",
+            "description": "Đọc bundle cục bộ thay vì tải từ GitHub."
+          },
+          {
+            "flag": "--custom-trusted-root",
+            "description": "Chọn trusted root đã kiểm tra cho xác minh ngoại tuyến."
+          },
+          {
+            "flag": "--predicate-type",
+            "description": "Chọn loại chứng thực; mặc định SLSA provenance v1."
+          }
+        ],
+        "warning": "Dùng gh từ 2.102.0 để có bản vá kiểm tra source-ref và signer-workflow. Xác minh nguồn gốc không bảo đảm mã an toàn; xác định đúng signer cho reusable workflow và đừng tin tùy tiện predicate do workflow kiểm soát."
+      }
+    ]
+  },
+  {
+    "id": "agent-task",
+    "title": "Coding agent tasks",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-agent-task-create",
+        "canonicalCommand": "gh agent-task create",
+        "title": "Giao việc cho coding agent",
+        "command": "gh agent-task create [<task description>] [flags]",
+        "description": "Tạo tác vụ để agent xử lý trong repository và tạo thay đổi qua pull request.",
+        "example": "gh agent-task create \"Bổ sung ví dụ README\" --repo octo-org/cli-sandbox --base main",
+        "risk": "write",
+        "tags": [
+          "agent-task",
+          "create"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_agent-task_create",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--base",
+            "description": "Chọn nhánh nền cho pull request."
+          },
+          {
+            "flag": "--from-file",
+            "description": "Đọc mô tả tác vụ từ file; dấu - dùng stdin."
+          },
+          {
+            "flag": "--custom-agent",
+            "description": "Chọn tên custom agent trong repository."
+          },
+          {
+            "flag": "--follow",
+            "description": "Tiếp tục theo dõi log khi có dữ liệu mới."
+          }
+        ],
+        "warning": "Tạo tác vụ thật trên GitHub, có thể tiêu tốn hạn mức Copilot/Actions và tạo PR. Kiểm tra mô tả, quyền repo, dữ liệu gửi và thay đổi agent trước khi merge.",
+        "status": "preview",
+        "billingNote": "Có thể liên quan hạn mức hoặc chi phí GitHub Actions, Copilot hoặc Codespaces tùy dịch vụ, gói và tổ chức; kiểm tra tài khoản trước khi chạy."
+      },
+      {
+        "id": "gh-agent-task-list",
+        "canonicalCommand": "gh agent-task list",
+        "title": "Liệt kê tác vụ agent",
+        "command": "gh agent-task list [flags]",
+        "description": "Xem các tác vụ agent và trạng thái được trả về cho tài khoản.",
+        "example": "gh agent-task list --limit 30",
+        "risk": "read",
+        "tags": [
+          "agent-task",
+          "list"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_agent-task_list",
+        "options": [
+          {
+            "flag": "--limit",
+            "description": "Giới hạn số kết quả lấy về."
+          },
+          {
+            "flag": "--json",
+            "description": "Xuất các trường được chỉ định dưới dạng JSON."
+          },
+          {
+            "flag": "--web",
+            "description": "Mở nội dung hoặc luồng tương ứng trong trình duyệt."
+          }
+        ],
+        "status": "preview"
+      },
+      {
+        "id": "gh-agent-task-view",
+        "canonicalCommand": "gh agent-task view",
+        "title": "Xem phiên agent",
+        "command": "gh agent-task view [<session-id> | <pr-number> | <pr-url> | <pr-branch>] [flags]",
+        "description": "Đọc chi tiết tác vụ qua session ID hoặc tham chiếu pull request.",
+        "example": "gh agent-task view 17 --repo octo-org/cli-sandbox --log",
+        "risk": "read",
+        "tags": [
+          "agent-task",
+          "view"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_agent-task_view",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--log",
+            "description": "In log phiên agent."
+          },
+          {
+            "flag": "--follow",
+            "description": "Tiếp tục theo dõi log khi có dữ liệu mới."
+          },
+          {
+            "flag": "--json",
+            "description": "Xuất các trường được chỉ định dưới dạng JSON."
+          },
+          {
+            "flag": "--web",
+            "description": "Mở nội dung hoặc luồng tương ứng trong trình duyệt."
+          }
+        ],
+        "warning": "Log có thể chứa mã và dữ liệu nội bộ; kiểm tra trước khi chia sẻ.",
+        "status": "preview"
+      }
+    ]
+  },
+  {
+    "id": "skill",
+    "title": "Agent skills",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-skill-install",
+        "canonicalCommand": "gh skill install",
+        "title": "Cài agent skill",
+        "command": "gh skill install <repository> [<skill[@version]>] [flags]",
+        "description": "Tải/copy skill vào thư mục phù hợp agent ở phạm vi project hoặc user.",
+        "example": "gh skill install OWNER/REPO SKILL_NAME --agent codex --scope project --pin VERIFIED_TAG_OR_COMMIT",
+        "risk": "write",
+        "tags": [
+          "skill",
+          "install"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_skill_install",
+        "options": [
+          {
+            "flag": "--agent",
+            "description": "Chọn agent đích như codex, github-copilot hoặc claude-code."
+          },
+          {
+            "flag": "--scope",
+            "description": "Chọn project hoặc user; mặc định project."
+          },
+          {
+            "flag": "--pin",
+            "description": "Ghim tag hoặc commit SHA đã kiểm tra."
+          },
+          {
+            "flag": "--dir",
+            "description": "Thư mục tùy chỉnh, ghi đè lựa chọn agent/scope."
+          },
+          {
+            "flag": "--from-local",
+            "description": "Đọc từ thư mục cục bộ."
+          },
+          {
+            "flag": "--force",
+            "description": "Bỏ một số bước bảo vệ hoặc buộc thao tác; chỉ dùng sau khi hiểu tác động."
+          }
+        ],
+        "warning": "Skill chứa chỉ dẫn/script có thể ảnh hưởng hành vi agent. Đọc gh skill preview và kiểm tra nguồn trước khi cài; tránh ghi đè và mở phạm vi user ngoài dự định. Tính năng preview có thể thay đổi mà không báo trước.",
+        "status": "preview"
+      },
+      {
+        "id": "gh-skill-list",
+        "canonicalCommand": "gh skill list",
+        "title": "Liệt kê skill đã cài",
+        "command": "gh skill list [flags]",
+        "description": "Quét các thư mục skill được hỗ trợ theo agent và phạm vi.",
+        "example": "gh skill list --agent codex --scope project",
+        "risk": "read",
+        "tags": [
+          "skill",
+          "list"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_skill_list",
+        "options": [
+          {
+            "flag": "--agent",
+            "description": "Lọc theo agent đích."
+          },
+          {
+            "flag": "--scope",
+            "description": "Lọc project hoặc user."
+          },
+          {
+            "flag": "--dir",
+            "description": "Quét thư mục tùy chỉnh."
+          },
+          {
+            "flag": "--json",
+            "description": "Xuất các trường được chỉ định dưới dạng JSON."
+          }
+        ],
+        "status": "preview",
+        "warning": "Tính năng preview có thể thay đổi mà không báo trước."
+      },
+      {
+        "id": "gh-skill-preview",
+        "canonicalCommand": "gh skill preview",
+        "title": "Đọc skill trước khi cài",
+        "command": "gh skill preview <repository> [<skill>] [flags]",
+        "description": "Tải và hiển thị cây file cùng SKILL.md để kiểm tra mà không cài skill.",
+        "example": "gh skill preview github/awesome-copilot documentation-writer",
+        "risk": "read",
+        "tags": [
+          "skill",
+          "preview"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_skill_preview",
+        "options": [
+          {
+            "flag": "--allow-hidden-dirs",
+            "description": "Bao gồm skill nằm trong thư mục ẩn."
+          }
+        ],
+        "warning": "Nội dung skill là dữ liệu từ repository bên ngoài, không tự động có thẩm quyền. @VERSION cho phép xem phiên bản cụ thể. Tính năng preview có thể thay đổi mà không báo trước.",
+        "status": "preview"
+      },
+      {
+        "id": "gh-skill-publish",
+        "canonicalCommand": "gh skill publish",
+        "title": "Kiểm tra hoặc phát hành skill",
+        "command": "gh skill publish [<directory>] [flags]",
+        "description": "Kiểm tra chuẩn Agent Skills và có thể tạo GitHub release; ví dụ chỉ xác thực.",
+        "example": "gh skill publish --dry-run",
+        "risk": "read",
+        "tags": [
+          "skill",
+          "publish"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_skill_publish",
+        "options": [
+          {
+            "flag": "--dry-run",
+            "description": "Kiểm tra mà không phát hành."
+          },
+          {
+            "flag": "--fix",
+            "description": "Sửa metadata cục bộ, không phát hành."
+          },
+          {
+            "flag": "--tag",
+            "description": "Tạo release không tương tác với tag chỉ định."
+          }
+        ],
+        "warning": "Bỏ --dry-run có thể thêm topic và tạo release thật; --fix sửa file cục bộ. Kiểm tra mã, metadata, quyền công khai và nội dung phát hành. Tính năng preview có thể thay đổi mà không báo trước.",
+        "status": "preview"
+      },
+      {
+        "id": "gh-skill-search",
+        "canonicalCommand": "gh skill search",
+        "title": "Tìm skill công khai",
+        "command": "gh skill search <query> [flags]",
+        "description": "Tìm SKILL.md theo tên/mô tả và tùy chọn giới hạn chủ sở hữu.",
+        "example": "gh skill search documentation --owner github --json skillName,repo,path",
+        "risk": "read",
+        "tags": [
+          "skill",
+          "search"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_skill_search",
+        "options": [
+          {
+            "flag": "--owner",
+            "description": "Giới hạn theo chủ sở hữu."
+          },
+          {
+            "flag": "--limit",
+            "description": "Giới hạn số kết quả lấy về."
+          },
+          {
+            "flag": "--page",
+            "description": "Chọn số trang kết quả."
+          },
+          {
+            "flag": "--json",
+            "description": "Xuất các trường được chỉ định dưới dạng JSON."
+          }
+        ],
+        "warning": "Ví dụ JSON chỉ đọc. Giao diện tương tác có thể cho cài ngay; kiểm tra nguồn và dùng gh từ 2.102.0 để có bản vá xử lý kết quả tìm kiếm. Tính năng preview có thể thay đổi mà không báo trước.",
+        "status": "preview"
+      },
+      {
+        "id": "gh-skill-update",
+        "canonicalCommand": "gh skill update",
+        "title": "Kiểm tra cập nhật skill",
+        "command": "gh skill update [<skill>...] [flags]",
+        "description": "So sánh skill đã cài với nguồn và tùy chọn cập nhật; ví dụ không sửa file.",
+        "example": "gh skill update --dry-run",
+        "risk": "read",
+        "tags": [
+          "skill",
+          "update"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_skill_update",
+        "options": [
+          {
+            "flag": "--dry-run",
+            "description": "Chỉ báo cập nhật, không thay file."
+          },
+          {
+            "flag": "--all",
+            "description": "Cập nhật tất cả mà không hỏi."
+          },
+          {
+            "flag": "--force",
+            "description": "Tải lại, có thể ghi đè sửa đổi cục bộ."
+          },
+          {
+            "flag": "--unpin",
+            "description": "Bỏ ghim phiên bản và đưa skill đã ghim vào cập nhật."
+          },
+          {
+            "flag": "--dir",
+            "description": "Quét thư mục tùy chỉnh."
+          }
+        ],
+        "warning": "Bỏ --dry-run có thể thay chỉ dẫn/script agent đang dùng. Kiểm tra diff và sao lưu thay đổi cục bộ trước khi --force hoặc --unpin. Tính năng preview có thể thay đổi mà không báo trước.",
+        "status": "preview"
+      }
+    ]
+  },
+  {
+    "id": "extension",
+    "title": "Extensions",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-extension-browse",
+        "canonicalCommand": "gh extension browse",
+        "title": "Duyệt extension tương tác",
+        "command": "gh extension browse [flags]",
+        "description": "Mở giao diện terminal để tìm, cài hoặc gỡ extension.",
+        "example": "gh extension browse --single-column",
+        "risk": "write",
+        "tags": [
+          "extension",
+          "browse"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_extension_browse",
+        "options": [
+          {
+            "flag": "--single-column",
+            "description": "Hiển thị một cột, phù hợp trình đọc màn hình hoặc phóng to."
+          }
+        ],
+        "warning": "Mở giao diện chưa cài extension, nhưng thao tác trong đó có thể cài/gỡ chương trình. Chỉ dùng extension đã kiểm tra; phím ? xem trợ giúp, q thoát."
+      },
+      {
+        "id": "gh-extension-create",
+        "canonicalCommand": "gh extension create",
+        "title": "Tạo khung extension",
+        "command": "gh extension create [<name>] [flags]",
+        "description": "Sinh file khởi đầu để viết extension dạng script hoặc bản biên dịch.",
+        "example": "gh extension create example-helper",
+        "risk": "write",
+        "tags": [
+          "extension",
+          "create"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_extension_create",
+        "options": [
+          {
+            "flag": "--precompiled",
+            "description": "Chọn go hoặc other để tạo extension dạng biên dịch."
+          }
+        ],
+        "warning": "Thay đổi file hoặc cấu hình trên máy. Đọc lệnh và sao lưu dữ liệu liên quan trước khi chạy."
+      },
+      {
+        "id": "gh-extension-exec",
+        "canonicalCommand": "gh extension exec",
+        "title": "Chạy extension đã cài",
+        "command": "gh extension exec <name> [args]",
+        "description": "Gọi extension theo tên ngắn, kể cả khi tên trùng lệnh gh gốc.",
+        "example": "gh extension exec EXTENSION_NAME --help",
+        "risk": "write",
+        "tags": [
+          "extension",
+          "exec"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_extension_exec",
+        "warning": "Extension chạy mã của bên cung cấp với quyền người dùng; ngay cả --help cũng do extension xử lý. Chỉ chạy nguồn đã tin cậy; đối số sau tên được chuyển nguyên cho extension."
+      },
+      {
+        "id": "gh-extension-install",
+        "canonicalCommand": "gh extension install",
+        "title": "Cài extension",
+        "command": "gh extension install <repository> [flags]",
+        "description": "Cài extension từ repository GitHub hoặc thư mục cục bộ.",
+        "example": "gh extension install OWNER/gh-EXTENSION --pin VERIFIED_TAG_OR_COMMIT",
+        "risk": "write",
+        "tags": [
+          "extension",
+          "install"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_extension_install",
+        "options": [
+          {
+            "flag": "--pin",
+            "description": "Ghim tag phát hành cho binary hoặc commit cho script."
+          },
+          {
+            "flag": "--force",
+            "description": "Bỏ một số bước bảo vệ hoặc buộc thao tác; chỉ dùng sau khi hiểu tác động."
+          }
+        ],
+        "warning": "Tải chương trình có thể chạy với quyền và token của bạn. Kiểm tra chủ sở hữu, mã, release và ref trước; ví dụ chứa placeholder cần thay bằng nguồn đã kiểm tra."
+      },
+      {
+        "id": "gh-extension-list",
+        "canonicalCommand": "gh extension list",
+        "title": "Liệt kê extension đã cài",
+        "command": "gh extension list",
+        "description": "Xem các extension hiện được gh quản lý trên máy.",
+        "example": "gh extension list",
+        "risk": "read",
+        "tags": [
+          "extension",
+          "list"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_extension_list"
+      },
+      {
+        "id": "gh-extension-remove",
+        "canonicalCommand": "gh extension remove",
+        "title": "Gỡ extension",
+        "command": "gh extension remove <name>",
+        "description": "Xóa extension khỏi danh sách cài đặt của gh.",
+        "example": "gh extension remove EXTENSION_NAME",
+        "risk": "write",
+        "tags": [
+          "extension",
+          "remove"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_extension_remove",
+        "warning": "Gỡ chương trình cục bộ; kiểm tra tên extension. Lệnh không phải thao tác xóa repository trên GitHub."
+      },
+      {
+        "id": "gh-extension-search",
+        "canonicalCommand": "gh extension search",
+        "title": "Tìm extension",
+        "command": "gh extension search [<query>] [flags]",
+        "description": "Tìm repository extension theo từ khóa, chủ sở hữu, giấy phép hoặc thứ tự.",
+        "example": "gh extension search branch --limit 30",
+        "risk": "read",
+        "tags": [
+          "extension",
+          "search"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_extension_search",
+        "options": [
+          {
+            "flag": "--limit",
+            "description": "Giới hạn số kết quả lấy về."
+          },
+          {
+            "flag": "--owner",
+            "description": "Giới hạn theo chủ sở hữu."
+          },
+          {
+            "flag": "--license",
+            "description": "Lọc theo giấy phép."
+          },
+          {
+            "flag": "--sort",
+            "description": "Chọn trường dùng để sắp xếp."
+          },
+          {
+            "flag": "--web",
+            "description": "Mở nội dung hoặc luồng tương ứng trong trình duyệt."
+          }
+        ],
+        "warning": "Kết quả tìm kiếm không đồng nghĩa extension đã được kiểm tra an toàn."
+      },
+      {
+        "id": "gh-extension-upgrade",
+        "canonicalCommand": "gh extension upgrade",
+        "title": "Kiểm tra hoặc nâng cấp extension",
+        "command": "gh extension upgrade {<name> | --all} [flags]",
+        "description": "Xem bản cập nhật có sẵn hoặc nâng cấp extension đã cài.",
+        "example": "gh extension upgrade --all --dry-run",
+        "risk": "read",
+        "tags": [
+          "extension",
+          "upgrade"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_extension_upgrade",
+        "options": [
+          {
+            "flag": "--all",
+            "description": "Áp dụng cho tất cả mục trong phạm vi được chọn; kiểm tra phạm vi trước khi chạy."
+          },
+          {
+            "flag": "--dry-run",
+            "description": "Chỉ hiển thị các bản nâng cấp."
+          },
+          {
+            "flag": "--force",
+            "description": "Bỏ một số bước bảo vệ hoặc buộc thao tác; chỉ dùng sau khi hiểu tác động."
+          }
+        ],
+        "warning": "Ví dụ --dry-run chỉ kiểm tra; bỏ cờ này sẽ cập nhật mã thực thi cục bộ. Xem nguồn và thay đổi phiên bản trước khi nâng cấp."
+      }
+    ]
+  },
+  {
+    "id": "alias",
+    "title": "Alias lệnh",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-alias-delete",
+        "canonicalCommand": "gh alias delete",
+        "title": "Xóa alias cục bộ",
+        "command": "gh alias delete {<alias> | --all} [flags]",
+        "description": "Gỡ một alias hoặc toàn bộ alias đã cấu hình.",
+        "example": "gh alias delete my-issues",
+        "risk": "write",
+        "tags": [
+          "alias",
+          "delete"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_alias_delete",
+        "options": [
+          {
+            "flag": "--all",
+            "description": "Áp dụng cho tất cả mục trong phạm vi được chọn; kiểm tra phạm vi trước khi chạy."
+          }
+        ],
+        "warning": "Thay đổi file hoặc cấu hình trên máy. Đọc lệnh và sao lưu dữ liệu liên quan trước khi chạy. --all xóa toàn bộ alias."
+      },
+      {
+        "id": "gh-alias-import",
+        "canonicalCommand": "gh alias import",
+        "title": "Nhập danh sách alias",
+        "command": "gh alias import [<filename> | -] [flags]",
+        "description": "Đọc alias từ file YAML và thêm vào cấu hình gh.",
+        "example": "gh alias import ./aliases.yml",
+        "risk": "write",
+        "tags": [
+          "alias",
+          "import"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_alias_import",
+        "options": [
+          {
+            "flag": "--clobber",
+            "description": "Cho phép ghi đè alias trùng tên."
+          }
+        ],
+        "warning": "Chỉ nhập file đã kiểm tra: alias có thể chứa shell command và chạy mã khi được gọi. --clobber thay thế alias hiện có."
+      },
+      {
+        "id": "gh-alias-list",
+        "canonicalCommand": "gh alias list",
+        "title": "Liệt kê alias",
+        "command": "gh alias list",
+        "description": "Hiển thị alias và phần mở rộng lệnh tương ứng.",
+        "example": "gh alias list",
+        "risk": "read",
+        "tags": [
+          "alias",
+          "list"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_alias_list"
+      }
+    ]
+  }
+]

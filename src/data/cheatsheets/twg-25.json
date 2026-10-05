@@ -1,0 +1,1184 @@
+[
+  {
+    "id": "jsm-agents",
+    "title": "JSM · agent",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "twg-jsm-agents-list",
+        "canonicalCommand": "twg jsm agents list",
+        "title": "Liệt kê agent của JSM",
+        "command": "twg jsm agents list --project <keyOrId>",
+        "description": "Liệt kê agent của JSM.",
+        "example": "twg jsm agents list --project TSM --site demo",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "agents",
+          "list"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--project <keyOrId>",
+            "description": "Dự án; bắt buộc",
+            "example": "--project DEMO"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "jsm-alert",
+    "title": "JSM · cảnh báo",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "twg-jsm-alert-create",
+        "canonicalCommand": "twg jsm alert create",
+        "title": "Tạo cảnh báo của JSM",
+        "command": "twg jsm alert create",
+        "description": "Tạo cảnh báo của JSM.",
+        "example": "twg jsm alert create --message \"Database CPU high\" --priority P3 --site demo",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jsm",
+          "alert",
+          "create"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--message <message>",
+            "description": "Nội dung thông báo",
+            "example": "--message 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--priority <priority>",
+            "description": "Độ ưu tiên; nhận: P1, P2, P3, P4, P5",
+            "example": "--priority P1"
+          },
+          {
+            "flag": "--alias <alias>",
+            "description": "Tham số alias",
+            "example": "--alias ALIAS"
+          },
+          {
+            "flag": "--description <description>",
+            "description": "Mô tả",
+            "example": "--description 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--entity <entity>",
+            "description": "Tham số entity",
+            "example": "--entity ENTITY"
+          },
+          {
+            "flag": "--source <source>",
+            "description": "Nguồn",
+            "example": "--source main"
+          },
+          {
+            "flag": "--note <note>",
+            "description": "Tham số note",
+            "example": "--note 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--tags <tags>",
+            "description": "Tham số tags",
+            "example": "--tags TAGS"
+          },
+          {
+            "flag": "--actions <actions>",
+            "description": "Tham số actions",
+            "example": "--actions ACTIONS"
+          },
+          {
+            "flag": "--responders <responders>",
+            "description": "Tham số responders",
+            "example": "--responders RESPONDERS"
+          },
+          {
+            "flag": "--visible-to <visibleTo>",
+            "description": "Tham số visible-to",
+            "example": "--visible-to VISIBLE_TO"
+          },
+          {
+            "flag": "--extra-properties <extraProperties>",
+            "description": "Tham số extra-properties",
+            "example": "--extra-properties EXTRA_PROPERTIES"
+          },
+          {
+            "flag": "--input-json <inputJson>",
+            "description": "Payload JSON theo schema của lệnh; không dùng cùng --input-file",
+            "example": "--input-json '{}'"
+          },
+          {
+            "flag": "--input-file <inputFile>",
+            "description": "Đường dẫn tới tệp payload JSON đã chuẩn bị; không dùng cùng --input-json",
+            "example": "--input-file ./request.json"
+          },
+          {
+            "flag": "--variables-json <variablesJson>",
+            "description": "Đối tượng JSON chứa biến truy vấn; không dùng cùng --variables-file",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "--variables-file <variablesFile>",
+            "description": "Tệp JSON chứa biến truy vấn; không dùng cùng --variables-json",
+            "example": "--variables-file ./example.txt"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-jsm-alert-delete",
+        "canonicalCommand": "twg jsm alert delete",
+        "title": "Xóa cảnh báo của JSM",
+        "command": "twg jsm alert delete",
+        "description": "Xóa cảnh báo của JSM.",
+        "example": "twg jsm alert delete --alert 12345-abcde --site demo",
+        "exampleKind": "usage",
+        "risk": "destructive",
+        "tags": [
+          "jsm",
+          "alert",
+          "delete"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--alert <id>",
+            "description": "Cảnh báo",
+            "example": "--alert ALERT"
+          },
+          {
+            "flag": "--yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          },
+          {
+            "flag": "--input-json <inputJson>",
+            "description": "Payload JSON theo schema của lệnh",
+            "example": "--input-json '{}'"
+          },
+          {
+            "flag": "--variables-json <variablesJson>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Có thể xóa dữ liệu, thu hồi quyền hoặc gỡ cấu hình. Đọc lại đối tượng và khả năng khôi phục; ưu tiên --dry-run nếu lệnh hỗ trợ. Không thêm --yes khi chưa kiểm tra."
+      },
+      {
+        "id": "twg-jsm-alert-get",
+        "canonicalCommand": "twg jsm alert get",
+        "title": "Đọc cảnh báo của JSM",
+        "command": "twg jsm alert get --alert <id>",
+        "description": "Đọc cảnh báo của JSM.",
+        "example": "twg jsm alert get --alert 12345-abcde --site demo -o json",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "alert",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--alert <id>",
+            "description": "Cảnh báo; bắt buộc",
+            "example": "--alert ALERT"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      },
+      {
+        "id": "twg-jsm-alert-query",
+        "canonicalCommand": "twg jsm alert query",
+        "title": "Tra cứu cảnh báo của JSM",
+        "command": "twg jsm alert query [text...]",
+        "description": "Tra cứu cảnh báo của JSM.",
+        "example": "twg jsm alert query --site demo",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "alert",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--query <query>",
+            "description": "Chuỗi truy vấn theo lệnh",
+            "example": "--query onboarding"
+          },
+          {
+            "flag": "--limit <n>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh",
+            "example": "--limit 10"
+          },
+          {
+            "flag": "--offset <n>",
+            "description": "Tham số offset",
+            "example": "--offset 1"
+          },
+          {
+            "flag": "--sort <field>",
+            "description": "Thứ tự; nhận: createdAt, insertedAt, lastOccurredAt, priority",
+            "example": "--sort createdAt"
+          },
+          {
+            "flag": "--order <order>",
+            "description": "Thứ tự; nhận: asc, desc",
+            "example": "--order asc"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      },
+      {
+        "id": "twg-jsm-alert-update",
+        "canonicalCommand": "twg jsm alert update",
+        "title": "Cập nhật cảnh báo của JSM",
+        "command": "twg jsm alert update",
+        "description": "Cập nhật cảnh báo của JSM.",
+        "example": "twg jsm alert update --alert 12345-abcde --priority P1 --site demo",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jsm",
+          "alert",
+          "update"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--alert <id>",
+            "description": "Cảnh báo",
+            "example": "--alert ALERT"
+          },
+          {
+            "flag": "--priority <priority>",
+            "description": "Độ ưu tiên; nhận: P1, P2, P3, P4, P5",
+            "example": "--priority P1"
+          },
+          {
+            "flag": "--message <message>",
+            "description": "Nội dung thông báo",
+            "example": "--message 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--description <description>",
+            "description": "Mô tả",
+            "example": "--description 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--input-json <inputJson>",
+            "description": "Payload JSON theo schema của lệnh; không dùng cùng --input-file",
+            "example": "--input-json '{}'"
+          },
+          {
+            "flag": "--input-file <inputFile>",
+            "description": "Đường dẫn tới tệp payload JSON đã chuẩn bị; không dùng cùng --input-json",
+            "example": "--input-file ./request.json"
+          },
+          {
+            "flag": "--variables-json <variablesJson>",
+            "description": "Đối tượng JSON chứa biến truy vấn; không dùng cùng --variables-file",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "--variables-file <variablesFile>",
+            "description": "Tệp JSON chứa biến truy vấn; không dùng cùng --variables-json",
+            "example": "--variables-file ./example.txt"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      }
+    ]
+  },
+  {
+    "id": "jsm-approval",
+    "title": "JSM · phê duyệt",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "twg-jsm-approval-approve",
+        "canonicalCommand": "twg jsm approval approve",
+        "title": "Phê duyệt phê duyệt của JSM",
+        "command": "twg jsm approval approve --request <issue>",
+        "description": "Phê duyệt phê duyệt của JSM.",
+        "example": "twg jsm approval approve --request PEOPLE-8 --site demo",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jsm",
+          "approval",
+          "approve"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--request <issue>",
+            "description": "Yêu cầu; bắt buộc",
+            "example": "--request REQUEST"
+          },
+          {
+            "flag": "--approval-id <id>",
+            "description": "ID phê duyệt",
+            "example": "--approval-id 12345"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-jsm-approval-get",
+        "canonicalCommand": "twg jsm approval get",
+        "title": "Đọc phê duyệt của JSM",
+        "command": "twg jsm approval get --request <issue> --approval-id <id>",
+        "description": "Đọc phê duyệt của JSM.",
+        "example": "twg jsm approval get --request PEOPLE-8 --approval-id 63 --site demo",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "approval",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--request <issue>",
+            "description": "Yêu cầu; bắt buộc",
+            "example": "--request REQUEST"
+          },
+          {
+            "flag": "--approval-id <id>",
+            "description": "ID phê duyệt; bắt buộc",
+            "example": "--approval-id 12345"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      },
+      {
+        "id": "twg-jsm-approval-list",
+        "canonicalCommand": "twg jsm approval list",
+        "title": "Liệt kê phê duyệt của JSM",
+        "command": "twg jsm approval list --request <issue>",
+        "description": "Liệt kê phê duyệt của JSM.",
+        "example": "twg jsm approval list --request PEOPLE-8 --site demo",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "approval",
+          "list"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--request <issue>",
+            "description": "Yêu cầu; bắt buộc",
+            "example": "--request REQUEST"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      },
+      {
+        "id": "twg-jsm-approval-reject",
+        "canonicalCommand": "twg jsm approval reject",
+        "title": "Từ chối phê duyệt của JSM",
+        "command": "twg jsm approval reject --request <issue>",
+        "description": "Từ chối phê duyệt của JSM.",
+        "example": "twg jsm approval reject --request PEOPLE-8 --site demo",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jsm",
+          "approval",
+          "reject"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--request <issue>",
+            "description": "Yêu cầu; bắt buộc",
+            "example": "--request REQUEST"
+          },
+          {
+            "flag": "--approval-id <id>",
+            "description": "ID phê duyệt",
+            "example": "--approval-id 12345"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      }
+    ]
+  },
+  {
+    "id": "jsm-conversation",
+    "title": "JSM · hội thoại",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "twg-jsm-conversation-claim-create",
+        "canonicalCommand": "twg jsm conversation claim create",
+        "title": "Tạo claim của hội thoại của JSM",
+        "command": "twg jsm conversation claim create",
+        "description": "Tạo claim của hội thoại của JSM.",
+        "example": "twg jsm conversation claim create --conversation-id \"$CONVERSATION_ID\"",
+        "exampleKind": "template",
+        "risk": "write",
+        "tags": [
+          "jsm",
+          "conversation",
+          "claim",
+          "create"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "--input-json <json>",
+            "description": "Payload JSON theo schema của lệnh",
+            "example": "--input-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--conversation-id <conversationId>",
+            "description": "ID hội thoại",
+            "example": "--conversation-id 12345"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cần điền biến: CONVERSATION_ID. Lấy ID, giá trị và JSON hợp lệ từ schema/metadata của site; chạy twg help describe 'jsm conversation claim create' để kiểm tra trước. Đây không phải ví dụ đã chạy thành công trên tenant."
+      },
+      {
+        "id": "twg-jsm-conversation-close-create",
+        "canonicalCommand": "twg jsm conversation close create",
+        "title": "Tạo close của hội thoại của JSM",
+        "command": "twg jsm conversation close create",
+        "description": "Tạo close của hội thoại của JSM.",
+        "example": "twg jsm conversation close create --channel-id \"$CHANNEL_ID\"",
+        "exampleKind": "template",
+        "risk": "write",
+        "tags": [
+          "jsm",
+          "conversation",
+          "close",
+          "create"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "--input-json <json>",
+            "description": "Payload JSON theo schema của lệnh",
+            "example": "--input-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--channel-id <channelId>",
+            "description": "ID kênh",
+            "example": "--channel-id 12345"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cần điền biến: CHANNEL_ID. Lấy ID, giá trị và JSON hợp lệ từ schema/metadata của site; chạy twg help describe 'jsm conversation close create' để kiểm tra trước. Đây không phải ví dụ đã chạy thành công trên tenant."
+      },
+      {
+        "id": "twg-jsm-conversation-message-query",
+        "canonicalCommand": "twg jsm conversation message query",
+        "title": "Tra cứu nội dung thông báo của hội thoại của JSM",
+        "command": "twg jsm conversation message query",
+        "description": "Tra cứu nội dung thông báo của hội thoại của JSM.",
+        "example": "twg jsm conversation message query",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "conversation",
+          "message",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--after <after>",
+            "description": "Con trỏ hoặc mốc bắt đầu theo lệnh",
+            "example": "--after AFTER"
+          },
+          {
+            "flag": "--conversation-ari <conversationAri>",
+            "description": "ARI hội thoại",
+            "example": "--conversation-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--first <first>",
+            "description": "Số phần tử của trang đầu/tiếp theo",
+            "example": "--first 10"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jsm-conversation-query",
+        "canonicalCommand": "twg jsm conversation query",
+        "title": "Tra cứu hội thoại của JSM",
+        "command": "twg jsm conversation query",
+        "description": "Tra cứu hội thoại của JSM.",
+        "example": "twg jsm conversation query",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "conversation",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--after <after>",
+            "description": "Con trỏ hoặc mốc bắt đầu theo lệnh",
+            "example": "--after AFTER"
+          },
+          {
+            "flag": "--conversation-assignee <conversationAssignee>",
+            "description": "Tham số conversation-assignee",
+            "example": "--conversation-assignee CONVERSATION_ASSIGNEE"
+          },
+          {
+            "flag": "--conversation-status <conversationStatus>",
+            "description": "Tham số conversation-status",
+            "example": "--conversation-status CONVERSATION_STATUS"
+          },
+          {
+            "flag": "--first <first>",
+            "description": "Số phần tử của trang đầu/tiếp theo",
+            "example": "--first 10"
+          },
+          {
+            "flag": "--project-key <projectKey>",
+            "description": "Mã dự án",
+            "example": "--project-key DEMO"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jsm-conversation-settings-query",
+        "canonicalCommand": "twg jsm conversation settings query",
+        "title": "Tra cứu cài đặt của hội thoại của JSM",
+        "command": "twg jsm conversation settings query",
+        "description": "Tra cứu cài đặt của hội thoại của JSM.",
+        "example": "twg jsm conversation settings query",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "conversation",
+          "settings",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--project-ari <projectAri>",
+            "description": "ARI dự án",
+            "example": "--project-ari RESOURCE_ARI"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jsm-conversation-settings-update",
+        "canonicalCommand": "twg jsm conversation settings update",
+        "title": "Cập nhật cài đặt của hội thoại của JSM",
+        "command": "twg jsm conversation settings update [id]",
+        "description": "Cập nhật cài đặt của hội thoại của JSM.",
+        "example": "twg jsm conversation settings update --project-ari DEMO --default-request-type-id 12345",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jsm",
+          "conversation",
+          "settings",
+          "update"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "--input-json <json>",
+            "description": "Payload JSON theo schema của lệnh",
+            "example": "--input-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--default-request-type-id <defaultRequestTypeId>",
+            "description": "ID default-request-type",
+            "example": "--default-request-type-id 12345"
+          },
+          {
+            "flag": "--project-ari <projectAri>",
+            "description": "ARI dự án",
+            "example": "--project-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--sla-list <slaList>",
+            "description": "Tham số sla-list",
+            "example": "--sla-list SLA_LIST"
+          },
+          {
+            "flag": "--team-id <teamId>",
+            "description": "Id đội nhóm",
+            "example": "--team-id 12345"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jsm-conversation-workspace-create",
+        "canonicalCommand": "twg jsm conversation workspace create",
+        "title": "Tạo workspace của hội thoại của JSM",
+        "command": "twg jsm conversation workspace create",
+        "description": "Tạo workspace của hội thoại của JSM. Đây là nhóm API động; chọn field và input theo schema mà site trả về.",
+        "example": "twg jsm conversation workspace create --field \"$FIELD_NAME\" --input-json \"$INPUT_JSON\" --site demo",
+        "exampleKind": "template",
+        "risk": "write",
+        "tags": [
+          "jsm",
+          "conversation",
+          "workspace",
+          "create"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "--variables-file <path>",
+            "description": "Tệp JSON chứa biến truy vấn",
+            "example": "--variables-file ./request.json"
+          },
+          {
+            "flag": "--field <field>",
+            "description": "Trường hoặc giá trị trường theo hợp đồng của lệnh",
+            "example": "--field FIELD"
+          },
+          {
+            "flag": "--input-json <json>",
+            "description": "Payload JSON theo schema của lệnh",
+            "example": "--input-json '{}'"
+          },
+          {
+            "flag": "--input-file <path>",
+            "description": "Đường dẫn tới tệp payload JSON đã chuẩn bị",
+            "example": "--input-file ./request.json"
+          },
+          {
+            "flag": "--conversation-id <conversationId>",
+            "description": "ID hội thoại",
+            "example": "--conversation-id 12345"
+          },
+          {
+            "flag": "--conversation-message-id <conversationMessageId>",
+            "description": "ID conversation-message",
+            "example": "--conversation-message-id 12345"
+          },
+          {
+            "flag": "--jira-issue-ari <jiraIssueAri>",
+            "description": "ARI jira-issue",
+            "example": "--jira-issue-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--jira-project-ari <jiraProjectAri>",
+            "description": "ARI jira-project",
+            "example": "--jira-project-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--ms-teams-ari <msTeamsAri>",
+            "description": "ARI ms-teams",
+            "example": "--ms-teams-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--ms-teams-channel-ari <msTeamsChannelAri>",
+            "description": "ARI ms-teams-channel",
+            "example": "--ms-teams-channel-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--slack-channel-ari <slackChannelAri>",
+            "description": "ARI slack-channel",
+            "example": "--slack-channel-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--workspace-ari <workspaceAri>",
+            "description": "ARI workspace",
+            "example": "--workspace-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cần điền biến: FIELD_NAME, INPUT_JSON. Lấy ID, giá trị và JSON hợp lệ từ schema/metadata của site; chạy twg help describe 'jsm conversation workspace create' để kiểm tra trước. Đây không phải ví dụ đã chạy thành công trên tenant."
+      },
+      {
+        "id": "twg-jsm-conversation-workspace-query",
+        "canonicalCommand": "twg jsm conversation workspace query",
+        "title": "Tra cứu workspace của hội thoại của JSM",
+        "command": "twg jsm conversation workspace query",
+        "description": "Tra cứu workspace của hội thoại của JSM. Đây là nhóm API động; chọn field và input theo schema mà site trả về.",
+        "example": "twg jsm conversation workspace query --field \"$FIELD_NAME\" --input-json \"$INPUT_JSON\" --site demo",
+        "exampleKind": "template",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "conversation",
+          "workspace",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "--variables-file <path>",
+            "description": "Tệp JSON chứa biến truy vấn",
+            "example": "--variables-file ./request.json"
+          },
+          {
+            "flag": "--field <field>",
+            "description": "Trường hoặc giá trị trường theo hợp đồng của lệnh",
+            "example": "--field FIELD"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--conversation-id <conversationId>",
+            "description": "ID hội thoại",
+            "example": "--conversation-id 12345"
+          },
+          {
+            "flag": "--input-json <json>",
+            "description": "Payload JSON theo schema của lệnh",
+            "example": "--input-json '{}'"
+          },
+          {
+            "flag": "--input-file <path>",
+            "description": "Đường dẫn tới tệp payload JSON đã chuẩn bị",
+            "example": "--input-file ./request.json"
+          },
+          {
+            "flag": "--jira-project-ari <jiraProjectAri>",
+            "description": "ARI jira-project",
+            "example": "--jira-project-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--last <last>",
+            "description": "Số phần tử khi phân trang ngược",
+            "example": "--last 10"
+          },
+          {
+            "flag": "--pagination-config <paginationConfig>",
+            "description": "Tham số pagination-config",
+            "example": "--pagination-config PAGINATION_CONFIG"
+          },
+          {
+            "flag": "--activation-id <activationId>",
+            "description": "ID activation",
+            "example": "--activation-id 12345"
+          },
+          {
+            "flag": "--project-id <projectId>",
+            "description": "ID dự án",
+            "example": "--project-id 12345"
+          },
+          {
+            "flag": "--site-id <siteId>",
+            "description": "ID site",
+            "example": "--site-id demo"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Mẫu cần điền biến: FIELD_NAME, INPUT_JSON. Lấy ID, giá trị và JSON hợp lệ từ schema/metadata của site; chạy twg help describe 'jsm conversation workspace query' để kiểm tra trước. Đây không phải ví dụ đã chạy thành công trên tenant."
+      }
+    ]
+  },
+  {
+    "id": "jsm-form",
+    "title": "JSM · biểu mẫu",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "twg-jsm-form-answers-list",
+        "canonicalCommand": "twg jsm form answers list",
+        "title": "Liệt kê câu trả lời của biểu mẫu của JSM",
+        "command": "twg jsm form answers list --workitem <key> --form-id <id>",
+        "description": "Liệt kê câu trả lời của biểu mẫu của JSM.",
+        "example": "twg jsm form answers list --workitem DEMO-123 --form-id 12345",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "form",
+          "answers",
+          "list"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--workitem <key>",
+            "description": "Ticket; bắt buộc",
+            "example": "--workitem DEMO-123"
+          },
+          {
+            "flag": "--form-id <id>",
+            "description": "Id biểu mẫu; bắt buộc",
+            "example": "--form-id 12345"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jsm-form-fields-list",
+        "canonicalCommand": "twg jsm form fields list",
+        "title": "Liệt kê trường của biểu mẫu của JSM",
+        "command": "twg jsm form fields list --workitem <key> --form-id <id>",
+        "description": "Liệt kê trường của biểu mẫu của JSM.",
+        "example": "twg jsm form fields list --workitem DEMO-123 --form-id 12345",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "form",
+          "fields",
+          "list"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--workitem <key>",
+            "description": "Ticket; bắt buộc",
+            "example": "--workitem DEMO-123"
+          },
+          {
+            "flag": "--form-id <id>",
+            "description": "Id biểu mẫu; bắt buộc",
+            "example": "--form-id 12345"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jsm-form-get",
+        "canonicalCommand": "twg jsm form get",
+        "title": "Đọc biểu mẫu của JSM",
+        "command": "twg jsm form get --workitem <key> --form-id <id>",
+        "description": "Đọc biểu mẫu của JSM.",
+        "example": "twg jsm form get --workitem DEMO-123 --form-id 12345",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "form",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--workitem <key>",
+            "description": "Ticket; bắt buộc",
+            "example": "--workitem DEMO-123"
+          },
+          {
+            "flag": "--form-id <id>",
+            "description": "Id biểu mẫu; bắt buộc",
+            "example": "--form-id 12345"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jsm-form-list",
+        "canonicalCommand": "twg jsm form list",
+        "title": "Liệt kê biểu mẫu của JSM",
+        "command": "twg jsm form list --workitem <key>",
+        "description": "Liệt kê biểu mẫu của JSM.",
+        "example": "twg jsm form list --workitem DEMO-123",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "form",
+          "list"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--workitem <key>",
+            "description": "Ticket; bắt buộc",
+            "example": "--workitem DEMO-123"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      }
+    ]
+  }
+]

@@ -1,0 +1,1161 @@
+[
+  {
+    "id": "plumbinginterrogators",
+    "title": "Plumbing: đọc kho và lịch sử",
+    "level": "plumbing",
+    "commands": [
+      {
+        "id": "git-for-each-ref",
+        "canonicalCommand": "git for-each-ref",
+        "title": "Liệt kê ref bằng định dạng tùy chọn",
+        "command": "git for-each-ref --sort=<key> --format=<format> <pattern>",
+        "description": "Duyệt các ref khớp mẫu với định dạng ổn định để dùng trong script. Ví dụ sắp các nhánh mới có commit lên trước.",
+        "example": "git for-each-ref --sort=-committerdate --format=\"%(refname:short) %(objectname:short) %(subject)\" refs/heads/",
+        "risk": "read",
+        "tags": [
+          "for-each-ref",
+          "plumbing",
+          "refs",
+          "script"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-for-each-ref",
+        "options": [
+          {
+            "flag": "--format=<format>",
+            "description": "Chèn atom như %(refname), %(objectname), %(upstream:track), %(subject)"
+          },
+          {
+            "flag": "--sort=<key>",
+            "description": "Sắp xếp theo atom; tiền tố - đảo thứ tự; có thể lặp"
+          },
+          {
+            "flag": "--count=<n>",
+            "description": "Giới hạn số ref đầu ra"
+          },
+          {
+            "flag": "--contains=<object> / --no-contains=<object>",
+            "description": "Lọc nhánh có hoặc không chứa commit"
+          },
+          {
+            "flag": "--merged[=<object>] / --no-merged[=<object>]",
+            "description": "Lọc ref đã hoặc chưa merge vào mốc, mặc định HEAD"
+          },
+          {
+            "flag": "--points-at=<object>",
+            "description": "Chỉ ref trỏ trực tiếp tới object"
+          },
+          {
+            "flag": "--exclude=<pattern>",
+            "description": "Bỏ ref khớp mẫu; có thể lặp"
+          },
+          {
+            "flag": "--include-root-refs",
+            "description": "Bao gồm root refs và pseudo-refs như HEAD"
+          },
+          {
+            "flag": "--start-after=<marker>",
+            "description": "Tiếp tục theo thứ tự từ sau marker; không kết hợp --sort, --stdin hoặc pattern"
+          },
+          {
+            "flag": "--stdin",
+            "description": "Đọc các pattern từ stdin"
+          },
+          {
+            "flag": "--shell / --python / --perl / --tcl",
+            "description": "Quote giá trị phù hợp ngôn ngữ; không tự thực thi đầu ra"
+          }
+        ]
+      },
+      {
+        "id": "git-for-each-repo",
+        "canonicalCommand": "git for-each-repo",
+        "title": "Chạy truy vấn trên danh sách kho",
+        "command": "git for-each-repo --config=<config-key> -- <git-arguments>",
+        "description": "Đọc các đường dẫn kho tuyệt đối từ một biến config nhiều giá trị rồi chạy git -C cho từng kho. Ví dụ dùng danh sách maintenance.repo đã đăng ký.",
+        "example": "git for-each-repo --config=maintenance.repo -- status --short",
+        "risk": "read",
+        "tags": [
+          "for-each-repo",
+          "plumbing",
+          "repositories",
+          "batch",
+          "experimental"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-for-each-repo",
+        "options": [
+          {
+            "flag": "--config=<config>",
+            "description": "Khóa config nhiều giá trị chứa các đường dẫn tuyệt đối"
+          },
+          {
+            "flag": "--keep-going",
+            "description": "Tiếp tục khi một kho lỗi; cuối cùng vẫn trả mã 1 nếu có lỗi"
+          },
+          {
+            "flag": "--",
+            "description": "Kết thúc tùy chọn for-each-repo; sau đó là tên lệnh Git và đối số"
+          }
+        ],
+        "warning": "EXPERIMENTAL. Rủi ro phụ thuộc lệnh con: ví dụ status chỉ đọc, nhưng reset/clean/maintenance sẽ tác động lần lượt tới nhiều kho."
+      },
+      {
+        "id": "git-format-rev",
+        "canonicalCommand": "git format-rev",
+        "title": "Định dạng commit theo luồng đầu vào",
+        "command": "git format-rev --stdin-mode=revs --format=<pretty>",
+        "description": "Lệnh thử nghiệm nhận revision từng dòng và trả kết quả ngay, giữ thứ tự và bản lặp. Ví dụ in OID ngắn và tiêu đề cho HEAD, HEAD~1.",
+        "example": "printf \"%s\\n\" HEAD HEAD~1 | git format-rev --stdin-mode=revs --format=\"%h %s\"",
+        "risk": "read",
+        "tags": [
+          "format-rev",
+          "plumbing",
+          "format",
+          "pipeline",
+          "experimental"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-format-rev",
+        "options": [
+          {
+            "flag": "--stdin-mode=revs",
+            "description": "Mỗi bản ghi input là một revision; rev là bí danh được chấp nhận"
+          },
+          {
+            "flag": "--stdin-mode=text",
+            "description": "Thay các OID commit đầy đủ tìm được trong văn bản; OID rút gọn không được nhận"
+          },
+          {
+            "flag": "--format=<pretty>",
+            "description": "Định dạng pretty, ví dụ %h %s, %an, %ad hoặc reference"
+          },
+          {
+            "flag": "--notes=<ref> / --no-notes",
+            "description": "Chọn notes ref; dùng atom %N để hiển thị"
+          },
+          {
+            "flag": "-z / --null",
+            "description": "Input và output đều kết thúc bằng NUL"
+          },
+          {
+            "flag": "--null-input / --no-null-input",
+            "description": "Điều khiển riêng dấu kết thúc input"
+          },
+          {
+            "flag": "--null-output / --no-null-output",
+            "description": "Điều khiển riêng dấu kết thúc output"
+          }
+        ],
+        "warning": "EXPERIMENTAL: giao diện có thể đổi. --stdin-mode=text chỉ nhận tên object đầy đủ và giữ nguyên object không phải commit."
+      },
+      {
+        "id": "git-get-tar-commit-id",
+        "canonicalCommand": "git get-tar-commit-id",
+        "title": "Đọc commit OID từ tar do Git tạo",
+        "command": "git get-tar-commit-id < <archive.tar>",
+        "description": "Đọc header tar từ stdin để lấy commit OID nhúng bởi git archive. Ví dụ pipeline tạo tar trên stdout rồi chỉ đọc metadata, không tạo tệp.",
+        "example": "git archive --format=tar HEAD | git get-tar-commit-id",
+        "risk": "read",
+        "tags": [
+          "get-tar-commit-id",
+          "plumbing",
+          "archive",
+          "metadata"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-get-tar-commit-id",
+        "options": [
+          {
+            "flag": "stdin",
+            "description": "Luồng tar chưa nén; nếu tệp .tar.gz, giải nén trước khi truyền vào"
+          },
+          {
+            "flag": "không có tùy chọn riêng",
+            "description": "Đọc header đầu của archive; cần tar có global extended pax header do git archive tạo"
+          }
+        ],
+        "warning": "Archive tạo trực tiếp từ tree hoặc tar thông thường có thể không chứa commit OID; kiểm tra mã thoát thay vì giả định luôn có kết quả."
+      },
+      {
+        "id": "git-last-modified",
+        "canonicalCommand": "git last-modified",
+        "title": "Tìm commit sửa từng đường dẫn gần nhất",
+        "command": "git last-modified --recursive [<range>] -- <pathspec>",
+        "description": "Lệnh thử nghiệm in OID commit cuối cùng thay đổi nội dung, tên hoặc mode của mỗi đường dẫn. Đây là lịch sử Git, không phải mtime trên filesystem.",
+        "example": "git last-modified --recursive HEAD -- src/",
+        "risk": "read",
+        "tags": [
+          "last-modified",
+          "plumbing",
+          "history",
+          "files",
+          "experimental"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-last-modified",
+        "options": [
+          {
+            "flag": "-r / --recursive",
+            "description": "Đi xuống mọi cây con; tương đương --max-depth=-1"
+          },
+          {
+            "flag": "-t / --show-trees",
+            "description": "Hiện cả entry tree khi đang duyệt đệ quy"
+          },
+          {
+            "flag": "--max-depth=<depth>",
+            "description": "Giới hạn số tầng từ mỗi pathspec; mặc định 0, âm là không giới hạn"
+          },
+          {
+            "flag": "-z",
+            "description": "Kết thúc từng bản ghi OID-tab-path bằng NUL, không quote đường dẫn"
+          },
+          {
+            "flag": "<revision-range>",
+            "description": "Chỉ tìm trong dải lịch sử chỉ định; mặc định HEAD"
+          },
+          {
+            "flag": "-- <pathspec>",
+            "description": "Chỉ xét các đường dẫn khớp pathspec"
+          }
+        ],
+        "warning": "EXPERIMENTAL: cú pháp và hành vi có thể đổi. Range hẹp chỉ xét lịch sử trong range, không phải toàn bộ kho."
+      },
+      {
+        "id": "git-ls-files",
+        "canonicalCommand": "git ls-files",
+        "title": "Liệt kê index, tệp untracked và xung đột",
+        "command": "git ls-files --stage -- <path>",
+        "description": "Đọc các entry trong index. Ví dụ hiện mode, OID và stage cho src/; stage 0 bình thường, 1/2/3 biểu diễn base/ours/theirs khi xung đột.",
+        "example": "git ls-files --stage -- src/",
+        "risk": "read",
+        "tags": [
+          "ls-files",
+          "plumbing",
+          "index",
+          "files",
+          "ignore"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-ls-files",
+        "options": [
+          {
+            "flag": "-c / --cached",
+            "description": "Liệt kê tệp đã theo dõi; chế độ mặc định"
+          },
+          {
+            "flag": "-s / --stage",
+            "description": "Hiện mode, OID và stage"
+          },
+          {
+            "flag": "-u / --unmerged",
+            "description": "Chỉ entry xung đột, ngầm --stage"
+          },
+          {
+            "flag": "-o / --others",
+            "description": "Liệt kê tệp chưa được theo dõi"
+          },
+          {
+            "flag": "--exclude-standard",
+            "description": "Áp dụng .gitignore, info/exclude và ignore toàn cục"
+          },
+          {
+            "flag": "-i / --ignored",
+            "description": "Chỉ tệp bị ignore; phải kết hợp -c hoặc -o và quy tắc loại trừ"
+          },
+          {
+            "flag": "-m / --modified",
+            "description": "Tệp có thay đổi chưa stage"
+          },
+          {
+            "flag": "-d / --deleted",
+            "description": "Tệp đã bị xóa khỏi working tree nhưng còn trong index"
+          },
+          {
+            "flag": "--eol",
+            "description": "Hiện kiểu EOL trong index, working tree và thuộc tính text/eol"
+          },
+          {
+            "flag": "-z",
+            "description": "Tên/bản ghi kết thúc bằng NUL"
+          },
+          {
+            "flag": "--deduplicate",
+            "description": "Bỏ tên lặp khi chỉ xuất tên"
+          },
+          {
+            "flag": "--format=<format>",
+            "description": "Định dạng trường như %(objectname), %(path), %(eolinfo:index)"
+          },
+          {
+            "flag": "--error-unmatch",
+            "description": "Trả lỗi nếu đường dẫn không có trong index"
+          },
+          {
+            "flag": "--recurse-submodules",
+            "description": "Đệ quy submodule đang hoạt động trong chế độ cached/stage"
+          },
+          {
+            "flag": "--sparse",
+            "description": "Với sparse index, hiện thư mục sparse thay vì mở rộng nội dung"
+          },
+          {
+            "flag": "-v",
+            "description": "Nhãn chữ thường cho entry assume-unchanged"
+          }
+        ]
+      },
+      {
+        "id": "git-ls-remote",
+        "canonicalCommand": "git ls-remote",
+        "title": "Đọc refs của kho ở xa",
+        "command": "git ls-remote --symref <repository> <pattern>",
+        "description": "Liệt kê OID và ref được phía remote quảng bá mà không fetch object hay sửa remote-tracking refs. Ví dụ origin là remote đã cấu hình.",
+        "example": "git ls-remote --symref origin HEAD",
+        "risk": "read",
+        "tags": [
+          "ls-remote",
+          "plumbing",
+          "remote",
+          "refs"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-ls-remote",
+        "options": [
+          {
+            "flag": "--branches",
+            "description": "Chỉ refs/heads; --heads là bí danh cũ"
+          },
+          {
+            "flag": "--tags",
+            "description": "Chỉ refs/tags"
+          },
+          {
+            "flag": "--refs",
+            "description": "Bỏ pseudo-ref và các dòng tag đã peel dạng ^{}"
+          },
+          {
+            "flag": "--symref",
+            "description": "Hiện đích của symbolic ref được server cung cấp, thường là HEAD"
+          },
+          {
+            "flag": "--exit-code",
+            "description": "Trả mã 2 nếu không có ref khớp"
+          },
+          {
+            "flag": "--get-url",
+            "description": "Chỉ mở rộng URL theo cấu hình thay vì liên hệ remote"
+          },
+          {
+            "flag": "--sort=<key>",
+            "description": "Sắp xếp theo khóa; khóa cần object local có thể lỗi khi chưa fetch"
+          },
+          {
+            "flag": "--upload-pack=<exec>",
+            "description": "Đường dẫn upload-pack phía server"
+          },
+          {
+            "flag": "-q / --quiet",
+            "description": "Không in URL remote lên stderr"
+          }
+        ],
+        "warning": "Quảng bá ref không chứng minh bạn có quyền push. Chỉ dùng URL và chương trình --upload-pack tin cậy; không nhúng token vào URL."
+      },
+      {
+        "id": "git-ls-tree",
+        "canonicalCommand": "git ls-tree",
+        "title": "Liệt kê nội dung snapshot",
+        "command": "git ls-tree -r --long <tree-ish> -- <path>",
+        "description": "Đọc cấu trúc tree đã commit, gồm mode, loại object, OID và kích thước blob nếu dùng --long. Không đọc phiên bản working tree.",
+        "example": "git ls-tree -r --long HEAD -- src/",
+        "risk": "read",
+        "tags": [
+          "ls-tree",
+          "plumbing",
+          "tree",
+          "files"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-ls-tree",
+        "options": [
+          {
+            "flag": "-r",
+            "description": "Đệ quy xuống thư mục"
+          },
+          {
+            "flag": "-d",
+            "description": "Chỉ hiện tree, không hiện blob"
+          },
+          {
+            "flag": "-t",
+            "description": "Hiện cả tree khi đệ quy"
+          },
+          {
+            "flag": "-l / --long",
+            "description": "Hiện kích thước blob theo byte"
+          },
+          {
+            "flag": "-z",
+            "description": "Kết thúc bản ghi bằng NUL, không quote tên"
+          },
+          {
+            "flag": "--name-only / --name-status",
+            "description": "Chỉ in đường dẫn; hai tùy chọn đồng nghĩa ở ls-tree"
+          },
+          {
+            "flag": "--object-only",
+            "description": "Chỉ in OID"
+          },
+          {
+            "flag": "--full-name",
+            "description": "Đường dẫn tính từ gốc kho"
+          },
+          {
+            "flag": "--full-tree",
+            "description": "Không giới hạn theo thư mục hiện hành; ngầm --full-name"
+          },
+          {
+            "flag": "--format=<format>",
+            "description": "Tùy chỉnh các trường như %(objectmode), %(objectname), %(path)"
+          },
+          {
+            "flag": "--abbrev=<n>",
+            "description": "Rút gọn OID đến tiền tố duy nhất tối thiểu n ký tự"
+          }
+        ]
+      },
+      {
+        "id": "git-merge-base",
+        "canonicalCommand": "git merge-base",
+        "title": "Tìm tổ tiên chung và kiểm tra quan hệ",
+        "command": "git merge-base <commit> <commit>",
+        "description": "Tìm tổ tiên chung tốt nhất để merge hai lịch sử. Ví dụ lấy điểm chung của main và feature; có thể có nhiều merge-base trong lịch sử phức tạp.",
+        "example": "git merge-base main feature",
+        "risk": "read",
+        "tags": [
+          "merge-base",
+          "plumbing",
+          "merge",
+          "history",
+          "ancestor"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-merge-base",
+        "options": [
+          {
+            "flag": "-a / --all",
+            "description": "Hiện mọi merge-base tốt nhất thay vì một kết quả"
+          },
+          {
+            "flag": "--is-ancestor <a> <b>",
+            "description": "Mã 0 nếu a là tổ tiên của b; 1 nếu không, mã khác báo lỗi"
+          },
+          {
+            "flag": "--octopus",
+            "description": "Tìm tổ tiên chung tốt nhất cho nhiều đầu mút"
+          },
+          {
+            "flag": "--independent",
+            "description": "Chỉ in tập đầu mút không reachable từ đầu mút khác"
+          },
+          {
+            "flag": "--fork-point <ref> [<commit>]",
+            "description": "Dùng reflog của ref để suy ra nơi nhánh tách trước khi upstream viết lại"
+          }
+        ],
+        "warning": "--fork-point phụ thuộc reflog còn lưu; không suy ra được lịch sử đã hết hạn. Phân biệt mã thoát 1 của --is-ancestor với lỗi thực sự."
+      },
+      {
+        "id": "git-name-rev",
+        "canonicalCommand": "git name-rev",
+        "title": "Gán tên mô tả cho commit",
+        "command": "git name-rev [--name-only] <commit-ish>...",
+        "description": "Tìm tên biểu tượng dựa trên các ref hiện có. Ví dụ mô tả HEAD và HEAD~3 bằng tên nhánh/tag và khoảng cách lịch sử.",
+        "example": "git name-rev HEAD HEAD~3",
+        "risk": "read",
+        "tags": [
+          "name-rev",
+          "plumbing",
+          "refs",
+          "history"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-name-rev",
+        "options": [
+          {
+            "flag": "--name-only",
+            "description": "Chỉ tên mô tả, bỏ OID đầu dòng"
+          },
+          {
+            "flag": "--tags",
+            "description": "Chỉ dùng tag để đặt tên"
+          },
+          {
+            "flag": "--refs=<pattern>",
+            "description": "Giới hạn ref được dùng làm tên"
+          },
+          {
+            "flag": "--exclude=<pattern>",
+            "description": "Không dùng ref khớp mẫu"
+          },
+          {
+            "flag": "--all",
+            "description": "Đặt tên mọi commit reachable từ refs"
+          },
+          {
+            "flag": "--annotate-stdin",
+            "description": "Thay OID trong văn bản stdin bằng mô tả"
+          },
+          {
+            "flag": "--always",
+            "description": "Dùng OID rút gọn khi không tìm được tên"
+          },
+          {
+            "flag": "--no-undefined",
+            "description": "Báo lỗi thay vì in undefined khi không có tên"
+          }
+        ]
+      },
+      {
+        "id": "git-pack-redundant",
+        "canonicalCommand": "git pack-redundant",
+        "title": "Nhận diện pack dư thừa theo công cụ cũ",
+        "command": "git pack-redundant --i-still-use-this --all",
+        "description": "Liệt kê pack bị xem là dư thừa; không tự xóa. Công cụ đã deprecated, Git 2.56 yêu cầu cờ xác nhận còn dùng; ưu tiên git gc cho bảo trì thực tế.",
+        "example": "git pack-redundant --i-still-use-this --all",
+        "risk": "read",
+        "tags": [
+          "pack-redundant",
+          "plumbing",
+          "pack",
+          "deprecated"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-pack-redundant",
+        "options": [
+          {
+            "flag": "--i-still-use-this",
+            "description": "Cờ bắt buộc để chạy trên Git 2.56 dù đã deprecated"
+          },
+          {
+            "flag": "--all",
+            "description": "Xét mọi pack local"
+          },
+          {
+            "flag": "--alt-odb",
+            "description": "Tính cả object trong alternate database khi đánh giá trùng lặp"
+          },
+          {
+            "flag": "--verbose",
+            "description": "Hiện thêm thống kê"
+          },
+          {
+            "flag": "<pack-filename>...",
+            "description": "Chỉ xét các pack được chỉ định"
+          },
+          {
+            "flag": "stdin",
+            "description": "OID đọc từ stdin được loại khỏi tập object phải có trong pack được giữ"
+          }
+        ],
+        "warning": "DEPRECATED và dự kiến bị loại bỏ. Không pipe kết quả sang rm: xóa pack thủ công có thể làm hỏng kho; dùng git gc."
+      },
+      {
+        "id": "git-repo",
+        "canonicalCommand": "git repo",
+        "title": "Truy vấn metadata và cấu trúc kho",
+        "command": "git repo info [--all | <key>...]",
+        "description": "Lệnh thử nghiệm trả metadata của kho theo khóa rõ ràng. Ví dụ xem bare/shallow và thuật toán object; repo structure thống kê ref và object reachable.",
+        "example": "git repo info layout.bare layout.shallow object.format",
+        "risk": "read",
+        "tags": [
+          "repo",
+          "plumbing",
+          "repository",
+          "metadata",
+          "experimental"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-repo",
+        "options": [
+          {
+            "flag": "info --keys",
+            "description": "Liệt kê các khóa info được hỗ trợ"
+          },
+          {
+            "flag": "info --all",
+            "description": "In giá trị mọi khóa info"
+          },
+          {
+            "flag": "info <key>...",
+            "description": "Chọn khóa và giữ thứ tự đã yêu cầu"
+          },
+          {
+            "flag": "info --format=lines",
+            "description": "Mỗi dòng key=value, có quote ký tự bất thường; mặc định"
+          },
+          {
+            "flag": "info --format=nul / -z",
+            "description": "key, newline, value, NUL cho xử lý bằng máy"
+          },
+          {
+            "flag": "structure",
+            "description": "Thống kê số ref/object reachable, dung lượng và object lớn nhất"
+          },
+          {
+            "flag": "structure --format=table",
+            "description": "Bảng dễ đọc; không dùng làm giao thức parse ổn định"
+          },
+          {
+            "flag": "structure --format=lines",
+            "description": "Thống kê dưới dạng key=value"
+          },
+          {
+            "flag": "structure --format=nul / -z",
+            "description": "Thống kê dạng key-newline-value-NUL"
+          },
+          {
+            "flag": "layout.bare / layout.shallow",
+            "description": "Trả trạng thái bare và shallow"
+          },
+          {
+            "flag": "object.format / references.format",
+            "description": "Thuật toán object và backend lưu refs"
+          },
+          {
+            "flag": "path.gitdir.absolute / path.gitdir.relative",
+            "description": "Đường dẫn Git directory tuyệt đối hoặc tương đối"
+          },
+          {
+            "flag": "path.commondir.absolute / path.commondir.relative",
+            "description": "Đường dẫn common directory dùng chung giữa worktree"
+          }
+        ],
+        "warning": "EXPERIMENTAL: giao diện có thể đổi. structure có thể tốn thời gian trên kho lớn vì duyệt object reachable."
+      },
+      {
+        "id": "git-rev-list",
+        "canonicalCommand": "git rev-list",
+        "title": "Duyệt tập commit và object",
+        "command": "git rev-list [<options>] <revision-range> -- <path>",
+        "description": "Công cụ duyệt lịch sử dùng trong script. Ví dụ đếm commit chỉ có ở mỗi phía của main và feature, loại các patch tương đương khi dùng --cherry-pick.",
+        "example": "git rev-list --left-right --count main...feature",
+        "risk": "read",
+        "tags": [
+          "rev-list",
+          "plumbing",
+          "history",
+          "objects",
+          "script"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-rev-list",
+        "options": [
+          {
+            "flag": "--count",
+            "description": "In số lượng thay vì từng OID"
+          },
+          {
+            "flag": "--max-count=<n> / -n <n>",
+            "description": "Giới hạn số commit"
+          },
+          {
+            "flag": "--all",
+            "description": "Duyệt từ mọi ref và HEAD"
+          },
+          {
+            "flag": "--branches / --tags / --remotes",
+            "description": "Chọn nhóm ref làm điểm bắt đầu"
+          },
+          {
+            "flag": "--not",
+            "description": "Đảo ý nghĩa các revision sau nó"
+          },
+          {
+            "flag": "--left-right",
+            "description": "Đánh dấu phía của symmetric difference A...B; với --count in hai số"
+          },
+          {
+            "flag": "--cherry-pick",
+            "description": "Trong symmetric difference, bỏ cặp commit có patch tương đương"
+          },
+          {
+            "flag": "--cherry-mark",
+            "description": "Đánh dấu patch tương đương thay vì loại bỏ"
+          },
+          {
+            "flag": "--first-parent",
+            "description": "Theo cha thứ nhất khi gặp merge"
+          },
+          {
+            "flag": "--no-merges / --merges",
+            "description": "Chỉ commit thường hoặc chỉ merge"
+          },
+          {
+            "flag": "--parents / --children",
+            "description": "Hiện quan hệ cha hoặc con"
+          },
+          {
+            "flag": "--topo-order / --date-order / --reverse",
+            "description": "Điều khiển thứ tự duyệt"
+          },
+          {
+            "flag": "--since=<date> / --until=<date>",
+            "description": "Giới hạn thời gian commit"
+          },
+          {
+            "flag": "--objects",
+            "description": "In cả object reachable từ commit, dùng cho đóng pack"
+          },
+          {
+            "flag": "--objects-edge",
+            "description": "Kèm object biên để tạo thin pack"
+          },
+          {
+            "flag": "--filter=<filter-spec>",
+            "description": "Với --objects, lọc như blob:none, blob:limit=1m, tree:2"
+          },
+          {
+            "flag": "--disk-usage",
+            "description": "Tính dung lượng lưu trữ của tập object được chọn"
+          },
+          {
+            "flag": "--stdin",
+            "description": "Đọc thêm revision và cờ được hỗ trợ từ stdin"
+          },
+          {
+            "flag": "--missing=<action>",
+            "description": "Chọn xử lý object thiếu, như error, allow-promisor hoặc print"
+          },
+          {
+            "flag": "--bisect",
+            "description": "Chọn commit chia đôi tập lịch sử"
+          }
+        ]
+      },
+      {
+        "id": "git-rev-parse",
+        "canonicalCommand": "git rev-parse",
+        "title": "Phân giải revision và vị trí kho",
+        "command": "git rev-parse --verify --end-of-options <revision>",
+        "description": "Phân giải một revision thành OID và xác nhận đúng loại. Ví dụ HEAD^{commit} yêu cầu object có thể peel tới commit; --end-of-options bảo vệ tên bắt đầu bằng dấu -.",
+        "example": "git rev-parse --verify --end-of-options HEAD^{commit}",
+        "risk": "read",
+        "tags": [
+          "rev-parse",
+          "plumbing",
+          "revision",
+          "paths",
+          "script"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-rev-parse",
+        "options": [
+          {
+            "flag": "--verify",
+            "description": "Yêu cầu đúng một đối số có thể phân giải thành object"
+          },
+          {
+            "flag": "--end-of-options",
+            "description": "Không diễn giải input tiếp theo thành tùy chọn"
+          },
+          {
+            "flag": "-q / --quiet",
+            "description": "Với --verify, im lặng khi tên object không hợp lệ"
+          },
+          {
+            "flag": "--short[=<n>]",
+            "description": "In tiền tố OID duy nhất tối thiểu n ký tự"
+          },
+          {
+            "flag": "--abbrev-ref",
+            "description": "In tên ref rút gọn, ví dụ nhánh hiện tại"
+          },
+          {
+            "flag": "--symbolic-full-name",
+            "description": "In tên ref đầy đủ thay OID"
+          },
+          {
+            "flag": "--show-toplevel",
+            "description": "Đường dẫn gốc working tree"
+          },
+          {
+            "flag": "--git-dir / --absolute-git-dir",
+            "description": "Đường dẫn Git directory tương đối hoặc tuyệt đối"
+          },
+          {
+            "flag": "--git-common-dir",
+            "description": "Đường dẫn common directory chung giữa worktree"
+          },
+          {
+            "flag": "--git-path <path>",
+            "description": "Phân giải đường dẫn metadata có xét biến môi trường và worktree"
+          },
+          {
+            "flag": "--is-inside-work-tree / --is-bare-repository",
+            "description": "Kiểm tra loại/vị trí kho"
+          },
+          {
+            "flag": "--is-shallow-repository",
+            "description": "Kiểm tra kho shallow"
+          },
+          {
+            "flag": "--show-object-format / --show-ref-format",
+            "description": "In thuật toán object hoặc backend refs"
+          },
+          {
+            "flag": "--path-format=(absolute|relative)",
+            "description": "Điều khiển đường dẫn của các tùy chọn hỗ trợ đi sau"
+          },
+          {
+            "flag": "--output-object-format=(sha1|sha256|storage)",
+            "description": "Chuyển OID ra định dạng object được kho hỗ trợ"
+          },
+          {
+            "flag": "--show-prefix / --show-cdup",
+            "description": "Vị trí thư mục hiện tại so với gốc kho"
+          },
+          {
+            "flag": "--sq / --sq-quote",
+            "description": "Quote đầu ra dùng trong shell; sq-quote chỉ quote, không phân giải"
+          },
+          {
+            "flag": "--parseopt",
+            "description": "Chế độ parser cho tùy chọn của shell script"
+          }
+        ]
+      },
+      {
+        "id": "git-show-index",
+        "canonicalCommand": "git show-index",
+        "title": "Đọc bảng index của pack",
+        "command": "git show-index < <pack-idx-file>",
+        "description": "Đọc một tệp pack index .idx từ stdin và in offset, OID cùng CRC nếu định dạng có. Ví dụ backup.idx là pack index đã có sẵn, không phải .git/index.",
+        "example": "git show-index < backup.idx",
+        "risk": "read",
+        "tags": [
+          "show-index",
+          "plumbing",
+          "pack",
+          "index",
+          "inspect"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-show-index",
+        "options": [
+          {
+            "flag": "--object-format=<hash-algorithm>",
+            "description": "Chọn sha1 hoặc sha256 phù hợp với pack index"
+          },
+          {
+            "flag": "stdin",
+            "description": "Dữ liệu nhị phân của pack .idx; không phải index staging"
+          }
+        ]
+      },
+      {
+        "id": "git-show-ref",
+        "canonicalCommand": "git show-ref",
+        "title": "Liệt kê hoặc kiểm tra ref local",
+        "command": "git show-ref --verify <full-refname>",
+        "description": "Kiểm tra đúng một tên ref đầy đủ trong kho local, tránh khớp hậu tố ngoài ý muốn. Ví dụ kiểm tra refs/heads/main.",
+        "example": "git show-ref --verify refs/heads/main",
+        "risk": "read",
+        "tags": [
+          "show-ref",
+          "plumbing",
+          "refs",
+          "validate"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-show-ref",
+        "options": [
+          {
+            "flag": "--verify",
+            "description": "Yêu cầu tên ref đầy đủ, trả lỗi nếu không tồn tại"
+          },
+          {
+            "flag": "--exists <ref>",
+            "description": "Kiểm tra tồn tại: 0 có, 2 thiếu, 1 lỗi khác; không phân giải object"
+          },
+          {
+            "flag": "--head",
+            "description": "Bao gồm HEAD trong danh sách"
+          },
+          {
+            "flag": "--branches / --tags",
+            "description": "Chỉ nhánh local hoặc tag"
+          },
+          {
+            "flag": "-d / --dereference",
+            "description": "Kèm OID sau khi peel annotated tag, hậu tố ^{}"
+          },
+          {
+            "flag": "-s / --hash[=<n>]",
+            "description": "Chỉ in OID, tùy chọn độ dài"
+          },
+          {
+            "flag": "--abbrev=<n>",
+            "description": "Rút gọn OID"
+          },
+          {
+            "flag": "-q / --quiet",
+            "description": "Không in kết quả, dùng mã thoát với --verify"
+          },
+          {
+            "flag": "--exclude-existing[=<pattern>]",
+            "description": "Lọc các ref từ stdin, chỉ giữ ref chưa tồn tại"
+          }
+        ]
+      },
+      {
+        "id": "git-unpack-file",
+        "canonicalCommand": "git unpack-file",
+        "title": "Xuất blob ra tệp tạm",
+        "command": "git unpack-file <blob>",
+        "description": "Tạo tệp .merge_file_XXXXX chứa blob và in tên tệp đó. Ví dụ xuất phiên bản README.md từ HEAD; lệnh tạo tệp dù thuộc nhóm interrogation.",
+        "example": "git unpack-file HEAD:README.md",
+        "risk": "write",
+        "tags": [
+          "unpack-file",
+          "plumbing",
+          "blob",
+          "temporary-file"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-unpack-file",
+        "options": [
+          {
+            "flag": "<blob>",
+            "description": "OID hoặc biểu thức phân giải đúng tới blob, ví dụ HEAD:README.md"
+          },
+          {
+            "flag": "không có tùy chọn riêng",
+            "description": "Trả tên tệp tạm đã tạo để chương trình gọi tự xử lý và dọn dẹp"
+          }
+        ],
+        "warning": "Blob có thể chứa dữ liệu lịch sử nhạy cảm. Theo dõi tên tệp được trả về và xóa bản tạm khi không cần nữa."
+      },
+      {
+        "id": "git-var",
+        "canonicalCommand": "git var",
+        "title": "Đọc biến logic Git đã phân giải",
+        "command": "git var <variable>",
+        "description": "In giá trị Git thực sự dùng sau khi xét môi trường và cấu hình. Ví dụ kiểm tra tên nhánh mặc định; mã thoát 1 khi biến không có giá trị.",
+        "example": "git var GIT_DEFAULT_BRANCH",
+        "risk": "read",
+        "tags": [
+          "var",
+          "plumbing",
+          "config",
+          "diagnostics"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-var",
+        "options": [
+          {
+            "flag": "-l",
+            "description": "Liệt kê biến logic và config; phần liệt kê config deprecated, nên dùng git config list"
+          },
+          {
+            "flag": "GIT_AUTHOR_IDENT / GIT_COMMITTER_IDENT",
+            "description": "Danh tính và timestamp dùng cho author/committer"
+          },
+          {
+            "flag": "GIT_EDITOR / GIT_SEQUENCE_EDITOR",
+            "description": "Editor được dùng cho thông điệp hoặc rebase todo"
+          },
+          {
+            "flag": "GIT_PAGER",
+            "description": "Pager đã phân giải theo độ ưu tiên cấu hình"
+          },
+          {
+            "flag": "GIT_DEFAULT_BRANCH",
+            "description": "Tên nhánh đầu tiên của kho mới"
+          },
+          {
+            "flag": "GIT_SHELL_PATH",
+            "description": "Đường dẫn POSIX shell Git sử dụng"
+          },
+          {
+            "flag": "GIT_ATTR_SYSTEM / GIT_ATTR_GLOBAL",
+            "description": "Vị trí tệp thuộc tính hệ thống hoặc người dùng"
+          },
+          {
+            "flag": "GIT_CONFIG_SYSTEM / GIT_CONFIG_GLOBAL",
+            "description": "Vị trí config, có thể trả nhiều đường dẫn"
+          }
+        ],
+        "warning": "-l có thể in cấu hình chứa URL hoặc thông tin riêng; không chia sẻ nguyên đầu ra khi chưa kiểm tra."
+      },
+      {
+        "id": "git-verify-pack",
+        "canonicalCommand": "git verify-pack",
+        "title": "Xác minh object trong pack",
+        "command": "git verify-pack -v <pack-idx-file>",
+        "description": "Kiểm tra index và nội dung pack tương ứng. Ví dụ backup.idx và backup.pack đã có sẵn; -v in loại, kích thước, offset và quan hệ delta.",
+        "example": "git verify-pack -v backup.idx",
+        "risk": "read",
+        "tags": [
+          "verify-pack",
+          "plumbing",
+          "pack",
+          "verify"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-verify-pack",
+        "options": [
+          {
+            "flag": "-v / --verbose",
+            "description": "Hiện chi tiết từng object và thống kê chuỗi delta"
+          },
+          {
+            "flag": "-s / --stat-only",
+            "description": "Chỉ hiện thống kê delta, không xác minh nội dung pack"
+          },
+          {
+            "flag": "--object-format=<hash-algorithm>",
+            "description": "Chọn thuật toán object tương ứng khi cần"
+          },
+          {
+            "flag": "<pack-idx-file>...",
+            "description": "Một hoặc nhiều .idx có .pack tương ứng"
+          }
+        ],
+        "warning": "--stat-only không chứng minh pack nguyên vẹn. Kiểm tra mã thoát của chế độ xác minh đầy đủ trước khi dùng bản sao để phục hồi."
+      }
+    ]
+  },
+  {
+    "id": "synchingrepositories",
+    "title": "Đồng bộ cấp thấp",
+    "level": "plumbing",
+    "commands": [
+      {
+        "id": "git-daemon",
+        "canonicalCommand": "git daemon",
+        "title": "Phục vụ Git protocol trên localhost",
+        "command": "git daemon --listen=<address> --port=<port> --base-path=<root> --strict-paths <repository>",
+        "description": "Khởi chạy Git daemon cấp thấp. Ví dụ chỉ lắng nghe localhost:9419 cho /srv/git/demo.git đã có git-daemon-export-ok; tiến trình chạy tiền cảnh cho đến khi dừng.",
+        "example": "git daemon --listen=127.0.0.1 --port=9419 --base-path=/srv/git --strict-paths /srv/git/demo.git",
+        "risk": "write",
+        "tags": [
+          "daemon",
+          "plumbing",
+          "server",
+          "network"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-daemon",
+        "options": [
+          {
+            "flag": "--listen=<host-or-ipaddr>",
+            "description": "Chỉ lắng nghe địa chỉ chỉ định; tránh vô tình mở ra mọi interface"
+          },
+          {
+            "flag": "--port=<n>",
+            "description": "Chọn cổng; mặc định giao thức Git là 9418"
+          },
+          {
+            "flag": "--base-path=<path>",
+            "description": "Ánh xạ đường dẫn yêu cầu dưới thư mục gốc này"
+          },
+          {
+            "flag": "--strict-paths",
+            "description": "Chỉ chấp nhận đúng các đường dẫn đã liệt kê"
+          },
+          {
+            "flag": "--export-all",
+            "description": "Phục vụ cả kho thiếu git-daemon-export-ok; có thể làm lộ kho"
+          },
+          {
+            "flag": "--enable=<service> / --disable=<service>",
+            "description": "Bật/tắt upload-pack, upload-archive hoặc receive-pack"
+          },
+          {
+            "flag": "--forbid-override=<service>",
+            "description": "Không cho cấu hình từng kho bật lại dịch vụ bị cấm"
+          },
+          {
+            "flag": "--timeout=<n> / --init-timeout=<n>",
+            "description": "Timeout cho hoạt động hoặc yêu cầu đầu tiên, tính bằng giây"
+          },
+          {
+            "flag": "--max-connections=<n>",
+            "description": "Giới hạn số kết nối đồng thời; 0 là không giới hạn"
+          },
+          {
+            "flag": "--verbose / --log-destination=<destination>",
+            "description": "Chi tiết log; stderr, syslog hoặc none"
+          },
+          {
+            "flag": "--detach / --pid-file=<file>",
+            "description": "Chạy nền và tùy chọn ghi PID"
+          },
+          {
+            "flag": "--user=<user> / --group=<group>",
+            "description": "Hạ quyền trước vòng phục vụ khi khởi động đủ quyền"
+          },
+          {
+            "flag": "--access-hook=<path>",
+            "description": "Gọi chương trình kiểm tra truy cập tin cậy trước yêu cầu"
+          }
+        ],
+        "warning": "git:// không mã hóa hay xác thực người dùng. Không bật receive-pack công khai và không dùng --export-all với kho riêng; cần thiết kế quyền truy cập trước khi triển khai."
+      },
+      {
+        "id": "git-fetch-pack",
+        "canonicalCommand": "git fetch-pack",
+        "title": "Tải object bằng giao thức fetch cấp thấp",
+        "command": "git fetch-pack <repository> <ref>...",
+        "description": "Trao đổi với upload-pack để nhận object và in refs được tải. Khác git fetch thông thường, bên gọi phải xử lý việc cập nhật ref; ví dụ lấy main từ kho bare local ../demo.git.",
+        "example": "git fetch-pack ../demo.git refs/heads/main",
+        "risk": "write",
+        "tags": [
+          "fetch-pack",
+          "plumbing",
+          "fetch",
+          "pack",
+          "protocol"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-fetch-pack",
+        "options": [
+          {
+            "flag": "--all",
+            "description": "Tải tất cả refs remote"
+          },
+          {
+            "flag": "--stdin",
+            "description": "Đọc thêm danh sách refs từ stdin"
+          },
+          {
+            "flag": "-k / --keep",
+            "description": "Giữ dữ liệu nhận thành pack; dùng hai lần để tạo .keep"
+          },
+          {
+            "flag": "--thin",
+            "description": "Yêu cầu thin pack nhằm giảm dữ liệu truyền"
+          },
+          {
+            "flag": "--include-tag",
+            "description": "Tải annotated tag trỏ tới object được nhận nếu server hỗ trợ; bên gọi vẫn phải tạo ref tag"
+          },
+          {
+            "flag": "--depth=<n>",
+            "description": "Giới hạn độ sâu lịch sử"
+          },
+          {
+            "flag": "--shallow-since=<date>",
+            "description": "Giới hạn shallow theo ngày"
+          },
+          {
+            "flag": "--shallow-exclude=<ref>",
+            "description": "Loại lịch sử reachable từ ref chỉ định"
+          },
+          {
+            "flag": "--deepen-relative",
+            "description": "Hiểu depth là số commit thêm từ biên shallow hiện tại"
+          },
+          {
+            "flag": "--refetch",
+            "description": "Bỏ đàm phán commit, tải lại tập object theo yêu cầu"
+          },
+          {
+            "flag": "--upload-pack=<path> / --exec=<path>",
+            "description": "Chọn chương trình upload-pack phía bên kia"
+          },
+          {
+            "flag": "--check-self-contained-and-connected",
+            "description": "Báo connectivity-ok nếu pack tự chứa và connected"
+          },
+          {
+            "flag": "-q / --quiet / --no-progress",
+            "description": "Giảm output hoặc tiến độ"
+          }
+        ],
+        "warning": "Ghi object và có thể thay đổi trạng thái shallow. Dùng git fetch cho quy trình thông thường; không tự chạy chương trình remote không tin cậy."
+      }
+    ]
+  }
+]

@@ -1,0 +1,1311 @@
+[
+  {
+    "id": "git-branches",
+    "title": "Porcelain · Nhánh, merge & viết lại",
+    "level": "core",
+    "commands": [
+      {
+        "id": "git-full-switch",
+        "canonicalCommand": "git switch",
+        "title": "Chuyển hoặc tạo nhánh",
+        "command": "git switch [OPTIONS] BRANCH",
+        "description": "Chuyển HEAD và working tree sang nhánh; -c tạo nhánh mới trước khi chuyển.",
+        "example": "git switch -c feature/login",
+        "risk": "write",
+        "tags": [
+          "switch",
+          "git-branches",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-switch",
+        "options": [
+          {
+            "flag": "-c NAME",
+            "description": "Tạo nhánh mới"
+          },
+          {
+            "flag": "--track REMOTE/BRANCH",
+            "description": "Tạo nhánh theo dõi upstream"
+          },
+          {
+            "flag": "--detach REV",
+            "description": "Checkout commit không gắn nhánh"
+          },
+          {
+            "flag": "--orphan NAME",
+            "description": "Tạo nhánh chưa có lịch sử"
+          },
+          {
+            "flag": "-",
+            "description": "Quay lại nhánh/vị trí trước"
+          },
+          {
+            "flag": "--discard-changes",
+            "description": "Bỏ thay đổi local; nguy cơ mất dữ liệu"
+          }
+        ],
+        "warning": "Ghi dữ liệu local. Kiểm tra git status và lưu công việc đang làm trước khi chạy."
+      },
+      {
+        "id": "git-full-checkout",
+        "canonicalCommand": "git checkout",
+        "title": "Checkout nhánh hoặc đường dẫn",
+        "command": "git checkout [OPTIONS] REV [-- PATH...]",
+        "description": "Lệnh đa dụng cũ cho chuyển nhánh và khôi phục file; chọn switch/restore để ý định rõ hơn.",
+        "example": "git checkout -b feature/docs",
+        "risk": "write",
+        "tags": [
+          "checkout",
+          "git-branches",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-checkout",
+        "options": [
+          {
+            "flag": "-b NAME",
+            "description": "Tạo nhánh mới và checkout"
+          },
+          {
+            "flag": "--detach REV",
+            "description": "Chuyển sang detached HEAD"
+          },
+          {
+            "flag": "-p",
+            "description": "Khôi phục theo hunk"
+          },
+          {
+            "flag": "--ours / --theirs",
+            "description": "Lấy một bên file xung đột"
+          },
+          {
+            "flag": "-- PATH",
+            "description": "Tách đường dẫn khỏi revision"
+          }
+        ],
+        "warning": "Dạng git checkout REV -- PATH ghi đè file và index. -f loại bỏ các bảo vệ trước thay đổi local."
+      },
+      {
+        "id": "git-full-merge",
+        "canonicalCommand": "git merge",
+        "title": "Gộp lịch sử vào nhánh hiện tại",
+        "command": "git merge [OPTIONS] BRANCH",
+        "description": "Đưa thay đổi của nhánh vào nhánh đang checkout; ví dụ chỉ chấp nhận fast-forward.",
+        "example": "git merge --ff-only feature/login",
+        "risk": "write",
+        "tags": [
+          "merge",
+          "git-branches",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-merge",
+        "options": [
+          {
+            "flag": "--ff-only",
+            "description": "Từ chối nếu cần merge commit"
+          },
+          {
+            "flag": "--no-ff",
+            "description": "Luôn tạo merge commit khi có thể merge"
+          },
+          {
+            "flag": "--no-commit",
+            "description": "Dừng trước commit; không chặn fast-forward"
+          },
+          {
+            "flag": "--squash",
+            "description": "Đưa kết quả vào index nhưng không tạo merge commit"
+          },
+          {
+            "flag": "--abort",
+            "description": "Hủy merge đang xung đột; không luôn khôi phục được thay đổi có sẵn trước merge"
+          },
+          {
+            "flag": "--continue",
+            "description": "Tiếp tục sau khi xử lý xung đột"
+          }
+        ],
+        "warning": "Ghi dữ liệu local. Kiểm tra git status và lưu công việc đang làm trước khi chạy. Xác nhận đang đứng ở nhánh đích."
+      },
+      {
+        "id": "git-full-mergetool",
+        "canonicalCommand": "git mergetool",
+        "title": "Giải quyết xung đột bằng công cụ",
+        "command": "git mergetool [OPTIONS] [-- PATH...]",
+        "description": "Mở công cụ merge đã cấu hình cho các file unmerged; cần xem lại kết quả rồi commit.",
+        "example": "git mergetool -- README.md",
+        "risk": "write",
+        "tags": [
+          "mergetool",
+          "git-branches",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-mergetool",
+        "options": [
+          {
+            "flag": "--tool=TOOL",
+            "description": "Chọn công cụ merge"
+          },
+          {
+            "flag": "--tool-help",
+            "description": "Liệt kê công cụ hỗ trợ"
+          },
+          {
+            "flag": "--no-prompt",
+            "description": "Không hỏi trước khi mở công cụ"
+          },
+          {
+            "flag": "--gui",
+            "description": "Ưu tiên công cụ giao diện"
+          }
+        ],
+        "warning": "Chạy chương trình bên ngoài và có thể sửa/stage file. Chỉ dùng công cụ đã tin cậy."
+      },
+      {
+        "id": "git-full-rebase",
+        "canonicalCommand": "git rebase",
+        "title": "Đặt lại nền chuỗi commit",
+        "command": "git rebase [OPTIONS] UPSTREAM",
+        "description": "Phát lại commit của nhánh hiện tại trên nền mới. Chỉ dùng với lịch sử chưa chia sẻ hoặc có phối hợp.",
+        "example": "git rebase main",
+        "risk": "destructive",
+        "tags": [
+          "rebase",
+          "git-branches",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-rebase",
+        "options": [
+          {
+            "flag": "--interactive / -i",
+            "description": "Sắp xếp, squash, fixup, reword từng commit"
+          },
+          {
+            "flag": "--onto NEWBASE UPSTREAM [BRANCH]",
+            "description": "Chọn nền và đoạn commit cần phát lại"
+          },
+          {
+            "flag": "--autosquash",
+            "description": "Tự sắp xếp commit fixup!/squash!"
+          },
+          {
+            "flag": "--rebase-merges",
+            "description": "Tái tạo cấu trúc merge"
+          },
+          {
+            "flag": "--continue / --skip / --abort",
+            "description": "Điều khiển khi xung đột; skip bỏ commit"
+          },
+          {
+            "flag": "--update-refs",
+            "description": "Di chuyển các nhánh liên quan, mở rộng phạm vi thay đổi"
+          }
+        ],
+        "warning": "Viết lại lịch sử local; commit mới có ID mới. Sao lưu và phối hợp trước nếu lịch sử đã chia sẻ."
+      },
+      {
+        "id": "git-full-cherry-pick",
+        "canonicalCommand": "git cherry-pick",
+        "title": "Chép thay đổi từ commit khác",
+        "command": "git cherry-pick [OPTIONS] COMMIT...",
+        "description": "Tạo commit mới mang thay đổi của commit chọn trên nhánh hiện tại.",
+        "example": "git cherry-pick feature/fix",
+        "risk": "write",
+        "tags": [
+          "cherry-pick",
+          "git-branches",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-cherry-pick",
+        "options": [
+          {
+            "flag": "-x",
+            "description": "Ghi nguồn commit vào thông điệp"
+          },
+          {
+            "flag": "--no-commit / -n",
+            "description": "Áp dụng vào index/working tree, chưa commit"
+          },
+          {
+            "flag": "--mainline N / -m N",
+            "description": "Chọn cha làm nền của merge commit"
+          },
+          {
+            "flag": "--continue / --abort / --skip",
+            "description": "Điều khiển chuỗi đang dở"
+          },
+          {
+            "flag": "--edit",
+            "description": "Sửa thông điệp commit"
+          }
+        ],
+        "warning": "Có thể xung đột hoặc lặp patch đã có. Merge commit cần chọn mainline có chủ đích."
+      },
+      {
+        "id": "git-full-revert",
+        "canonicalCommand": "git revert",
+        "title": "Đảo thay đổi bằng commit mới",
+        "command": "git revert [OPTIONS] COMMIT...",
+        "description": "Tạo commit bù đảo tác động của commit cũ mà không xóa lịch sử đã chia sẻ.",
+        "example": "git revert --no-edit HEAD",
+        "risk": "write",
+        "tags": [
+          "revert",
+          "git-branches",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-revert",
+        "options": [
+          {
+            "flag": "--no-edit",
+            "description": "Giữ thông điệp mặc định"
+          },
+          {
+            "flag": "--no-commit / -n",
+            "description": "Áp dụng chưa commit"
+          },
+          {
+            "flag": "--mainline N",
+            "description": "Chọn cha khi revert merge; ảnh hưởng merge về sau"
+          },
+          {
+            "flag": "--continue / --abort / --skip",
+            "description": "Điều khiển phiên revert"
+          }
+        ],
+        "warning": "Cần working tree sạch; ví dụ giả định HEAD không phải merge commit. Có thể xảy ra xung đột."
+      },
+      {
+        "id": "git-full-reset",
+        "canonicalCommand": "git reset",
+        "title": "Đặt lại HEAD hoặc index",
+        "command": "git reset [MODE] COMMIT",
+        "description": "Di chuyển đầu nhánh; mode quyết định cách thay index và working tree. Ví dụ rút một commit, giữ toàn bộ nội dung đã stage.",
+        "example": "git reset --soft HEAD~1",
+        "risk": "destructive",
+        "tags": [
+          "reset",
+          "git-branches",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-reset",
+        "options": [
+          {
+            "flag": "--soft",
+            "description": "Đổi HEAD, giữ index/working tree"
+          },
+          {
+            "flag": "--mixed",
+            "description": "Đổi HEAD và index, giữ working tree; mặc định"
+          },
+          {
+            "flag": "--hard",
+            "description": "Đổi cả ba, có thể mất thay đổi local"
+          },
+          {
+            "flag": "--merge / --keep",
+            "description": "Reset với bảo vệ một số thay đổi local"
+          },
+          {
+            "flag": "git reset HEAD -- PATH",
+            "description": "Dạng theo đường dẫn chỉ đổi index, không di chuyển nhánh"
+          },
+          {
+            "flag": "--patch",
+            "description": "Chọn từng hunk trong index"
+          }
+        ],
+        "warning": "Viết lại lịch sử local; commit mới có ID mới. Sao lưu và phối hợp trước nếu lịch sử đã chia sẻ. HEAD phải có cha; --hard còn bỏ thay đổi file local."
+      },
+      {
+        "id": "git-full-reflog",
+        "canonicalCommand": "git reflog",
+        "title": "Tìm lịch sử refs local",
+        "command": "git reflog [show] [REF]",
+        "description": "Tra các lần HEAD/ref di chuyển để tìm commit cũ sau reset, rebase hoặc checkout.",
+        "example": "git reflog show --max-count=20 HEAD",
+        "risk": "read",
+        "tags": [
+          "reflog",
+          "git-branches",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-reflog",
+        "options": [
+          {
+            "flag": "show REF",
+            "description": "Xem lịch sử ref"
+          },
+          {
+            "flag": "list",
+            "description": "Liệt kê ref có reflog"
+          },
+          {
+            "flag": "exists REF",
+            "description": "Kiểm tra có reflog"
+          },
+          {
+            "flag": "expire --dry-run --all",
+            "description": "Xem kế hoạch hết hạn mà chưa xóa"
+          },
+          {
+            "flag": "delete REF@{N}",
+            "description": "Xóa một mục reflog"
+          },
+          {
+            "flag": "drop REF",
+            "description": "Xóa toàn bộ reflog của ref"
+          },
+          {
+            "flag": "write REF OLD NEW MESSAGE",
+            "description": "Bổ sung một mục; dùng cho công cụ cấp thấp"
+          }
+        ],
+        "warning": "Reflog là dữ liệu local có thời hạn, không phải bản sao lưu và không được push tự động."
+      },
+      {
+        "id": "git-full-tag-list",
+        "canonicalCommand": "git tag",
+        "title": "Xem và kiểm tra tag",
+        "command": "git tag [OPTIONS] [PATTERN]",
+        "description": "Liệt kê nhãn phiên bản hoặc kiểm tra chữ ký tag annotated đã có.",
+        "example": "git tag --list \"v*\" --sort=-version:refname",
+        "risk": "read",
+        "tags": [
+          "tag",
+          "git-branches",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-tag",
+        "options": [
+          {
+            "flag": "--list / -l PATTERN",
+            "description": "Lọc tag"
+          },
+          {
+            "flag": "--sort=KEY",
+            "description": "Sắp xếp, version:refname hiểu số phiên bản"
+          },
+          {
+            "flag": "--contains COMMIT",
+            "description": "Tag chứa commit"
+          },
+          {
+            "flag": "--verify / -v TAG",
+            "description": "Kiểm tra chữ ký annotated tag"
+          },
+          {
+            "flag": "--points-at OBJECT",
+            "description": "Tag trỏ tới object"
+          }
+        ]
+      },
+      {
+        "id": "git-full-tag-create",
+        "canonicalCommand": "git tag",
+        "title": "Tạo annotated tag",
+        "command": "git tag -a TAG -m MESSAGE [COMMIT]",
+        "description": "Tạo tag có metadata và thông điệp; chưa công bố lên remote.",
+        "example": "git tag -a v1.2.0 -m \"Release 1.2.0\"",
+        "risk": "write",
+        "tags": [
+          "tag",
+          "git-branches",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-tag",
+        "options": [
+          {
+            "flag": "-a",
+            "description": "Annotated tag"
+          },
+          {
+            "flag": "-s / -u KEY",
+            "description": "Ký tag"
+          },
+          {
+            "flag": "-m MESSAGE",
+            "description": "Thông điệp"
+          },
+          {
+            "flag": "-d TAG",
+            "description": "Xóa tag local"
+          },
+          {
+            "flag": "-f",
+            "description": "Thay tag đã tồn tại; tránh thay nhãn đã phát hành"
+          }
+        ],
+        "warning": "Kiểm tra commit đích. Tag tạo local; git push origin TAG mới công bố. -f ghi đè tag đã có."
+      }
+    ]
+  },
+  {
+    "id": "git-remotes",
+    "title": "Porcelain · Remote & đồng bộ",
+    "level": "core",
+    "commands": [
+      {
+        "id": "git-full-remote-list",
+        "canonicalCommand": "git remote",
+        "title": "Xem remote và URL",
+        "command": "git remote [--verbose]",
+        "description": "Kiểm tra nguồn fetch và đích push trước khi đồng bộ.",
+        "example": "git remote -v",
+        "risk": "read",
+        "tags": [
+          "remote",
+          "git-remotes",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-remote",
+        "options": [
+          {
+            "flag": "-v / --verbose",
+            "description": "Hiện URL fetch/push"
+          },
+          {
+            "flag": "show NAME",
+            "description": "Đọc tình trạng remote, thường truy vấn mạng"
+          },
+          {
+            "flag": "show -n NAME",
+            "description": "Dùng dữ liệu local thay vì truy vấn"
+          },
+          {
+            "flag": "get-url --all NAME",
+            "description": "Hiện các URL đã cấu hình"
+          },
+          {
+            "flag": "get-url --push NAME",
+            "description": "Chỉ URL push"
+          }
+        ],
+        "warning": "URL remote có thể chứa thông tin nội bộ; không nhúng token vào URL."
+      },
+      {
+        "id": "git-full-remote-add",
+        "canonicalCommand": "git remote",
+        "title": "Thêm một remote",
+        "command": "git remote add [OPTIONS] NAME URL",
+        "description": "Lưu tên và URL nguồn cho những lần fetch/push sau.",
+        "example": "git remote add upstream https://github.com/git/git.git",
+        "risk": "write",
+        "tags": [
+          "remote",
+          "git-remotes",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-remote",
+        "options": [
+          {
+            "flag": "-f",
+            "description": "Fetch ngay sau khi thêm"
+          },
+          {
+            "flag": "-t BRANCH",
+            "description": "Chỉ theo dõi nhánh này"
+          },
+          {
+            "flag": "--tags / --no-tags",
+            "description": "Chọn hành vi fetch tag"
+          },
+          {
+            "flag": "--mirror=fetch|push",
+            "description": "Mirror refs, có thể tác động rộng khi đồng bộ"
+          }
+        ],
+        "warning": "Chỉ thay cấu hình local trừ khi thêm -f để fetch ngay. Xác nhận URL thuộc repository bạn muốn dùng."
+      },
+      {
+        "id": "git-full-remote-rename",
+        "canonicalCommand": "git remote",
+        "title": "Đổi tên remote",
+        "command": "git remote rename OLD NEW",
+        "description": "Đổi tên remote cùng remote-tracking refs và cấu hình liên quan.",
+        "example": "git remote rename upstream source",
+        "risk": "write",
+        "tags": [
+          "remote",
+          "git-remotes",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-remote",
+        "options": [
+          {
+            "flag": "--progress / --no-progress",
+            "description": "Bật/tắt tiến độ"
+          }
+        ],
+        "warning": "Ghi dữ liệu local. Kiểm tra git status và lưu công việc đang làm trước khi chạy."
+      },
+      {
+        "id": "git-full-remote-remove",
+        "canonicalCommand": "git remote",
+        "title": "Bỏ remote local",
+        "command": "git remote remove NAME",
+        "description": "Xóa cấu hình remote cùng remote-tracking refs local; repository trên server vẫn tồn tại.",
+        "example": "git remote remove source",
+        "risk": "write",
+        "tags": [
+          "remote",
+          "git-remotes",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-remote",
+        "options": [],
+        "warning": "Mất cấu hình và remote-tracking refs local. Kiểm tra các nhánh phụ thuộc remote này."
+      },
+      {
+        "id": "git-full-remote-set-url",
+        "canonicalCommand": "git remote",
+        "title": "Đổi URL remote",
+        "command": "git remote set-url [--push] NAME NEW_URL",
+        "description": "Đổi đích remote đã chọn; các lần đồng bộ tiếp theo dùng địa chỉ mới.",
+        "example": "git remote set-url origin https://github.com/example/cli-sandbox.git",
+        "risk": "write",
+        "tags": [
+          "remote",
+          "git-remotes",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-remote",
+        "options": [
+          {
+            "flag": "--push",
+            "description": "Chỉ đổi URL push"
+          },
+          {
+            "flag": "--add",
+            "description": "Thêm URL thay vì thay thế"
+          },
+          {
+            "flag": "--delete",
+            "description": "Xóa URL khớp; cần kiểm tra regex"
+          },
+          {
+            "flag": "get-url --all NAME",
+            "description": "Xác minh kết quả"
+          }
+        ],
+        "warning": "URL minh họa phải thay bằng repository được phép dùng. Kiểm tra lại git remote -v trước push."
+      },
+      {
+        "id": "git-full-remote-set-head",
+        "canonicalCommand": "git remote",
+        "title": "Đặt nhánh mặc định remote-tracking",
+        "command": "git remote set-head NAME (-a | -d | BRANCH)",
+        "description": "Cập nhật symbolic ref REMOTE/HEAD trong local; không đổi nhánh mặc định trên server.",
+        "example": "git remote set-head origin --auto",
+        "risk": "write",
+        "tags": [
+          "remote",
+          "git-remotes",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-remote",
+        "options": [
+          {
+            "flag": "--auto / -a",
+            "description": "Phát hiện HEAD từ server"
+          },
+          {
+            "flag": "--delete / -d",
+            "description": "Bỏ symbolic ref local"
+          },
+          {
+            "flag": "BRANCH",
+            "description": "Chọn rõ nhánh có sẵn"
+          }
+        ],
+        "warning": "--auto truy vấn server và cần ref remote-tracking tương ứng đã được fetch."
+      },
+      {
+        "id": "git-full-remote-set-branches",
+        "canonicalCommand": "git remote",
+        "title": "Chọn nhánh được theo dõi",
+        "command": "git remote set-branches [--add] NAME BRANCH...",
+        "description": "Cập nhật danh sách branch mà remote fetch theo dõi.",
+        "example": "git remote set-branches --add origin release",
+        "risk": "write",
+        "tags": [
+          "remote",
+          "git-remotes",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-remote",
+        "options": [
+          {
+            "flag": "--add",
+            "description": "Thêm vào danh sách hiện có"
+          }
+        ],
+        "warning": "Thay cấu hình fetch; cần fetch để tải ref mới. Không có --add sẽ thay danh sách cũ."
+      },
+      {
+        "id": "git-full-remote-prune",
+        "canonicalCommand": "git remote",
+        "title": "Xem refs remote-tracking lỗi thời",
+        "command": "git remote prune --dry-run NAME",
+        "description": "Truy vấn và liệt kê ref local sẽ bị dọn vì không còn tồn tại trên remote.",
+        "example": "git remote prune --dry-run origin",
+        "risk": "read",
+        "tags": [
+          "remote",
+          "git-remotes",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-remote",
+        "options": [
+          {
+            "flag": "--dry-run / -n",
+            "description": "Chỉ xem trước"
+          },
+          {
+            "flag": "update --prune NAME",
+            "description": "Fetch rồi dọn ref lỗi thời"
+          }
+        ],
+        "warning": "Bỏ --dry-run sẽ xóa refs local theo refspec, có thể bao gồm tag nếu cấu hình như vậy."
+      },
+      {
+        "id": "git-full-remote-update",
+        "canonicalCommand": "git remote",
+        "title": "Cập nhật một nhóm remote",
+        "command": "git remote update [--prune] [REMOTE_OR_GROUP...]",
+        "description": "Fetch các remote hoặc nhóm remote đã cấu hình vào repository local.",
+        "example": "git remote update origin",
+        "risk": "write",
+        "tags": [
+          "remote",
+          "git-remotes",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-remote",
+        "options": [
+          {
+            "flag": "--prune / -p",
+            "description": "Dọn refs không còn trên nguồn"
+          }
+        ],
+        "warning": "Dùng mạng và cập nhật refs/object local. --prune xóa remote-tracking ref lỗi thời."
+      },
+      {
+        "id": "git-full-fetch",
+        "canonicalCommand": "git fetch",
+        "title": "Tải object và refs",
+        "command": "git fetch [OPTIONS] [REMOTE] [REFSPEC...]",
+        "description": "Tải thay đổi về object database và cập nhật refs theo cấu hình; thường chưa gộp vào nhánh đang checkout.",
+        "example": "git fetch origin",
+        "risk": "write",
+        "tags": [
+          "fetch",
+          "git-remotes",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-fetch",
+        "options": [
+          {
+            "flag": "--all",
+            "description": "Fetch mọi remote không bị skip"
+          },
+          {
+            "flag": "--prune",
+            "description": "Dọn refs stale theo refspec"
+          },
+          {
+            "flag": "--tags",
+            "description": "Fetch mọi tag"
+          },
+          {
+            "flag": "--dry-run",
+            "description": "Hiện kế hoạch mà không thay đổi"
+          },
+          {
+            "flag": "--depth=N / --unshallow",
+            "description": "Điều chỉnh shallow history"
+          },
+          {
+            "flag": "--recurse-submodules=on-demand",
+            "description": "Fetch submodule khi cần"
+          }
+        ],
+        "warning": "Refspec tùy chỉnh có thể cập nhật phạm vi khác remote-tracking refs. --prune-tags có thể xóa tag local."
+      },
+      {
+        "id": "git-full-pull",
+        "canonicalCommand": "git pull",
+        "title": "Fetch rồi tích hợp",
+        "command": "git pull [OPTIONS] [REMOTE [BRANCH]]",
+        "description": "Kết hợp fetch với fast-forward, merge hoặc rebase theo cờ/cấu hình. Ví dụ dùng trên main local.",
+        "example": "git pull --ff-only origin main",
+        "risk": "write",
+        "tags": [
+          "pull",
+          "git-remotes",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-pull",
+        "options": [
+          {
+            "flag": "--ff-only",
+            "description": "Chỉ cho fast-forward"
+          },
+          {
+            "flag": "--rebase",
+            "description": "Rebase local commits sau fetch, đổi ID commit"
+          },
+          {
+            "flag": "--no-rebase",
+            "description": "Dùng merge"
+          },
+          {
+            "flag": "--autostash",
+            "description": "Tự stash/apply; áp lại vẫn có thể xung đột"
+          },
+          {
+            "flag": "--no-commit",
+            "description": "Dừng trước merge commit; không dừng fast-forward"
+          }
+        ],
+        "warning": "Kiểm tra nhánh hiện tại và lưu thay đổi. --ff-only dừng khi hai bên phân kỳ."
+      },
+      {
+        "id": "git-full-push-preview",
+        "canonicalCommand": "git push",
+        "title": "Xem trước cập nhật remote",
+        "command": "git push --dry-run REMOTE REFSPEC",
+        "description": "Kiểm tra đích và refs dự kiến đẩy lên mà chưa cập nhật remote.",
+        "example": "git push --dry-run origin feature/login",
+        "risk": "read",
+        "tags": [
+          "push",
+          "git-remotes",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-push",
+        "options": [
+          {
+            "flag": "--dry-run",
+            "description": "Không gửi cập nhật refs"
+          },
+          {
+            "flag": "--porcelain",
+            "description": "Đầu ra dễ xử lý cho script"
+          },
+          {
+            "flag": "--set-upstream / -u",
+            "description": "Trong push thật, đặt upstream khi thành công"
+          },
+          {
+            "flag": "--tags",
+            "description": "Push mọi tag, phạm vi rộng"
+          },
+          {
+            "flag": "--atomic",
+            "description": "Yêu cầu server cập nhật tất cả refs hoặc không cập nhật"
+          }
+        ],
+        "warning": "Vẫn dùng mạng/xác thực. Xem kết quả và kiểm tra dữ liệu commit trước lần push thật."
+      },
+      {
+        "id": "git-full-push",
+        "canonicalCommand": "git push",
+        "title": "Công bố nhánh lên remote",
+        "command": "git push [OPTIONS] REMOTE BRANCH",
+        "description": "Gửi object và cập nhật nhánh trên server; ví dụ đặt upstream cho nhánh mới.",
+        "example": "git push --set-upstream origin feature/login",
+        "risk": "write",
+        "tags": [
+          "push",
+          "git-remotes",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-push",
+        "options": [
+          {
+            "flag": "--set-upstream / -u",
+            "description": "Đặt upstream khi push thành công"
+          },
+          {
+            "flag": "--force-with-lease=REF:EXPECTED",
+            "description": "Chỉ force khi remote ref đúng ID bạn đã xác nhận"
+          },
+          {
+            "flag": "--delete BRANCH",
+            "description": "Xóa nhánh remote; cần chấp thuận và phối hợp"
+          },
+          {
+            "flag": "--follow-tags",
+            "description": "Push tag annotated phù hợp cùng commit"
+          },
+          {
+            "flag": "--force / --mirror",
+            "description": "Nguy cơ ghi đè/xóa nhiều refs; không dùng tùy tiện"
+          }
+        ],
+        "warning": "Công bố mã và có thể chạy CI/triển khai. Xác minh URL, nhánh và bí mật trước; force-push có thể làm mất commit của người khác."
+      },
+      {
+        "id": "git-full-backfill",
+        "canonicalCommand": "git backfill",
+        "title": "Tải bù blob cho partial clone",
+        "command": "git backfill [OPTIONS] [REVISION_RANGE]",
+        "description": "Tải blob còn thiếu theo lô để việc đọc lịch sử của blobless clone hiệu quả hơn.",
+        "example": "git backfill --sparse HEAD",
+        "risk": "write",
+        "tags": [
+          "backfill",
+          "git-remotes",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-backfill",
+        "options": [
+          {
+            "flag": "--min-batch-size=N",
+            "description": "Kích thước lô tối thiểu mục tiêu"
+          },
+          {
+            "flag": "--sparse / --no-sparse",
+            "description": "Giới hạn theo sparse-checkout hoặc mọi đường dẫn"
+          },
+          {
+            "flag": "--include-edges / --no-include-edges",
+            "description": "Điều khiển blob ở biên revision range"
+          }
+        ],
+        "warning": "Chỉ phù hợp partial clone; dùng băng thông và dung lượng local. Giới hạn range nếu không cần toàn lịch sử."
+      }
+    ]
+  },
+  {
+    "id": "git-stash",
+    "title": "Porcelain · Cất và khôi phục công việc",
+    "level": "core",
+    "commands": [
+      {
+        "id": "git-full-stash-push",
+        "canonicalCommand": "git stash",
+        "title": "Cất thay đổi tạm",
+        "command": "git stash push [OPTIONS] [-- PATH...]",
+        "description": "Lưu thay đổi vào stash local rồi dọn chúng khỏi working tree theo lựa chọn.",
+        "example": "git stash push --include-untracked -m \"WIP login\"",
+        "risk": "write",
+        "tags": [
+          "stash",
+          "git-stash",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-stash",
+        "options": [
+          {
+            "flag": "--include-untracked / -u",
+            "description": "Cất cả untracked"
+          },
+          {
+            "flag": "--all / -a",
+            "description": "Cất cả ignored, có thể rất nhiều file"
+          },
+          {
+            "flag": "--patch / -p",
+            "description": "Chọn từng hunk"
+          },
+          {
+            "flag": "--staged / -S",
+            "description": "Chỉ cất phần đã stage"
+          },
+          {
+            "flag": "--keep-index",
+            "description": "Giữ phần đã stage trong working tree/index"
+          },
+          {
+            "flag": "-m MESSAGE",
+            "description": "Ghi chú cho stash"
+          },
+          {
+            "flag": "save MESSAGE",
+            "description": "Cú pháp cũ deprecated; dùng push cho workflow mới"
+          }
+        ],
+        "warning": "Stash không phải bản sao lưu ngoài máy. -u gồm untracked nhưng không gồm ignored; -a còn dọn cả ignored."
+      },
+      {
+        "id": "git-full-stash-list",
+        "canonicalCommand": "git stash",
+        "title": "Liệt kê stash",
+        "command": "git stash list [LOG_OPTIONS]",
+        "description": "Xem các mục stash; stash@{0} là mục mới nhất và số thứ tự thay đổi khi thêm/xóa.",
+        "example": "git stash list",
+        "risk": "read",
+        "tags": [
+          "stash",
+          "git-stash",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-stash",
+        "options": [
+          {
+            "flag": "--max-count=N",
+            "description": "Giới hạn số mục"
+          },
+          {
+            "flag": "--format=FORMAT",
+            "description": "Định dạng đầu ra theo log"
+          }
+        ]
+      },
+      {
+        "id": "git-full-stash-show",
+        "canonicalCommand": "git stash",
+        "title": "Đọc nội dung stash",
+        "command": "git stash show [OPTIONS] [STASH]",
+        "description": "Xem thống kê hoặc patch trước khi khôi phục.",
+        "example": "git stash show --patch --include-untracked \"stash@{0}\"",
+        "risk": "read",
+        "tags": [
+          "stash",
+          "git-stash",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-stash",
+        "options": [
+          {
+            "flag": "--patch / -p",
+            "description": "Xem diff đầy đủ"
+          },
+          {
+            "flag": "--include-untracked / -u",
+            "description": "Kèm untracked đã cất"
+          },
+          {
+            "flag": "--only-untracked",
+            "description": "Chỉ phần untracked"
+          },
+          {
+            "flag": "--stat",
+            "description": "Tóm tắt theo file"
+          }
+        ]
+      },
+      {
+        "id": "git-full-stash-apply",
+        "canonicalCommand": "git stash",
+        "title": "Áp lại và giữ stash",
+        "command": "git stash apply [--index] [STASH]",
+        "description": "Đưa thay đổi stash vào working tree nhưng không xóa mục cất tạm.",
+        "example": "git stash apply \"stash@{0}\"",
+        "risk": "write",
+        "tags": [
+          "stash",
+          "git-stash",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-stash",
+        "options": [
+          {
+            "flag": "--index",
+            "description": "Cố khôi phục cả index"
+          },
+          {
+            "flag": "--quiet / -q",
+            "description": "Giảm thông báo"
+          }
+        ],
+        "warning": "Có thể xung đột. Bắt đầu từ working tree sạch để dễ xử lý; mặc định không khôi phục trạng thái stage."
+      },
+      {
+        "id": "git-full-stash-pop",
+        "canonicalCommand": "git stash",
+        "title": "Áp lại rồi bỏ stash khi thành công",
+        "command": "git stash pop [--index] [STASH]",
+        "description": "Áp dụng stash và xóa mục đó nếu thành công; khi xung đột, stash được giữ lại.",
+        "example": "git stash pop \"stash@{0}\"",
+        "risk": "write",
+        "tags": [
+          "stash",
+          "git-stash",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-stash",
+        "options": [
+          {
+            "flag": "--index",
+            "description": "Cố phục hồi trạng thái stage"
+          },
+          {
+            "flag": "-q",
+            "description": "Giảm thông báo"
+          }
+        ],
+        "warning": "Kiểm tra kết quả trước khi tiếp tục. Muốn giữ bản cất chắc chắn, dùng apply thay vì pop."
+      },
+      {
+        "id": "git-full-stash-branch",
+        "canonicalCommand": "git stash",
+        "title": "Khôi phục stash trên nhánh mới",
+        "command": "git stash branch BRANCH [STASH]",
+        "description": "Tạo nhánh tại commit gốc của stash rồi áp thay đổi; có thể tránh xung đột do nhánh cũ đã tiến xa.",
+        "example": "git stash branch recover-login \"stash@{0}\"",
+        "risk": "write",
+        "tags": [
+          "stash",
+          "git-stash",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-stash",
+        "options": [],
+        "warning": "Khi áp thành công một stash dạng stash@{N}, lệnh sẽ bỏ stash đó. Chọn tên nhánh mới."
+      },
+      {
+        "id": "git-full-stash-drop",
+        "canonicalCommand": "git stash",
+        "title": "Xóa một mục stash",
+        "command": "git stash drop [STASH]",
+        "description": "Bỏ một mục khỏi danh sách stash.",
+        "example": "git stash drop \"stash@{2}\"",
+        "risk": "destructive",
+        "tags": [
+          "stash",
+          "git-stash",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-stash",
+        "options": [
+          {
+            "flag": "--quiet / -q",
+            "description": "Giảm thông báo"
+          }
+        ],
+        "warning": "Xem stash show trước. Mục bị bỏ có thể không khôi phục được sau dọn object; chỉ số stash khác sẽ đổi."
+      },
+      {
+        "id": "git-full-stash-clear",
+        "canonicalCommand": "git stash",
+        "title": "Xóa toàn bộ stash",
+        "command": "git stash clear",
+        "description": "Bỏ tất cả các mục stash trong repository hiện tại.",
+        "example": "git stash clear",
+        "risk": "destructive",
+        "tags": [
+          "stash",
+          "git-stash",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-stash",
+        "options": [],
+        "warning": "Có thể mất toàn bộ công việc chỉ còn trong stash. Xuất/sao lưu các mục cần giữ và xác nhận danh sách trước khi chạy."
+      },
+      {
+        "id": "git-full-stash-create",
+        "canonicalCommand": "git stash",
+        "title": "Tạo object stash chưa ghi vào danh sách",
+        "command": "git stash create [MESSAGE]",
+        "description": "Tạo stash commit và in ID cho script; không thêm refs/stash và không dọn working tree.",
+        "example": "git stash create \"snapshot for script\"",
+        "risk": "write",
+        "tags": [
+          "stash",
+          "git-stash",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-stash",
+        "options": [],
+        "warning": "Object chưa được ref giữ có thể bị garbage collection. Muốn giữ dùng stash store với ID trả về."
+      },
+      {
+        "id": "git-full-stash-store",
+        "canonicalCommand": "git stash",
+        "title": "Lưu stash object đã có",
+        "command": "git stash store [-m MESSAGE] COMMIT",
+        "description": "Thêm commit stash hợp lệ đã được stash create tạo ra vào danh sách stash.",
+        "example": "git stash store -m \"saved snapshot\" \"$stash_oid\"",
+        "risk": "write",
+        "tags": [
+          "stash",
+          "git-stash",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-stash",
+        "options": [
+          {
+            "flag": "-m MESSAGE",
+            "description": "Ghi chú mục stash"
+          },
+          {
+            "flag": "-q",
+            "description": "Giảm thông báo"
+          }
+        ],
+        "warning": "Biến stash_oid phải là ID trả về từ git stash create; không dùng một commit thường bất kỳ."
+      },
+      {
+        "id": "git-full-stash-export",
+        "canonicalCommand": "git stash",
+        "title": "Xuất stash thành chuỗi commit",
+        "command": "git stash export (--print | --to-ref REF) [STASH...]",
+        "description": "Tạo chuỗi commit có thể fetch/push để chuyển stash; ví dụ giữ trong một ref local riêng.",
+        "example": "git stash export --to-ref refs/transfer/stashes \"stash@{0}\"",
+        "risk": "write",
+        "tags": [
+          "stash",
+          "git-stash",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-stash",
+        "options": [
+          {
+            "flag": "--print",
+            "description": "In object ID, không cập nhật ref"
+          },
+          {
+            "flag": "--to-ref REF",
+            "description": "Ghi chuỗi vào ref chỉ định"
+          }
+        ],
+        "warning": "Chứa cả công việc chưa công bố. Kiểm tra dữ liệu nhạy cảm trước khi chia sẻ; --print cũng tạo object local."
+      },
+      {
+        "id": "git-full-stash-import",
+        "canonicalCommand": "git stash",
+        "title": "Nhập stash đã xuất",
+        "command": "git stash import COMMIT",
+        "description": "Nhập chuỗi commit do stash export tạo vào danh sách stash local.",
+        "example": "git stash import refs/transfer/stashes",
+        "risk": "write",
+        "tags": [
+          "stash",
+          "git-stash",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-stash",
+        "options": [],
+        "warning": "Chỉ nhập object nguồn tin cậy đã fetch/kiểm tra; đây không phải lệnh áp stash vào working tree."
+      }
+    ]
+  },
+  {
+    "id": "git-multi-worktree",
+    "title": "Porcelain · Worktree, submodule & sparse",
+    "level": "core",
+    "commands": [
+      {
+        "id": "git-full-worktree-list",
+        "canonicalCommand": "git worktree",
+        "title": "Xem các working tree",
+        "command": "git worktree list [--porcelain [-z]]",
+        "description": "Liệt kê các working tree cùng nhánh, HEAD và trạng thái khóa.",
+        "example": "git worktree list --verbose",
+        "risk": "read",
+        "tags": [
+          "worktree",
+          "git-multi-worktree",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-worktree",
+        "options": [
+          {
+            "flag": "--verbose / -v",
+            "description": "Kèm lý do khóa hoặc prune"
+          },
+          {
+            "flag": "--porcelain -z",
+            "description": "Đầu ra ổn định, phân tách NUL"
+          }
+        ]
+      },
+      {
+        "id": "git-full-worktree-add",
+        "canonicalCommand": "git worktree",
+        "title": "Tạo working tree thứ hai",
+        "command": "git worktree add [OPTIONS] PATH [COMMIT]",
+        "description": "Tạo thư mục checkout riêng dùng chung object database nhưng có HEAD/index riêng.",
+        "example": "git worktree add -b fix/urgent ../urgent-fix main",
+        "risk": "write",
+        "tags": [
+          "worktree",
+          "git-multi-worktree",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-worktree",
+        "options": [
+          {
+            "flag": "-b NAME",
+            "description": "Tạo nhánh mới"
+          },
+          {
+            "flag": "--detach",
+            "description": "Worktree không gắn nhánh"
+          },
+          {
+            "flag": "--lock --reason TEXT",
+            "description": "Khóa metadata để tránh bị dọn"
+          },
+          {
+            "flag": "--no-checkout",
+            "description": "Tạo metadata chưa xuất file"
+          },
+          {
+            "flag": "--orphan",
+            "description": "Tạo worktree rỗng với nhánh chưa có commit"
+          }
+        ],
+        "warning": "Chọn thư mục mới và nhánh chưa checkout ở worktree khác; tránh --force để bỏ bảo vệ."
+      },
+      {
+        "id": "git-full-worktree-move",
+        "canonicalCommand": "git worktree",
+        "title": "Chuyển vị trí linked worktree",
+        "command": "git worktree move WORKTREE NEW_PATH",
+        "description": "Di chuyển linked worktree và cập nhật liên kết metadata của Git.",
+        "example": "git worktree move ../urgent-fix ../urgent-fix-renamed",
+        "risk": "write",
+        "tags": [
+          "worktree",
+          "git-multi-worktree",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-worktree",
+        "options": [],
+        "warning": "Không dùng cho main worktree hoặc linked worktree chứa submodule. Đích phải phù hợp; không di chuyển bằng tay nếu lệnh này hỗ trợ."
+      },
+      {
+        "id": "git-full-worktree-lock",
+        "canonicalCommand": "git worktree",
+        "title": "Giữ worktree khỏi bị dọn",
+        "command": "git worktree lock [--reason TEXT] WORKTREE",
+        "description": "Khóa metadata của worktree trên ổ rời/network share để không bị prune hoặc vô tình move/remove.",
+        "example": "git worktree lock --reason \"external drive\" ../urgent-fix",
+        "risk": "write",
+        "tags": [
+          "worktree",
+          "git-multi-worktree",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-worktree",
+        "options": [
+          {
+            "flag": "--reason TEXT",
+            "description": "Lưu lý do khóa"
+          }
+        ],
+        "warning": "Khóa này bảo vệ quản lý worktree, không ngăn sửa file hoặc commit."
+      },
+      {
+        "id": "git-full-worktree-unlock",
+        "canonicalCommand": "git worktree",
+        "title": "Mở khóa worktree",
+        "command": "git worktree unlock WORKTREE",
+        "description": "Cho phép worktree lại được move/remove/prune bình thường.",
+        "example": "git worktree unlock ../urgent-fix",
+        "risk": "write",
+        "tags": [
+          "worktree",
+          "git-multi-worktree",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-worktree",
+        "options": [],
+        "warning": "Xác nhận worktree trên ổ rời đã có mặt nếu không muốn metadata bị dọn."
+      }
+    ]
+  }
+]

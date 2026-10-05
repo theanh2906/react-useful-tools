@@ -1,0 +1,1202 @@
+[
+  {
+    "id": "basics",
+    "title": "Bắt đầu, API & trình duyệt",
+    "level": "core",
+    "commands": [
+      {
+        "id": "gh-api",
+        "canonicalCommand": "gh api",
+        "title": "Gọi REST hoặc GraphQL API",
+        "command": "gh api <endpoint> [flags]",
+        "description": "Gửi yêu cầu đã xác thực tới GitHub API; ví dụ chỉ đọc thông tin repository.",
+        "example": "gh api repos/cli/cli --method GET --jq .default_branch",
+        "risk": "read",
+        "tags": [
+          "api"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_api",
+        "options": [
+          {
+            "flag": "--method",
+            "description": "Chọn HTTP method; mặc định GET nhưng thêm field có thể đổi thành POST."
+          },
+          {
+            "flag": "--field",
+            "description": "Thêm trường có ép kiểu; giá trị @file đọc nội dung file."
+          },
+          {
+            "flag": "--raw-field",
+            "description": "Thêm trường dạng chuỗi."
+          },
+          {
+            "flag": "--paginate",
+            "description": "Đọc các trang tiếp theo; GraphQL cần query phân trang phù hợp."
+          },
+          {
+            "flag": "--input",
+            "description": "Đọc body từ file hoặc dấu - cho stdin."
+          },
+          {
+            "flag": "--hostname",
+            "description": "Chọn máy chủ GitHub hoặc GitHub Enterprise."
+          }
+        ],
+        "warning": "Method POST/PATCH/PUT/DELETE hoặc GraphQL mutation có thể ghi/xóa dữ liệu. Cờ field có thể chuyển mặc định sang POST; dùng --method GET cho ví dụ chỉ đọc. Header/log có thể chứa thông tin nhạy cảm."
+      },
+      {
+        "id": "gh-browse",
+        "canonicalCommand": "gh browse",
+        "title": "Mở trang repository",
+        "command": "gh browse [<number> | <path> | <commit-sha>] [flags]",
+        "description": "Mở repository, file, issue, PR hoặc trang con trong trình duyệt; --no-browser chỉ in URL.",
+        "example": "gh browse --repo cli/cli --no-browser",
+        "risk": "read",
+        "tags": [
+          "browse"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_browse",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--no-browser",
+            "description": "In URL thay vì mở trình duyệt."
+          },
+          {
+            "flag": "--branch",
+            "description": "Chọn nhánh chứa file."
+          },
+          {
+            "flag": "--commit",
+            "description": "Đi tới commit chỉ định hoặc commit mới nhất."
+          },
+          {
+            "flag": "--settings",
+            "description": "Mở trang cài đặt repository."
+          }
+        ]
+      },
+      {
+        "id": "gh-completion",
+        "canonicalCommand": "gh completion",
+        "title": "Sinh gợi ý cho shell",
+        "command": "gh completion -s <shell>",
+        "description": "In script hoàn thành lệnh cho shell đã chọn, để bạn xem trước khi cài vào cấu hình shell.",
+        "example": "gh completion --shell zsh",
+        "risk": "read",
+        "tags": [
+          "completion"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_completion",
+        "options": [
+          {
+            "flag": "--shell",
+            "description": "Chọn bash, zsh, fish hoặc powershell."
+          }
+        ],
+        "warning": "Ví dụ chỉ in script. Việc chuyển hướng vào file hoặc source script sẽ thay đổi môi trường shell; xem kỹ đường dẫn trước."
+      },
+      {
+        "id": "gh-licenses",
+        "canonicalCommand": "gh licenses",
+        "title": "Xem giấy phép phụ thuộc",
+        "command": "gh licenses",
+        "description": "In thông tin giấy phép của phần mềm được gh sử dụng.",
+        "example": "gh licenses",
+        "risk": "read",
+        "tags": [
+          "licenses"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_licenses"
+      },
+      {
+        "id": "gh-status",
+        "canonicalCommand": "gh status",
+        "title": "Tóm tắt hoạt động liên quan",
+        "command": "gh status [flags]",
+        "description": "Xem công việc GitHub được gh tổng hợp quanh tài khoản đang đăng nhập.",
+        "example": "gh status",
+        "risk": "read",
+        "tags": [
+          "status"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_status",
+        "options": [
+          {
+            "flag": "--org",
+            "description": "Chọn tổ chức; một số thao tác đòi hỏi quyền quản trị."
+          },
+          {
+            "flag": "--exclude",
+            "description": "Loại repository khỏi phần tổng hợp bằng danh sách OWNER/REPO."
+          }
+        ]
+      },
+      {
+        "id": "gh-copilot",
+        "canonicalCommand": "gh copilot",
+        "title": "Khởi chạy Copilot CLI",
+        "command": "gh copilot [flags] [args]",
+        "description": "Cầu nối chạy Copilot CLI, tự tải bản hỗ trợ nếu chưa có trong PATH; tính năng đang preview.",
+        "example": "gh copilot -- --help",
+        "risk": "write",
+        "tags": [
+          "copilot"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_copilot",
+        "options": [
+          {
+            "flag": "--remove",
+            "description": "Xóa bản Copilot CLI đã được gh tải xuống."
+          }
+        ],
+        "warning": "Có thể tải và chạy chương trình cục bộ. Khi dùng tác vụ thật, kiểm tra quyền chạy công cụ, dữ liệu gửi tới Copilot và hạn mức gói; -- chuyển cờ cho Copilot.",
+        "status": "preview"
+      },
+      {
+        "id": "gh-version",
+        "canonicalCommand": "gh --version",
+        "title": "Kiểm tra phiên bản gh",
+        "command": "gh --version",
+        "description": "In phiên bản CLI đang cài để so sánh với tài liệu và ghi chú phát hành.",
+        "example": "gh --version",
+        "risk": "read",
+        "tags": [
+          "help",
+          "version"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh"
+      }
+    ]
+  },
+  {
+    "id": "auth",
+    "title": "Tài khoản & xác thực",
+    "level": "core",
+    "commands": [
+      {
+        "id": "gh-auth-login",
+        "canonicalCommand": "gh auth login",
+        "title": "Đăng nhập GitHub",
+        "command": "gh auth login [flags]",
+        "description": "Bắt đầu xác thực bằng trình duyệt cho host chỉ định và chọn giao thức Git.",
+        "example": "gh auth login --hostname github.com --git-protocol https --web",
+        "risk": "write",
+        "tags": [
+          "auth",
+          "login"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_auth_login",
+        "options": [
+          {
+            "flag": "--hostname",
+            "description": "Chọn máy chủ GitHub hoặc GitHub Enterprise."
+          },
+          {
+            "flag": "--web",
+            "description": "Mở nội dung hoặc luồng tương ứng trong trình duyệt."
+          },
+          {
+            "flag": "--git-protocol",
+            "description": "Chọn https hoặc ssh; thiết lập này áp dụng cho các tài khoản trên host."
+          },
+          {
+            "flag": "--scopes",
+            "description": "Yêu cầu thêm OAuth scope."
+          },
+          {
+            "flag": "--with-token",
+            "description": "Đọc PAT từ stdin; tránh token trong lịch sử shell."
+          }
+        ],
+        "warning": "Thay đổi xác thực hoặc quyền truy cập. Tự kiểm tra chủ sở hữu, quyền yêu cầu và tài khoản trước khi chấp thuận; không chia sẻ token hay khóa riêng. Nếu credential store lỗi/không có, gh có thể lưu token dạng văn bản; kiểm tra gh auth status. Không dùng --insecure-storage nếu không cần."
+      },
+      {
+        "id": "gh-auth-logout",
+        "canonicalCommand": "gh auth logout",
+        "title": "Xóa đăng nhập cục bộ",
+        "command": "gh auth logout [flags]",
+        "description": "Gỡ cấu hình đăng nhập của tài khoản trên máy; token chưa bị thu hồi tại GitHub.",
+        "example": "gh auth logout --hostname github.com --user USERNAME",
+        "risk": "write",
+        "tags": [
+          "auth",
+          "logout"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_auth_logout",
+        "options": [
+          {
+            "flag": "--hostname",
+            "description": "Chọn máy chủ GitHub hoặc GitHub Enterprise."
+          },
+          {
+            "flag": "--user",
+            "description": "Chọn tài khoản người dùng."
+          }
+        ],
+        "warning": "Đăng xuất chỉ xóa cấu hình tại máy này. Muốn thu hồi token phải quản lý quyền ứng dụng trên GitHub; thu hồi có thể ảnh hưởng các máy khác."
+      },
+      {
+        "id": "gh-auth-refresh",
+        "canonicalCommand": "gh auth refresh",
+        "title": "Điều chỉnh OAuth scope",
+        "command": "gh auth refresh [flags]",
+        "description": "Làm mới xác thực hoặc thêm/bớt scope của tài khoản đang hoạt động.",
+        "example": "gh auth refresh --hostname github.com --remove-scopes delete_repo",
+        "risk": "write",
+        "tags": [
+          "auth",
+          "refresh"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_auth_refresh",
+        "options": [
+          {
+            "flag": "--hostname",
+            "description": "Chọn máy chủ GitHub hoặc GitHub Enterprise."
+          },
+          {
+            "flag": "--scopes",
+            "description": "Yêu cầu các scope bổ sung."
+          },
+          {
+            "flag": "--remove-scopes",
+            "description": "Gỡ các scope chỉ định; không gỡ được bộ scope tối thiểu."
+          },
+          {
+            "flag": "--reset-scopes",
+            "description": "Đưa scope về bộ tối thiểu của luồng đăng nhập."
+          }
+        ],
+        "warning": "Thay đổi xác thực hoặc quyền truy cập. Tự kiểm tra chủ sở hữu, quyền yêu cầu và tài khoản trước khi chấp thuận; không chia sẻ token hay khóa riêng."
+      },
+      {
+        "id": "gh-auth-setup-git",
+        "canonicalCommand": "gh auth setup-git",
+        "title": "Dùng gh làm Git credential helper",
+        "command": "gh auth setup-git [flags]",
+        "description": "Cấu hình Git để lấy thông tin xác thực thông qua GitHub CLI.",
+        "example": "gh auth setup-git --hostname github.com",
+        "risk": "write",
+        "tags": [
+          "auth",
+          "setup-git"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_auth_setup-git",
+        "options": [
+          {
+            "flag": "--hostname",
+            "description": "Chọn máy chủ GitHub hoặc GitHub Enterprise."
+          },
+          {
+            "flag": "--force",
+            "description": "Buộc thiết lập host chưa biết; phải đi cùng --hostname."
+          }
+        ],
+        "warning": "Thay đổi xác thực hoặc quyền truy cập. Tự kiểm tra chủ sở hữu, quyền yêu cầu và tài khoản trước khi chấp thuận; không chia sẻ token hay khóa riêng. Lệnh sửa cấu hình Git cục bộ và ảnh hưởng lần xác thực Git sau."
+      },
+      {
+        "id": "gh-auth-status",
+        "canonicalCommand": "gh auth status",
+        "title": "Kiểm tra tài khoản đăng nhập",
+        "command": "gh auth status [flags]",
+        "description": "Xem host, tài khoản và trạng thái xác thực mà gh đang sử dụng.",
+        "example": "gh auth status --hostname github.com",
+        "risk": "read",
+        "tags": [
+          "auth",
+          "status"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_auth_status",
+        "options": [
+          {
+            "flag": "--hostname",
+            "description": "Chọn máy chủ GitHub hoặc GitHub Enterprise."
+          },
+          {
+            "flag": "--active",
+            "description": "Chỉ kiểm tra tài khoản đang hoạt động."
+          },
+          {
+            "flag": "--show-token",
+            "description": "In cả token; tránh dùng khi ghi log/chia sẻ màn hình."
+          },
+          {
+            "flag": "--json",
+            "description": "Xuất các trường được chỉ định dưới dạng JSON."
+          }
+        ],
+        "warning": "Không thêm --show-token khi chia sẻ đầu ra. Kết quả --json và mã thoát có thể khác kiểm tra tương tác; đọc tài liệu nếu dùng trong script."
+      },
+      {
+        "id": "gh-auth-switch",
+        "canonicalCommand": "gh auth switch",
+        "title": "Đổi tài khoản đang hoạt động",
+        "command": "gh auth switch [flags]",
+        "description": "Chọn một tài khoản đã đăng nhập cho các lệnh nhắm tới host tương ứng.",
+        "example": "gh auth switch --hostname github.com --user USERNAME",
+        "risk": "write",
+        "tags": [
+          "auth",
+          "switch"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_auth_switch",
+        "options": [
+          {
+            "flag": "--hostname",
+            "description": "Chọn máy chủ GitHub hoặc GitHub Enterprise."
+          },
+          {
+            "flag": "--user",
+            "description": "Chọn tài khoản người dùng."
+          }
+        ],
+        "warning": "Thay đổi danh tính mặc định cho lệnh chạy sau trên host; xác nhận lại gh auth status trước thao tác ghi."
+      },
+      {
+        "id": "gh-auth-token",
+        "canonicalCommand": "gh auth token",
+        "title": "Đọc token hiện có",
+        "command": "gh auth token [flags]",
+        "description": "Xuất token của tài khoản/host được chọn ra stdout.",
+        "example": "gh auth token --hostname github.com --user USERNAME",
+        "risk": "read",
+        "tags": [
+          "auth",
+          "token"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_auth_token",
+        "options": [
+          {
+            "flag": "--hostname",
+            "description": "Chọn máy chủ GitHub hoặc GitHub Enterprise."
+          },
+          {
+            "flag": "--user",
+            "description": "Chọn tài khoản người dùng."
+          }
+        ],
+        "warning": "Đầu ra là bí mật xác thực. Không gửi vào chat, ảnh chụp, log CI hoặc file công khai; chỉ chạy khi thực sự cần và giữ kín terminal."
+      }
+    ]
+  },
+  {
+    "id": "repo",
+    "title": "Repository & cấu hình kho",
+    "level": "core",
+    "commands": [
+      {
+        "id": "gh-repo-archive",
+        "canonicalCommand": "gh repo archive",
+        "title": "Lưu trữ kho GitHub",
+        "command": "gh repo archive [<repository>] [flags]",
+        "description": "Đưa kho GitHub sang trạng thái lưu trữ; bỏ tên kho sẽ tác động tới kho hiện tại.",
+        "example": "gh repo archive octo-org/cli-sandbox",
+        "risk": "write",
+        "tags": [
+          "repo",
+          "archive"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_repo_archive",
+        "warning": "Kho sẽ bị hạn chế chỉnh sửa; kiểm tra tên kho trước khi xác nhận.",
+        "options": [
+          {
+            "flag": "-y, --yes",
+            "description": "Bỏ qua bước hỏi xác nhận; chỉ dùng khi đã kiểm tra đúng mục tiêu"
+          }
+        ]
+      },
+      {
+        "id": "gh-repo-autolink-create",
+        "canonicalCommand": "gh repo autolink create",
+        "title": "Tạo liên kết tự động",
+        "command": "gh repo autolink create <keyPrefix> <urlTemplate> [flags]",
+        "description": "Ánh xạ tiền tố mã công việc sang URL ngoài GitHub; mẫu URL phải chứa <num>.",
+        "example": "gh repo autolink create TASK- 'https://example.com/tasks/<num>' --numeric --repo octo-org/cli-sandbox",
+        "risk": "write",
+        "tags": [
+          "repo",
+          "autolink"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_repo_autolink_create",
+        "warning": "Thay đổi cấu hình kho và cần quyền quản trị; kiểm tra miền đích trước khi thêm.",
+        "options": [
+          {
+            "flag": "-n, --numeric",
+            "description": "Chỉ khớp phần số 0–9; mặc định cho phép cả chữ và dấu gạch nối"
+          },
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          }
+        ]
+      },
+      {
+        "id": "gh-repo-autolink-delete",
+        "canonicalCommand": "gh repo autolink delete",
+        "title": "Xóa liên kết tự động",
+        "command": "gh repo autolink delete <id> [flags]",
+        "description": "Xóa một cấu hình autolink theo ID trong kho.",
+        "example": "gh repo autolink delete 123 --repo octo-org/cli-sandbox",
+        "risk": "destructive",
+        "tags": [
+          "repo",
+          "autolink"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_repo_autolink_delete",
+        "warning": "Xóa cấu hình autolink; cần quyền quản trị và nên lưu lại mẫu URL nếu cần khôi phục.",
+        "options": [
+          {
+            "flag": "--yes",
+            "description": "Bỏ qua bước hỏi xác nhận; chỉ dùng khi đã kiểm tra đúng mục tiêu"
+          },
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          }
+        ]
+      },
+      {
+        "id": "gh-repo-autolink-list",
+        "canonicalCommand": "gh repo autolink list",
+        "title": "Liệt kê liên kết tự động",
+        "command": "gh repo autolink list [flags]",
+        "description": "Xem toàn bộ autolink của kho; chỉ quản trị viên kho mới đọc được thông tin này.",
+        "example": "gh repo autolink list --repo octo-org/cli-sandbox --json id,keyPrefix,urlTemplate",
+        "risk": "read",
+        "tags": [
+          "repo",
+          "autolink"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_repo_autolink_list",
+        "options": [
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          },
+          {
+            "flag": "--json <fields>",
+            "description": "Xuất JSON với các trường được chỉ định"
+          },
+          {
+            "flag": "-q, --jq <expression>",
+            "description": "Lọc đầu ra JSON bằng biểu thức jq"
+          },
+          {
+            "flag": "-w, --web",
+            "description": "Mở nội dung tương ứng trong trình duyệt"
+          }
+        ]
+      },
+      {
+        "id": "gh-repo-autolink-view",
+        "canonicalCommand": "gh repo autolink view",
+        "title": "Xem một liên kết tự động",
+        "command": "gh repo autolink view <id> [flags]",
+        "description": "Xem tiền tố, mẫu URL và kiểu khớp của một autolink theo ID.",
+        "example": "gh repo autolink view 123 --repo octo-org/cli-sandbox --json id,keyPrefix,urlTemplate",
+        "risk": "read",
+        "tags": [
+          "repo",
+          "autolink"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_repo_autolink_view",
+        "options": [
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          },
+          {
+            "flag": "--json <fields>",
+            "description": "Xuất JSON với các trường được chỉ định"
+          },
+          {
+            "flag": "-q, --jq <expression>",
+            "description": "Lọc đầu ra JSON bằng biểu thức jq"
+          }
+        ]
+      },
+      {
+        "id": "gh-repo-clone",
+        "canonicalCommand": "gh repo clone",
+        "title": "Sao chép kho về máy",
+        "command": "gh repo clone <repository> [<directory>] [-- <gitflags>...]",
+        "description": "Clone kho GitHub; các cờ sau -- được chuyển trực tiếp cho git clone.",
+        "example": "gh repo clone octo-org/cli-sandbox ./cli-sandbox -- --depth=1",
+        "risk": "write",
+        "tags": [
+          "repo",
+          "clone"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_repo_clone",
+        "warning": "Tạo dữ liệu trên máy; khi clone một fork, gh mặc định thêm remote upstream và chọn kho cha làm kho mặc định. Không tự chạy mã hoặc hook/script chưa tin cậy từ nội dung vừa tải.",
+        "options": [
+          {
+            "flag": "--no-upstream",
+            "description": "Không thêm remote upstream khi clone một fork"
+          },
+          {
+            "flag": "-u, --upstream-remote-name <string> (default \"upstream\")",
+            "description": "Đặt tên remote của kho cha; @owner dùng tên chủ sở hữu"
+          }
+        ]
+      },
+      {
+        "id": "gh-repo-create",
+        "canonicalCommand": "gh repo create",
+        "title": "Tạo kho GitHub",
+        "command": "gh repo create [<name>] [flags]",
+        "description": "Tạo kho mới từ tên, kho mẫu hoặc một kho Git cục bộ.",
+        "example": "gh repo create octo-org/cli-sandbox --private --add-readme --clone",
+        "risk": "write",
+        "tags": [
+          "repo",
+          "create"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_repo_create",
+        "warning": "Tạo kho trên GitHub; --public công khai nội dung và --push đẩy commit cục bộ lên remote. Ví dụ --clone còn tạo bản clone cục bộ.",
+        "options": [
+          {
+            "flag": "--private",
+            "description": "Tạo kho riêng tư"
+          },
+          {
+            "flag": "--public",
+            "description": "Tạo kho công khai"
+          },
+          {
+            "flag": "-s, --source <string>",
+            "description": "Dùng thư mục kho Git cục bộ làm nguồn"
+          },
+          {
+            "flag": "--push",
+            "description": "Đẩy commit cục bộ lên kho mới; kho bare sẽ mirror tất cả ref"
+          },
+          {
+            "flag": "-c, --clone",
+            "description": "Clone kho mới về thư mục hiện tại"
+          },
+          {
+            "flag": "-p, --template <repository>",
+            "description": "Tạo kho từ kho mẫu OWNER/REPO"
+          }
+        ]
+      },
+      {
+        "id": "gh-repo-delete",
+        "canonicalCommand": "gh repo delete",
+        "title": "Xóa kho GitHub",
+        "command": "gh repo delete [<repository>] [flags]",
+        "description": "Xóa kho được chỉ định; cần quyền OAuth delete_repo.",
+        "example": "gh repo delete octo-org/cli-sandbox",
+        "risk": "destructive",
+        "tags": [
+          "repo",
+          "delete"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_repo_delete",
+        "warning": "Xóa kho và dữ liệu liên quan trên GitHub. Khi bỏ đối số kho, --yes bị bỏ qua và gh vẫn hỏi xác nhận.",
+        "options": [
+          {
+            "flag": "--yes",
+            "description": "Bỏ qua bước hỏi xác nhận; chỉ dùng khi đã kiểm tra đúng mục tiêu"
+          }
+        ]
+      },
+      {
+        "id": "gh-repo-deploy-key-add",
+        "canonicalCommand": "gh repo deploy-key add",
+        "title": "Thêm khóa triển khai",
+        "command": "gh repo deploy-key add <key-file> [flags]",
+        "description": "Đăng ký một khóa SSH công khai để truy cập kho từ máy triển khai.",
+        "example": "gh repo deploy-key add ~/.ssh/cli-sandbox-deploy.pub --title staging --repo octo-org/cli-sandbox",
+        "risk": "write",
+        "tags": [
+          "repo",
+          "deploy-key"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_repo_deploy-key_add",
+        "warning": "Cấp quyền truy cập kho lâu dài cho khóa; chỉ dùng file .pub. --allow-write còn cấp quyền ghi.",
+        "options": [
+          {
+            "flag": "-t, --title <string>",
+            "description": "Tên nhận diện khóa triển khai"
+          },
+          {
+            "flag": "-w, --allow-write",
+            "description": "Cấp quyền ghi cho khóa; mặc định chỉ đọc"
+          },
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          }
+        ]
+      },
+      {
+        "id": "gh-repo-deploy-key-delete",
+        "canonicalCommand": "gh repo deploy-key delete",
+        "title": "Xóa khóa triển khai",
+        "command": "gh repo deploy-key delete <key-id>",
+        "description": "Thu hồi deploy key theo ID khỏi kho GitHub.",
+        "example": "gh repo deploy-key delete 123 --repo octo-org/cli-sandbox",
+        "risk": "destructive",
+        "tags": [
+          "repo",
+          "deploy-key"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_repo_deploy-key_delete",
+        "warning": "Máy hoặc dịch vụ đang dùng khóa này có thể mất quyền truy cập và ngừng triển khai.",
+        "options": [
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          }
+        ]
+      },
+      {
+        "id": "gh-repo-deploy-key-list",
+        "canonicalCommand": "gh repo deploy-key list",
+        "title": "Liệt kê khóa triển khai",
+        "command": "gh repo deploy-key list [flags]",
+        "description": "Xem các deploy key của kho, gồm ID, tiêu đề và quyền chỉ đọc.",
+        "example": "gh repo deploy-key list --repo octo-org/cli-sandbox --json id,title,readOnly",
+        "risk": "read",
+        "tags": [
+          "repo",
+          "deploy-key"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_repo_deploy-key_list",
+        "options": [
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          },
+          {
+            "flag": "--json <fields>",
+            "description": "Xuất JSON với các trường được chỉ định"
+          },
+          {
+            "flag": "-q, --jq <expression>",
+            "description": "Lọc đầu ra JSON bằng biểu thức jq"
+          }
+        ]
+      },
+      {
+        "id": "gh-repo-edit",
+        "canonicalCommand": "gh repo edit",
+        "title": "Sửa cấu hình kho",
+        "command": "gh repo edit [<repository>] [flags]",
+        "description": "Thay đổi mô tả, tính năng, cách merge, nhánh mặc định hoặc độ hiển thị của kho.",
+        "example": "gh repo edit octo-org/cli-sandbox --description \"CLI practice repository\" --enable-issues",
+        "risk": "write",
+        "tags": [
+          "repo",
+          "edit"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_repo_edit",
+        "warning": "Đổi visibility có thể công khai lịch sử/log Actions, tách fork hoặc mất stars/watchers; phải thêm --accept-visibility-change-consequences.",
+        "options": [
+          {
+            "flag": "-d, --description <string>",
+            "description": "Đặt mô tả kho"
+          },
+          {
+            "flag": "--default-branch <name>",
+            "description": "Đặt tên nhánh mặc định"
+          },
+          {
+            "flag": "--enable-issues",
+            "description": "Bật Issues; dùng --enable-issues=false để tắt"
+          },
+          {
+            "flag": "--delete-branch-on-merge",
+            "description": "Tự xóa nhánh nguồn khi PR được merge"
+          },
+          {
+            "flag": "--visibility <string>",
+            "description": "Đổi độ hiển thị: public, private hoặc internal"
+          },
+          {
+            "flag": "--accept-visibility-change-consequences",
+            "description": "Xác nhận chấp nhận hệ quả khi đổi độ hiển thị kho"
+          }
+        ]
+      },
+      {
+        "id": "gh-repo-fork",
+        "canonicalCommand": "gh repo fork",
+        "title": "Tạo fork của kho",
+        "command": "gh repo fork [<repository>] [-- <gitflags>...] [flags]",
+        "description": "Tạo fork trong tài khoản hoặc tổ chức và tùy chọn clone/thêm Git remote.",
+        "example": "gh repo fork octo-org/cli-sandbox --clone=false",
+        "risk": "write",
+        "tags": [
+          "repo",
+          "fork"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_repo_fork",
+        "warning": "Tạo kho trên GitHub; khi thêm remote, gh có thể đổi origin thành upstream và đặt fork làm origin.",
+        "options": [
+          {
+            "flag": "--clone",
+            "description": "Clone fork mới; --clone=false bỏ qua bước clone"
+          },
+          {
+            "flag": "--org <string>",
+            "description": "Tạo fork trong tổ chức được chỉ định"
+          },
+          {
+            "flag": "--default-branch-only",
+            "description": "Chỉ sao chép nhánh mặc định"
+          },
+          {
+            "flag": "--remote",
+            "description": "Thêm Git remote của fork; --remote=false để bỏ qua"
+          },
+          {
+            "flag": "--remote-name <string> (default \"origin\")",
+            "description": "Tên remote mới của fork, mặc định origin"
+          },
+          {
+            "flag": "--fork-name <string>",
+            "description": "Đặt tên khác cho kho fork"
+          }
+        ]
+      },
+      {
+        "id": "gh-repo-gitignore-list",
+        "canonicalCommand": "gh repo gitignore list",
+        "title": "Liệt kê mẫu gitignore",
+        "command": "gh repo gitignore list",
+        "description": "Liệt kê tên các mẫu .gitignore có sẵn trên GitHub.",
+        "example": "gh repo gitignore list",
+        "risk": "read",
+        "tags": [
+          "repo",
+          "gitignore"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_repo_gitignore_list"
+      },
+      {
+        "id": "gh-repo-gitignore-view",
+        "canonicalCommand": "gh repo gitignore view",
+        "title": "Xem mẫu gitignore",
+        "command": "gh repo gitignore view <template>",
+        "description": "Hiển thị một mẫu .gitignore; tên mẫu phân biệt chữ hoa và chữ thường.",
+        "example": "gh repo gitignore view Python",
+        "risk": "read",
+        "tags": [
+          "repo",
+          "gitignore"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_repo_gitignore_view"
+      },
+      {
+        "id": "gh-repo-license-list",
+        "canonicalCommand": "gh repo license list",
+        "title": "Liệt kê giấy phép phổ biến",
+        "command": "gh repo license list",
+        "description": "Xem các giấy phép phổ biến có thể dùng khi tạo kho.",
+        "example": "gh repo license list",
+        "risk": "read",
+        "tags": [
+          "repo",
+          "license"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_repo_license_list"
+      },
+      {
+        "id": "gh-repo-license-view",
+        "canonicalCommand": "gh repo license view",
+        "title": "Xem nội dung giấy phép",
+        "command": "gh repo license view {<license-key> | <spdx-id>} [flags]",
+        "description": "Đọc mẫu giấy phép theo khóa giấy phép hoặc mã SPDX.",
+        "example": "gh repo license view MIT",
+        "risk": "read",
+        "tags": [
+          "repo",
+          "license"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_repo_license_view",
+        "options": [
+          {
+            "flag": "-w, --web",
+            "description": "Mở giấy phép trên choosealicense.com"
+          }
+        ]
+      },
+      {
+        "id": "gh-repo-list",
+        "canonicalCommand": "gh repo list",
+        "title": "Liệt kê kho của chủ sở hữu",
+        "command": "gh repo list [<owner>] [flags]",
+        "description": "Liệt kê kho thuộc một người dùng hoặc tổ chức; lọc fork không mở rộng sang chủ sở hữu khác.",
+        "example": "gh repo list octo-org --no-archived --limit 100 --json nameWithOwner,visibility,url",
+        "risk": "read",
+        "tags": [
+          "repo",
+          "list"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_repo_list",
+        "options": [
+          {
+            "flag": "-L, --limit <int> (default 30)",
+            "description": "Số kho tối đa cần lấy, mặc định 30"
+          },
+          {
+            "flag": "-l, --language <string>",
+            "description": "Lọc theo ngôn ngữ lập trình chính"
+          },
+          {
+            "flag": "--visibility <string>",
+            "description": "Lọc kho public, private hoặc internal"
+          },
+          {
+            "flag": "--no-archived",
+            "description": "Bỏ các kho đã lưu trữ"
+          },
+          {
+            "flag": "--json <fields>",
+            "description": "Xuất JSON với các trường được chỉ định"
+          },
+          {
+            "flag": "-q, --jq <expression>",
+            "description": "Lọc đầu ra JSON bằng biểu thức jq"
+          }
+        ]
+      },
+      {
+        "id": "gh-repo-read-dir",
+        "canonicalCommand": "gh repo read-dir",
+        "title": "Đọc thư mục trên GitHub",
+        "command": "gh repo read-dir [<path>] [flags]",
+        "description": "Liệt kê nội dung một thư mục mà không clone kho; bỏ đường dẫn để xem thư mục gốc.",
+        "example": "gh repo read-dir docs --repo octo-org/cli-sandbox --ref main --json name,path,type,size",
+        "risk": "read",
+        "tags": [
+          "repo",
+          "read-dir"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_repo_read-dir",
+        "warning": "Tính năng preview có thể thay đổi mà không báo trước.",
+        "status": "preview",
+        "options": [
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          },
+          {
+            "flag": "--ref <string>",
+            "description": "Đọc tại nhánh, tag hoặc commit được chỉ định"
+          },
+          {
+            "flag": "--json <fields>",
+            "description": "Xuất JSON với các trường được chỉ định"
+          },
+          {
+            "flag": "-q, --jq <expression>",
+            "description": "Lọc đầu ra JSON bằng biểu thức jq"
+          }
+        ]
+      },
+      {
+        "id": "gh-repo-read-file",
+        "canonicalCommand": "gh repo read-file",
+        "title": "Đọc tệp trên GitHub",
+        "command": "gh repo read-file <path> [flags]",
+        "description": "Đọc nội dung tệp mà không clone kho; mặc định đọc từ nhánh mặc định.",
+        "example": "gh repo read-file README.md --repo octo-org/cli-sandbox --ref main",
+        "risk": "read",
+        "tags": [
+          "repo",
+          "read-file"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_repo_read-file",
+        "warning": "Tính năng preview. --output ghi dữ liệu thô xuống đĩa; --clobber ghi đè tệp. Chỉ cho phép escape sequences khi tin cậy nội dung. Khi ghi file, dùng gh từ 2.102.0 và thư mục đích an toàn để có bản vá xử lý symlink.",
+        "status": "preview",
+        "options": [
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          },
+          {
+            "flag": "--ref <string>",
+            "description": "Đọc tại nhánh, tag hoặc commit được chỉ định"
+          },
+          {
+            "flag": "-o, --output <path>",
+            "description": "Ghi nội dung thô vào đường dẫn thay vì stdout"
+          },
+          {
+            "flag": "--clobber",
+            "description": "Cho phép ghi đè đường dẫn đầu ra đã tồn tại"
+          },
+          {
+            "flag": "--json <fields>",
+            "description": "Xuất JSON với các trường được chỉ định"
+          },
+          {
+            "flag": "--allow-escape-sequences",
+            "description": "Cho phép chuỗi điều khiển terminal vốn bị chặn mặc định"
+          }
+        ]
+      },
+      {
+        "id": "gh-repo-rename",
+        "canonicalCommand": "gh repo rename",
+        "title": "Đổi tên kho",
+        "command": "gh repo rename [<new-name>] [flags]",
+        "description": "Đổi tên kho; tên mới không bao gồm chủ sở hữu và không chuyển quyền sở hữu kho.",
+        "example": "gh repo rename cli-lab --repo octo-org/cli-sandbox",
+        "risk": "write",
+        "tags": [
+          "repo",
+          "rename"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_repo_rename",
+        "warning": "Thay đổi tên/URL kho; kiểm tra các liên kết, cấu hình triển khai và remote phụ thuộc tên cũ.",
+        "options": [
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Bỏ qua bước hỏi xác nhận; chỉ dùng khi đã kiểm tra đúng mục tiêu"
+          }
+        ]
+      },
+      {
+        "id": "gh-repo-set-default",
+        "canonicalCommand": "gh repo set-default",
+        "title": "Chọn kho mặc định cho gh",
+        "command": "gh repo set-default [<repository>] [flags]",
+        "description": "Đặt kho remote mặc định cho các thao tác API trong bản clone hiện tại; không áp dụng cho quản lý secrets.",
+        "example": "gh repo set-default octo-org/cli-sandbox",
+        "risk": "write",
+        "tags": [
+          "repo",
+          "set-default"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_repo_set-default",
+        "warning": "Thay đổi đích mặc định của nhiều lệnh gh; dùng --view kiểm tra trước khi chạy lệnh ghi.",
+        "options": [
+          {
+            "flag": "-v, --view",
+            "description": "Chỉ hiển thị kho mặc định hiện tại"
+          },
+          {
+            "flag": "-u, --unset",
+            "description": "Gỡ cấu hình kho mặc định hiện tại"
+          }
+        ]
+      },
+      {
+        "id": "gh-repo-sync",
+        "canonicalCommand": "gh repo sync",
+        "title": "Đồng bộ kho với nguồn",
+        "command": "gh repo sync [<destination-repository>] [flags]",
+        "description": "Cập nhật nhánh đích bằng nhánh tương ứng từ kho nguồn; mặc định lấy từ kho cha của fork.",
+        "example": "gh repo sync octocat/cli-sandbox --source octo-org/cli-sandbox --branch main",
+        "risk": "write",
+        "tags": [
+          "repo",
+          "sync"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_repo_sync",
+        "warning": "Cập nhật nhánh local hoặc remote. --force dùng hard reset, có thể loại bỏ commit chỉ có ở nhánh đích.",
+        "options": [
+          {
+            "flag": "-s, --source <string>",
+            "description": "Chọn kho nguồn thay cho kho cha mặc định"
+          },
+          {
+            "flag": "-b, --branch <string>",
+            "description": "Chọn nhánh cần đồng bộ"
+          },
+          {
+            "flag": "--force",
+            "description": "Hard reset nhánh đích cho giống nguồn; có nguy cơ mất commit"
+          }
+        ]
+      },
+      {
+        "id": "gh-repo-unarchive",
+        "canonicalCommand": "gh repo unarchive",
+        "title": "Bỏ lưu trữ kho",
+        "command": "gh repo unarchive [<repository>] [flags]",
+        "description": "Mở lại khả năng chỉnh sửa của một kho đã lưu trữ.",
+        "example": "gh repo unarchive octo-org/cli-sandbox",
+        "risk": "write",
+        "tags": [
+          "repo",
+          "unarchive"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_repo_unarchive",
+        "warning": "Đưa kho trở lại trạng thái hoạt động; các thay đổi mới lại có thể được thực hiện.",
+        "options": [
+          {
+            "flag": "-y, --yes",
+            "description": "Bỏ qua bước hỏi xác nhận; chỉ dùng khi đã kiểm tra đúng mục tiêu"
+          }
+        ]
+      },
+      {
+        "id": "gh-repo-view",
+        "canonicalCommand": "gh repo view",
+        "title": "Xem thông tin kho",
+        "command": "gh repo view [<repository>] [flags]",
+        "description": "Hiển thị mô tả và README, hoặc xuất các trường thông tin kho thành JSON.",
+        "example": "gh repo view octo-org/cli-sandbox --json nameWithOwner,defaultBranchRef,visibility,url",
+        "risk": "read",
+        "tags": [
+          "repo",
+          "view"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_repo_view",
+        "options": [
+          {
+            "flag": "-b, --branch <string>",
+            "description": "Xem nội dung từ một nhánh cụ thể"
+          },
+          {
+            "flag": "-w, --web",
+            "description": "Mở nội dung tương ứng trong trình duyệt"
+          },
+          {
+            "flag": "--json <fields>",
+            "description": "Xuất JSON với các trường được chỉ định"
+          },
+          {
+            "flag": "-q, --jq <expression>",
+            "description": "Lọc đầu ra JSON bằng biểu thức jq"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "issue",
+    "title": "Issue & quan hệ công việc",
+    "level": "core",
+    "commands": [
+      {
+        "id": "gh-issue-close",
+        "canonicalCommand": "gh issue close",
+        "title": "Đóng issue",
+        "command": "gh issue close {<number> | <url>} [flags]",
+        "description": "Đóng issue với lý do hoàn thành, không lên kế hoạch hoặc trùng lặp.",
+        "example": "gh issue close 12 --repo octo-org/cli-sandbox --duplicate-of 34",
+        "risk": "write",
+        "tags": [
+          "issue",
+          "close"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_issue_close",
+        "warning": "Đổi trạng thái issue trên GitHub; --comment đăng thêm bình luận.",
+        "options": [
+          {
+            "flag": "-r, --reason <string>",
+            "description": "Lý do đóng: completed, \"not planned\" hoặc duplicate"
+          },
+          {
+            "flag": "--duplicate-of <string>",
+            "description": "Đánh dấu trùng lặp với issue theo số hoặc URL"
+          },
+          {
+            "flag": "-c, --comment <string>",
+            "description": "Kèm một bình luận khi đổi trạng thái"
+          },
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          }
+        ]
+      },
+      {
+        "id": "gh-issue-comment",
+        "canonicalCommand": "gh issue comment",
+        "title": "Bình luận trên issue",
+        "command": "gh issue comment {<number> | <url>} [flags]",
+        "description": "Thêm bình luận hoặc ảnh/video vào issue; cũng hỗ trợ sửa/xóa bình luận cuối của chính mình.",
+        "example": "gh issue comment 12 --repo octo-org/cli-sandbox --body \"Reproduced on the latest release.\"",
+        "risk": "write",
+        "tags": [
+          "issue",
+          "comment"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_issue_comment",
+        "warning": "Nội dung và tệp đính kèm sẽ được tải lên GitHub; --delete-last xóa bình luận cuối của bạn.",
+        "options": [
+          {
+            "flag": "-b, --body <text>",
+            "description": "Nội dung văn bản gửi lên GitHub"
+          },
+          {
+            "flag": "-F, --body-file <file>",
+            "description": "Đọc nội dung từ tệp; dùng - để lấy từ stdin"
+          },
+          {
+            "flag": "--attach <file>",
+            "description": "Tải ảnh/video lên GitHub; dùng đường-dẫn#văn-bản-thay-thế cho ảnh"
+          },
+          {
+            "flag": "--edit-last",
+            "description": "Sửa bình luận gần nhất của người dùng hiện tại"
+          },
+          {
+            "flag": "--delete-last",
+            "description": "Xóa bình luận gần nhất của người dùng hiện tại"
+          },
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          }
+        ]
+      },
+      {
+        "id": "gh-issue-create",
+        "canonicalCommand": "gh issue create",
+        "title": "Tạo issue",
+        "command": "gh issue create [flags]",
+        "description": "Tạo issue, đặt người phụ trách, nhãn, loại issue hoặc quan hệ cha/con và phụ thuộc.",
+        "example": "gh issue create --repo octo-org/cli-sandbox --title \"Login redirects to a blank page\" --body \"Steps: sign in with an expired session.\" --label bug",
+        "risk": "write",
+        "tags": [
+          "issue",
+          "create"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_issue_create",
+        "warning": "Tạo issue và gửi thông báo. Nếu tải tệp thất bại một phần, issue vẫn có thể đã được tạo dù mã thoát khác 0.",
+        "options": [
+          {
+            "flag": "-t, --title <string>",
+            "description": "Tiêu đề mới"
+          },
+          {
+            "flag": "-b, --body <string>",
+            "description": "Nội dung văn bản gửi lên GitHub"
+          },
+          {
+            "flag": "-l, --label <name>",
+            "description": "Thêm hoặc lọc nhãn theo tên, tùy lệnh"
+          },
+          {
+            "flag": "-a, --assignee <login>",
+            "description": "Chỉ định người phụ trách; @me là chính mình"
+          },
+          {
+            "flag": "--parent <number>",
+            "description": "Tạo dưới dạng sub-issue của issue cha theo số hoặc URL"
+          },
+          {
+            "flag": "--blocked-by <numbers>",
+            "description": "Các issue theo số/URL đang chặn issue mới"
+          }
+        ]
+      }
+    ]
+  }
+]

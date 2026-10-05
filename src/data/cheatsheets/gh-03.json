@@ -1,0 +1,1187 @@
+[
+  {
+    "id": "label",
+    "title": "Nhãn",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-label-clone",
+        "canonicalCommand": "gh label clone",
+        "title": "Sao chép bộ nhãn",
+        "command": "gh label clone <source-repository> [flags]",
+        "description": "Sao chép nhãn từ repository nguồn sang repository đích; mặc định bỏ qua tên đã có.",
+        "example": "gh label clone cli/cli --repo octo-org/cli-sandbox",
+        "risk": "write",
+        "tags": [
+          "label",
+          "clone"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_label_clone",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--force",
+            "description": "Ghi đè nhãn trùng tên ở repository đích."
+          }
+        ],
+        "warning": "Thay đổi dữ liệu thật trên GitHub và có thể gửi thông báo. Kiểm tra đúng tài khoản, repository và nội dung trước khi chạy. Nhãn chỉ có ở đích không bị xóa."
+      },
+      {
+        "id": "gh-label-create",
+        "canonicalCommand": "gh label create",
+        "title": "Tạo nhãn",
+        "command": "gh label create <name> [flags]",
+        "description": "Thêm nhãn mới với mô tả và màu hexadecimal 6 ký tự.",
+        "example": "gh label create docs-example --repo octo-org/cli-sandbox --description \"Ví dụ tài liệu\" --color 0969DA",
+        "risk": "write",
+        "tags": [
+          "label",
+          "create"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_label_create",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--color",
+            "description": "Chỉ định màu theo định dạng lệnh yêu cầu."
+          },
+          {
+            "flag": "--description",
+            "description": "Chỉ định mô tả."
+          },
+          {
+            "flag": "--force",
+            "description": "Cập nhật màu/mô tả nếu nhãn đã tồn tại."
+          }
+        ],
+        "warning": "Thay đổi dữ liệu thật trên GitHub và có thể gửi thông báo. Kiểm tra đúng tài khoản, repository và nội dung trước khi chạy."
+      },
+      {
+        "id": "gh-label-delete",
+        "canonicalCommand": "gh label delete",
+        "title": "Xóa nhãn",
+        "command": "gh label delete <name> [flags]",
+        "description": "Xóa nhãn khỏi repository đã chọn.",
+        "example": "gh label delete docs-example --repo octo-org/cli-sandbox",
+        "risk": "destructive",
+        "tags": [
+          "label",
+          "delete"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_label_delete",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--yes",
+            "description": "Bỏ qua bước xác nhận; không dùng trước khi kiểm tra mục tiêu."
+          }
+        ],
+        "warning": "Xóa dữ liệu đã chọn; có thể không khôi phục được bằng CLI. Kiểm tra ID, phạm vi và bản sao lưu trước khi xác nhận. Có thể ảnh hưởng phân loại issue/PR và các tự động hóa dựa trên nhãn."
+      },
+      {
+        "id": "gh-label-edit",
+        "canonicalCommand": "gh label edit",
+        "title": "Đổi nhãn",
+        "command": "gh label edit <name> [flags]",
+        "description": "Đổi tên, mô tả hoặc màu nhãn đang có.",
+        "example": "gh label edit docs-example --repo octo-org/cli-sandbox --color 8250DF",
+        "risk": "write",
+        "tags": [
+          "label",
+          "edit"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_label_edit",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--name",
+            "description": "Lọc hoặc chỉ định tên theo chức năng của lệnh."
+          },
+          {
+            "flag": "--description",
+            "description": "Chỉ định mô tả."
+          },
+          {
+            "flag": "--color",
+            "description": "Chỉ định màu theo định dạng lệnh yêu cầu."
+          }
+        ],
+        "warning": "Thay đổi dữ liệu thật trên GitHub và có thể gửi thông báo. Kiểm tra đúng tài khoản, repository và nội dung trước khi chạy."
+      },
+      {
+        "id": "gh-label-list",
+        "canonicalCommand": "gh label list",
+        "title": "Liệt kê nhãn",
+        "command": "gh label list [flags]",
+        "description": "Xem nhãn theo tên, mô tả và thứ tự; tìm kiếm có thứ tự best match riêng.",
+        "example": "gh label list --repo cli/cli --limit 50 --sort name",
+        "risk": "read",
+        "tags": [
+          "label",
+          "list"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_label_list",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--limit",
+            "description": "Giới hạn số kết quả lấy về."
+          },
+          {
+            "flag": "--search",
+            "description": "Bổ sung biểu thức tìm kiếm."
+          },
+          {
+            "flag": "--sort",
+            "description": "Chọn trường dùng để sắp xếp."
+          },
+          {
+            "flag": "--json",
+            "description": "Xuất các trường được chỉ định dưới dạng JSON."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "project",
+    "title": "GitHub Projects",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-project-close",
+        "canonicalCommand": "gh project close",
+        "title": "Đóng hoặc mở lại project",
+        "command": "gh project close [<number>] [flags]",
+        "description": "Đóng GitHub Project hoặc dùng --undo để mở lại.",
+        "example": "gh project close 1 --owner octo-org",
+        "risk": "write",
+        "tags": [
+          "project",
+          "close"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_project_close",
+        "warning": "Thay đổi trạng thái project của người dùng/tổ chức; không xóa project.",
+        "options": [
+          {
+            "flag": "--owner <string>",
+            "description": "Chủ sở hữu project; dùng @me cho tài khoản hiện tại"
+          },
+          {
+            "flag": "--undo",
+            "description": "Mở lại project đã đóng"
+          },
+          {
+            "flag": "--format <string>",
+            "description": "Xuất kết quả JSON bằng --format json"
+          }
+        ]
+      },
+      {
+        "id": "gh-project-copy",
+        "canonicalCommand": "gh project copy",
+        "title": "Sao chép project",
+        "command": "gh project copy [<number>] [flags]",
+        "description": "Sao chép một project sang chủ sở hữu đích, có thể kèm draft issues.",
+        "example": "gh project copy 1 --source-owner octo-org --target-owner \"@me\" --title \"CLI sandbox roadmap copy\"",
+        "risk": "write",
+        "tags": [
+          "project",
+          "copy"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_project_copy",
+        "warning": "Tạo project mới và có thể sao chép nội dung draft issues; kiểm tra quyền truy cập ở chủ sở hữu đích.",
+        "options": [
+          {
+            "flag": "--source-owner <string>",
+            "description": "Tài khoản/tổ chức sở hữu project nguồn; hỗ trợ @me"
+          },
+          {
+            "flag": "--target-owner <string>",
+            "description": "Tài khoản/tổ chức nhận project mới; hỗ trợ @me"
+          },
+          {
+            "flag": "--title <string>",
+            "description": "Đặt tiêu đề"
+          },
+          {
+            "flag": "--drafts",
+            "description": "Sao chép cả draft issues của project"
+          },
+          {
+            "flag": "--format <string>",
+            "description": "Xuất kết quả JSON bằng --format json"
+          }
+        ]
+      },
+      {
+        "id": "gh-project-create",
+        "canonicalCommand": "gh project create",
+        "title": "Tạo project",
+        "command": "gh project create [flags]",
+        "description": "Tạo GitHub Project cho tài khoản hoặc tổ chức.",
+        "example": "gh project create --owner octo-org --title \"CLI sandbox roadmap\" --format json",
+        "risk": "write",
+        "tags": [
+          "project",
+          "create"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_project_create",
+        "warning": "Tạo project trên GitHub dưới chủ sở hữu được chọn; kiểm tra quyền và độ hiển thị sau khi tạo.",
+        "options": [
+          {
+            "flag": "--owner <string>",
+            "description": "Chủ sở hữu project; dùng @me cho tài khoản hiện tại"
+          },
+          {
+            "flag": "--title <string>",
+            "description": "Đặt tiêu đề"
+          },
+          {
+            "flag": "--format <string>",
+            "description": "Xuất kết quả JSON bằng --format json"
+          }
+        ]
+      },
+      {
+        "id": "gh-project-delete",
+        "canonicalCommand": "gh project delete",
+        "title": "Xóa project",
+        "command": "gh project delete [<number>] [flags]",
+        "description": "Xóa project theo số trong phạm vi chủ sở hữu.",
+        "example": "gh project delete 1 --owner octo-org",
+        "risk": "destructive",
+        "tags": [
+          "project",
+          "delete"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_project_delete",
+        "warning": "Xóa project và cấu hình quản lý công việc của nó; kiểm tra số project/chủ sở hữu và xuất dữ liệu cần giữ trước.",
+        "options": [
+          {
+            "flag": "--owner <string>",
+            "description": "Chủ sở hữu project; dùng @me cho tài khoản hiện tại"
+          },
+          {
+            "flag": "--format <string>",
+            "description": "Xuất kết quả JSON bằng --format json"
+          },
+          {
+            "flag": "-q, --jq <expression>",
+            "description": "Lọc đầu ra JSON bằng biểu thức jq"
+          }
+        ]
+      },
+      {
+        "id": "gh-project-edit",
+        "canonicalCommand": "gh project edit",
+        "title": "Sửa cấu hình project",
+        "command": "gh project edit [<number>] [flags]",
+        "description": "Đổi tiêu đề, mô tả, README hoặc độ hiển thị của project.",
+        "example": "gh project edit 1 --owner octo-org --description \"Track CLI sandbox work\" --visibility PRIVATE",
+        "risk": "write",
+        "tags": [
+          "project",
+          "edit"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_project_edit",
+        "warning": "Đổi visibility thành PUBLIC có thể công khai thông tin project; kiểm tra nội dung trước khi dùng.",
+        "options": [
+          {
+            "flag": "--owner <string>",
+            "description": "Chủ sở hữu project; dùng @me cho tài khoản hiện tại"
+          },
+          {
+            "flag": "--title <string>",
+            "description": "Đặt tiêu đề"
+          },
+          {
+            "flag": "-d, --description <string>",
+            "description": "Mô tả mới của project"
+          },
+          {
+            "flag": "--readme <string>",
+            "description": "Nội dung README mới của project"
+          },
+          {
+            "flag": "--visibility <string>",
+            "description": "Độ hiển thị project: PUBLIC hoặc PRIVATE"
+          },
+          {
+            "flag": "--format <string>",
+            "description": "Xuất kết quả JSON bằng --format json"
+          }
+        ]
+      },
+      {
+        "id": "gh-project-field-create",
+        "canonicalCommand": "gh project field-create",
+        "title": "Tạo trường trong project",
+        "command": "gh project field-create [<number>] [flags]",
+        "description": "Thêm trường tùy chỉnh dạng văn bản, một lựa chọn, ngày hoặc số vào project.",
+        "example": "gh project field-create 1 --owner octo-org --name Priority --data-type SINGLE_SELECT --single-select-options \"Low,Medium,High\"",
+        "risk": "write",
+        "tags": [
+          "project",
+          "field-create"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_project_field-create",
+        "warning": "Thay đổi cấu trúc project; thống nhất tên trường và lựa chọn để tránh tạo trùng.",
+        "options": [
+          {
+            "flag": "--owner <string>",
+            "description": "Chủ sở hữu project; dùng @me cho tài khoản hiện tại"
+          },
+          {
+            "flag": "--name <string>",
+            "description": "Tên trường mới"
+          },
+          {
+            "flag": "--data-type <string>",
+            "description": "Kiểu dữ liệu: TEXT, SINGLE_SELECT, DATE hoặc NUMBER"
+          },
+          {
+            "flag": "--single-select-options <strings>",
+            "description": "Danh sách lựa chọn cho SINGLE_SELECT, phân cách bằng dấu phẩy"
+          },
+          {
+            "flag": "--format <string>",
+            "description": "Xuất kết quả JSON bằng --format json"
+          }
+        ]
+      },
+      {
+        "id": "gh-project-field-delete",
+        "canonicalCommand": "gh project field-delete",
+        "title": "Xóa trường của project",
+        "command": "gh project field-delete [flags]",
+        "description": "Xóa trường theo GraphQL node ID; lấy ID từ gh project field-list.",
+        "example": "gh project field-delete --id \"PVTF_REPLACE_WITH_FIELD_ID\" --format json",
+        "risk": "destructive",
+        "tags": [
+          "project",
+          "field-delete"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_project_field-delete",
+        "warning": "Xóa trường tùy chỉnh và dữ liệu trường liên quan; ID trong ví dụ phải được thay bằng ID đã kiểm tra.",
+        "options": [
+          {
+            "flag": "--id <string>",
+            "description": "GraphQL node ID của trường cần xóa"
+          },
+          {
+            "flag": "--format <string>",
+            "description": "Xuất kết quả JSON bằng --format json"
+          },
+          {
+            "flag": "-q, --jq <expression>",
+            "description": "Lọc đầu ra JSON bằng biểu thức jq"
+          }
+        ]
+      },
+      {
+        "id": "gh-project-field-list",
+        "canonicalCommand": "gh project field-list",
+        "title": "Liệt kê trường của project",
+        "command": "gh project field-list [<number>] [flags]",
+        "description": "Xem các trường và ID dùng để cập nhật dữ liệu project bằng script.",
+        "example": "gh project field-list 1 --owner octo-org --limit 100 --format json",
+        "risk": "read",
+        "tags": [
+          "project",
+          "field-list"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_project_field-list",
+        "options": [
+          {
+            "flag": "--owner <string>",
+            "description": "Chủ sở hữu project; dùng @me cho tài khoản hiện tại"
+          },
+          {
+            "flag": "-L, --limit <int> (default 30)",
+            "description": "Số kết quả tối đa cần lấy, mặc định 30"
+          },
+          {
+            "flag": "--format <string>",
+            "description": "Xuất kết quả JSON bằng --format json"
+          },
+          {
+            "flag": "-q, --jq <expression>",
+            "description": "Lọc đầu ra JSON bằng biểu thức jq"
+          }
+        ]
+      },
+      {
+        "id": "gh-project-item-add",
+        "canonicalCommand": "gh project item-add",
+        "title": "Thêm issue hoặc PR vào project",
+        "command": "gh project item-add [<number>] [flags]",
+        "description": "Thêm một issue hoặc pull request hiện có vào project bằng URL.",
+        "example": "gh project item-add 1 --owner octo-org --url https://github.com/octo-org/cli-sandbox/issues/12",
+        "risk": "write",
+        "tags": [
+          "project",
+          "item-add"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_project_item-add",
+        "warning": "Thêm liên kết công việc vào project; kiểm tra đúng URL và chủ sở hữu project.",
+        "options": [
+          {
+            "flag": "--owner <string>",
+            "description": "Chủ sở hữu project; dùng @me cho tài khoản hiện tại"
+          },
+          {
+            "flag": "--url <string>",
+            "description": "URL đầy đủ của issue hoặc PR cần thêm"
+          },
+          {
+            "flag": "--format <string>",
+            "description": "Xuất kết quả JSON bằng --format json"
+          }
+        ]
+      },
+      {
+        "id": "gh-project-item-archive",
+        "canonicalCommand": "gh project item-archive",
+        "title": "Lưu trữ mục trong project",
+        "command": "gh project item-archive [<number>] [flags]",
+        "description": "Lưu trữ một mục theo ID hoặc bỏ lưu trữ với --undo.",
+        "example": "gh project item-archive 1 --owner octo-org --id \"PVTI_REPLACE_WITH_ITEM_ID\"",
+        "risk": "write",
+        "tags": [
+          "project",
+          "item-archive"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_project_item-archive",
+        "warning": "Ẩn mục khỏi các chế độ xem hoạt động; thay ID ví dụ bằng ID từ gh project item-list.",
+        "options": [
+          {
+            "flag": "--owner <string>",
+            "description": "Chủ sở hữu project; dùng @me cho tài khoản hiện tại"
+          },
+          {
+            "flag": "--id <string>",
+            "description": "GraphQL node ID của mục trong project"
+          },
+          {
+            "flag": "--undo",
+            "description": "Bỏ lưu trữ mục đã được lưu trữ"
+          },
+          {
+            "flag": "--format <string>",
+            "description": "Xuất kết quả JSON bằng --format json"
+          }
+        ]
+      },
+      {
+        "id": "gh-project-item-create",
+        "canonicalCommand": "gh project item-create",
+        "title": "Tạo draft issue trong project",
+        "command": "gh project item-create [<number>] [flags]",
+        "description": "Tạo mục draft issue ngay trong project với tiêu đề và nội dung.",
+        "example": "gh project item-create 1 --owner octo-org --title \"Explore offline mode\" --body \"Collect requirements and constraints.\"",
+        "risk": "write",
+        "tags": [
+          "project",
+          "item-create"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_project_item-create",
+        "warning": "Tạo nội dung trong project; đây là draft issue của project, chưa phải issue của một repository.",
+        "options": [
+          {
+            "flag": "--owner <string>",
+            "description": "Chủ sở hữu project; dùng @me cho tài khoản hiện tại"
+          },
+          {
+            "flag": "--title <string>",
+            "description": "Đặt tiêu đề"
+          },
+          {
+            "flag": "--body <string>",
+            "description": "Nội dung của draft issue"
+          },
+          {
+            "flag": "--format <string>",
+            "description": "Xuất kết quả JSON bằng --format json"
+          }
+        ]
+      },
+      {
+        "id": "gh-project-item-delete",
+        "canonicalCommand": "gh project item-delete",
+        "title": "Xóa mục khỏi project",
+        "command": "gh project item-delete [<number>] [flags]",
+        "description": "Xóa mục theo ID khỏi project; với issue/PR liên kết, đây là gỡ mục khỏi project.",
+        "example": "gh project item-delete 1 --owner octo-org --id \"PVTI_REPLACE_WITH_ITEM_ID\"",
+        "risk": "destructive",
+        "tags": [
+          "project",
+          "item-delete"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_project_item-delete",
+        "warning": "Mất dữ liệu mục trong project; không nhầm ID mục với ID issue/PR. Thay ID ví dụ bằng ID đã kiểm tra.",
+        "options": [
+          {
+            "flag": "--owner <string>",
+            "description": "Chủ sở hữu project; dùng @me cho tài khoản hiện tại"
+          },
+          {
+            "flag": "--id <string>",
+            "description": "GraphQL node ID của mục cần xóa khỏi project"
+          },
+          {
+            "flag": "--format <string>",
+            "description": "Xuất kết quả JSON bằng --format json"
+          }
+        ]
+      },
+      {
+        "id": "gh-project-item-edit",
+        "canonicalCommand": "gh project item-edit",
+        "title": "Sửa giá trị mục project",
+        "command": "gh project item-edit [<number>] [flags]",
+        "description": "Sửa một trường bằng tên và URL issue/PR, hoặc dùng node ID cho script; mỗi lần chỉ sửa một trường của mục không phải draft.",
+        "example": "gh project item-edit 1 --owner octo-org --url https://github.com/octo-org/cli-sandbox/issues/12 --field Status --value \"In Progress\"",
+        "risk": "write",
+        "tags": [
+          "project",
+          "item-edit"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_project_item-edit",
+        "warning": "Cập nhật dữ liệu project; --clear xóa giá trị hiện có. URL phải trỏ tới issue/PR, không phải project.",
+        "options": [
+          {
+            "flag": "--owner <string>",
+            "description": "Chủ sở hữu project; dùng @me cho tài khoản hiện tại"
+          },
+          {
+            "flag": "--url <string>",
+            "description": "URL của issue/PR chứa mục cần sửa trong project"
+          },
+          {
+            "flag": "--field <string>",
+            "description": "Tên trường cần cập nhật"
+          },
+          {
+            "flag": "--value <--field>",
+            "description": "Giá trị cho --field; với single-select dùng tên lựa chọn"
+          },
+          {
+            "flag": "--clear",
+            "description": "Xóa giá trị trường của mục"
+          },
+          {
+            "flag": "--id <string>",
+            "description": "Chọn mục bằng GraphQL node ID cho luồng dùng --field-id/--project-id"
+          }
+        ]
+      },
+      {
+        "id": "gh-project-item-list",
+        "canonicalCommand": "gh project item-list",
+        "title": "Liệt kê mục trong project",
+        "command": "gh project item-list [<number>] [flags]",
+        "description": "Xem các mục, lọc bằng cú pháp Projects và thêm cột trường tùy chỉnh nếu API host hỗ trợ.",
+        "example": "gh project item-list 1 --owner octo-org --query \"assignee:@me is:issue is:open\" --field Status --limit 100",
+        "risk": "read",
+        "tags": [
+          "project",
+          "item-list"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_project_item-list",
+        "options": [
+          {
+            "flag": "--owner <string>",
+            "description": "Chủ sở hữu project; dùng @me cho tài khoản hiện tại"
+          },
+          {
+            "flag": "--query <string>",
+            "description": "Lọc theo cú pháp Projects, ví dụ label:bug -status:Done"
+          },
+          {
+            "flag": "--field <stringArray>",
+            "description": "Thêm cột theo tên trường; có thể lặp cờ"
+          },
+          {
+            "flag": "-L, --limit <int> (default 30)",
+            "description": "Số kết quả tối đa cần lấy, mặc định 30"
+          },
+          {
+            "flag": "--format <string>",
+            "description": "Xuất kết quả JSON bằng --format json"
+          },
+          {
+            "flag": "-q, --jq <expression>",
+            "description": "Lọc đầu ra JSON bằng biểu thức jq"
+          }
+        ]
+      },
+      {
+        "id": "gh-project-link",
+        "canonicalCommand": "gh project link",
+        "title": "Liên kết project với kho hoặc nhóm",
+        "command": "gh project link [<number>] [flags]",
+        "description": "Gắn project vào một repository hoặc team; bỏ cả hai lựa chọn để dùng kho của thư mục hiện tại.",
+        "example": "gh project link 1 --owner octo-org --repo cli-sandbox",
+        "risk": "write",
+        "tags": [
+          "project",
+          "link"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_project_link",
+        "warning": "Thay đổi liên kết project với kho/nhóm; chọn đúng chủ sở hữu và đích liên kết.",
+        "options": [
+          {
+            "flag": "--owner <string>",
+            "description": "Chủ sở hữu project; dùng @me cho tài khoản hiện tại"
+          },
+          {
+            "flag": "-R, --repo <string>",
+            "description": "Repository cần liên kết với project"
+          },
+          {
+            "flag": "-T, --team <string>",
+            "description": "Team cần liên kết với project"
+          }
+        ]
+      },
+      {
+        "id": "gh-project-list",
+        "canonicalCommand": "gh project list",
+        "title": "Liệt kê project",
+        "command": "gh project list [flags]",
+        "description": "Liệt kê project của tài khoản hoặc tổ chức, có thể gồm cả project đã đóng.",
+        "example": "gh project list --owner octo-org --closed --limit 100 --format json",
+        "risk": "read",
+        "tags": [
+          "project",
+          "list"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_project_list",
+        "options": [
+          {
+            "flag": "--owner <string>",
+            "description": "Tài khoản hoặc tổ chức sở hữu các project"
+          },
+          {
+            "flag": "--closed",
+            "description": "Bao gồm project đã đóng"
+          },
+          {
+            "flag": "-L, --limit <int> (default 30)",
+            "description": "Số kết quả tối đa cần lấy, mặc định 30"
+          },
+          {
+            "flag": "--format <string>",
+            "description": "Xuất kết quả JSON bằng --format json"
+          },
+          {
+            "flag": "-q, --jq <expression>",
+            "description": "Lọc đầu ra JSON bằng biểu thức jq"
+          },
+          {
+            "flag": "-w, --web",
+            "description": "Mở nội dung tương ứng trong trình duyệt"
+          }
+        ]
+      },
+      {
+        "id": "gh-project-mark-template",
+        "canonicalCommand": "gh project mark-template",
+        "title": "Đặt project làm mẫu",
+        "command": "gh project mark-template [<number>] [flags]",
+        "description": "Đánh dấu project của tổ chức là template hoặc bỏ đánh dấu.",
+        "example": "gh project mark-template 1 --owner octo-org",
+        "risk": "write",
+        "tags": [
+          "project",
+          "mark-template"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_project_mark-template",
+        "warning": "Thay đổi cách project được dùng làm mẫu; kiểm tra nội dung có phù hợp để tái sử dụng.",
+        "options": [
+          {
+            "flag": "--owner <string>",
+            "description": "Tên tổ chức sở hữu project"
+          },
+          {
+            "flag": "--undo",
+            "description": "Bỏ đánh dấu project là template"
+          },
+          {
+            "flag": "--format <string>",
+            "description": "Xuất kết quả JSON bằng --format json"
+          }
+        ]
+      },
+      {
+        "id": "gh-project-unlink",
+        "canonicalCommand": "gh project unlink",
+        "title": "Gỡ liên kết project",
+        "command": "gh project unlink [<number>] [flags]",
+        "description": "Gỡ liên kết project khỏi một repository hoặc team.",
+        "example": "gh project unlink 1 --owner octo-org --repo cli-sandbox",
+        "risk": "write",
+        "tags": [
+          "project",
+          "unlink"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_project_unlink",
+        "warning": "Xóa liên kết tới kho/nhóm đã chọn; project vẫn tồn tại.",
+        "options": [
+          {
+            "flag": "--owner <string>",
+            "description": "Chủ sở hữu project; dùng @me cho tài khoản hiện tại"
+          },
+          {
+            "flag": "-R, --repo <string>",
+            "description": "Repository cần gỡ liên kết khỏi project"
+          },
+          {
+            "flag": "-T, --team <string>",
+            "description": "Team cần gỡ liên kết khỏi project"
+          }
+        ]
+      },
+      {
+        "id": "gh-project-view",
+        "canonicalCommand": "gh project view",
+        "title": "Xem chi tiết project",
+        "command": "gh project view [<number>] [flags]",
+        "description": "Xem thông tin project theo số và chủ sở hữu, hoặc mở trong trình duyệt.",
+        "example": "gh project view 1 --owner octo-org --format json",
+        "risk": "read",
+        "tags": [
+          "project",
+          "view"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_project_view",
+        "options": [
+          {
+            "flag": "--owner <string>",
+            "description": "Chủ sở hữu project; dùng @me cho tài khoản hiện tại"
+          },
+          {
+            "flag": "--format <string>",
+            "description": "Xuất kết quả JSON bằng --format json"
+          },
+          {
+            "flag": "-q, --jq <expression>",
+            "description": "Lọc đầu ra JSON bằng biểu thức jq"
+          },
+          {
+            "flag": "-w, --web",
+            "description": "Mở nội dung tương ứng trong trình duyệt"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "release",
+    "title": "Release & tài sản",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-release-create",
+        "canonicalCommand": "gh release create",
+        "title": "Tạo bản phát hành",
+        "command": "gh release create [<tag>] [<filename>... | <pattern>...]",
+        "description": "Tạo GitHub Release từ tag, kèm tệp tài sản và ghi chú tùy chọn.",
+        "example": "gh release create v1.2.3 --repo octo-org/cli-sandbox --draft --verify-tag --generate-notes",
+        "risk": "write",
+        "tags": [
+          "release",
+          "create"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_release_create",
+        "warning": "Có thể tạo tag mới nếu thiếu --verify-tag. Khi kho bật immutable releases, tag và tài sản bị khóa sau khi phát hành chính thức.",
+        "options": [
+          {
+            "flag": "-d, --draft",
+            "description": "Lưu nháp thay vì phát hành ngay"
+          },
+          {
+            "flag": "--verify-tag",
+            "description": "Dừng nếu tag chưa tồn tại trên kho remote"
+          },
+          {
+            "flag": "--generate-notes",
+            "description": "Tự sinh tiêu đề và ghi chú bằng GitHub Release Notes API"
+          },
+          {
+            "flag": "-F, --notes-file <file>",
+            "description": "Đọc ghi chú phát hành từ tệp; dùng - để đọc stdin"
+          },
+          {
+            "flag": "--target <branch>",
+            "description": "Nhánh hoặc SHA đầy đủ dùng khi tạo tag tự động"
+          },
+          {
+            "flag": "-p, --prerelease",
+            "description": "Đánh dấu là bản phát hành thử nghiệm"
+          }
+        ]
+      },
+      {
+        "id": "gh-release-delete",
+        "canonicalCommand": "gh release delete",
+        "title": "Xóa bản phát hành",
+        "command": "gh release delete <tag> [flags]",
+        "description": "Xóa một release theo tag; tùy chọn xóa cả Git tag tương ứng.",
+        "example": "gh release delete v1.2.3 --repo octo-org/cli-sandbox",
+        "risk": "destructive",
+        "tags": [
+          "release",
+          "delete"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_release_delete",
+        "warning": "Xóa release và tài sản liên quan; --cleanup-tag xóa thêm tag. Release bất biến có thể hạn chế thao tác.",
+        "options": [
+          {
+            "flag": "--cleanup-tag",
+            "description": "Xóa cả tag bên cạnh release"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Bỏ qua bước hỏi xác nhận; kiểm tra đúng mục tiêu trước khi dùng"
+          },
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          }
+        ]
+      },
+      {
+        "id": "gh-release-delete-asset",
+        "canonicalCommand": "gh release delete-asset",
+        "title": "Xóa tài sản phát hành",
+        "command": "gh release delete-asset <tag> <asset-name> [flags]",
+        "description": "Xóa một asset theo tên khỏi release được chỉ định.",
+        "example": "gh release delete-asset v1.2.3 cli-sandbox-linux-amd64.tar.gz --repo octo-org/cli-sandbox",
+        "risk": "destructive",
+        "tags": [
+          "release",
+          "delete-asset"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_release_delete-asset",
+        "warning": "Tệp tải xuống và liên kết tới asset có thể không còn dùng được; tài sản của release bất biến không thể bị sửa/xóa.",
+        "options": [
+          {
+            "flag": "-y, --yes",
+            "description": "Bỏ qua bước hỏi xác nhận; kiểm tra đúng mục tiêu trước khi dùng"
+          },
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          }
+        ]
+      },
+      {
+        "id": "gh-release-download",
+        "canonicalCommand": "gh release download",
+        "title": "Tải tài sản phát hành",
+        "command": "gh release download [<tag>] [flags]",
+        "description": "Tải asset từ một release; nếu bỏ tag, phải dùng --pattern hoặc --archive để chọn từ release mới nhất.",
+        "example": "gh release download v1.2.3 --repo octo-org/cli-sandbox --pattern \"*.tar.gz\" --dir ./downloads --skip-existing",
+        "risk": "write",
+        "tags": [
+          "release",
+          "download"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_release_download",
+        "warning": "Ghi tệp xuống máy; --clobber ghi đè tệp hiện có. Chỉ mở/chạy tài sản sau khi kiểm tra nguồn và chữ ký phù hợp. Khi ghi file, dùng gh từ 2.102.0 và thư mục đích an toàn để có bản vá xử lý symlink.",
+        "options": [
+          {
+            "flag": "-p, --pattern <stringArray>",
+            "description": "Chỉ tải asset khớp glob; lặp cờ để chọn nhiều mẫu"
+          },
+          {
+            "flag": "-D, --dir <directory> (default \".\")",
+            "description": "Thư mục đích tải về, mặc định thư mục hiện tại"
+          },
+          {
+            "flag": "-A, --archive <format>",
+            "description": "Tải mã nguồn dạng zip hoặc tar.gz"
+          },
+          {
+            "flag": "-O, --output <file>",
+            "description": "Ghi một asset vào tệp; dùng - để ghi ra stdout"
+          },
+          {
+            "flag": "--skip-existing",
+            "description": "Bỏ qua tệp đã tồn tại cùng tên"
+          },
+          {
+            "flag": "--clobber",
+            "description": "Ghi đè tệp đã tồn tại cùng tên"
+          }
+        ]
+      },
+      {
+        "id": "gh-release-edit",
+        "canonicalCommand": "gh release edit",
+        "title": "Sửa bản phát hành",
+        "command": "gh release edit <tag>",
+        "description": "Sửa tiêu đề, ghi chú, tag, trạng thái nháp/thử nghiệm hoặc dấu Latest.",
+        "example": "gh release edit v1.2.3 --repo octo-org/cli-sandbox --notes-file ./release-notes.md",
+        "risk": "write",
+        "tags": [
+          "release",
+          "edit"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_release_edit",
+        "warning": "Cập nhật release đã chia sẻ; --draft=false có thể phát hành bản nháp và kích hoạt bảo vệ bất biến.",
+        "options": [
+          {
+            "flag": "-t, --title <string>",
+            "description": "Đặt tiêu đề"
+          },
+          {
+            "flag": "-F, --notes-file <file>",
+            "description": "Đọc ghi chú phát hành từ tệp; dùng - để đọc stdin"
+          },
+          {
+            "flag": "--draft",
+            "description": "Đặt trạng thái nháp; --draft=false để phát hành bản nháp"
+          },
+          {
+            "flag": "--prerelease",
+            "description": "Đánh dấu là bản phát hành thử nghiệm"
+          },
+          {
+            "flag": "--latest",
+            "description": "Đánh dấu rõ release này là Latest"
+          },
+          {
+            "flag": "--tag <string>",
+            "description": "Đổi tag gắn với release"
+          }
+        ]
+      },
+      {
+        "id": "gh-release-list",
+        "canonicalCommand": "gh release list",
+        "title": "Liệt kê bản phát hành",
+        "command": "gh release list [flags]",
+        "description": "Liệt kê releases của kho với bộ lọc bản nháp, thử nghiệm và thứ tự.",
+        "example": "gh release list --repo octo-org/cli-sandbox --exclude-drafts --exclude-pre-releases --limit 50",
+        "risk": "read",
+        "tags": [
+          "release",
+          "list"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_release_list",
+        "options": [
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          },
+          {
+            "flag": "--exclude-drafts",
+            "description": "Bỏ các bản nháp"
+          },
+          {
+            "flag": "--exclude-pre-releases",
+            "description": "Bỏ các bản phát hành thử nghiệm"
+          },
+          {
+            "flag": "-L, --limit <int> (default 30)",
+            "description": "Số kết quả tối đa cần lấy, mặc định 30"
+          },
+          {
+            "flag": "-O, --order <string> (default \"desc\")",
+            "description": "Thứ tự asc hoặc desc, mặc định desc"
+          },
+          {
+            "flag": "--json <fields>",
+            "description": "Xuất JSON với các trường được chỉ định"
+          }
+        ]
+      },
+      {
+        "id": "gh-release-upload",
+        "canonicalCommand": "gh release upload",
+        "title": "Tải tài sản lên release",
+        "command": "gh release upload <tag> <files>... [flags]",
+        "description": "Đính kèm các tệp vào release có sẵn; thêm #nhãn sau tên tệp để đặt nhãn hiển thị.",
+        "example": "gh release upload v1.2.3 \"./dist/cli-sandbox.zip#CLI sandbox bundle\" --repo octo-org/cli-sandbox",
+        "risk": "write",
+        "tags": [
+          "release",
+          "upload"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_release_upload",
+        "warning": "--clobber xóa asset cũ trước khi tải mới; nếu tải lên thất bại, asset cũ đã mất. Release bất biến chặn sửa tài sản.",
+        "options": [
+          {
+            "flag": "--clobber",
+            "description": "Xóa rồi tải lại asset cùng tên, không phải thay thế nguyên tử"
+          },
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          }
+        ]
+      },
+      {
+        "id": "gh-release-verify",
+        "canonicalCommand": "gh release verify",
+        "title": "Xác minh chứng thực release",
+        "command": "gh release verify [<tag>] [flags]",
+        "description": "Kiểm tra chứng thực có chữ ký của GitHub cho release và in metadata/digest của các tài sản được chứng thực.",
+        "example": "gh release verify v1.2.3 --repo octo-org/cli-sandbox --format json",
+        "risk": "read",
+        "tags": [
+          "release",
+          "verify"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_release_verify",
+        "options": [
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          },
+          {
+            "flag": "--format <string>",
+            "description": "Xuất kết quả JSON bằng --format json"
+          },
+          {
+            "flag": "-q, --jq <expression>",
+            "description": "Lọc đầu ra JSON bằng biểu thức jq"
+          }
+        ],
+        "warning": "Kiểm tra chữ ký/chứng thực và digest không chứng minh mã bên trong an toàn để chạy; vẫn cần tin cậy nguồn phát hành."
+      },
+      {
+        "id": "gh-release-verify-asset",
+        "canonicalCommand": "gh release verify-asset",
+        "title": "Xác minh tệp tài sản release",
+        "command": "gh release verify-asset [<tag>] <file-path> [flags]",
+        "description": "So khớp digest của tệp cục bộ với chứng thực có chữ ký hợp lệ gắn với release đã chọn.",
+        "example": "gh release verify-asset v1.2.3 ./downloads/cli-sandbox.zip --repo octo-org/cli-sandbox --format json",
+        "risk": "read",
+        "tags": [
+          "release",
+          "verify-asset"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_release_verify-asset",
+        "options": [
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          },
+          {
+            "flag": "--format <string>",
+            "description": "Xuất kết quả JSON bằng --format json"
+          },
+          {
+            "flag": "-q, --jq <expression>",
+            "description": "Lọc đầu ra JSON bằng biểu thức jq"
+          }
+        ],
+        "warning": "Kiểm tra chữ ký/chứng thực và digest không chứng minh mã bên trong an toàn để chạy; vẫn cần tin cậy nguồn phát hành."
+      },
+      {
+        "id": "gh-release-view",
+        "canonicalCommand": "gh release view",
+        "title": "Xem chi tiết release",
+        "command": "gh release view [<tag>] [flags]",
+        "description": "Xem thông tin của một release; bỏ tag để xem release mới nhất.",
+        "example": "gh release view v1.2.3 --repo octo-org/cli-sandbox --json tagName,isDraft,isImmutable,assets,url",
+        "risk": "read",
+        "tags": [
+          "release",
+          "view"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_release_view",
+        "options": [
+          {
+            "flag": "-R, --repo <[HOST/]OWNER/REPO>",
+            "description": "Chọn kho theo dạng [HOST/]OWNER/REPO"
+          },
+          {
+            "flag": "--json <fields>",
+            "description": "Xuất JSON với các trường được chỉ định"
+          },
+          {
+            "flag": "-q, --jq <expression>",
+            "description": "Lọc đầu ra JSON bằng biểu thức jq"
+          },
+          {
+            "flag": "-w, --web",
+            "description": "Mở nội dung tương ứng trong trình duyệt"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "run",
+    "title": "GitHub Actions: lần chạy",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-run-cancel",
+        "canonicalCommand": "gh run cancel",
+        "title": "Hủy workflow run",
+        "command": "gh run cancel [<run-id>] [flags]",
+        "description": "Yêu cầu hủy lần chạy workflow theo run ID.",
+        "example": "gh run cancel 123456789 --repo octo-org/cli-sandbox",
+        "risk": "write",
+        "tags": [
+          "run",
+          "cancel"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_run_cancel",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          },
+          {
+            "flag": "--force",
+            "description": "Buộc hủy nếu cơ chế hủy thông thường không đủ."
+          }
+        ],
+        "warning": "Gián đoạn job đang chạy, có thể bỏ dở triển khai hoặc dọn dẹp. Hủy không tự hoàn tác tác dụng phụ đã xảy ra."
+      },
+      {
+        "id": "gh-run-delete",
+        "canonicalCommand": "gh run delete",
+        "title": "Xóa workflow run",
+        "command": "gh run delete [<run-id>]",
+        "description": "Xóa bản ghi một lần chạy workflow.",
+        "example": "gh run delete 123456789 --repo octo-org/cli-sandbox",
+        "risk": "destructive",
+        "tags": [
+          "run",
+          "delete"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_run_delete",
+        "options": [
+          {
+            "flag": "--repo",
+            "description": "Chọn repository theo dạng [HOST/]OWNER/REPO; với Codespaces có thể lọc danh sách chọn."
+          }
+        ],
+        "warning": "Xóa dữ liệu đã chọn; có thể không khôi phục được bằng CLI. Kiểm tra ID, phạm vi và bản sao lưu trước khi xác nhận. Có thể mất log/artifact cần cho điều tra; không tự hoàn tác triển khai."
+      }
+    ]
+  }
+]

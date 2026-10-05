@@ -1,0 +1,891 @@
+[
+  {
+    "id": "trello-card",
+    "title": "Trello · thẻ",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-trello-card-add-member",
+        "canonicalCommand": "twg trello card add-member",
+        "title": "Thêm thành viên thẻ của Trello",
+        "command": "twg trello card add-member --card <id> --user-id <userId>",
+        "description": "Thêm thành viên thẻ của Trello.",
+        "example": "twg trello card add-member --card abc123 --user-id johnsmith",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "trello",
+          "card",
+          "add-member"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--card <id>",
+            "description": "Thẻ; bắt buộc",
+            "example": "--card CARD"
+          },
+          {
+            "flag": "--user-id <userId>",
+            "description": "ID người dùng; bắt buộc",
+            "example": "--user-id 12345"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng; mặc định: false",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-trello-card-archive",
+        "canonicalCommand": "twg trello card archive",
+        "title": "Lưu trữ thẻ của Trello",
+        "command": "twg trello card archive --card <id>",
+        "description": "Lưu trữ thẻ của Trello.",
+        "example": "twg trello card archive --card abc123",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "trello",
+          "card",
+          "archive"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--card <id>",
+            "description": "Thẻ; bắt buộc",
+            "example": "--card CARD"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng; mặc định: false",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-trello-card-create",
+        "canonicalCommand": "twg trello card create",
+        "title": "Tạo thẻ của Trello",
+        "command": "twg trello card create --list-id <listId> --name <name>",
+        "description": "Tạo thẻ của Trello.",
+        "example": "twg trello card create --list-id abc123 --name \"Fix bug\" --position 1",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "trello",
+          "card",
+          "create"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--list-id <listId>",
+            "description": "ID list; bắt buộc",
+            "example": "--list-id 12345"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Tên; bắt buộc",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--description <description>",
+            "description": "Mô tả",
+            "example": "--description 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--position <position>",
+            "description": "Vị trí",
+            "example": "--position POSITION"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng; mặc định: false",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-trello-card-get",
+        "canonicalCommand": "twg trello card get",
+        "title": "Đọc thẻ của Trello",
+        "command": "twg trello card get --card <id>",
+        "description": "Đọc thẻ của Trello.",
+        "example": "twg trello card get --card AbC123xY",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "trello",
+          "card",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--card <id>",
+            "description": "Thẻ; bắt buộc",
+            "example": "--card CARD"
+          },
+          {
+            "flag": "--include-actions",
+            "description": "Kèm actions; mặc định: false",
+            "example": "--include-actions"
+          },
+          {
+            "flag": "--include-attachments",
+            "description": "Kèm tệp đính kèm; mặc định: false",
+            "example": "--include-attachments"
+          },
+          {
+            "flag": "--include-checklists",
+            "description": "Kèm checklists; mặc định: false",
+            "example": "--include-checklists"
+          },
+          {
+            "flag": "--include-cover",
+            "description": "Kèm cover; mặc định: false",
+            "example": "--include-cover"
+          },
+          {
+            "flag": "--include-custom-fields",
+            "description": "Kèm custom-fields; mặc định: false",
+            "example": "--include-custom-fields"
+          },
+          {
+            "flag": "--include-due",
+            "description": "Kèm due; mặc định: false",
+            "example": "--include-due"
+          }
+        ]
+      },
+      {
+        "id": "twg-trello-card-label-query",
+        "canonicalCommand": "twg trello card label query",
+        "title": "Tra cứu nhãn của thẻ của Trello",
+        "command": "twg trello card label query --card <id>",
+        "description": "Tra cứu nhãn của thẻ của Trello.",
+        "example": "twg trello card label query --card abc123 -o json",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "trello",
+          "card",
+          "label",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--card <id>",
+            "description": "Thẻ; bắt buộc",
+            "example": "--card CARD"
+          },
+          {
+            "flag": "--first <number>",
+            "description": "Số phần tử của trang đầu/tiếp theo; mặc định: \"20\"",
+            "example": "--first 10"
+          },
+          {
+            "flag": "--after <after>",
+            "description": "Con trỏ hoặc mốc bắt đầu theo lệnh",
+            "example": "--after AFTER"
+          }
+        ]
+      },
+      {
+        "id": "twg-trello-card-mark-complete",
+        "canonicalCommand": "twg trello card mark-complete",
+        "title": "Đánh dấu hoàn thành thẻ của Trello",
+        "command": "twg trello card mark-complete --card <id>",
+        "description": "Đánh dấu hoàn thành thẻ của Trello.",
+        "example": "twg trello card mark-complete --card abc123",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "trello",
+          "card",
+          "mark-complete"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--card <id>",
+            "description": "Thẻ; bắt buộc",
+            "example": "--card CARD"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng; mặc định: false",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-trello-card-member-query",
+        "canonicalCommand": "twg trello card member query",
+        "title": "Tra cứu thành viên của thẻ của Trello",
+        "command": "twg trello card member query --card <id>",
+        "description": "Tra cứu thành viên của thẻ của Trello.",
+        "example": "twg trello card member query --card abc123",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "trello",
+          "card",
+          "member",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--card <id>",
+            "description": "Thẻ; bắt buộc",
+            "example": "--card CARD"
+          },
+          {
+            "flag": "--first <number>",
+            "description": "Số phần tử của trang đầu/tiếp theo; mặc định: \"20\"",
+            "example": "--first 10"
+          },
+          {
+            "flag": "--after <after>",
+            "description": "Con trỏ hoặc mốc bắt đầu theo lệnh",
+            "example": "--after AFTER"
+          }
+        ]
+      },
+      {
+        "id": "twg-trello-card-remove-label",
+        "canonicalCommand": "twg trello card remove-label",
+        "title": "Gỡ nhãn thẻ của Trello",
+        "command": "twg trello card remove-label --card <id>",
+        "description": "Gỡ nhãn thẻ của Trello.",
+        "example": "twg trello card remove-label --card abc123 --label-id xyz789",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "trello",
+          "card",
+          "remove-label"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--card <id>",
+            "description": "Thẻ; bắt buộc",
+            "example": "--card CARD"
+          },
+          {
+            "flag": "--label-id <labelId>",
+            "description": "ID nhãn; có thể nhập nhiều giá trị; mặc định: []",
+            "example": "--label-id 12345"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng; mặc định: false",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-trello-card-remove-member",
+        "canonicalCommand": "twg trello card remove-member",
+        "title": "Gỡ thành viên thẻ của Trello",
+        "command": "twg trello card remove-member --card <id> --user-id <userId>",
+        "description": "Gỡ thành viên thẻ của Trello.",
+        "example": "twg trello card remove-member --card abc123 --user-id johnsmith",
+        "exampleKind": "usage",
+        "risk": "destructive",
+        "tags": [
+          "trello",
+          "card",
+          "remove-member"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--card <id>",
+            "description": "Thẻ; bắt buộc",
+            "example": "--card CARD"
+          },
+          {
+            "flag": "--user-id <userId>",
+            "description": "ID người dùng; bắt buộc",
+            "example": "--user-id 12345"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng; mặc định: false",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể xóa dữ liệu, thu hồi quyền hoặc gỡ cấu hình. Đọc lại đối tượng và khả năng khôi phục; ưu tiên --dry-run nếu lệnh hỗ trợ. Không thêm --yes khi chưa kiểm tra."
+      },
+      {
+        "id": "twg-trello-card-unarchive",
+        "canonicalCommand": "twg trello card unarchive",
+        "title": "Khôi phục thẻ của Trello",
+        "command": "twg trello card unarchive --card <id>",
+        "description": "Khôi phục thẻ của Trello.",
+        "example": "twg trello card unarchive --card abc123",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "trello",
+          "card",
+          "unarchive"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--card <id>",
+            "description": "Thẻ; bắt buộc",
+            "example": "--card CARD"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng; mặc định: false",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-trello-card-update",
+        "canonicalCommand": "twg trello card update",
+        "title": "Cập nhật thẻ của Trello",
+        "command": "twg trello card update --card <id>",
+        "description": "Cập nhật thẻ của Trello.",
+        "example": "twg trello card update --card A7Y9VzZh --name \"Renamed card\"",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "trello",
+          "card",
+          "update"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--card <id>",
+            "description": "Thẻ; bắt buộc",
+            "example": "--card CARD"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Tên",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--description <description>",
+            "description": "Mô tả",
+            "example": "--description 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng; mặc định: false",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      }
+    ]
+  },
+  {
+    "id": "trello-list",
+    "title": "Trello · list",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-trello-list-card-query",
+        "canonicalCommand": "twg trello list card query",
+        "title": "Tra cứu thẻ của list của Trello",
+        "command": "twg trello list card query --list <id>",
+        "description": "Tra cứu thẻ của list của Trello.",
+        "example": "twg trello list card query --list abc123",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "trello",
+          "list",
+          "card",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--list <id>",
+            "description": "Tham số list; bắt buộc",
+            "example": "--list LIST"
+          },
+          {
+            "flag": "--closed <closed>",
+            "description": "Tham số closed",
+            "example": "--closed CLOSED"
+          },
+          {
+            "flag": "--first <number>",
+            "description": "Số phần tử của trang đầu/tiếp theo; mặc định: \"20\"",
+            "example": "--first 10"
+          },
+          {
+            "flag": "--after <after>",
+            "description": "Con trỏ hoặc mốc bắt đầu theo lệnh",
+            "example": "--after AFTER"
+          }
+        ]
+      },
+      {
+        "id": "twg-trello-list-card-sort",
+        "canonicalCommand": "twg trello list card sort",
+        "title": "Sắp xếp thẻ của list của Trello",
+        "command": "twg trello list card sort --list <id> --sort-by <sortBy>",
+        "description": "Sắp xếp thẻ của list của Trello.",
+        "example": "twg trello list card sort --list abc123 --sort-by NEWEST_FIRST",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "trello",
+          "list",
+          "card",
+          "sort"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--list <id>",
+            "description": "Tham số list; bắt buộc",
+            "example": "--list LIST"
+          },
+          {
+            "flag": "--sort-by <sortBy>",
+            "description": "Tham số sort-by; bắt buộc",
+            "example": "--sort-by SORT_BY"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng; mặc định: false",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-trello-list-get",
+        "canonicalCommand": "twg trello list get",
+        "title": "Đọc list của Trello",
+        "command": "twg trello list get <id>",
+        "description": "Đọc list của Trello.",
+        "example": "twg trello list get abc123",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "trello",
+          "list",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "trello-member",
+    "title": "Trello · thành viên",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-trello-member-get",
+        "canonicalCommand": "twg trello member get",
+        "title": "Đọc thành viên của Trello",
+        "command": "twg trello member get <id>",
+        "description": "Đọc thành viên của Trello.",
+        "example": "twg trello member get johnsmith",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "trello",
+          "member",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      },
+      {
+        "id": "twg-trello-member-me",
+        "canonicalCommand": "twg trello member me",
+        "title": "Xem tài khoản hiện tại của thành viên của Trello",
+        "command": "twg trello member me",
+        "description": "Xem tài khoản hiện tại của thành viên của Trello.",
+        "example": "twg trello member me",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "trello",
+          "member",
+          "me"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      },
+      {
+        "id": "twg-trello-member-workspace-query",
+        "canonicalCommand": "twg trello member workspace query",
+        "title": "Tra cứu workspace của thành viên của Trello",
+        "command": "twg trello member workspace query",
+        "description": "Tra cứu workspace của thành viên của Trello.",
+        "example": "twg trello member workspace query",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "trello",
+          "member",
+          "workspace",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "--membership-type <membershipType>",
+            "description": "Tham số membership-type",
+            "example": "--membership-type MEMBERSHIP_TYPE"
+          },
+          {
+            "flag": "--tier <tier>",
+            "description": "Tham số tier",
+            "example": "--tier TIER"
+          },
+          {
+            "flag": "--first <number>",
+            "description": "Số phần tử của trang đầu/tiếp theo; mặc định: \"20\"",
+            "example": "--first 10"
+          },
+          {
+            "flag": "--after <after>",
+            "description": "Con trỏ hoặc mốc bắt đầu theo lệnh",
+            "example": "--after AFTER"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "trello-workspace",
+    "title": "Trello · workspace",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-trello-workspace-get",
+        "canonicalCommand": "twg trello workspace get",
+        "title": "Đọc workspace của Trello",
+        "command": "twg trello workspace get <id>",
+        "description": "Đọc workspace của Trello.",
+        "example": "twg trello workspace get 5b7f0a4e2e3d8f1c9a7b6d3e",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "trello",
+          "workspace",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      },
+      {
+        "id": "twg-trello-workspace-member-query",
+        "canonicalCommand": "twg trello workspace member query",
+        "title": "Tra cứu thành viên của workspace của Trello",
+        "command": "twg trello workspace member query --workspace <id>",
+        "description": "Tra cứu thành viên của workspace của Trello.",
+        "example": "twg trello workspace member query --workspace demo-workspace",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "trello",
+          "workspace",
+          "member",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--workspace <id>",
+            "description": "Workspace; bắt buộc",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "--first <number>",
+            "description": "Số phần tử của trang đầu/tiếp theo; mặc định: \"20\"",
+            "example": "--first 10"
+          },
+          {
+            "flag": "--after <after>",
+            "description": "Con trỏ hoặc mốc bắt đầu theo lệnh",
+            "example": "--after AFTER"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "visualize",
+    "title": "Visualize",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-visualize",
+        "canonicalCommand": "twg visualize",
+        "title": "Tạo bản xem đồ thị",
+        "command": "twg visualize [input]",
+        "description": "Tạo bản xem đồ thị.",
+        "example": "twg visualize",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "visualize"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--in <file>",
+            "description": "Tham số in",
+            "example": "--in IN"
+          },
+          {
+            "flag": "--out-dir <dir>",
+            "description": "Thư mục lưu kết quả",
+            "example": "--out-dir ./exports"
+          },
+          {
+            "flag": "--out <file>",
+            "description": "Đường dẫn ghi tệp đầu ra",
+            "example": "--out ./example.txt"
+          },
+          {
+            "flag": "--format <format>",
+            "description": "Định dạng mà lệnh hỗ trợ; nhận: html, gexf; mặc định: \"html\"",
+            "example": "--format html"
+          },
+          {
+            "flag": "--open",
+            "description": "Tham số open",
+            "example": "--open"
+          },
+          {
+            "flag": "--allow-isolated",
+            "description": "Tham số allow-isolated",
+            "example": "--allow-isolated"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      }
+    ]
+  }
+]

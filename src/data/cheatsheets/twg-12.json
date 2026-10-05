@@ -1,0 +1,1205 @@
+[
+  {
+    "id": "assets-type",
+    "title": "Assets · loại",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "twg-assets-type-query",
+        "canonicalCommand": "twg assets type query",
+        "title": "Tra cứu loại của Assets",
+        "command": "twg assets type query --schema-id <schemaId>",
+        "description": "Tra cứu loại của Assets.",
+        "example": "twg assets type query --schema-id 33",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "assets",
+          "type",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--schema-id <schemaId>",
+            "description": "ID schema; bắt buộc",
+            "example": "--schema-id 12345"
+          },
+          {
+            "flag": "--exclude-abstract",
+            "description": "Loại abstract",
+            "example": "--exclude-abstract"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      },
+      {
+        "id": "twg-assets-type-update",
+        "canonicalCommand": "twg assets type update",
+        "title": "Cập nhật loại của Assets",
+        "command": "twg assets type update <id>",
+        "description": "Cập nhật loại của Assets.",
+        "example": "twg assets type update 44 --abstract --dry-run",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "assets",
+          "type",
+          "update"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Tên",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--description <text>",
+            "description": "Mô tả",
+            "example": "--description 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--inherited",
+            "description": "Tham số inherited",
+            "example": "--inherited"
+          },
+          {
+            "flag": "--abstract",
+            "description": "Tham số abstract",
+            "example": "--abstract"
+          },
+          {
+            "flag": "--dry-run",
+            "description": "Chỉ kiểm tra hoặc xem trước thay đổi, theo hợp đồng của lệnh",
+            "example": "--dry-run"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      }
+    ]
+  },
+  {
+    "id": "bitbucket-branch",
+    "title": "Bitbucket · nhánh",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-bitbucket-branch-create",
+        "canonicalCommand": "twg bitbucket branch create",
+        "title": "Tạo nhánh của Bitbucket",
+        "command": "twg bitbucket branch create --branch <name> --from <branchOrHash>",
+        "description": "Tạo nhánh của Bitbucket.",
+        "example": "twg bitbucket branch create --branch feature/new-api --from main --workspace demo-workspace --repo demo-repo",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "bitbucket",
+          "branch",
+          "create"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          },
+          {
+            "flag": "--branch <name>",
+            "description": "Nhánh; bắt buộc",
+            "example": "--branch main"
+          },
+          {
+            "flag": "--from <branchOrHash>",
+            "description": "Tham số from; bắt buộc",
+            "example": "--from 1"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-bitbucket-branch-delete",
+        "canonicalCommand": "twg bitbucket branch delete",
+        "title": "Xóa nhánh của Bitbucket",
+        "command": "twg bitbucket branch delete <name>",
+        "description": "Xóa nhánh của Bitbucket.",
+        "example": "twg bitbucket branch delete feature/old-branch --workspace demo-workspace --repo demo-repo",
+        "exampleKind": "usage",
+        "risk": "destructive",
+        "tags": [
+          "bitbucket",
+          "branch",
+          "delete"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng; mặc định: false",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể xóa dữ liệu, thu hồi quyền hoặc gỡ cấu hình. Đọc lại đối tượng và khả năng khôi phục; ưu tiên --dry-run nếu lệnh hỗ trợ. Không thêm --yes khi chưa kiểm tra."
+      },
+      {
+        "id": "twg-bitbucket-branch-query",
+        "canonicalCommand": "twg bitbucket branch query",
+        "title": "Tra cứu nhánh của Bitbucket",
+        "command": "twg bitbucket branch query",
+        "description": "Tra cứu nhánh của Bitbucket.",
+        "example": "twg bitbucket branch query --workspace demo-workspace --repo demo-repo",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "bitbucket",
+          "branch",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          },
+          {
+            "flag": "-q, --query <search>",
+            "description": "Chuỗi truy vấn theo lệnh",
+            "example": "--query onboarding"
+          },
+          {
+            "flag": "--author <name-or-account-id>",
+            "description": "Tác giả",
+            "example": "--author AUTHOR"
+          },
+          {
+            "flag": "--sort <field>",
+            "description": "Thứ tự; mặc định: \"-target.date\"",
+            "example": "--sort SORT"
+          },
+          {
+            "flag": "-n, --limit <count>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh; mặc định: \"25\"",
+            "example": "--limit 10"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bitbucket-commit",
+    "title": "Bitbucket · commit",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-bitbucket-commit-create",
+        "canonicalCommand": "twg bitbucket commit create",
+        "title": "Tạo commit của Bitbucket",
+        "command": "twg bitbucket commit create --message <text>",
+        "description": "Tạo commit của Bitbucket.",
+        "example": "twg bitbucket commit create -m \"Fix typo\" --file README.md --default-branch",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "bitbucket",
+          "commit",
+          "create"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-m, --message <text>",
+            "description": "Nội dung thông báo; bắt buộc",
+            "example": "--message 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--file <localPath>",
+            "description": "Tệp",
+            "example": "--file ./example.txt"
+          },
+          {
+            "flag": "--file-local <localPath>",
+            "description": "Tham số file-local",
+            "example": "--file-local FILE_LOCAL"
+          },
+          {
+            "flag": "--file-remote <repoPath>",
+            "description": "Tham số file-remote",
+            "example": "--file-remote FILE_REMOTE"
+          },
+          {
+            "flag": "--files-from <path>",
+            "description": "Tham số files-from",
+            "example": "--files-from FILES_FROM"
+          },
+          {
+            "flag": "--delete <repoPath>",
+            "description": "Tham số delete",
+            "example": "--delete DELETE"
+          },
+          {
+            "flag": "--branch <name>",
+            "description": "Nhánh",
+            "example": "--branch main"
+          },
+          {
+            "flag": "--default-branch",
+            "description": "Tham số default-branch; mặc định: false",
+            "example": "--default-branch"
+          },
+          {
+            "flag": "--author <author>",
+            "description": "Tác giả",
+            "example": "--author AUTHOR"
+          },
+          {
+            "flag": "--parent <hash>",
+            "description": "Cấp cha",
+            "example": "--parent PARENT"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng; mặc định: false",
+            "example": "--yes"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-bitbucket-commit-query",
+        "canonicalCommand": "twg bitbucket commit query",
+        "title": "Tra cứu commit của Bitbucket",
+        "command": "twg bitbucket commit query",
+        "description": "Tra cứu commit của Bitbucket.",
+        "example": "twg bitbucket commit query --workspace demo-workspace --repo demo-repo",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "bitbucket",
+          "commit",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          },
+          {
+            "flag": "--branch <branch>",
+            "description": "Nhánh",
+            "example": "--branch main"
+          },
+          {
+            "flag": "-n, --limit <count>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh; mặc định: \"20\"",
+            "example": "--limit 10"
+          }
+        ]
+      },
+      {
+        "id": "twg-bitbucket-commit-report-query",
+        "canonicalCommand": "twg bitbucket commit report query",
+        "title": "Tra cứu báo cáo của commit của Bitbucket",
+        "command": "twg bitbucket commit report query <commit>",
+        "description": "Tra cứu báo cáo của commit của Bitbucket.",
+        "example": "twg bitbucket commit report query abc123def --workspace demo-workspace --repo demo-repo",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "bitbucket",
+          "commit",
+          "report",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          },
+          {
+            "flag": "-n, --limit <count>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh; mặc định: \"100\"",
+            "example": "--limit 10"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bitbucket-deployment",
+    "title": "Bitbucket · lần triển khai",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-bitbucket-deployment-environment-variable-create",
+        "canonicalCommand": "twg bitbucket deployment environment variable create",
+        "title": "Tạo biến của môi trường của lần triển khai của Bitbucket",
+        "command": "twg bitbucket deployment environment variable create <environment> --key <key> --from-clipboard",
+        "description": "Tạo biến của môi trường của lần triển khai của Bitbucket.",
+        "example": "twg bitbucket deployment environment variable create Production --key API_TOKEN --from-clipboard",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "bitbucket",
+          "deployment",
+          "environment",
+          "variable",
+          "create"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--key <key>",
+            "description": "Mã tài nguyên; bắt buộc",
+            "example": "--key DEMO-123"
+          },
+          {
+            "flag": "--from-clipboard",
+            "description": "Đọc giá trị từ clipboard; không dán bí mật vào lịch sử lệnh hoặc chat; bắt buộc",
+            "example": "--from-clipboard"
+          },
+          {
+            "flag": "--plain",
+            "description": "Tham số plain",
+            "example": "--plain"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-bitbucket-deployment-environment-variable-delete",
+        "canonicalCommand": "twg bitbucket deployment environment variable delete",
+        "title": "Xóa biến của môi trường của lần triển khai của Bitbucket",
+        "command": "twg bitbucket deployment environment variable delete <environment> --variable <key-or-uuid>",
+        "description": "Xóa biến của môi trường của lần triển khai của Bitbucket.",
+        "example": "twg bitbucket deployment environment variable delete Production --variable OLD_TOKEN",
+        "exampleKind": "usage",
+        "risk": "destructive",
+        "tags": [
+          "bitbucket",
+          "deployment",
+          "environment",
+          "variable",
+          "delete"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--variable <key-or-uuid>",
+            "description": "Biến; bắt buộc",
+            "example": "--variable '{00000000-0000-4000-8000-000000000000}'"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng; mặc định: false",
+            "example": "--yes"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          }
+        ],
+        "warning": "Có thể xóa dữ liệu, thu hồi quyền hoặc gỡ cấu hình. Đọc lại đối tượng và khả năng khôi phục; ưu tiên --dry-run nếu lệnh hỗ trợ. Không thêm --yes khi chưa kiểm tra."
+      },
+      {
+        "id": "twg-bitbucket-deployment-environment-variable-query",
+        "canonicalCommand": "twg bitbucket deployment environment variable query",
+        "title": "Tra cứu biến của môi trường của lần triển khai của Bitbucket",
+        "command": "twg bitbucket deployment environment variable query <environment>",
+        "description": "Tra cứu biến của môi trường của lần triển khai của Bitbucket.",
+        "example": "twg bitbucket deployment environment variable query {environment-uuid} -o json",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "bitbucket",
+          "deployment",
+          "environment",
+          "variable",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          }
+        ]
+      },
+      {
+        "id": "twg-bitbucket-deployment-environment-variable-update",
+        "canonicalCommand": "twg bitbucket deployment environment variable update",
+        "title": "Cập nhật biến của môi trường của lần triển khai của Bitbucket",
+        "command": "twg bitbucket deployment environment variable update <environment> --variable <key-or-uuid> --from-clipboard",
+        "description": "Cập nhật biến của môi trường của lần triển khai của Bitbucket.",
+        "example": "twg bitbucket deployment environment variable update Production --variable API_TOKEN --from-clipboard",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "bitbucket",
+          "deployment",
+          "environment",
+          "variable",
+          "update"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--variable <key-or-uuid>",
+            "description": "Biến; bắt buộc",
+            "example": "--variable '{00000000-0000-4000-8000-000000000000}'"
+          },
+          {
+            "flag": "--from-clipboard",
+            "description": "Đọc giá trị từ clipboard; không dán bí mật vào lịch sử lệnh hoặc chat; bắt buộc",
+            "example": "--from-clipboard"
+          },
+          {
+            "flag": "--plain",
+            "description": "Tham số plain",
+            "example": "--plain"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-bitbucket-deployment-environments-query",
+        "canonicalCommand": "twg bitbucket deployment environments query",
+        "title": "Tra cứu môi trường của lần triển khai của Bitbucket",
+        "command": "twg bitbucket deployment environments query",
+        "description": "Tra cứu môi trường của lần triển khai của Bitbucket.",
+        "example": "twg bitbucket deployment environments query --workspace demo-workspace --repo demo-repo",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "bitbucket",
+          "deployment",
+          "environments",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          }
+        ]
+      },
+      {
+        "id": "twg-bitbucket-deployment-get",
+        "canonicalCommand": "twg bitbucket deployment get",
+        "title": "Đọc lần triển khai của Bitbucket",
+        "command": "twg bitbucket deployment get <uuid>",
+        "description": "Đọc lần triển khai của Bitbucket.",
+        "example": "twg bitbucket deployment get {deployment-uuid} -o json",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "bitbucket",
+          "deployment",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          }
+        ]
+      },
+      {
+        "id": "twg-bitbucket-deployment-query",
+        "canonicalCommand": "twg bitbucket deployment query",
+        "title": "Tra cứu lần triển khai của Bitbucket",
+        "command": "twg bitbucket deployment query",
+        "description": "Tra cứu lần triển khai của Bitbucket.",
+        "example": "twg bitbucket deployment query --workspace demo-workspace --repo demo-repo",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "bitbucket",
+          "deployment",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          },
+          {
+            "flag": "-n, --limit <count>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh; mặc định: \"15\"",
+            "example": "--limit 10"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bitbucket-inbox",
+    "title": "Bitbucket · hộp PR cần chú ý",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-bitbucket-inbox",
+        "canonicalCommand": "twg bitbucket inbox",
+        "title": "Xem hộp PR cần chú ý của Bitbucket",
+        "command": "twg bitbucket inbox",
+        "description": "Xem hộp PR cần chú ý của Bitbucket.",
+        "example": "twg bitbucket inbox",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "bitbucket",
+          "inbox"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--scope <scope>",
+            "description": "Phạm vi truy vấn hoặc thao tác; nhận: workspace, repo; mặc định: \"workspace\"",
+            "example": "--scope workspace"
+          },
+          {
+            "flag": "--role <role>",
+            "description": "Vai trò dùng để lọc hoặc phân quyền; nhận: reviewer, author; mặc định: \"reviewer\"",
+            "example": "--role reviewer"
+          },
+          {
+            "flag": "--state <state>",
+            "description": "Trạng thái; dùng đúng giá trị được lệnh hỗ trợ",
+            "example": "--state open"
+          },
+          {
+            "flag": "--status <status>",
+            "description": "Trạng thái; giá trị và ý nghĩa phụ thuộc lệnh",
+            "example": "--status open"
+          },
+          {
+            "flag": "-n, --limit <count>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh",
+            "example": "--limit 10"
+          },
+          {
+            "flag": "--repo-limit <count>",
+            "description": "Tham số repo-limit",
+            "example": "--repo-limit 10"
+          },
+          {
+            "flag": "--repo-role <role>",
+            "description": "Tham số repo-role; nhận: member, contributor, admin; mặc định: \"member\"",
+            "example": "--repo-role member"
+          },
+          {
+            "flag": "--concurrency <count>",
+            "description": "Tham số concurrency",
+            "example": "--concurrency 10"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      }
+    ]
+  },
+  {
+    "id": "bitbucket-pipeline",
+    "title": "Bitbucket · pipeline",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-bitbucket-pipeline-config-get",
+        "canonicalCommand": "twg bitbucket pipeline config get",
+        "title": "Đọc cấu hình của pipeline của Bitbucket",
+        "command": "twg bitbucket pipeline config get",
+        "description": "Đọc cấu hình của pipeline của Bitbucket.",
+        "example": "twg bitbucket pipeline config get",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "bitbucket",
+          "pipeline",
+          "config",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          }
+        ]
+      },
+      {
+        "id": "twg-bitbucket-pipeline-config-update",
+        "canonicalCommand": "twg bitbucket pipeline config update",
+        "title": "Cập nhật cấu hình của pipeline của Bitbucket",
+        "command": "twg bitbucket pipeline config update --enabled <true|false>",
+        "description": "Cập nhật cấu hình của pipeline của Bitbucket.",
+        "example": "twg bitbucket pipeline config update --enabled true --workspace demo-workspace --repo demo-repo",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "bitbucket",
+          "pipeline",
+          "config",
+          "update"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          },
+          {
+            "flag": "--enabled <true|false>",
+            "description": "Tham số enabled; bắt buộc",
+            "example": "--enabled true"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-bitbucket-pipeline-get",
+        "canonicalCommand": "twg bitbucket pipeline get",
+        "title": "Đọc pipeline của Bitbucket",
+        "command": "twg bitbucket pipeline get --pipeline <id>",
+        "description": "Đọc pipeline của Bitbucket.",
+        "example": "twg bitbucket pipeline get --pipeline 1234 --workspace demo-workspace --repo demo-repo",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "bitbucket",
+          "pipeline",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          },
+          {
+            "flag": "--pipeline <id>",
+            "description": "Pipeline; bắt buộc",
+            "example": "--pipeline 12"
+          },
+          {
+            "flag": "--logs",
+            "description": "Tham số logs",
+            "example": "--logs"
+          },
+          {
+            "flag": "--test-reports",
+            "description": "Tham số test-reports",
+            "example": "--test-reports"
+          },
+          {
+            "flag": "--test-cases",
+            "description": "Tham số test-cases",
+            "example": "--test-cases"
+          },
+          {
+            "flag": "--case-limit <count>",
+            "description": "Tham số case-limit; mặc định: \"100\"",
+            "example": "--case-limit 10"
+          },
+          {
+            "flag": "--step <step>",
+            "description": "Tham số step",
+            "example": "--step 1"
+          },
+          {
+            "flag": "--failed-steps",
+            "description": "Tham số failed-steps",
+            "example": "--failed-steps"
+          },
+          {
+            "flag": "--lines <count>",
+            "description": "Dòng; mặc định: \"100\"",
+            "example": "--lines 10"
+          }
+        ]
+      },
+      {
+        "id": "twg-bitbucket-pipeline-grep",
+        "canonicalCommand": "twg bitbucket pipeline grep",
+        "title": "Tìm trong log pipeline của Bitbucket",
+        "command": "twg bitbucket pipeline grep <pattern> --pipeline <number>",
+        "description": "Tìm trong log pipeline của Bitbucket.",
+        "example": "twg bitbucket pipeline grep error --pipeline 12 --workspace demo-workspace --repo demo-repo",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "bitbucket",
+          "pipeline",
+          "grep"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--pipeline <number>",
+            "description": "Pipeline; bắt buộc",
+            "example": "--pipeline 12"
+          },
+          {
+            "flag": "--step <selector>",
+            "description": "Tham số step",
+            "example": "--step 1"
+          },
+          {
+            "flag": "-i, --ignore-case",
+            "description": "Không phân biệt chữ hoa và chữ thường",
+            "example": "--ignore-case"
+          },
+          {
+            "flag": "-C, --context <n>",
+            "description": "Ngữ cảnh; mặc định: \"0\"",
+            "example": "--context 10"
+          },
+          {
+            "flag": "--max-matches <n>",
+            "description": "Tham số max-matches; mặc định: \"200\"",
+            "example": "--max-matches 10"
+          },
+          {
+            "flag": "--regex",
+            "description": "Xử lý mẫu tìm kiếm như biểu thức chính quy",
+            "example": "--regex"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-bitbucket-pipeline-latest-failure",
+        "canonicalCommand": "twg bitbucket pipeline latest-failure",
+        "title": "Xem pipeline thất bại gần nhất của pipeline của Bitbucket",
+        "command": "twg bitbucket pipeline latest-failure",
+        "description": "Xem pipeline thất bại gần nhất của pipeline của Bitbucket.",
+        "example": "twg bitbucket pipeline latest-failure --branch main --workspace demo-workspace --repo demo-repo",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "bitbucket",
+          "pipeline",
+          "latest-failure"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          },
+          {
+            "flag": "--state <state>",
+            "description": "Trạng thái; dùng đúng giá trị được lệnh hỗ trợ",
+            "example": "--state open"
+          },
+          {
+            "flag": "--status <status>",
+            "description": "Trạng thái; giá trị và ý nghĩa phụ thuộc lệnh; mặc định: \"FAILED\"",
+            "example": "--status open"
+          },
+          {
+            "flag": "--branch <branch>",
+            "description": "Nhánh",
+            "example": "--branch main"
+          },
+          {
+            "flag": "--trigger <trigger>",
+            "description": "Tham số trigger",
+            "example": "--trigger TRIGGER"
+          },
+          {
+            "flag": "--pattern <pattern>",
+            "description": "Tham số pattern",
+            "example": "--pattern onboarding"
+          },
+          {
+            "flag": "--all-steps",
+            "description": "Tham số all-steps; mặc định: false",
+            "example": "--all-steps"
+          },
+          {
+            "flag": "--lines <count>",
+            "description": "Dòng; mặc định: \"40\"",
+            "example": "--lines 10"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-bitbucket-pipeline-query",
+        "canonicalCommand": "twg bitbucket pipeline query",
+        "title": "Tra cứu pipeline của Bitbucket",
+        "command": "twg bitbucket pipeline query",
+        "description": "Tra cứu pipeline của Bitbucket.",
+        "example": "twg bitbucket pipeline query --workspace demo-workspace --repo demo-repo",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "bitbucket",
+          "pipeline",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          },
+          {
+            "flag": "--state <state>",
+            "description": "Trạng thái; dùng đúng giá trị được lệnh hỗ trợ",
+            "example": "--state open"
+          },
+          {
+            "flag": "--status <status>",
+            "description": "Trạng thái; giá trị và ý nghĩa phụ thuộc lệnh",
+            "example": "--status open"
+          },
+          {
+            "flag": "--branch <branch>",
+            "description": "Nhánh",
+            "example": "--branch main"
+          },
+          {
+            "flag": "--trigger <trigger>",
+            "description": "Tham số trigger",
+            "example": "--trigger TRIGGER"
+          },
+          {
+            "flag": "--pattern <pattern>",
+            "description": "Tham số pattern",
+            "example": "--pattern onboarding"
+          },
+          {
+            "flag": "-n, --limit <count>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh; mặc định: \"15\"",
+            "example": "--limit 10"
+          }
+        ]
+      },
+      {
+        "id": "twg-bitbucket-pipeline-rerun-failed",
+        "canonicalCommand": "twg bitbucket pipeline rerun-failed",
+        "title": "Chạy lại phần thất bại pipeline của Bitbucket",
+        "command": "twg bitbucket pipeline rerun-failed --pipeline <id>",
+        "description": "Chạy lại phần thất bại pipeline của Bitbucket.",
+        "example": "twg bitbucket pipeline rerun-failed --pipeline 1234 --workspace demo-workspace --repo demo-repo",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "bitbucket",
+          "pipeline",
+          "rerun-failed"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          },
+          {
+            "flag": "--pipeline <id>",
+            "description": "Pipeline; bắt buộc",
+            "example": "--pipeline 12"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-bitbucket-pipeline-run",
+        "canonicalCommand": "twg bitbucket pipeline run",
+        "title": "Chạy pipeline của Bitbucket",
+        "command": "twg bitbucket pipeline run",
+        "description": "Chạy pipeline của Bitbucket.",
+        "example": "twg bitbucket pipeline run --tag v1.2.3 --workspace demo-workspace --repo demo-repo",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "bitbucket",
+          "pipeline",
+          "run"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-w, --workspace <slug>",
+            "description": "Workspace",
+            "example": "--workspace demo-workspace"
+          },
+          {
+            "flag": "-r, --repo <slug>",
+            "description": "Repository; có thể nhập nhiều giá trị",
+            "example": "--repo demo-repo"
+          },
+          {
+            "flag": "--branch <branch>",
+            "description": "Nhánh",
+            "example": "--branch main"
+          },
+          {
+            "flag": "--tag <tag>",
+            "description": "Tham số tag",
+            "example": "--tag TAG"
+          },
+          {
+            "flag": "--custom <pattern>",
+            "description": "Tham số custom",
+            "example": "--custom CUSTOM"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      }
+    ]
+  }
+]

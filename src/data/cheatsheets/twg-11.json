@@ -1,0 +1,1245 @@
+[
+  {
+    "id": "assets-object",
+    "title": "Assets · đối tượng",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "twg-assets-object-update",
+        "canonicalCommand": "twg assets object update",
+        "title": "Cập nhật đối tượng của Assets",
+        "command": "twg assets object update <id>",
+        "description": "Cập nhật đối tượng của Assets.",
+        "example": "twg assets object update 123 --attribute 55=\"MacBook Pro\"",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "assets",
+          "object",
+          "update"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--type-id <typeId>",
+            "description": "ID loại",
+            "example": "--type-id 12345"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--attribute <attributeId=value>",
+            "description": "Thuộc tính; có thể nhập nhiều giá trị",
+            "example": "--attribute ATTRIBUTE"
+          },
+          {
+            "flag": "--attribute-name <name=value>",
+            "description": "Tham số attribute-name; có thể nhập nhiều giá trị",
+            "example": "--attribute-name ATTRIBUTE_NAME"
+          },
+          {
+            "flag": "--attributes-json <json>",
+            "description": "JSON cho thuộc tính",
+            "example": "--attributes-json '{}'"
+          },
+          {
+            "flag": "--attributes-file <path>",
+            "description": "Tệp cho thuộc tính",
+            "example": "--attributes-file ./request.json"
+          },
+          {
+            "flag": "--dry-run",
+            "description": "Chỉ kiểm tra hoặc xem trước thay đổi, theo hợp đồng của lệnh",
+            "example": "--dry-run"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      }
+    ]
+  },
+  {
+    "id": "assets-object-attribute-value",
+    "title": "Assets · giá trị thuộc tính đối tượng",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "twg-assets-object-attribute-value-update",
+        "canonicalCommand": "twg assets object-attribute-value update",
+        "title": "Cập nhật giá trị thuộc tính đối tượng của Assets",
+        "command": "twg assets object-attribute-value update <id> --attribute-id <attributeId>",
+        "description": "Cập nhật giá trị thuộc tính đối tượng của Assets.",
+        "example": "twg assets object-attribute-value update 123 --attribute-id 456 --value example",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "assets",
+          "object-attribute-value",
+          "update"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--attribute-id <attributeId>",
+            "description": "ID thuộc tính; bắt buộc",
+            "example": "--attribute-id 12345"
+          },
+          {
+            "flag": "--value <value>",
+            "description": "Giá trị; có thể nhập nhiều giá trị",
+            "example": "--value VALUE"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      }
+    ]
+  },
+  {
+    "id": "assets-objects",
+    "title": "Assets · đối tượng",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "twg-assets-objects-query",
+        "canonicalCommand": "twg assets objects query",
+        "title": "Tra cứu đối tượng của Assets",
+        "command": "twg assets objects query",
+        "description": "Tra cứu đối tượng của Assets.",
+        "example": "twg assets objects query --id 1 --id 2",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "assets",
+          "objects",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên; có thể nhập nhiều giá trị",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "assets-objectschema",
+    "title": "Assets · schema đối tượng",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "twg-assets-objectschema-attributes-query",
+        "canonicalCommand": "twg assets objectschema attributes query",
+        "title": "Tra cứu thuộc tính của schema đối tượng của Assets",
+        "command": "twg assets objectschema attributes query",
+        "description": "Tra cứu thuộc tính của schema đối tượng của Assets.",
+        "example": "twg assets objectschema attributes query --id 1 --id 2",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "assets",
+          "objectschema",
+          "attributes",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên; có thể nhập nhiều giá trị",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      },
+      {
+        "id": "twg-assets-objectschema-create",
+        "canonicalCommand": "twg assets objectschema create",
+        "title": "Tạo schema đối tượng của Assets",
+        "command": "twg assets objectschema create --name <name> --key <key>",
+        "description": "Tạo schema đối tượng của Assets.",
+        "example": "twg assets objectschema create --name Inventory --key INV",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "assets",
+          "objectschema",
+          "create"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--name <name>",
+            "description": "Tên; bắt buộc",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--key <key>",
+            "description": "Mã tài nguyên; bắt buộc",
+            "example": "--key DEMO-123"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--description <text>",
+            "description": "Mô tả",
+            "example": "--description 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--dry-run",
+            "description": "Chỉ kiểm tra hoặc xem trước thay đổi, theo hợp đồng của lệnh",
+            "example": "--dry-run"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-assets-objectschema-delete",
+        "canonicalCommand": "twg assets objectschema delete",
+        "title": "Xóa schema đối tượng của Assets",
+        "command": "twg assets objectschema delete <id>",
+        "description": "Xóa schema đối tượng của Assets.",
+        "example": "twg assets objectschema delete 33",
+        "exampleKind": "usage",
+        "risk": "destructive",
+        "tags": [
+          "assets",
+          "objectschema",
+          "delete"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Có thể xóa dữ liệu, thu hồi quyền hoặc gỡ cấu hình. Đọc lại đối tượng và khả năng khôi phục; ưu tiên --dry-run nếu lệnh hỗ trợ. Không thêm --yes khi chưa kiểm tra."
+      },
+      {
+        "id": "twg-assets-objectschema-get",
+        "canonicalCommand": "twg assets objectschema get",
+        "title": "Đọc schema đối tượng của Assets",
+        "command": "twg assets objectschema get",
+        "description": "Đọc schema đối tượng của Assets.",
+        "example": "twg assets objectschema get --id 1 --id 2",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "assets",
+          "objectschema",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên; có thể nhập nhiều giá trị",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      },
+      {
+        "id": "twg-assets-objectschema-list",
+        "canonicalCommand": "twg assets objectschema list",
+        "title": "Liệt kê schema đối tượng của Assets",
+        "command": "twg assets objectschema list",
+        "description": "Liệt kê schema đối tượng của Assets.",
+        "example": "twg assets objectschema list",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "assets",
+          "objectschema",
+          "list"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--include-counts",
+            "description": "Kèm số lượng",
+            "example": "--include-counts"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      },
+      {
+        "id": "twg-assets-objectschema-settings-update",
+        "canonicalCommand": "twg assets objectschema settings update",
+        "title": "Cập nhật cài đặt của schema đối tượng của Assets",
+        "command": "twg assets objectschema settings update <id>",
+        "description": "Cập nhật cài đặt của schema đối tượng của Assets.",
+        "example": "twg assets objectschema settings update 33 --allow-other-object-schema true",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "assets",
+          "objectschema",
+          "settings",
+          "update"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--allow-other-object-schema <true|false>",
+            "description": "Tham số allow-other-object-schema",
+            "example": "--allow-other-object-schema true"
+          },
+          {
+            "flag": "--validate-quick-create <true|false>",
+            "description": "Tham số validate-quick-create",
+            "example": "--validate-quick-create true"
+          },
+          {
+            "flag": "--quick-create-objects <true|false>",
+            "description": "Tham số quick-create-objects",
+            "example": "--quick-create-objects true"
+          },
+          {
+            "flag": "--dry-run",
+            "description": "Chỉ kiểm tra hoặc xem trước thay đổi, theo hợp đồng của lệnh",
+            "example": "--dry-run"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-assets-objectschema-update",
+        "canonicalCommand": "twg assets objectschema update",
+        "title": "Cập nhật schema đối tượng của Assets",
+        "command": "twg assets objectschema update <id>",
+        "description": "Cập nhật schema đối tượng của Assets.",
+        "example": "twg assets objectschema update 33 --name \"Inventory 2\"",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "assets",
+          "objectschema",
+          "update"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--name <name>",
+            "description": "Tên",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--key <key>",
+            "description": "Mã tài nguyên",
+            "example": "--key DEMO-123"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--description <text>",
+            "description": "Mô tả",
+            "example": "--description 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--dry-run",
+            "description": "Chỉ kiểm tra hoặc xem trước thay đổi, theo hợp đồng của lệnh",
+            "example": "--dry-run"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      }
+    ]
+  },
+  {
+    "id": "assets-query",
+    "title": "Assets · truy vấn",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "twg-assets-query",
+        "canonicalCommand": "twg assets query",
+        "title": "Tra cứu Assets",
+        "command": "twg assets query",
+        "description": "Tra cứu Assets.",
+        "example": "twg assets query --aql \"Name like 'prod-*'\" --limit 10",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "assets",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--aql <query>",
+            "description": "Truy vấn Assets bằng AQL",
+            "example": "--aql 'objectType = Service'"
+          },
+          {
+            "flag": "--object-type <name>",
+            "description": "Tham số object-type",
+            "example": "--object-type OBJECT_TYPE"
+          },
+          {
+            "flag": "--field <name=value>",
+            "description": "Trường hoặc giá trị trường theo hợp đồng của lệnh; có thể nhập nhiều giá trị",
+            "example": "--field FIELD"
+          },
+          {
+            "flag": "--account-id <id-or-ari>",
+            "description": "ID tài khoản Atlassian hoặc ARI được hỗ trợ; có thể nhập nhiều giá trị",
+            "example": "--account-id ACCOUNT_ID"
+          },
+          {
+            "flag": "--person <account-id-or-handle>",
+            "description": "Tham số person; có thể nhập nhiều giá trị",
+            "example": "--person PERSON"
+          },
+          {
+            "flag": "--person-field <name>",
+            "description": "Tham số person-field; có thể nhập nhiều giá trị",
+            "example": "--person-field PERSON_FIELD"
+          },
+          {
+            "flag": "--field-like <name=pattern>",
+            "description": "Tham số field-like; có thể nhập nhiều giá trị",
+            "example": "--field-like FIELD_LIKE"
+          },
+          {
+            "flag": "--limit <n>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh",
+            "example": "--limit 10"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "assets-reference-type",
+    "title": "Assets · loại tham chiếu",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "twg-assets-reference-type-create",
+        "canonicalCommand": "twg assets reference-type create",
+        "title": "Tạo loại tham chiếu của Assets",
+        "command": "twg assets reference-type create --name <name>",
+        "description": "Tạo loại tham chiếu của Assets.",
+        "example": "twg assets reference-type create --name \"Hosted on\" --schema-id 34 --dry-run",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "assets",
+          "reference-type",
+          "create"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Tên; bắt buộc",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--description <text>",
+            "description": "Mô tả",
+            "example": "--description 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--color <hex>",
+            "description": "Tham số color",
+            "example": "--color COLOR"
+          },
+          {
+            "flag": "--schema-id <id>",
+            "description": "ID schema",
+            "example": "--schema-id 12345"
+          },
+          {
+            "flag": "--dry-run",
+            "description": "Chỉ kiểm tra hoặc xem trước thay đổi, theo hợp đồng của lệnh",
+            "example": "--dry-run"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-assets-reference-type-delete",
+        "canonicalCommand": "twg assets reference-type delete",
+        "title": "Xóa loại tham chiếu của Assets",
+        "command": "twg assets reference-type delete <id>",
+        "description": "Xóa loại tham chiếu của Assets.",
+        "example": "twg assets reference-type delete 7",
+        "exampleKind": "usage",
+        "risk": "destructive",
+        "tags": [
+          "assets",
+          "reference-type",
+          "delete"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Có thể xóa dữ liệu, thu hồi quyền hoặc gỡ cấu hình. Đọc lại đối tượng và khả năng khôi phục; ưu tiên --dry-run nếu lệnh hỗ trợ. Không thêm --yes khi chưa kiểm tra."
+      },
+      {
+        "id": "twg-assets-reference-type-query",
+        "canonicalCommand": "twg assets reference-type query",
+        "title": "Tra cứu loại tham chiếu của Assets",
+        "command": "twg assets reference-type query",
+        "description": "Tra cứu loại tham chiếu của Assets.",
+        "example": "twg assets reference-type query",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "assets",
+          "reference-type",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--schema-id <id>",
+            "description": "ID schema",
+            "example": "--schema-id 12345"
+          },
+          {
+            "flag": "--include-all",
+            "description": "Kèm all",
+            "example": "--include-all"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      },
+      {
+        "id": "twg-assets-reference-type-update",
+        "canonicalCommand": "twg assets reference-type update",
+        "title": "Cập nhật loại tham chiếu của Assets",
+        "command": "twg assets reference-type update <id>",
+        "description": "Cập nhật loại tham chiếu của Assets.",
+        "example": "twg assets reference-type update 7 --name \"Hosted on\"",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "assets",
+          "reference-type",
+          "update"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Tên",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--description <text>",
+            "description": "Mô tả",
+            "example": "--description 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--color <hex>",
+            "description": "Tham số color",
+            "example": "--color COLOR"
+          },
+          {
+            "flag": "--schema-id <id>",
+            "description": "ID schema",
+            "example": "--schema-id 12345"
+          },
+          {
+            "flag": "--dry-run",
+            "description": "Chỉ kiểm tra hoặc xem trước thay đổi, theo hợp đồng của lệnh",
+            "example": "--dry-run"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      }
+    ]
+  },
+  {
+    "id": "assets-search",
+    "title": "Assets · search",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "twg-assets-search",
+        "canonicalCommand": "twg assets search",
+        "title": "Tìm Assets",
+        "command": "twg assets search [input...]",
+        "description": "Tìm Assets.",
+        "example": "twg assets search \"MacBook Pro\" --limit 10",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "assets",
+          "search"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--query <text>",
+            "description": "Chuỗi truy vấn theo lệnh",
+            "example": "--query onboarding"
+          },
+          {
+            "flag": "--aql <query>",
+            "description": "Truy vấn Assets bằng AQL",
+            "example": "--aql 'objectType = Service'"
+          },
+          {
+            "flag": "--object-type <name>",
+            "description": "Tham số object-type",
+            "example": "--object-type OBJECT_TYPE"
+          },
+          {
+            "flag": "--field <name=value>",
+            "description": "Trường hoặc giá trị trường theo hợp đồng của lệnh; có thể nhập nhiều giá trị",
+            "example": "--field FIELD"
+          },
+          {
+            "flag": "--field-like <name=pattern>",
+            "description": "Tham số field-like; có thể nhập nhiều giá trị",
+            "example": "--field-like FIELD_LIKE"
+          },
+          {
+            "flag": "--account-id <id-or-ari>",
+            "description": "ID tài khoản Atlassian hoặc ARI được hỗ trợ; có thể nhập nhiều giá trị",
+            "example": "--account-id ACCOUNT_ID"
+          },
+          {
+            "flag": "--person <account-id-or-handle>",
+            "description": "Tham số person; có thể nhập nhiều giá trị",
+            "example": "--person PERSON"
+          },
+          {
+            "flag": "--person-field <name>",
+            "description": "Tham số person-field; có thể nhập nhiều giá trị",
+            "example": "--person-field PERSON_FIELD"
+          },
+          {
+            "flag": "--limit <n>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh",
+            "example": "--limit 10"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "assets-service-object",
+    "title": "Assets · đối tượng dịch vụ",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "twg-assets-service-object-query",
+        "canonicalCommand": "twg assets service-object query",
+        "title": "Tra cứu đối tượng dịch vụ của Assets",
+        "command": "twg assets service-object query",
+        "description": "Tra cứu đối tượng dịch vụ của Assets.",
+        "example": "twg assets service-object query --id 1 --id 2",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "assets",
+          "service-object",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên; có thể nhập nhiều giá trị",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "assets-type",
+    "title": "Assets · loại",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "twg-assets-type-attribute-create",
+        "canonicalCommand": "twg assets type attribute create",
+        "title": "Tạo thuộc tính của loại của Assets",
+        "command": "twg assets type attribute create",
+        "description": "Tạo thuộc tính của loại của Assets.",
+        "example": "twg assets type attribute create --type-id 44 --name Serial --type 0 --label",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "assets",
+          "type",
+          "attribute",
+          "create"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--type-id <typeId>",
+            "description": "ID loại",
+            "example": "--type-id 12345"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Tên",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--type <number>",
+            "description": "Loại tài nguyên hoặc nội dung theo lệnh",
+            "example": "--type 10"
+          },
+          {
+            "flag": "--default-type-id <number>",
+            "description": "ID default-type",
+            "example": "--default-type-id 12345"
+          },
+          {
+            "flag": "--label",
+            "description": "Nhãn",
+            "example": "--label"
+          },
+          {
+            "flag": "--description <text>",
+            "description": "Mô tả",
+            "example": "--description 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--type-value <value>",
+            "description": "Tham số type-value",
+            "example": "--type-value TYPE_VALUE"
+          },
+          {
+            "flag": "--type-value-multi <value>",
+            "description": "Tham số type-value-multi; có thể nhập nhiều giá trị",
+            "example": "--type-value-multi TYPE_VALUE_MULTI"
+          },
+          {
+            "flag": "--additional-value <value>",
+            "description": "Tham số additional-value",
+            "example": "--additional-value ADDITIONAL_VALUE"
+          },
+          {
+            "flag": "--select-option <value>",
+            "description": "Tham số select-option; có thể nhập nhiều giá trị",
+            "example": "--select-option SELECT_OPTION"
+          },
+          {
+            "flag": "--min <number>",
+            "description": "Tham số min",
+            "example": "--min 10"
+          },
+          {
+            "flag": "--max <number>",
+            "description": "Tham số max",
+            "example": "--max 10"
+          },
+          {
+            "flag": "--input-json <json>",
+            "description": "Payload JSON theo schema của lệnh",
+            "example": "--input-json '{}'"
+          },
+          {
+            "flag": "--input-file <path>",
+            "description": "Đường dẫn tới tệp payload JSON đã chuẩn bị",
+            "example": "--input-file ./request.json"
+          },
+          {
+            "flag": "--dry-run",
+            "description": "Chỉ kiểm tra hoặc xem trước thay đổi, theo hợp đồng của lệnh",
+            "example": "--dry-run"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-assets-type-attribute-delete",
+        "canonicalCommand": "twg assets type attribute delete",
+        "title": "Xóa thuộc tính của loại của Assets",
+        "command": "twg assets type attribute delete <id>",
+        "description": "Xóa thuộc tính của loại của Assets.",
+        "example": "twg assets type attribute delete 55",
+        "exampleKind": "usage",
+        "risk": "destructive",
+        "tags": [
+          "assets",
+          "type",
+          "attribute",
+          "delete"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Có thể xóa dữ liệu, thu hồi quyền hoặc gỡ cấu hình. Đọc lại đối tượng và khả năng khôi phục; ưu tiên --dry-run nếu lệnh hỗ trợ. Không thêm --yes khi chưa kiểm tra."
+      },
+      {
+        "id": "twg-assets-type-attribute-update",
+        "canonicalCommand": "twg assets type attribute update",
+        "title": "Cập nhật thuộc tính của loại của Assets",
+        "command": "twg assets type attribute update",
+        "description": "Cập nhật thuộc tính của loại của Assets.",
+        "example": "twg assets type attribute update --type-id 44 --attribute-id 55 --description \"Serial number\"",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "assets",
+          "type",
+          "attribute",
+          "update"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--type-id <typeId>",
+            "description": "ID loại",
+            "example": "--type-id 12345"
+          },
+          {
+            "flag": "--attribute-id <attributeId>",
+            "description": "ID thuộc tính",
+            "example": "--attribute-id 12345"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Tên",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--type <number>",
+            "description": "Loại tài nguyên hoặc nội dung theo lệnh",
+            "example": "--type 10"
+          },
+          {
+            "flag": "--default-type-id <number>",
+            "description": "ID default-type",
+            "example": "--default-type-id 12345"
+          },
+          {
+            "flag": "--label",
+            "description": "Nhãn",
+            "example": "--label"
+          },
+          {
+            "flag": "--description <text>",
+            "description": "Mô tả",
+            "example": "--description 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--type-value <value>",
+            "description": "Tham số type-value",
+            "example": "--type-value TYPE_VALUE"
+          },
+          {
+            "flag": "--type-value-multi <value>",
+            "description": "Tham số type-value-multi; có thể nhập nhiều giá trị",
+            "example": "--type-value-multi TYPE_VALUE_MULTI"
+          },
+          {
+            "flag": "--additional-value <value>",
+            "description": "Tham số additional-value",
+            "example": "--additional-value ADDITIONAL_VALUE"
+          },
+          {
+            "flag": "--select-option <value>",
+            "description": "Tham số select-option; có thể nhập nhiều giá trị",
+            "example": "--select-option SELECT_OPTION"
+          },
+          {
+            "flag": "--min <number>",
+            "description": "Tham số min",
+            "example": "--min 10"
+          },
+          {
+            "flag": "--max <number>",
+            "description": "Tham số max",
+            "example": "--max 10"
+          },
+          {
+            "flag": "--input-json <json>",
+            "description": "Payload JSON theo schema của lệnh",
+            "example": "--input-json '{}'"
+          },
+          {
+            "flag": "--input-file <path>",
+            "description": "Đường dẫn tới tệp payload JSON đã chuẩn bị",
+            "example": "--input-file ./request.json"
+          },
+          {
+            "flag": "--dry-run",
+            "description": "Chỉ kiểm tra hoặc xem trước thay đổi, theo hợp đồng của lệnh",
+            "example": "--dry-run"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-assets-type-create",
+        "canonicalCommand": "twg assets type create",
+        "title": "Tạo loại của Assets",
+        "command": "twg assets type create --schema-id <schemaId> --name <name>",
+        "description": "Tạo loại của Assets.",
+        "example": "twg assets type create --schema-id 33 --name Hardware",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "assets",
+          "type",
+          "create"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--schema-id <schemaId>",
+            "description": "ID schema; bắt buộc",
+            "example": "--schema-id 12345"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Tên; bắt buộc",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--description <text>",
+            "description": "Mô tả",
+            "example": "--description 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--parent-type-id <id>",
+            "description": "ID parent-type",
+            "example": "--parent-type-id 12345"
+          },
+          {
+            "flag": "--inherited",
+            "description": "Tham số inherited",
+            "example": "--inherited"
+          },
+          {
+            "flag": "--abstract",
+            "description": "Tham số abstract",
+            "example": "--abstract"
+          },
+          {
+            "flag": "--dry-run",
+            "description": "Chỉ kiểm tra hoặc xem trước thay đổi, theo hợp đồng của lệnh",
+            "example": "--dry-run"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-assets-type-delete",
+        "canonicalCommand": "twg assets type delete",
+        "title": "Xóa loại của Assets",
+        "command": "twg assets type delete <id>",
+        "description": "Xóa loại của Assets.",
+        "example": "twg assets type delete 44",
+        "exampleKind": "usage",
+        "risk": "destructive",
+        "tags": [
+          "assets",
+          "type",
+          "delete"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Có thể xóa dữ liệu, thu hồi quyền hoặc gỡ cấu hình. Đọc lại đối tượng và khả năng khôi phục; ưu tiên --dry-run nếu lệnh hỗ trợ. Không thêm --yes khi chưa kiểm tra."
+      },
+      {
+        "id": "twg-assets-type-get",
+        "canonicalCommand": "twg assets type get",
+        "title": "Đọc loại của Assets",
+        "command": "twg assets type get",
+        "description": "Đọc loại của Assets.",
+        "example": "twg assets type get --id 1 --id 2",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "assets",
+          "type",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên; có thể nhập nhiều giá trị",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      },
+      {
+        "id": "twg-assets-type-list-attr-query",
+        "canonicalCommand": "twg assets type list-attr query",
+        "title": "Tra cứu danh sách thuộc tính của loại của Assets",
+        "command": "twg assets type list-attr query",
+        "description": "Tra cứu danh sách thuộc tính của loại của Assets.",
+        "example": "twg assets type list-attr query --type-id 1159",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "assets",
+          "type",
+          "list-attr",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--type-id <typeId>",
+            "description": "ID loại; có thể nhập nhiều giá trị",
+            "example": "--type-id 12345"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ]
+      }
+    ]
+  }
+]

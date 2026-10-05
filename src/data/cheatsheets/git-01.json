@@ -1,0 +1,1350 @@
+[
+  {
+    "id": "git-setup",
+    "title": "Porcelain · Bắt đầu & cấu hình",
+    "level": "core",
+    "commands": [
+      {
+        "id": "git-full-global",
+        "canonicalCommand": "git",
+        "title": "Git và tùy chọn toàn cục",
+        "command": "git [GLOBAL_OPTIONS] COMMAND [ARGS]",
+        "description": "Chọn repository, cấu hình tạm thời và cách hiển thị trước khi gọi một lệnh con. Ví dụ đọc trạng thái của thư mục dự án.",
+        "example": "git -C ./my-project --no-pager status",
+        "risk": "read",
+        "tags": [
+          "git",
+          "git-setup",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git",
+        "options": [
+          {
+            "flag": "-C PATH",
+            "description": "Chạy như đang đứng trong PATH"
+          },
+          {
+            "flag": "-c key=value",
+            "description": "Ghi đè cấu hình cho một lần chạy; không lưu vào file"
+          },
+          {
+            "flag": "--no-pager",
+            "description": "In trực tiếp thay vì mở trình phân trang"
+          },
+          {
+            "flag": "--git-dir=PATH / --work-tree=PATH",
+            "description": "Chỉ định kho metadata và working tree"
+          },
+          {
+            "flag": "--no-optional-locks",
+            "description": "Bỏ khóa tùy chọn; hữu ích cho tác vụ đọc nền"
+          },
+          {
+            "flag": "--no-lazy-fetch",
+            "description": "Không tự tải object thiếu của partial clone"
+          },
+          {
+            "flag": "--literal-pathspecs",
+            "description": "Đọc đường dẫn đúng nghĩa, không mở rộng pattern"
+          }
+        ]
+      },
+      {
+        "id": "git-full-version",
+        "canonicalCommand": "git version",
+        "title": "Kiểm tra phiên bản Git",
+        "command": "git version [--build-options]",
+        "description": "Xem phiên bản thực sự cài trên máy để đối chiếu khả năng hỗ trợ lệnh.",
+        "example": "git version --build-options",
+        "risk": "read",
+        "tags": [
+          "version",
+          "git-setup",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-version",
+        "options": [
+          {
+            "flag": "--build-options",
+            "description": "Hiện thông tin build và nền tảng"
+          },
+          {
+            "flag": "git --version",
+            "description": "Cách gọi tương đương"
+          }
+        ]
+      },
+      {
+        "id": "git-full-help",
+        "canonicalCommand": "git help",
+        "title": "Tra trợ giúp và toàn bộ lệnh",
+        "command": "git help [--all | --guides | COMMAND]",
+        "description": "Mở manual một lệnh hoặc liệt kê các lệnh mà bản cài hiện tại hỗ trợ, bao gồm lệnh mở rộng trên PATH.",
+        "example": "git help --all",
+        "risk": "read",
+        "tags": [
+          "help",
+          "git-setup",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-help",
+        "options": [
+          {
+            "flag": "--all",
+            "description": "Liệt kê các lệnh khả dụng"
+          },
+          {
+            "flag": "--guides",
+            "description": "Liệt kê bài hướng dẫn, không phải lệnh thực thi"
+          },
+          {
+            "flag": "--web",
+            "description": "Mở manual trong trình duyệt"
+          },
+          {
+            "flag": "--user-formats / --developer-interfaces",
+            "description": "Liệt kê tài liệu về giao diện và định dạng"
+          },
+          {
+            "flag": "git COMMAND -h",
+            "description": "Xem nhanh cú pháp ngay tại terminal"
+          }
+        ]
+      },
+      {
+        "id": "git-full-init",
+        "canonicalCommand": "git init",
+        "title": "Tạo repository mới",
+        "command": "git init [OPTIONS] DIRECTORY",
+        "description": "Tạo repository rỗng với nhánh ban đầu được chỉ định; chưa tạo commit.",
+        "example": "git init --initial-branch=main my-project",
+        "risk": "write",
+        "tags": [
+          "init",
+          "git-setup",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-init",
+        "options": [
+          {
+            "flag": "--initial-branch=NAME",
+            "description": "Đặt tên nhánh ban đầu"
+          },
+          {
+            "flag": "--bare",
+            "description": "Tạo bare repository cho lưu trữ/remote"
+          },
+          {
+            "flag": "--object-format=sha1|sha256",
+            "description": "Chọn thuật toán object khi tạo kho"
+          },
+          {
+            "flag": "--ref-format=files|reftable",
+            "description": "Chọn backend refs"
+          },
+          {
+            "flag": "--shared[=PERMISSIONS]",
+            "description": "Cấu hình quyền cho kho dùng chung"
+          }
+        ],
+        "warning": "Chọn thư mục mới. --bare tạo kho không có working tree; định dạng object/ref cần tương thích các công cụ khác."
+      },
+      {
+        "id": "git-full-clone",
+        "canonicalCommand": "git clone",
+        "title": "Clone repository",
+        "command": "git clone [OPTIONS] REPOSITORY [DIRECTORY]",
+        "description": "Tải lịch sử và tạo working tree mới từ nguồn tin cậy.",
+        "example": "git clone https://github.com/git/git.git git-study",
+        "risk": "write",
+        "tags": [
+          "clone",
+          "git-setup",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-clone",
+        "options": [
+          {
+            "flag": "--branch NAME",
+            "description": "Checkout nhánh hoặc tag chỉ định"
+          },
+          {
+            "flag": "--depth N",
+            "description": "Tạo shallow clone giới hạn độ sâu"
+          },
+          {
+            "flag": "--filter=blob:none",
+            "description": "Partial clone, tải blob khi cần"
+          },
+          {
+            "flag": "--recurse-submodules",
+            "description": "Clone cả submodule"
+          },
+          {
+            "flag": "--bare / --mirror",
+            "description": "Không có working tree; --mirror sao chép toàn bộ refs"
+          },
+          {
+            "flag": "--no-checkout",
+            "description": "Chưa checkout file sau clone"
+          }
+        ],
+        "warning": "Ghi file và dùng mạng. --depth giới hạn lịch sử; --filter cần server hỗ trợ. Chỉ đọc mã sau clone, không chạy script chưa kiểm tra."
+      },
+      {
+        "id": "git-full-config-list",
+        "canonicalCommand": "git config",
+        "title": "Đọc cấu hình và nguồn",
+        "command": "git config list [--show-origin] [--show-scope]",
+        "description": "Liệt kê giá trị cùng phạm vi và file cung cấp, giúp phát hiện cấu hình chồng nhau.",
+        "example": "git config list --show-origin --show-scope",
+        "risk": "read",
+        "tags": [
+          "config",
+          "git-setup",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-config",
+        "options": [
+          {
+            "flag": "list",
+            "description": "Liệt kê tất cả cấu hình có hiệu lực"
+          },
+          {
+            "flag": "get NAME",
+            "description": "Đọc một khóa; --all lấy mọi giá trị"
+          },
+          {
+            "flag": "--system / --global / --local / --worktree",
+            "description": "Chọn phạm vi cấu hình"
+          },
+          {
+            "flag": "--file PATH",
+            "description": "Đọc hoặc sửa một file cụ thể"
+          },
+          {
+            "flag": "--show-origin / --show-scope",
+            "description": "Hiện vị trí và phạm vi"
+          },
+          {
+            "flag": "--includes",
+            "description": "Xử lý file cấu hình được include"
+          }
+        ],
+        "warning": "Đầu ra có thể chứa URL hoặc cấu hình nhạy cảm; rà soát trước khi chia sẻ."
+      },
+      {
+        "id": "git-full-config-get",
+        "canonicalCommand": "git config",
+        "title": "Đọc một khóa cấu hình",
+        "command": "git config get [--all] NAME",
+        "description": "Lấy cấu hình hiệu lực của một khóa. Ví dụ xem chiến lược fast-forward khi pull.",
+        "example": "git config get --default only pull.ff",
+        "risk": "read",
+        "tags": [
+          "config",
+          "git-setup",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-config",
+        "options": [
+          {
+            "flag": "--default VALUE",
+            "description": "Giá trị dùng khi không có khóa"
+          },
+          {
+            "flag": "--all",
+            "description": "Lấy tất cả giá trị của khóa đa trị"
+          },
+          {
+            "flag": "--regexp",
+            "description": "Tên là biểu thức chính quy"
+          },
+          {
+            "flag": "--type=bool|int|path",
+            "description": "Chuẩn hóa/kiểm tra kiểu giá trị"
+          },
+          {
+            "flag": "--url URL",
+            "description": "Áp dụng khớp cấu hình theo URL"
+          }
+        ]
+      },
+      {
+        "id": "git-full-config-set",
+        "canonicalCommand": "git config",
+        "title": "Đặt cấu hình trong repository",
+        "command": "git config set --local NAME VALUE",
+        "description": "Lưu tùy chọn cho kho hiện tại. Ví dụ buộc pull chỉ fast-forward.",
+        "example": "git config set --local pull.ff only",
+        "risk": "write",
+        "tags": [
+          "config",
+          "git-setup",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-config",
+        "options": [
+          {
+            "flag": "--local",
+            "description": "Ghi vào cấu hình repository hiện tại"
+          },
+          {
+            "flag": "--global",
+            "description": "Ghi cấu hình chung của người dùng"
+          },
+          {
+            "flag": "--all",
+            "description": "Thay tất cả giá trị khớp"
+          },
+          {
+            "flag": "--value PATTERN / --fixed-value",
+            "description": "Giới hạn giá trị cần thay"
+          },
+          {
+            "flag": "--type TYPE",
+            "description": "Kiểm tra/chuẩn hóa kiểu trước khi ghi"
+          }
+        ],
+        "warning": "--global ảnh hưởng mọi repository của tài khoản. Không ghi mật khẩu hoặc token vào cấu hình."
+      },
+      {
+        "id": "git-full-config-unset",
+        "canonicalCommand": "git config",
+        "title": "Bỏ một cấu hình",
+        "command": "git config unset [--all] --local NAME",
+        "description": "Xóa khóa chỉ định để dùng lại giá trị từ phạm vi khác hoặc mặc định.",
+        "example": "git config unset --local pull.ff",
+        "risk": "write",
+        "tags": [
+          "config",
+          "git-setup",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-config",
+        "options": [
+          {
+            "flag": "--all",
+            "description": "Xóa mọi giá trị của khóa"
+          },
+          {
+            "flag": "--value PATTERN",
+            "description": "Chỉ xóa giá trị khớp"
+          },
+          {
+            "flag": "--fixed-value",
+            "description": "Khớp đúng giá trị thay vì regex"
+          }
+        ],
+        "warning": "Xóa local có thể làm cấu hình global bắt đầu có hiệu lực."
+      },
+      {
+        "id": "git-full-config-edit",
+        "canonicalCommand": "git config",
+        "title": "Sửa file cấu hình bằng editor",
+        "command": "git config edit --local",
+        "description": "Mở cấu hình local trong editor đã chọn của Git.",
+        "example": "git config edit --local",
+        "risk": "write",
+        "tags": [
+          "config",
+          "git-setup",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-config",
+        "options": [
+          {
+            "flag": "--global / --system",
+            "description": "Mở phạm vi khác"
+          },
+          {
+            "flag": "--file PATH",
+            "description": "Mở file chỉ định"
+          }
+        ],
+        "warning": "Đọc kỹ thay đổi trước khi lưu; cấu hình alias, hook hoặc công cụ bên ngoài có thể dẫn đến chạy chương trình."
+      },
+      {
+        "id": "git-full-config-rename-section",
+        "canonicalCommand": "git config",
+        "title": "Đổi tên section cấu hình",
+        "command": "git config rename-section --local OLD NEW",
+        "description": "Đổi tên một section và giữ các khóa bên trong; thích hợp để bảo trì cấu hình do bạn tạo.",
+        "example": "git config rename-section --local demo old-demo",
+        "risk": "write",
+        "tags": [
+          "config",
+          "git-setup",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-config",
+        "options": [
+          {
+            "flag": "--local / --global",
+            "description": "Chọn phạm vi cần sửa"
+          }
+        ],
+        "warning": "Ví dụ cần section demo đã tồn tại. Với remote, ưu tiên git remote rename để cập nhật dữ liệu liên quan."
+      },
+      {
+        "id": "git-full-config-remove-section",
+        "canonicalCommand": "git config",
+        "title": "Xóa cả section cấu hình",
+        "command": "git config remove-section --local SECTION",
+        "description": "Xóa một section cùng mọi khóa con trong file cấu hình đã chọn.",
+        "example": "git config remove-section --local old-demo",
+        "risk": "destructive",
+        "tags": [
+          "config",
+          "git-setup",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-config",
+        "options": [
+          {
+            "flag": "--local / --global",
+            "description": "Chọn phạm vi cần sửa"
+          }
+        ],
+        "warning": "Kiểm tra section trước khi xóa; không chỉ xóa một giá trị đơn lẻ."
+      }
+    ]
+  },
+  {
+    "id": "git-stage",
+    "title": "Porcelain · Trạng thái, stage & snapshot",
+    "level": "core",
+    "commands": [
+      {
+        "id": "git-full-status",
+        "canonicalCommand": "git status",
+        "title": "Kiểm tra working tree",
+        "command": "git status [OPTIONS] [-- PATH...]",
+        "description": "Xem file đã stage, chưa stage, untracked và trạng thái nhánh.",
+        "example": "git status --short --branch",
+        "risk": "read",
+        "tags": [
+          "status",
+          "git-stage",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-status",
+        "options": [
+          {
+            "flag": "--short / -s",
+            "description": "Hiện dạng ngắn"
+          },
+          {
+            "flag": "--branch / -b",
+            "description": "Thêm trạng thái nhánh/upstream"
+          },
+          {
+            "flag": "--porcelain=v2 -z",
+            "description": "Đầu ra ổn định, phân tách NUL cho script"
+          },
+          {
+            "flag": "--untracked-files=all",
+            "description": "Hiện từng file untracked"
+          },
+          {
+            "flag": "--ignored",
+            "description": "Hiện thêm file bị ignore"
+          }
+        ]
+      },
+      {
+        "id": "git-full-add",
+        "canonicalCommand": "git add",
+        "title": "Stage nội dung file",
+        "command": "git add [OPTIONS] -- PATH...",
+        "description": "Đưa nội dung hiện tại vào index; sửa file tiếp sau đó cần stage lại.",
+        "example": "git add -- README.md src/app.js",
+        "risk": "write",
+        "tags": [
+          "add",
+          "git-stage",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-add",
+        "options": [
+          {
+            "flag": "--patch / -p",
+            "description": "Chọn từng hunk"
+          },
+          {
+            "flag": "--all / -A",
+            "description": "Stage thêm/sửa/xóa trong phạm vi"
+          },
+          {
+            "flag": "--update / -u",
+            "description": "Chỉ stage file đã theo dõi"
+          },
+          {
+            "flag": "--intent-to-add / -N",
+            "description": "Ghi nhận đường dẫn để xem diff trước khi stage nội dung"
+          },
+          {
+            "flag": "--dry-run / -n",
+            "description": "Chỉ xem sẽ thêm gì"
+          },
+          {
+            "flag": "--renormalize",
+            "description": "Áp dụng lại quy tắc chuẩn hóa cho file tracked"
+          }
+        ],
+        "warning": "Stage có thể đưa bí mật vào commit. Luôn kiểm tra git diff --staged."
+      },
+      {
+        "id": "git-full-stage",
+        "canonicalCommand": "git stage",
+        "title": "Alias chính thức của add",
+        "command": "git stage [OPTIONS] -- PATH...",
+        "description": "git stage là cách gọi khác của git add, nhận cùng tùy chọn và có cùng tác dụng lên index.",
+        "example": "git stage --patch -- README.md",
+        "risk": "write",
+        "tags": [
+          "stage",
+          "git-stage",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-stage",
+        "options": [
+          {
+            "flag": "--patch",
+            "description": "Stage từng hunk tương tác"
+          },
+          {
+            "flag": "--all",
+            "description": "Stage các thay đổi thêm/sửa/xóa"
+          }
+        ],
+        "warning": "Alias này không tạo commit. Kiểm tra phần đã stage trước khi commit."
+      },
+      {
+        "id": "git-full-commit",
+        "canonicalCommand": "git commit",
+        "title": "Tạo commit từ index",
+        "command": "git commit [OPTIONS]",
+        "description": "Tạo snapshot từ nội dung đã stage, gắn thông điệp và danh tính tác giả.",
+        "example": "git commit -m \"docs: clarify setup\"",
+        "risk": "write",
+        "tags": [
+          "commit",
+          "git-stage",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-commit",
+        "options": [
+          {
+            "flag": "-m MESSAGE",
+            "description": "Thông điệp commit"
+          },
+          {
+            "flag": "--all / -a",
+            "description": "Stage tự động file tracked đã sửa/xóa, không gồm untracked"
+          },
+          {
+            "flag": "--signoff / -s",
+            "description": "Thêm Signed-off-by; xác nhận bạn có quyền theo quy định dự án"
+          },
+          {
+            "flag": "--gpg-sign / -S",
+            "description": "Ký commit bằng cơ chế đã cấu hình"
+          },
+          {
+            "flag": "--dry-run",
+            "description": "Xem những gì sẽ commit"
+          },
+          {
+            "flag": "--fixup=COMMIT",
+            "description": "Tạo commit fixup cho rebase --autosquash"
+          }
+        ],
+        "warning": "Hook có thể chạy chương trình. Kiểm tra nội dung, tác giả và dữ liệu nhạy cảm; không dùng --no-verify để né kiểm tra một cách vô thức."
+      },
+      {
+        "id": "git-full-commit-amend",
+        "canonicalCommand": "git commit",
+        "title": "Sửa commit cuối",
+        "command": "git commit --amend [OPTIONS]",
+        "description": "Tạo commit thay thế HEAD; ví dụ chỉ thay thông điệp và giữ nguyên snapshot cũ.",
+        "example": "git commit --amend --only -m \"docs: clarify installation\"",
+        "risk": "destructive",
+        "tags": [
+          "commit",
+          "git-stage",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-commit",
+        "options": [
+          {
+            "flag": "--only",
+            "description": "Khi amend không truyền path, bỏ qua thay đổi đang stage"
+          },
+          {
+            "flag": "--no-edit",
+            "description": "Giữ thông điệp hiện tại"
+          },
+          {
+            "flag": "--reset-author",
+            "description": "Đổi tác giả về người đang commit khi có chủ đích"
+          }
+        ],
+        "warning": "Viết lại lịch sử local; commit mới có ID mới. Sao lưu và phối hợp trước nếu lịch sử đã chia sẻ."
+      },
+      {
+        "id": "git-full-diff",
+        "canonicalCommand": "git diff",
+        "title": "So sánh thay đổi",
+        "command": "git diff [OPTIONS] [REVISION...] [-- PATH...]",
+        "description": "So sánh working tree, index hoặc các snapshot. Không có revision thì xem phần chưa stage.",
+        "example": "git diff --staged -- README.md",
+        "risk": "read",
+        "tags": [
+          "diff",
+          "git-stage",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-diff",
+        "options": [
+          {
+            "flag": "--staged / --cached",
+            "description": "So sánh index với HEAD hoặc commit chọn"
+          },
+          {
+            "flag": "--stat / --name-status",
+            "description": "Tóm tắt theo file"
+          },
+          {
+            "flag": "--word-diff",
+            "description": "So sánh ở mức từ"
+          },
+          {
+            "flag": "--check",
+            "description": "Phát hiện lỗi whitespace/conflict marker"
+          },
+          {
+            "flag": "A..B",
+            "description": "Diff hai snapshot A và B, không phải danh sách commit"
+          },
+          {
+            "flag": "A...B",
+            "description": "Diff từ merge-base của A/B tới B"
+          },
+          {
+            "flag": "--no-index PATH PATH",
+            "description": "So sánh hai file ngoài repository"
+          }
+        ]
+      },
+      {
+        "id": "git-full-restore-index",
+        "canonicalCommand": "git restore",
+        "title": "Bỏ stage, giữ nội dung file",
+        "command": "git restore --staged [--source=REV] -- PATH...",
+        "description": "Khôi phục index từ HEAD mặc định, giữ nguyên thay đổi trong working tree.",
+        "example": "git restore --staged -- README.md",
+        "risk": "write",
+        "tags": [
+          "restore",
+          "git-stage",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-restore",
+        "options": [
+          {
+            "flag": "--staged",
+            "description": "Đích là index"
+          },
+          {
+            "flag": "--source=REV",
+            "description": "Nguồn khác HEAD"
+          },
+          {
+            "flag": "--patch",
+            "description": "Chọn từng hunk để khôi phục"
+          }
+        ],
+        "warning": "Cần HEAD hợp lệ. Nếu thêm --worktree, cả nội dung file cũng thay đổi."
+      },
+      {
+        "id": "git-full-restore-worktree",
+        "canonicalCommand": "git restore",
+        "title": "Khôi phục file trong working tree",
+        "command": "git restore [--source=REV] --worktree -- PATH...",
+        "description": "Thay nội dung file từ index mặc định hoặc commit được chọn; không di chuyển nhánh.",
+        "example": "git restore --source=HEAD --worktree -- README.md",
+        "risk": "destructive",
+        "tags": [
+          "restore",
+          "git-stage",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-restore",
+        "options": [
+          {
+            "flag": "--source=REV",
+            "description": "Chọn snapshot nguồn"
+          },
+          {
+            "flag": "--worktree",
+            "description": "Khôi phục working tree"
+          },
+          {
+            "flag": "--staged --worktree",
+            "description": "Khôi phục cả index lẫn working tree"
+          },
+          {
+            "flag": "--ours / --theirs",
+            "description": "Lấy stage xung đột tương ứng khi nguồn là index; ý nghĩa đảo trong một số luồng rebase"
+          }
+        ],
+        "warning": "Có thể mất vĩnh viễn thay đổi chưa commit. Xem diff và sao lưu/stash trước."
+      },
+      {
+        "id": "git-full-mv",
+        "canonicalCommand": "git mv",
+        "title": "Đổi tên hoặc di chuyển file",
+        "command": "git mv [OPTIONS] SOURCE DESTINATION",
+        "description": "Di chuyển file tracked và cập nhật index tương ứng.",
+        "example": "git mv README.md docs/README.md",
+        "risk": "write",
+        "tags": [
+          "mv",
+          "git-stage",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-mv",
+        "options": [
+          {
+            "flag": "--dry-run / -n",
+            "description": "Chỉ xem kế hoạch"
+          },
+          {
+            "flag": "--force / -f",
+            "description": "Cho phép ghi đè đích, cần kiểm tra kỹ"
+          },
+          {
+            "flag": "--verbose / -v",
+            "description": "Hiện đường dẫn đã xử lý"
+          }
+        ],
+        "warning": "Thư mục đích cần tồn tại. -f có thể ghi đè đích đã có."
+      },
+      {
+        "id": "git-full-rm",
+        "canonicalCommand": "git rm",
+        "title": "Xóa file được theo dõi",
+        "command": "git rm [OPTIONS] -- PATH...",
+        "description": "Xóa đường dẫn khỏi index và, mặc định, khỏi working tree. Sau đó cần commit.",
+        "example": "git rm -- obsolete.txt",
+        "risk": "destructive",
+        "tags": [
+          "rm",
+          "git-stage",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-rm",
+        "options": [
+          {
+            "flag": "--cached",
+            "description": "Chỉ bỏ khỏi index"
+          },
+          {
+            "flag": "-r",
+            "description": "Xóa đệ quy thư mục"
+          },
+          {
+            "flag": "--dry-run / -n",
+            "description": "Xem trước"
+          },
+          {
+            "flag": "--force / -f",
+            "description": "Bỏ kiểm tra thay đổi local; nguy cơ mất nội dung"
+          },
+          {
+            "flag": "--ignore-unmatch",
+            "description": "Không lỗi nếu không có đường dẫn khớp"
+          }
+        ],
+        "warning": "Kiểm tra đúng file; --cached chỉ ngừng theo dõi và giữ file local, không xóa bí mật khỏi lịch sử cũ."
+      },
+      {
+        "id": "git-full-clean-preview",
+        "canonicalCommand": "git clean",
+        "title": "Xem file untracked có thể xóa",
+        "command": "git clean --dry-run [OPTIONS] [-- PATH...]",
+        "description": "Liệt kê file không được theo dõi mà clean sẽ xóa; ví dụ giới hạn trong thư mục build.",
+        "example": "git clean --dry-run -d -- build/",
+        "risk": "read",
+        "tags": [
+          "clean",
+          "git-stage",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-clean",
+        "options": [
+          {
+            "flag": "-n / --dry-run",
+            "description": "Không xóa, chỉ liệt kê"
+          },
+          {
+            "flag": "-d",
+            "description": "Xét thư mục untracked"
+          },
+          {
+            "flag": "-i",
+            "description": "Chọn tương tác"
+          },
+          {
+            "flag": "-x",
+            "description": "Bao gồm cả file ignored"
+          },
+          {
+            "flag": "-X",
+            "description": "Chỉ chọn file ignored"
+          },
+          {
+            "flag": "-f",
+            "description": "Thực sự xóa; dùng sau khi kiểm tra"
+          }
+        ],
+        "warning": "Chỉ -n/--dry-run mới là xem trước. Chạy -f có thể xóa vĩnh viễn file chưa từng được Git lưu."
+      }
+    ]
+  },
+  {
+    "id": "git-history-read",
+    "title": "Porcelain · Đọc lịch sử & tìm lỗi",
+    "level": "core",
+    "commands": [
+      {
+        "id": "git-full-log",
+        "canonicalCommand": "git log",
+        "title": "Xem lịch sử commit",
+        "command": "git log [OPTIONS] [REVISION_RANGE] [-- PATH...]",
+        "description": "Hiển thị commit reachable, hỗ trợ lọc theo tác giả, thời gian, thông điệp và đường dẫn.",
+        "example": "git log --oneline --graph --decorate --all -n 30",
+        "risk": "read",
+        "tags": [
+          "log",
+          "git-history-read",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-log",
+        "options": [
+          {
+            "flag": "--oneline --graph --decorate",
+            "description": "Lịch sử gọn với đồ thị và refs"
+          },
+          {
+            "flag": "-n N / --since=DATE",
+            "description": "Giới hạn số lượng hoặc thời gian"
+          },
+          {
+            "flag": "--author=PATTERN / --grep=PATTERN",
+            "description": "Lọc tác giả/thông điệp"
+          },
+          {
+            "flag": "-p / --stat",
+            "description": "Thêm diff hoặc thống kê"
+          },
+          {
+            "flag": "--follow -- PATH",
+            "description": "Theo lịch sử một file qua đổi tên"
+          },
+          {
+            "flag": "-S TEXT / -G REGEX",
+            "description": "Tìm thay đổi số lần xuất hiện chuỗi hoặc dòng khớp regex"
+          },
+          {
+            "flag": "A..B / A...B",
+            "description": "Commit chỉ ở B / khác nhau đối xứng giữa A và B"
+          }
+        ]
+      },
+      {
+        "id": "git-full-show",
+        "canonicalCommand": "git show",
+        "title": "Đọc commit, tag hoặc blob",
+        "command": "git show [OPTIONS] OBJECT",
+        "description": "Hiển thị thông tin object; với commit thường bao gồm thông điệp và patch.",
+        "example": "git show --stat HEAD",
+        "risk": "read",
+        "tags": [
+          "show",
+          "git-history-read",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-show",
+        "options": [
+          {
+            "flag": "--format=FORMAT",
+            "description": "Định dạng metadata"
+          },
+          {
+            "flag": "--stat",
+            "description": "Tóm tắt file thay đổi"
+          },
+          {
+            "flag": "--no-patch / -s",
+            "description": "Chỉ metadata"
+          },
+          {
+            "flag": "REV:PATH",
+            "description": "Đọc nội dung file ở revision, ví dụ HEAD:README.md"
+          },
+          {
+            "flag": "--name-only",
+            "description": "Chỉ tên file trong diff"
+          }
+        ]
+      },
+      {
+        "id": "git-full-shortlog",
+        "canonicalCommand": "git shortlog",
+        "title": "Tổng hợp đóng góp",
+        "command": "git shortlog [OPTIONS] [REVISION_RANGE]",
+        "description": "Nhóm commit theo tác giả hoặc trailer để thống kê lịch sử đã chọn.",
+        "example": "git shortlog -sn --all",
+        "risk": "read",
+        "tags": [
+          "shortlog",
+          "git-history-read",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-shortlog",
+        "options": [
+          {
+            "flag": "-s",
+            "description": "Chỉ số lượng commit"
+          },
+          {
+            "flag": "-n",
+            "description": "Sắp xếp theo số commit"
+          },
+          {
+            "flag": "-e",
+            "description": "Kèm địa chỉ email"
+          },
+          {
+            "flag": "--group=author|committer|trailer:FIELD",
+            "description": "Chọn tiêu chí nhóm"
+          },
+          {
+            "flag": "--all",
+            "description": "Xét mọi refs"
+          }
+        ]
+      },
+      {
+        "id": "git-full-describe",
+        "canonicalCommand": "git describe",
+        "title": "Đặt tên dễ đọc cho commit",
+        "command": "git describe [OPTIONS] [COMMIT]",
+        "description": "Mô tả commit theo tag reachable gần nhất, khoảng cách commit và ID rút gọn.",
+        "example": "git describe --tags --always --dirty",
+        "risk": "read",
+        "tags": [
+          "describe",
+          "git-history-read",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-describe",
+        "options": [
+          {
+            "flag": "--tags",
+            "description": "Xét cả lightweight tag"
+          },
+          {
+            "flag": "--always",
+            "description": "Dùng ID rút gọn nếu không tìm được tên"
+          },
+          {
+            "flag": "--dirty[=MARK]",
+            "description": "Đánh dấu working tree bị sửa"
+          },
+          {
+            "flag": "--abbrev=N",
+            "description": "Độ dài ID; 0 chỉ hiện tên tag"
+          },
+          {
+            "flag": "--match PATTERN",
+            "description": "Chỉ xét tag khớp mẫu"
+          },
+          {
+            "flag": "--exact-match",
+            "description": "Yêu cầu tag trỏ đúng commit"
+          }
+        ]
+      },
+      {
+        "id": "git-full-grep",
+        "canonicalCommand": "git grep",
+        "title": "Tìm nội dung được theo dõi",
+        "command": "git grep [OPTIONS] PATTERN [REV] [-- PATH...]",
+        "description": "Tìm chuỗi trong file tracked hoặc snapshot; kết quả chỉ rõ file và dòng.",
+        "example": "git grep -n -i \"TODO\" -- src/",
+        "risk": "read",
+        "tags": [
+          "grep",
+          "git-history-read",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-grep",
+        "options": [
+          {
+            "flag": "-n",
+            "description": "Kèm số dòng"
+          },
+          {
+            "flag": "-i",
+            "description": "Không phân biệt hoa thường"
+          },
+          {
+            "flag": "-F",
+            "description": "Chuỗi cố định thay vì regex"
+          },
+          {
+            "flag": "-E / -P",
+            "description": "Regex mở rộng / Perl nếu build hỗ trợ"
+          },
+          {
+            "flag": "--cached",
+            "description": "Tìm trong index"
+          },
+          {
+            "flag": "-l / -L",
+            "description": "Tên file khớp / không khớp"
+          },
+          {
+            "flag": "--untracked",
+            "description": "Bao gồm file untracked"
+          }
+        ]
+      },
+      {
+        "id": "git-full-blame",
+        "canonicalCommand": "git blame",
+        "title": "Truy nguồn từng dòng",
+        "command": "git blame [OPTIONS] [REV] -- FILE",
+        "description": "Tìm commit và tác giả thay đổi từng dòng; kết quả là dấu vết lịch sử, không tự giải thích nguyên nhân thay đổi.",
+        "example": "git blame -L 10,40 -- README.md",
+        "risk": "read",
+        "tags": [
+          "blame",
+          "git-history-read",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-blame",
+        "options": [
+          {
+            "flag": "-L START,END",
+            "description": "Giới hạn vùng dòng hoặc tên hàm"
+          },
+          {
+            "flag": "-w",
+            "description": "Bỏ qua thay đổi whitespace"
+          },
+          {
+            "flag": "-M / -C",
+            "description": "Tìm dòng di chuyển / sao chép"
+          },
+          {
+            "flag": "--ignore-rev COMMIT",
+            "description": "Bỏ qua commit cơ học đã xác định"
+          },
+          {
+            "flag": "--line-porcelain",
+            "description": "Đầu ra chi tiết cho script"
+          }
+        ]
+      },
+      {
+        "id": "git-full-annotate",
+        "canonicalCommand": "git annotate",
+        "title": "Annotate theo định dạng tương thích",
+        "command": "git annotate [OPTIONS] [REV] -- FILE",
+        "description": "Thông tin nguồn gốc dòng tương tự blame, giữ định dạng đầu ra lịch sử để tương thích công cụ cũ.",
+        "example": "git annotate -L 1,20 -- README.md",
+        "risk": "read",
+        "tags": [
+          "annotate",
+          "git-history-read",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-annotate",
+        "options": [
+          {
+            "flag": "-L START,END",
+            "description": "Giới hạn vùng dòng"
+          },
+          {
+            "flag": "-w",
+            "description": "Bỏ khác biệt whitespace"
+          },
+          {
+            "flag": "--show-email",
+            "description": "Hiện email thay cho tên"
+          }
+        ]
+      },
+      {
+        "id": "git-full-range-diff",
+        "canonicalCommand": "git range-diff",
+        "title": "So sánh hai phiên bản chuỗi commit",
+        "command": "git range-diff OLD_RANGE NEW_RANGE",
+        "description": "Đối chiếu từng patch trước và sau rebase/review, dễ thấy thay đổi nội dung ngoài việc đổi ID.",
+        "example": "git range-diff main..feature-v1 main..feature-v2",
+        "risk": "read",
+        "tags": [
+          "range-diff",
+          "git-history-read",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-range-diff",
+        "options": [
+          {
+            "flag": "--creation-factor=N",
+            "description": "Điều chỉnh cách ghép các patch"
+          },
+          {
+            "flag": "--no-dual-color",
+            "description": "Tắt kiểu màu diff lồng nhau"
+          },
+          {
+            "flag": "--left-only / --right-only",
+            "description": "Chỉ phần bên tương ứng"
+          }
+        ],
+        "warning": "Cần hai ref/range còn tồn tại. Kết quả phục vụ con người, không phải định dạng ổn định cho script."
+      },
+      {
+        "id": "git-full-show-branch",
+        "canonicalCommand": "git show-branch",
+        "title": "Xem quan hệ nhiều nhánh",
+        "command": "git show-branch [OPTIONS] [REV...]",
+        "description": "So sánh tập commit của nhiều đầu nhánh trong dạng ma trận gọn.",
+        "example": "git show-branch main feature/login",
+        "risk": "read",
+        "tags": [
+          "show-branch",
+          "git-history-read",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-show-branch",
+        "options": [
+          {
+            "flag": "--all",
+            "description": "Nhánh local và remote-tracking"
+          },
+          {
+            "flag": "--list",
+            "description": "Chỉ liệt kê đầu nhánh"
+          },
+          {
+            "flag": "--more=N",
+            "description": "Hiện thêm commit sau tổ tiên chung"
+          },
+          {
+            "flag": "--merge-base",
+            "description": "Chỉ hiện merge-base"
+          }
+        ]
+      },
+      {
+        "id": "git-full-whatchanged",
+        "canonicalCommand": "git whatchanged",
+        "title": "Lệnh lịch sử cũ: whatchanged",
+        "command": "git whatchanged [LOG_OPTIONS]",
+        "description": "Lệnh đã deprecated; gần tương đương git log --raw --no-merges, còn giữ để tương thích thói quen/công cụ cũ.",
+        "example": "git whatchanged -n 5 -- README.md",
+        "risk": "read",
+        "tags": [
+          "whatchanged",
+          "git-history-read",
+          "core",
+          "legacy"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-whatchanged",
+        "options": [
+          {
+            "flag": "-p",
+            "description": "Hiện patch thay raw diff"
+          },
+          {
+            "flag": "-n N",
+            "description": "Giới hạn commit"
+          },
+          {
+            "flag": "--since=DATE",
+            "description": "Lọc theo thời gian"
+          }
+        ],
+        "warning": "Đã deprecated và dự kiến bị loại bỏ trong bản Git tương lai. Dùng git log --raw --no-merges cho workflow mới."
+      },
+      {
+        "id": "git-full-bisect-start",
+        "canonicalCommand": "git bisect",
+        "title": "Tìm commit gây lỗi bằng chia đôi",
+        "command": "git bisect start BAD_COMMIT GOOD_COMMIT [-- PATH...]",
+        "description": "Bắt đầu tìm nhị phân trong lịch sử, checkout một commit trung gian để bạn chạy kiểm thử.",
+        "example": "git bisect start HEAD v1.0.0",
+        "risk": "write",
+        "tags": [
+          "bisect",
+          "git-history-read",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-bisect",
+        "options": [
+          {
+            "flag": "good / bad [REV]",
+            "description": "Đánh dấu commit chạy đúng hoặc lỗi"
+          },
+          {
+            "flag": "skip [REV...]",
+            "description": "Bỏ commit không kiểm thử được"
+          },
+          {
+            "flag": "reset",
+            "description": "Kết thúc và quay về vị trí ban đầu"
+          },
+          {
+            "flag": "--first-parent",
+            "description": "Chỉ lần theo nhánh cha thứ nhất"
+          },
+          {
+            "flag": "--no-checkout",
+            "description": "Không đổi working tree, dùng BISECT_HEAD"
+          },
+          {
+            "flag": "--term-old / --term-new",
+            "description": "Đặt thuật ngữ khác good/bad"
+          }
+        ],
+        "warning": "Working tree cần sạch và tag tốt phải tồn tại. Bisect checkout mã lịch sử; chỉ chạy kiểm thử tin cậy."
+      },
+      {
+        "id": "git-full-bisect-run",
+        "canonicalCommand": "git bisect",
+        "title": "Tự động chạy kiểm thử khi bisect",
+        "command": "git bisect run COMMAND [ARGS...]",
+        "description": "Sau bisect start, lặp kiểm thử: mã thoát 0 là tốt, 1–127 trừ 125 là lỗi, 125 là bỏ qua.",
+        "example": "git bisect run ./test-regression.sh",
+        "risk": "write",
+        "tags": [
+          "bisect",
+          "git-history-read",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-bisect",
+        "options": [
+          {
+            "flag": "log",
+            "description": "In các bước bisect để lưu nhật ký"
+          },
+          {
+            "flag": "replay FILE",
+            "description": "Khôi phục phiên từ nhật ký"
+          },
+          {
+            "flag": "visualize / view",
+            "description": "Xem commit còn lại"
+          },
+          {
+            "flag": "terms",
+            "description": "Hiện thuật ngữ good/bad đã chọn"
+          },
+          {
+            "flag": "next",
+            "description": "Tiến một bước sau khi đã có mốc"
+          },
+          {
+            "flag": "--reset-when-found[=WHERE]",
+            "description": "Tự kết thúc khi tìm ra kết quả trên bản Git hỗ trợ"
+          }
+        ],
+        "warning": "Chỉ chạy script đã đọc và tin cậy. Script có thể ghi file/dùng mạng; 126/127 do lỗi gọi lệnh cũng bị xem là commit lỗi."
+      }
+    ]
+  },
+  {
+    "id": "git-branches",
+    "title": "Porcelain · Nhánh, merge & viết lại",
+    "level": "core",
+    "commands": [
+      {
+        "id": "git-full-branch-list",
+        "canonicalCommand": "git branch",
+        "title": "Liệt kê và quản lý nhánh",
+        "command": "git branch [OPTIONS] [BRANCH]",
+        "description": "Xem nhánh cùng upstream; số ahead/behind dựa trên dữ liệu đã fetch.",
+        "example": "git branch -vv --all",
+        "risk": "read",
+        "tags": [
+          "branch",
+          "git-branches",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-branch",
+        "options": [
+          {
+            "flag": "-a / -r",
+            "description": "Tất cả / chỉ remote-tracking"
+          },
+          {
+            "flag": "-vv",
+            "description": "Hiện upstream và commit đầu"
+          },
+          {
+            "flag": "--contains COMMIT / --merged",
+            "description": "Lọc theo commit chứa hoặc đã gộp"
+          },
+          {
+            "flag": "-m OLD NEW",
+            "description": "Đổi tên nhánh"
+          },
+          {
+            "flag": "--set-upstream-to=REMOTE/BRANCH",
+            "description": "Đặt upstream"
+          },
+          {
+            "flag": "--unset-upstream",
+            "description": "Bỏ upstream"
+          }
+        ]
+      },
+      {
+        "id": "git-full-branch-delete",
+        "canonicalCommand": "git branch",
+        "title": "Xóa nhánh local đã gộp",
+        "command": "git branch -d BRANCH",
+        "description": "Xóa ref nhánh đã được gộp vào upstream hoặc HEAD khi không có upstream.",
+        "example": "git branch -d feature/done",
+        "risk": "destructive",
+        "tags": [
+          "branch",
+          "git-branches",
+          "core"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-branch",
+        "options": [
+          {
+            "flag": "-d",
+            "description": "Chỉ xóa khi qua kiểm tra đã gộp"
+          },
+          {
+            "flag": "-D",
+            "description": "Ép xóa, nguy cơ mất điểm truy cập commit"
+          },
+          {
+            "flag": "-r -d",
+            "description": "Xóa remote-tracking local, không xóa nhánh trên server"
+          }
+        ],
+        "warning": "Tên nhánh và reflog bị xóa. Phải chuyển sang nhánh khác; -D ép xóa kể cả chưa gộp."
+      }
+    ]
+  }
+]

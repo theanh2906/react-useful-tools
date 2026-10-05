@@ -1,0 +1,1102 @@
+[
+  {
+    "id": "jira-workitem",
+    "title": "Jira · ticket",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-jira-workitem-link-deployment",
+        "canonicalCommand": "twg jira workitem link deployment",
+        "title": "Xem lần triển khai của link của ticket của Jira",
+        "command": "twg jira workitem link deployment --id <id> --target <urlOrAri>",
+        "description": "Xem lần triển khai của link của ticket của Jira.",
+        "example": "twg jira workitem link deployment --id DEMO-123 --target https://bitbucket.org/demo-workspace/demo-repo/deployments/prod-20260707",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jira",
+          "workitem",
+          "link",
+          "deployment"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên; bắt buộc",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "--target <urlOrAri>",
+            "description": "Đích; bắt buộc",
+            "example": "--target https://example.atlassian.net/browse/DEMO-123"
+          },
+          {
+            "flag": "--url <url>",
+            "description": "URL của tài nguyên",
+            "example": "--url https://example.atlassian.net/browse/DEMO-123"
+          },
+          {
+            "flag": "--title <title>",
+            "description": "Tiêu đề",
+            "example": "--title 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--global-id <globalId>",
+            "description": "ID global",
+            "example": "--global-id 12345"
+          },
+          {
+            "flag": "--relationship <relationship>",
+            "description": "Tham số relationship",
+            "example": "--relationship RELATIONSHIP"
+          },
+          {
+            "flag": "--application-name <applicationName>",
+            "description": "Tham số application-name",
+            "example": "--application-name APPLICATION_NAME"
+          },
+          {
+            "flag": "--application-type <applicationType>",
+            "description": "Tham số application-type",
+            "example": "--application-type APPLICATION_TYPE"
+          },
+          {
+            "flag": "--summary <summary>",
+            "description": "Nội dung tóm tắt",
+            "example": "--summary 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--icon-url <iconUrl>",
+            "description": "Tham số icon-url",
+            "example": "--icon-url https://example.atlassian.net/browse/DEMO-123"
+          },
+          {
+            "flag": "--resolved",
+            "description": "Tham số resolved",
+            "example": "--resolved"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-jira-workitem-link-goal",
+        "canonicalCommand": "twg jira workitem link goal",
+        "title": "Xem mục tiêu của link của ticket của Jira",
+        "command": "twg jira workitem link goal --id <id>",
+        "description": "Xem mục tiêu của link của ticket của Jira.",
+        "example": "twg jira workitem link goal --id 12345",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jira",
+          "workitem",
+          "link",
+          "goal"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--work-item-id <workItemId>",
+            "description": "Id ticket",
+            "example": "--work-item-id 12345"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên; bắt buộc",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "--goal-id <goalId>",
+            "description": "ID mục tiêu",
+            "example": "--goal-id 12345"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-workitem-link-loom",
+        "canonicalCommand": "twg jira workitem link loom",
+        "title": "Xem Loom của link của ticket của Jira",
+        "command": "twg jira workitem link loom --id <id> --target <urlOrAri>",
+        "description": "Xem Loom của link của ticket của Jira.",
+        "example": "twg jira workitem link loom --id DEMO-123 --target https://www.loom.com/share/0123456789abcdef0123456789abcdef",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jira",
+          "workitem",
+          "link",
+          "loom"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên; bắt buộc",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "--target <urlOrAri>",
+            "description": "Đích; bắt buộc",
+            "example": "--target https://example.atlassian.net/browse/DEMO-123"
+          },
+          {
+            "flag": "--url <url>",
+            "description": "URL của tài nguyên",
+            "example": "--url https://example.atlassian.net/browse/DEMO-123"
+          },
+          {
+            "flag": "--title <title>",
+            "description": "Tiêu đề",
+            "example": "--title 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--global-id <globalId>",
+            "description": "ID global",
+            "example": "--global-id 12345"
+          },
+          {
+            "flag": "--relationship <relationship>",
+            "description": "Tham số relationship",
+            "example": "--relationship RELATIONSHIP"
+          },
+          {
+            "flag": "--application-name <applicationName>",
+            "description": "Tham số application-name",
+            "example": "--application-name APPLICATION_NAME"
+          },
+          {
+            "flag": "--application-type <applicationType>",
+            "description": "Tham số application-type",
+            "example": "--application-type APPLICATION_TYPE"
+          },
+          {
+            "flag": "--summary <summary>",
+            "description": "Nội dung tóm tắt",
+            "example": "--summary 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--icon-url <iconUrl>",
+            "description": "Tham số icon-url",
+            "example": "--icon-url https://example.atlassian.net/browse/DEMO-123"
+          },
+          {
+            "flag": "--resolved",
+            "description": "Tham số resolved",
+            "example": "--resolved"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-jira-workitem-link-meeting",
+        "canonicalCommand": "twg jira workitem link meeting",
+        "title": "Xem cuộc họp của link của ticket của Jira",
+        "command": "twg jira workitem link meeting --id <id> --target <urlOrAri>",
+        "description": "Xem cuộc họp của link của ticket của Jira.",
+        "example": "twg jira workitem link meeting --id DEMO-123 --target https://www.loom.com/share/0123456789abcdef0123456789abcdef",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jira",
+          "workitem",
+          "link",
+          "meeting"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên; bắt buộc",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "--target <urlOrAri>",
+            "description": "Đích; bắt buộc",
+            "example": "--target https://example.atlassian.net/browse/DEMO-123"
+          },
+          {
+            "flag": "--url <url>",
+            "description": "URL của tài nguyên",
+            "example": "--url https://example.atlassian.net/browse/DEMO-123"
+          },
+          {
+            "flag": "--title <title>",
+            "description": "Tiêu đề",
+            "example": "--title 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--global-id <globalId>",
+            "description": "ID global",
+            "example": "--global-id 12345"
+          },
+          {
+            "flag": "--relationship <relationship>",
+            "description": "Tham số relationship",
+            "example": "--relationship RELATIONSHIP"
+          },
+          {
+            "flag": "--application-name <applicationName>",
+            "description": "Tham số application-name",
+            "example": "--application-name APPLICATION_NAME"
+          },
+          {
+            "flag": "--application-type <applicationType>",
+            "description": "Tham số application-type",
+            "example": "--application-type APPLICATION_TYPE"
+          },
+          {
+            "flag": "--summary <summary>",
+            "description": "Nội dung tóm tắt",
+            "example": "--summary 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--icon-url <iconUrl>",
+            "description": "Tham số icon-url",
+            "example": "--icon-url https://example.atlassian.net/browse/DEMO-123"
+          },
+          {
+            "flag": "--resolved",
+            "description": "Tham số resolved",
+            "example": "--resolved"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-jira-workitem-link-page",
+        "canonicalCommand": "twg jira workitem link page",
+        "title": "Xem trang của link của ticket của Jira",
+        "command": "twg jira workitem link page --id <id> --page <page>",
+        "description": "Xem trang của link của ticket của Jira.",
+        "example": "twg jira workitem link page --id 12345 --page 1",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jira",
+          "workitem",
+          "link",
+          "page"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên; bắt buộc",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "--page <page>",
+            "description": "Trang; bắt buộc",
+            "example": "--page 1"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-workitem-link-pr",
+        "canonicalCommand": "twg jira workitem link pr",
+        "title": "Xem PR của link của ticket của Jira",
+        "command": "twg jira workitem link pr --id <id> --target <urlOrAri>",
+        "description": "Xem PR của link của ticket của Jira.",
+        "example": "twg jira workitem link pr --id DEMO-123 --target https://bitbucket.org/demo-workspace/demo-repo/pull-requests/1551",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jira",
+          "workitem",
+          "link",
+          "pr"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên; bắt buộc",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "--target <urlOrAri>",
+            "description": "Đích; bắt buộc",
+            "example": "--target https://example.atlassian.net/browse/DEMO-123"
+          },
+          {
+            "flag": "--url <url>",
+            "description": "URL của tài nguyên",
+            "example": "--url https://example.atlassian.net/browse/DEMO-123"
+          },
+          {
+            "flag": "--title <title>",
+            "description": "Tiêu đề",
+            "example": "--title 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--global-id <globalId>",
+            "description": "ID global",
+            "example": "--global-id 12345"
+          },
+          {
+            "flag": "--relationship <relationship>",
+            "description": "Tham số relationship",
+            "example": "--relationship RELATIONSHIP"
+          },
+          {
+            "flag": "--application-name <applicationName>",
+            "description": "Tham số application-name",
+            "example": "--application-name APPLICATION_NAME"
+          },
+          {
+            "flag": "--application-type <applicationType>",
+            "description": "Tham số application-type",
+            "example": "--application-type APPLICATION_TYPE"
+          },
+          {
+            "flag": "--summary <summary>",
+            "description": "Nội dung tóm tắt",
+            "example": "--summary 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--icon-url <iconUrl>",
+            "description": "Tham số icon-url",
+            "example": "--icon-url https://example.atlassian.net/browse/DEMO-123"
+          },
+          {
+            "flag": "--resolved",
+            "description": "Tham số resolved",
+            "example": "--resolved"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-jira-workitem-link-project",
+        "canonicalCommand": "twg jira workitem link project",
+        "title": "Xem dự án của link của ticket của Jira",
+        "command": "twg jira workitem link project --id <id>",
+        "description": "Xem dự án của link của ticket của Jira.",
+        "example": "twg jira workitem link project --id 12345",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jira",
+          "workitem",
+          "link",
+          "project"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--input-json <json>",
+            "description": "Payload JSON theo schema của lệnh",
+            "example": "--input-json '{}'"
+          },
+          {
+            "flag": "--project-id <projectId>",
+            "description": "ID dự án",
+            "example": "--project-id 12345"
+          },
+          {
+            "flag": "--replace <replace>",
+            "description": "Tham số replace",
+            "example": "--replace REPLACE"
+          },
+          {
+            "flag": "--replace-child-work-item-links <replaceChildWorkItemLinks>",
+            "description": "Tham số replace-child-work-item-links",
+            "example": "--replace-child-work-item-links REPLACE_CHILD_WORK_ITEM_LINKS"
+          },
+          {
+            "flag": "--replace-current-work-item-link <replaceCurrentWorkItemLink>",
+            "description": "Tham số replace-current-work-item-link",
+            "example": "--replace-current-work-item-link REPLACE_CURRENT_WORK_ITEM_LINK"
+          },
+          {
+            "flag": "--work-item-id <workItemId>",
+            "description": "Id ticket",
+            "example": "--work-item-id 12345"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên; bắt buộc",
+            "example": "--id 12345"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-workitem-link-query",
+        "canonicalCommand": "twg jira workitem link query",
+        "title": "Tra cứu link của ticket của Jira",
+        "command": "twg jira workitem link query",
+        "description": "Tra cứu link của ticket của Jira.",
+        "example": "twg jira workitem link query",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jira",
+          "workitem",
+          "link",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--issue-id <issueId>",
+            "description": "Id ticket",
+            "example": "--issue-id DEMO-123"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-workitem-link-repo",
+        "canonicalCommand": "twg jira workitem link repo",
+        "title": "Xem repository của link của ticket của Jira",
+        "command": "twg jira workitem link repo --id <id> --target <urlOrAri>",
+        "description": "Xem repository của link của ticket của Jira.",
+        "example": "twg jira workitem link repo --id DEMO-123 --target https://bitbucket.org/demo-workspace/demo-repo",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jira",
+          "workitem",
+          "link",
+          "repo"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên; bắt buộc",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "--target <urlOrAri>",
+            "description": "Đích; bắt buộc",
+            "example": "--target https://example.atlassian.net/browse/DEMO-123"
+          },
+          {
+            "flag": "--url <url>",
+            "description": "URL của tài nguyên",
+            "example": "--url https://example.atlassian.net/browse/DEMO-123"
+          },
+          {
+            "flag": "--title <title>",
+            "description": "Tiêu đề",
+            "example": "--title 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--global-id <globalId>",
+            "description": "ID global",
+            "example": "--global-id 12345"
+          },
+          {
+            "flag": "--relationship <relationship>",
+            "description": "Tham số relationship",
+            "example": "--relationship RELATIONSHIP"
+          },
+          {
+            "flag": "--application-name <applicationName>",
+            "description": "Tham số application-name",
+            "example": "--application-name APPLICATION_NAME"
+          },
+          {
+            "flag": "--application-type <applicationType>",
+            "description": "Tham số application-type",
+            "example": "--application-type APPLICATION_TYPE"
+          },
+          {
+            "flag": "--summary <summary>",
+            "description": "Nội dung tóm tắt",
+            "example": "--summary 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--icon-url <iconUrl>",
+            "description": "Tham số icon-url",
+            "example": "--icon-url https://example.atlassian.net/browse/DEMO-123"
+          },
+          {
+            "flag": "--resolved",
+            "description": "Tham số resolved",
+            "example": "--resolved"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-jira-workitem-link-weblink",
+        "canonicalCommand": "twg jira workitem link weblink",
+        "title": "Xem liên kết web của link của ticket của Jira",
+        "command": "twg jira workitem link weblink --id <id> --url <url> --title <title>",
+        "description": "Xem liên kết web của link của ticket của Jira.",
+        "example": "twg jira workitem link weblink --id 12345 --url https://example.atlassian.net/browse/DEMO-123 --title 'Ví dụ trong môi trường thử nghiệm'",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jira",
+          "workitem",
+          "link",
+          "weblink"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên; bắt buộc",
+            "example": "--id 12345"
+          },
+          {
+            "flag": "--url <url>",
+            "description": "URL của tài nguyên; bắt buộc",
+            "example": "--url https://example.atlassian.net/browse/DEMO-123"
+          },
+          {
+            "flag": "--title <title>",
+            "description": "Tiêu đề; bắt buộc",
+            "example": "--title 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--global-id <globalId>",
+            "description": "ID global",
+            "example": "--global-id 12345"
+          },
+          {
+            "flag": "--relationship <relationship>",
+            "description": "Tham số relationship",
+            "example": "--relationship RELATIONSHIP"
+          },
+          {
+            "flag": "--application-name <applicationName>",
+            "description": "Tham số application-name",
+            "example": "--application-name APPLICATION_NAME"
+          },
+          {
+            "flag": "--application-type <applicationType>",
+            "description": "Tham số application-type",
+            "example": "--application-type APPLICATION_TYPE"
+          },
+          {
+            "flag": "--summary <summary>",
+            "description": "Nội dung tóm tắt",
+            "example": "--summary 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--icon-url <iconUrl>",
+            "description": "Tham số icon-url",
+            "example": "--icon-url https://example.atlassian.net/browse/DEMO-123"
+          },
+          {
+            "flag": "--resolved",
+            "description": "Tham số resolved",
+            "example": "--resolved"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-workitem-link-workitem",
+        "canonicalCommand": "twg jira workitem link workitem",
+        "title": "Xem ticket của link của ticket của Jira",
+        "command": "twg jira workitem link workitem --id <id> --target-id <targetId>",
+        "description": "Xem ticket của link của ticket của Jira.",
+        "example": "twg jira workitem link workitem --id DEMO-123 --target-id DEMO-123",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jira",
+          "workitem",
+          "link"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên; bắt buộc",
+            "example": "--id DEMO-123"
+          },
+          {
+            "flag": "--target-id <targetId>",
+            "description": "ID đích; có thể nhập nhiều giá trị; mặc định: []",
+            "example": "--target-id DEMO-123"
+          },
+          {
+            "flag": "--link-type-id <linkTypeId>",
+            "description": "ID link-type; mặc định: \"Relates\"",
+            "example": "--link-type-id 12345"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; mặc định: \"text\"",
+            "example": "--output json"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-workitem-link-types-query",
+        "canonicalCommand": "twg jira workitem link-types query",
+        "title": "Tra cứu loại liên kết của ticket của Jira",
+        "command": "twg jira workitem link-types query",
+        "description": "Tra cứu loại liên kết của ticket của Jira.",
+        "example": "twg jira workitem link-types query --site demo -o json",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jira",
+          "workitem",
+          "link-types",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--after <after>",
+            "description": "Con trỏ hoặc mốc bắt đầu theo lệnh",
+            "example": "--after AFTER"
+          },
+          {
+            "flag": "--before <before>",
+            "description": "Con trỏ hoặc mốc kết thúc theo lệnh",
+            "example": "--before BEFORE"
+          },
+          {
+            "flag": "--first <first>",
+            "description": "Số phần tử của trang đầu/tiếp theo",
+            "example": "--first 10"
+          },
+          {
+            "flag": "--last <last>",
+            "description": "Số phần tử khi phân trang ngược",
+            "example": "--last 10"
+          }
+        ]
+      },
+      {
+        "id": "twg-jira-workitem-priorities-query",
+        "canonicalCommand": "twg jira workitem priorities query",
+        "title": "Tra cứu mức ưu tiên của ticket của Jira",
+        "command": "twg jira workitem priorities query",
+        "description": "Tra cứu mức ưu tiên của ticket của Jira.",
+        "example": "twg jira workitem priorities query",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jira",
+          "workitem",
+          "priorities",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--id <id>",
+            "description": "Định danh tài nguyên; có thể nhập nhiều giá trị",
+            "example": "--id 12345"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-workitem-project-link-candidates-query",
+        "canonicalCommand": "twg jira workitem project-link-candidates query",
+        "title": "Tra cứu dự án có thể liên kết của ticket của Jira",
+        "command": "twg jira workitem project-link-candidates query",
+        "description": "Tra cứu dự án có thể liên kết của ticket của Jira.",
+        "example": "twg jira workitem project-link-candidates query",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jira",
+          "workitem",
+          "project-link-candidates",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--after <after>",
+            "description": "Con trỏ hoặc mốc bắt đầu theo lệnh",
+            "example": "--after AFTER"
+          },
+          {
+            "flag": "--project-id <projectId>",
+            "description": "ID dự án",
+            "example": "--project-id 12345"
+          },
+          {
+            "flag": "--strictly-return-first-items <strictlyReturnFirstItems>",
+            "description": "Tham số strictly-return-first-items",
+            "example": "--strictly-return-first-items STRICTLY_RETURN_FIRST_ITEMS"
+          },
+          {
+            "flag": "--query <query>",
+            "description": "Chuỗi truy vấn theo lệnh",
+            "example": "--query onboarding"
+          },
+          {
+            "flag": "--limit <limit>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh",
+            "example": "--limit 10"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-workitem-property-delete",
+        "canonicalCommand": "twg jira workitem property delete",
+        "title": "Xóa thuộc tính của ticket của Jira",
+        "command": "twg jira workitem property delete",
+        "description": "Xóa thuộc tính của ticket của Jira.",
+        "example": "twg jira workitem property delete --issue-id DEMO-123 --property-key demo.settings",
+        "exampleKind": "usage",
+        "risk": "destructive",
+        "tags": [
+          "jira",
+          "workitem",
+          "property",
+          "delete"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--issue-id <issueId>",
+            "description": "Id ticket",
+            "example": "--issue-id DEMO-123"
+          },
+          {
+            "flag": "--property-key <key>",
+            "description": "Tham số property-key",
+            "example": "--property-key DEMO"
+          }
+        ],
+        "warning": "Có thể xóa dữ liệu, thu hồi quyền hoặc gỡ cấu hình. Đọc lại đối tượng và khả năng khôi phục; ưu tiên --dry-run nếu lệnh hỗ trợ. Không thêm --yes khi chưa kiểm tra. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-workitem-property-get",
+        "canonicalCommand": "twg jira workitem property get",
+        "title": "Đọc thuộc tính của ticket của Jira",
+        "command": "twg jira workitem property get",
+        "description": "Đọc thuộc tính của ticket của Jira.",
+        "example": "twg jira workitem property get",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jira",
+          "workitem",
+          "property",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--issue-id <issueId>",
+            "description": "Id ticket",
+            "example": "--issue-id DEMO-123"
+          },
+          {
+            "flag": "--property-key <key>",
+            "description": "Tham số property-key",
+            "example": "--property-key DEMO"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-workitem-property-query",
+        "canonicalCommand": "twg jira workitem property query",
+        "title": "Tra cứu thuộc tính của ticket của Jira",
+        "command": "twg jira workitem property query",
+        "description": "Tra cứu thuộc tính của ticket của Jira.",
+        "example": "twg jira workitem property query",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jira",
+          "workitem",
+          "property",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--issue-id <issueId>",
+            "description": "Id ticket",
+            "example": "--issue-id DEMO-123"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-jira-workitem-property-set",
+        "canonicalCommand": "twg jira workitem property set",
+        "title": "Đặt thuộc tính của ticket của Jira",
+        "command": "twg jira workitem property set",
+        "description": "Đặt thuộc tính của ticket của Jira.",
+        "example": "twg jira workitem property set --issue-id DEMO-123 --property-key demo.settings --value-json '{\"enabled\":true}'",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "jira",
+          "workitem",
+          "property",
+          "set"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn; không dùng cùng --input-json",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--input-json <json>",
+            "description": "Payload JSON theo schema của lệnh; không dùng cùng --variables-json",
+            "example": "--input-json '{}'"
+          },
+          {
+            "flag": "--issue-id <issueId>",
+            "description": "Id ticket",
+            "example": "--issue-id DEMO-123"
+          },
+          {
+            "flag": "--property-key <key>",
+            "description": "Tham số property-key",
+            "example": "--property-key DEMO"
+          },
+          {
+            "flag": "--value-json <json>",
+            "description": "JSON cho giá trị",
+            "example": "--value-json '{}'"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      }
+    ]
+  }
+]

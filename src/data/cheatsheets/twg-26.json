@@ -1,0 +1,1214 @@
+[
+  {
+    "id": "jsm-help-article",
+    "title": "JSM · bài trợ giúp",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "twg-jsm-help-article-query",
+        "canonicalCommand": "twg jsm help-article query",
+        "title": "Tra cứu bài trợ giúp của JSM",
+        "command": "twg jsm help-article query",
+        "description": "Tra cứu bài trợ giúp của JSM.",
+        "example": "twg jsm help-article query",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "help-article",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--category-ids <categoryIds>",
+            "description": "Danh sách ID category",
+            "example": "--category-ids CATEGORY_IDS"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--help-center-ari <helpCenterAri>",
+            "description": "ARI trung tâm trợ giúp",
+            "example": "--help-center-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--highlight <highlight>",
+            "description": "Tham số highlight",
+            "example": "--highlight HIGHLIGHT"
+          },
+          {
+            "flag": "--limit <limit>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh",
+            "example": "--limit 10"
+          },
+          {
+            "flag": "--portal-ids <portalIds>",
+            "description": "Danh sách ID cổng hỗ trợ",
+            "example": "--portal-ids PORTAL_IDS"
+          },
+          {
+            "flag": "--query-term <queryTerm>",
+            "description": "Từ khóa truy vấn",
+            "example": "--query-term onboarding"
+          },
+          {
+            "flag": "--skip-restricted-pages <skipRestrictedPages>",
+            "description": "Tham số skip-restricted-pages",
+            "example": "--skip-restricted-pages SKIP_RESTRICTED_PAGES"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      }
+    ]
+  },
+  {
+    "id": "jsm-help-center",
+    "title": "JSM · trung tâm trợ giúp",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "twg-jsm-help-center-config-get",
+        "canonicalCommand": "twg jsm help-center config get",
+        "title": "Đọc cấu hình của trung tâm trợ giúp của JSM",
+        "command": "twg jsm help-center config get",
+        "description": "Đọc cấu hình của trung tâm trợ giúp của JSM.",
+        "example": "twg jsm help-center config get --workspace-ari WORKSPACEARI",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "help-center",
+          "config",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--workspace-ari <ari>",
+            "description": "ARI workspace",
+            "example": "--workspace-ari RESOURCE_ARI"
+          }
+        ]
+      },
+      {
+        "id": "twg-jsm-help-center-create",
+        "canonicalCommand": "twg jsm help-center create",
+        "title": "Tạo trung tâm trợ giúp của JSM",
+        "command": "twg jsm help-center create",
+        "description": "Tạo trung tâm trợ giúp của JSM. Đây là nhóm API động; chọn field và input theo schema mà site trả về.",
+        "example": "twg jsm help-center create --field \"$FIELD_NAME\" --input-json \"$INPUT_JSON\" --site demo",
+        "exampleKind": "template",
+        "risk": "write",
+        "tags": [
+          "jsm",
+          "help-center",
+          "create"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "--variables-file <path>",
+            "description": "Tệp JSON chứa biến truy vấn",
+            "example": "--variables-file ./request.json"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--field <field>",
+            "description": "Trường hoặc giá trị trường theo hợp đồng của lệnh",
+            "example": "--field FIELD"
+          },
+          {
+            "flag": "--input-json <json>",
+            "description": "Payload JSON theo schema của lệnh",
+            "example": "--input-json '{}'"
+          },
+          {
+            "flag": "--input-file <path>",
+            "description": "Đường dẫn tới tệp payload JSON đã chuẩn bị",
+            "example": "--input-file ./request.json"
+          },
+          {
+            "flag": "--help-center-ari <helpCenterAri>",
+            "description": "ARI trung tâm trợ giúp",
+            "example": "--help-center-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--help-center-page-ari <helpCenterPageAri>",
+            "description": "ARI help-center-page",
+            "example": "--help-center-page-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cần điền biến: FIELD_NAME, INPUT_JSON. Lấy ID, giá trị và JSON hợp lệ từ schema/metadata của site; chạy twg help describe 'jsm help-center create' để kiểm tra trước. Đây không phải ví dụ đã chạy thành công trên tenant."
+      },
+      {
+        "id": "twg-jsm-help-center-customer-experience-list",
+        "canonicalCommand": "twg jsm help-center customer-experience list",
+        "title": "Liệt kê trải nghiệm khách hàng của trung tâm trợ giúp của JSM",
+        "command": "twg jsm help-center customer-experience list",
+        "description": "Liệt kê trải nghiệm khách hàng của trung tâm trợ giúp của JSM.",
+        "example": "twg jsm help-center customer-experience list --workspace-ari WORKSPACEARI --sort-order CREATED_DATE_ASCENDING",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "help-center",
+          "customer-experience",
+          "list"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--workspace-ari <ari>",
+            "description": "ARI workspace",
+            "example": "--workspace-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--sort-order <order>",
+            "description": "Tham số sort-order; nhận: CREATED_DATE_ASCENDING, CREATED_DATE_DESCENDING",
+            "example": "--sort-order CREATED_DATE_ASCENDING"
+          },
+          {
+            "flag": "--first <n>",
+            "description": "Số phần tử của trang đầu/tiếp theo",
+            "example": "--first 10"
+          },
+          {
+            "flag": "--after <cursor>",
+            "description": "Con trỏ hoặc mốc bắt đầu theo lệnh",
+            "example": "--after AFTER"
+          }
+        ]
+      },
+      {
+        "id": "twg-jsm-help-center-get",
+        "canonicalCommand": "twg jsm help-center get",
+        "title": "Đọc trung tâm trợ giúp của JSM",
+        "command": "twg jsm help-center get",
+        "description": "Đọc trung tâm trợ giúp của JSM.",
+        "example": "twg jsm help-center get --id HELPCENTERARI",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "help-center",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--id <helpCenterAri>",
+            "description": "Định danh tài nguyên",
+            "example": "--id 12345"
+          }
+        ]
+      },
+      {
+        "id": "twg-jsm-help-center-get-by-project",
+        "canonicalCommand": "twg jsm help-center get-by-project",
+        "title": "Đọc theo dự án trung tâm trợ giúp của JSM",
+        "command": "twg jsm help-center get-by-project",
+        "description": "Đọc theo dự án trung tâm trợ giúp của JSM.",
+        "example": "twg jsm help-center get-by-project --workspace-ari WORKSPACEARI --project-ari PROJECTARI",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "help-center",
+          "get-by-project"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--workspace-ari <ari>",
+            "description": "ARI workspace",
+            "example": "--workspace-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--project-ari <ari>",
+            "description": "ARI dự án",
+            "example": "--project-ari RESOURCE_ARI"
+          }
+        ]
+      },
+      {
+        "id": "twg-jsm-help-center-hub-media-config-get",
+        "canonicalCommand": "twg jsm help-center hub-media-config get",
+        "title": "Đọc cấu hình media của hub của trung tâm trợ giúp của JSM",
+        "command": "twg jsm help-center hub-media-config get",
+        "description": "Đọc cấu hình media của hub của trung tâm trợ giúp của JSM.",
+        "example": "twg jsm help-center hub-media-config get --ari ARI",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "help-center",
+          "hub-media-config",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--ari <ari>",
+            "description": "Ari",
+            "example": "--ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--operation-type <type>",
+            "description": "Tham số operation-type; nhận: BANNER_UPLOAD, LOGO_UPLOAD, READ",
+            "example": "--operation-type BANNER_UPLOAD"
+          }
+        ]
+      },
+      {
+        "id": "twg-jsm-help-center-layout-translations-list",
+        "canonicalCommand": "twg jsm help-center layout-translations list",
+        "title": "Liệt kê bản dịch bố cục của trung tâm trợ giúp của JSM",
+        "command": "twg jsm help-center layout-translations list",
+        "description": "Liệt kê bản dịch bố cục của trung tâm trợ giúp của JSM.",
+        "example": "twg jsm help-center layout-translations list --help-center-ari ID --parent-ari ID",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "help-center",
+          "layout-translations",
+          "list"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--help-center-ari <id>",
+            "description": "ARI trung tâm trợ giúp",
+            "example": "--help-center-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--parent-ari <id>",
+            "description": "ARI cấp cha",
+            "example": "--parent-ari RESOURCE_ARI"
+          }
+        ]
+      },
+      {
+        "id": "twg-jsm-help-center-list",
+        "canonicalCommand": "twg jsm help-center list",
+        "title": "Liệt kê trung tâm trợ giúp của JSM",
+        "command": "twg jsm help-center list",
+        "description": "Liệt kê trung tâm trợ giúp của JSM.",
+        "example": "twg jsm help-center list --workspace-ari WORKSPACEARI --sort-order CREATED_DATE_ASCENDING",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "help-center",
+          "list"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--workspace-ari <ari>",
+            "description": "ARI workspace",
+            "example": "--workspace-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--sort-order <order>",
+            "description": "Tham số sort-order; nhận: CREATED_DATE_ASCENDING, CREATED_DATE_DESCENDING",
+            "example": "--sort-order CREATED_DATE_ASCENDING"
+          },
+          {
+            "flag": "--first <n>",
+            "description": "Số phần tử của trang đầu/tiếp theo",
+            "example": "--first 10"
+          },
+          {
+            "flag": "--after <cursor>",
+            "description": "Con trỏ hoặc mốc bắt đầu theo lệnh",
+            "example": "--after AFTER"
+          },
+          {
+            "flag": "--filter-json <json>",
+            "description": "JSON cho bộ lọc",
+            "example": "--filter-json '{}'"
+          }
+        ]
+      },
+      {
+        "id": "twg-jsm-help-center-list-basic",
+        "canonicalCommand": "twg jsm help-center list-basic",
+        "title": "Liệt kê cơ bản trung tâm trợ giúp của JSM",
+        "command": "twg jsm help-center list-basic",
+        "description": "Liệt kê cơ bản trung tâm trợ giúp của JSM.",
+        "example": "twg jsm help-center list-basic --workspace-ari WORKSPACEARI --sort-order CREATED_DATE_DESCENDING",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "help-center",
+          "list-basic"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--workspace-ari <ari>",
+            "description": "ARI workspace",
+            "example": "--workspace-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--sort-order <order>",
+            "description": "Tham số sort-order; nhận: CREATED_DATE_ASCENDING, CREATED_DATE_DESCENDING",
+            "example": "--sort-order CREATED_DATE_ASCENDING"
+          },
+          {
+            "flag": "--first <n>",
+            "description": "Số phần tử của trang đầu/tiếp theo",
+            "example": "--first 10"
+          },
+          {
+            "flag": "--after <cursor>",
+            "description": "Con trỏ hoặc mốc bắt đầu theo lệnh",
+            "example": "--after AFTER"
+          }
+        ]
+      },
+      {
+        "id": "twg-jsm-help-center-list-by-project",
+        "canonicalCommand": "twg jsm help-center list-by-project",
+        "title": "Liệt kê theo dự án trung tâm trợ giúp của JSM",
+        "command": "twg jsm help-center list-by-project",
+        "description": "Liệt kê theo dự án trung tâm trợ giúp của JSM.",
+        "example": "twg jsm help-center list-by-project --workspace-ari WORKSPACEARI --project-id ID --sort-order CREATED_DATE_ASCENDING",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "help-center",
+          "list-by-project"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--workspace-ari <ari>",
+            "description": "ARI workspace",
+            "example": "--workspace-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--project-id <id>",
+            "description": "ID dự án",
+            "example": "--project-id 12345"
+          },
+          {
+            "flag": "--sort-order <order>",
+            "description": "Tham số sort-order; nhận: CREATED_DATE_ASCENDING, CREATED_DATE_DESCENDING",
+            "example": "--sort-order CREATED_DATE_ASCENDING"
+          },
+          {
+            "flag": "--first <n>",
+            "description": "Số phần tử của trang đầu/tiếp theo",
+            "example": "--first 10"
+          },
+          {
+            "flag": "--after <cursor>",
+            "description": "Con trỏ hoặc mốc bắt đầu theo lệnh",
+            "example": "--after AFTER"
+          }
+        ]
+      },
+      {
+        "id": "twg-jsm-help-center-media-config-get",
+        "canonicalCommand": "twg jsm help-center media-config get",
+        "title": "Đọc cấu hình media của trung tâm trợ giúp của JSM",
+        "command": "twg jsm help-center media-config get",
+        "description": "Đọc cấu hình media của trung tâm trợ giúp của JSM.",
+        "example": "twg jsm help-center media-config get --help-center-ari ARI",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "help-center",
+          "media-config",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--help-center-ari <ari>",
+            "description": "ARI trung tâm trợ giúp",
+            "example": "--help-center-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--operation-type <type>",
+            "description": "Tham số operation-type; nhận: BANNER_UPLOAD, LOGO_UPLOAD, READ",
+            "example": "--operation-type BANNER_UPLOAD"
+          }
+        ]
+      },
+      {
+        "id": "twg-jsm-help-center-page-get",
+        "canonicalCommand": "twg jsm help-center page get",
+        "title": "Đọc trang của trung tâm trợ giúp của JSM",
+        "command": "twg jsm help-center page get",
+        "description": "Đọc trang của trung tâm trợ giúp của JSM.",
+        "example": "twg jsm help-center page get --id HELPCENTERPAGEARI",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "help-center",
+          "page",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--id <helpCenterPageAri>",
+            "description": "Định danh tài nguyên",
+            "example": "--id 12345"
+          }
+        ]
+      },
+      {
+        "id": "twg-jsm-help-center-page-list",
+        "canonicalCommand": "twg jsm help-center page list",
+        "title": "Liệt kê trang của trung tâm trợ giúp của JSM",
+        "command": "twg jsm help-center page list",
+        "description": "Liệt kê trang của trung tâm trợ giúp của JSM.",
+        "example": "twg jsm help-center page list --help-center-ari ARI",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "help-center",
+          "page",
+          "list"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--help-center-ari <ari>",
+            "description": "ARI trung tâm trợ giúp",
+            "example": "--help-center-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--first <n>",
+            "description": "Số phần tử của trang đầu/tiếp theo",
+            "example": "--first 10"
+          },
+          {
+            "flag": "--after <cursor>",
+            "description": "Con trỏ hoặc mốc bắt đầu theo lệnh",
+            "example": "--after AFTER"
+          }
+        ]
+      },
+      {
+        "id": "twg-jsm-help-center-permission-settings-get",
+        "canonicalCommand": "twg jsm help-center permission-settings get",
+        "title": "Đọc cài đặt quyền của trung tâm trợ giúp của JSM",
+        "command": "twg jsm help-center permission-settings get",
+        "description": "Đọc cài đặt quyền của trung tâm trợ giúp của JSM.",
+        "example": "twg jsm help-center permission-settings get --help-center-ari ARI",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "help-center",
+          "permission-settings",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--help-center-ari <ari>",
+            "description": "ARI trung tâm trợ giúp",
+            "example": "--help-center-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--first <n>",
+            "description": "Số phần tử của trang đầu/tiếp theo",
+            "example": "--first 10"
+          },
+          {
+            "flag": "--last <n>",
+            "description": "Số phần tử khi phân trang ngược",
+            "example": "--last 10"
+          },
+          {
+            "flag": "--after <cursor>",
+            "description": "Con trỏ hoặc mốc bắt đầu theo lệnh",
+            "example": "--after AFTER"
+          },
+          {
+            "flag": "--before <cursor>",
+            "description": "Con trỏ hoặc mốc kết thúc theo lệnh",
+            "example": "--before BEFORE"
+          }
+        ]
+      },
+      {
+        "id": "twg-jsm-help-center-permissions-get",
+        "canonicalCommand": "twg jsm help-center permissions get",
+        "title": "Đọc quyền của trung tâm trợ giúp của JSM",
+        "command": "twg jsm help-center permissions get",
+        "description": "Đọc quyền của trung tâm trợ giúp của JSM.",
+        "example": "twg jsm help-center permissions get --workspace-ari WORKSPACEARI",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "help-center",
+          "permissions",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--workspace-ari <ari>",
+            "description": "ARI workspace",
+            "example": "--workspace-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--slug <slug>",
+            "description": "Tham số slug",
+            "example": "--slug SLUG"
+          }
+        ]
+      },
+      {
+        "id": "twg-jsm-help-center-product-entities-query",
+        "canonicalCommand": "twg jsm help-center product-entities query",
+        "title": "Tra cứu thực thể sản phẩm của trung tâm trợ giúp của JSM",
+        "command": "twg jsm help-center product-entities query",
+        "description": "Tra cứu thực thể sản phẩm của trung tâm trợ giúp của JSM.",
+        "example": "twg jsm help-center product-entities query --help-center-ari ARI --inputs-json '<json>'",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "help-center",
+          "product-entities",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--help-center-ari <ari>",
+            "description": "ARI trung tâm trợ giúp",
+            "example": "--help-center-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--inputs-json <json>",
+            "description": "JSON cho inputs",
+            "example": "--inputs-json '{}'"
+          }
+        ]
+      },
+      {
+        "id": "twg-jsm-help-center-reporting-get",
+        "canonicalCommand": "twg jsm help-center reporting get",
+        "title": "Đọc báo cáo của trung tâm trợ giúp của JSM",
+        "command": "twg jsm help-center reporting get",
+        "description": "Đọc báo cáo của trung tâm trợ giúp của JSM.",
+        "example": "twg jsm help-center reporting get --help-center-ari ARI",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "help-center",
+          "reporting",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--help-center-ari <ari>",
+            "description": "ARI trung tâm trợ giúp",
+            "example": "--help-center-ari RESOURCE_ARI"
+          }
+        ]
+      },
+      {
+        "id": "twg-jsm-help-center-topic-get",
+        "canonicalCommand": "twg jsm help-center topic get",
+        "title": "Đọc chủ đề của trung tâm trợ giúp của JSM",
+        "command": "twg jsm help-center topic get",
+        "description": "Đọc chủ đề của trung tâm trợ giúp của JSM.",
+        "example": "twg jsm help-center topic get --help-center-ari ARI --topic-id ID",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "help-center",
+          "topic",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--help-center-ari <ari>",
+            "description": "ARI trung tâm trợ giúp",
+            "example": "--help-center-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--topic-id <id>",
+            "description": "ID chủ đề",
+            "example": "--topic-id 12345"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "jsm-help-object-store",
+    "title": "JSM · kho đối tượng trợ giúp",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "twg-jsm-help-object-store-create",
+        "canonicalCommand": "twg jsm help-object-store create",
+        "title": "Tạo kho đối tượng trợ giúp của JSM",
+        "command": "twg jsm help-object-store create",
+        "description": "Tạo kho đối tượng trợ giúp của JSM. Đây là nhóm API động; chọn field và input theo schema mà site trả về.",
+        "example": "twg jsm help-object-store create --field \"$FIELD_NAME\" --input-json \"$INPUT_JSON\" --site demo",
+        "exampleKind": "template",
+        "risk": "write",
+        "tags": [
+          "jsm",
+          "help-object-store",
+          "create"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "--variables-file <path>",
+            "description": "Tệp JSON chứa biến truy vấn",
+            "example": "--variables-file ./request.json"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--field <field>",
+            "description": "Trường hoặc giá trị trường theo hợp đồng của lệnh",
+            "example": "--field FIELD"
+          },
+          {
+            "flag": "--input-json <json>",
+            "description": "Payload JSON theo schema của lệnh",
+            "example": "--input-json '{}'"
+          },
+          {
+            "flag": "--input-file <path>",
+            "description": "Đường dẫn tới tệp payload JSON đã chuẩn bị",
+            "example": "--input-file ./request.json"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cần điền biến: FIELD_NAME, INPUT_JSON. Lấy ID, giá trị và JSON hợp lệ từ schema/metadata của site; chạy twg help describe 'jsm help-object-store create' để kiểm tra trước. Đây không phải ví dụ đã chạy thành công trên tenant."
+      },
+      {
+        "id": "twg-jsm-help-object-store-query",
+        "canonicalCommand": "twg jsm help-object-store query",
+        "title": "Tra cứu kho đối tượng trợ giúp của JSM",
+        "command": "twg jsm help-object-store query",
+        "description": "Tra cứu kho đối tượng trợ giúp của JSM. Đây là nhóm API động; chọn field và input theo schema mà site trả về.",
+        "example": "twg jsm help-object-store query --field \"$FIELD_NAME\" --variables-json \"$VARIABLES_JSON\" --site demo",
+        "exampleKind": "template",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "help-object-store",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--variables-json <json>",
+            "description": "Đối tượng JSON chứa biến truy vấn",
+            "example": "--variables-json '{}'"
+          },
+          {
+            "flag": "--variables-file <path>",
+            "description": "Tệp JSON chứa biến truy vấn",
+            "example": "--variables-file ./request.json"
+          },
+          {
+            "flag": "--cloud-id <cloudId>",
+            "description": "Id cloud",
+            "example": "--cloud-id 12345"
+          },
+          {
+            "flag": "--field <field>",
+            "description": "Trường hoặc giá trị trường theo hợp đồng của lệnh",
+            "example": "--field FIELD"
+          },
+          {
+            "flag": "--after <after>",
+            "description": "Con trỏ hoặc mốc bắt đầu theo lệnh",
+            "example": "--after AFTER"
+          },
+          {
+            "flag": "--filters <filters>",
+            "description": "Tham số filters",
+            "example": "--filters FILTERS"
+          },
+          {
+            "flag": "--first <first>",
+            "description": "Số phần tử của trang đầu/tiếp theo",
+            "example": "--first 10"
+          },
+          {
+            "flag": "--help-center-ari <helpCenterAri>",
+            "description": "ARI trung tâm trợ giúp",
+            "example": "--help-center-ari RESOURCE_ARI"
+          },
+          {
+            "flag": "--ids <ids>",
+            "description": "Danh sách định danh",
+            "example": "--ids 12345"
+          },
+          {
+            "flag": "--search-input <searchInput>",
+            "description": "Tham số search-input",
+            "example": "--search-input SEARCH_INPUT"
+          },
+          {
+            "flag": "--sort-config <sortConfig>",
+            "description": "Tham số sort-config",
+            "example": "--sort-config SORT_CONFIG"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          }
+        ],
+        "warning": "Mẫu cần điền biến: FIELD_NAME, VARIABLES_JSON. Lấy ID, giá trị và JSON hợp lệ từ schema/metadata của site; chạy twg help describe 'jsm help-object-store query' để kiểm tra trước. Đây không phải ví dụ đã chạy thành công trên tenant."
+      }
+    ]
+  },
+  {
+    "id": "jsm-incident",
+    "title": "JSM · sự cố",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "twg-jsm-incident-affected-service-query",
+        "canonicalCommand": "twg jsm incident affected-service query",
+        "title": "Tra cứu affected-service của sự cố của JSM",
+        "command": "twg jsm incident affected-service query",
+        "description": "Tra cứu affected-service của sự cố của JSM.",
+        "example": "twg jsm incident affected-service query",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "jsm",
+          "incident",
+          "affected-service",
+          "query"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "-s, --site <site>",
+            "description": "Site Atlassian hoặc cloud ID dùng cho yêu cầu",
+            "example": "--site demo"
+          },
+          {
+            "flag": "--incident <issue>",
+            "description": "Sự cố",
+            "example": "--incident DEMO-123"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      }
+    ]
+  }
+]

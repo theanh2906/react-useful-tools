@@ -1,0 +1,19 @@
+{
+  "validated": true,
+  "commands": 691,
+  "uniqueIds": 691,
+  "catalogSetMatches": true,
+  "exampleShellParsing": "all passed",
+  "longFlagsMatchSourceContracts": true,
+  "noAutomaticYesExamples": true,
+  "noUnquotedAnglePlaceholderExamples": true,
+  "exampleKinds": {
+    "usage": 662,
+    "template": 29
+  },
+  "optionOccurrences": 4358,
+  "groups": 110,
+  "payloadSha256": "b17b9717aa240e816810429172413073e44a7f27c86a1ef282ace747007c257f",
+  "discoveryOnlyCount": 0,
+  "runtimeSchemaTemplateCount": 10
+}

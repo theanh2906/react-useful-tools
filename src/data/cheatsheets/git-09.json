@@ -1,0 +1,170 @@
+[
+  {
+    "id": "purehelpers",
+    "title": "Tiện ích nội bộ và shell",
+    "level": "plumbing",
+    "commands": [
+      {
+        "id": "git-sh-i18n",
+        "canonicalCommand": "git sh-i18n",
+        "title": "Nạp helper quốc tế hóa cho shell script",
+        "command": ". \"$(git --exec-path)/git-sh-i18n\"",
+        "description": "Đây là scriptlet phải source bằng dấu chấm trong POSIX shell, không gọi git sh-i18n như lệnh người dùng. Ví dụ chạy trong shell con để không đổi môi trường shell hiện tại.",
+        "example": "sh -c '. \"$(git --exec-path)/git-sh-i18n\"; gettext \"Ready\"; printf \"\\n\"'",
+        "risk": "read",
+        "tags": [
+          "sh-i18n",
+          "plumbing",
+          "shell",
+          "i18n",
+          "internal"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-sh-i18n",
+        "options": [
+          {
+            "flag": ". <scriptlet>",
+            "description": "Source để định nghĩa các hàm; không phải thực thi command Git thông thường"
+          },
+          {
+            "flag": "gettext <message>",
+            "description": "Hàm xuất chuỗi; tài liệu phiên bản này mô tả fallback pass-through"
+          },
+          {
+            "flag": "eval_gettext <message>",
+            "description": "Hàm mở rộng biến trong thông điệp bằng helper envsubst"
+          }
+        ],
+        "warning": "Chỉ dành cho script nội bộ/porcelain bằng shell. Không truyền chuỗi hoặc biến không tin cậy để thực thi qua eval."
+      },
+      {
+        "id": "git-sh-setup",
+        "canonicalCommand": "git sh-setup",
+        "title": "Nạp môi trường chung cho Git shell script",
+        "command": "USAGE=<usage>; . \"$(git --exec-path)/git-sh-setup\"",
+        "description": "Scriptlet tạo các biến GIT_DIR, GIT_OBJECT_DIRECTORY và hàm hỗ trợ. Phải source trong script; ví dụ chỉ đọc trạng thái bare trong shell con, không chỉnh môi trường shell gọi.",
+        "example": "sh -c 'USAGE=\"demo\"; . \"$(git --exec-path)/git-sh-setup\"; is_bare_repository'",
+        "risk": "read",
+        "tags": [
+          "sh-setup",
+          "plumbing",
+          "shell",
+          "internal"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-sh-setup",
+        "options": [
+          {
+            "flag": "USAGE / LONG_USAGE",
+            "description": "Biến mô tả cách dùng cần chuẩn bị trước khi source"
+          },
+          {
+            "flag": "SUBDIRECTORY_OK",
+            "description": "Đặt nếu script được phép chạy từ thư mục con"
+          },
+          {
+            "flag": "die / usage",
+            "description": "Hàm in lỗi hoặc cách dùng rồi thoát"
+          },
+          {
+            "flag": "is_bare_repository",
+            "description": "Hàm in true/false về loại kho"
+          },
+          {
+            "flag": "require_work_tree / require_work_tree_exists",
+            "description": "Hàm xác nhận có working tree hoặc nó tồn tại"
+          },
+          {
+            "flag": "cd_to_toplevel",
+            "description": "Hàm chuyển thư mục tới gốc working tree"
+          },
+          {
+            "flag": "require_clean_work_tree <action> [<hint>]",
+            "description": "Hàm từ chối tiếp tục khi tệp tracked/index còn thay đổi"
+          },
+          {
+            "flag": "set_reflog_action <text>",
+            "description": "Hàm đặt nhãn cho các cập nhật reflog tiếp theo"
+          },
+          {
+            "flag": "git_editor <file>",
+            "description": "Hàm chạy editor đã cấu hình; có thể sửa tệp"
+          },
+          {
+            "flag": "get_author_ident_from_commit <commit>",
+            "description": "Hàm sinh mã shell để lấy danh tính tác giả của commit"
+          },
+          {
+            "flag": "create_virtual_base <file1> <file2>",
+            "description": "Hàm sửa file1 thành phần chung với file2"
+          }
+        ],
+        "warning": "Đây không phải lệnh tương tác. Một số hàm thay thư mục, sửa tệp hoặc chạy chương trình ngoài; chỉ source scriptlet từ bản cài Git tin cậy."
+      },
+      {
+        "id": "git-stripspace",
+        "canonicalCommand": "git stripspace",
+        "title": "Chuẩn hóa khoảng trắng của metadata",
+        "command": "git stripspace [--strip-comments] < <text-file>",
+        "description": "Bỏ khoảng trắng cuối dòng, gộp dòng trống, bỏ dòng trống đầu/cuối và bảo đảm newline cuối. Ví dụ chỉ in thông điệp đã làm sạch lên stdout.",
+        "example": "git stripspace --strip-comments < message.txt",
+        "risk": "read",
+        "tags": [
+          "stripspace",
+          "plumbing",
+          "text",
+          "message"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-stripspace",
+        "options": [
+          {
+            "flag": "-s / --strip-comments",
+            "description": "Bỏ các dòng bắt đầu bằng ký tự comment theo core.commentChar"
+          },
+          {
+            "flag": "-c / --comment-lines",
+            "description": "Thêm ký tự comment và khoảng trắng trước mỗi dòng"
+          },
+          {
+            "flag": "stdin / stdout",
+            "description": "Đọc và ghi luồng văn bản, không tự sửa tệp đầu vào"
+          }
+        ],
+        "warning": "Dùng cho thông điệp, notes và metadata. Không dùng thay công cụ sửa whitespace cho mã nguồn hoặc patch vì có thể đổi nội dung có ý nghĩa."
+      },
+      {
+        "id": "git-url-parse",
+        "canonicalCommand": "git url-parse",
+        "title": "Phân tích và kiểm tra Git URL",
+        "command": "git url-parse --component <component> -- <url>...",
+        "description": "Phân tích cả URL chuẩn lẫn dạng scp user@host:path. Ví dụ trích hostname, không kết nối mạng; không truyền mật khẩu/token trong URL.",
+        "example": "git url-parse --component host -- https://example.invalid/team/demo.git",
+        "risk": "read",
+        "tags": [
+          "url-parse",
+          "plumbing",
+          "url",
+          "validate"
+        ],
+        "sourceUrl": "https://git-scm.com/docs/git-url-parse",
+        "options": [
+          {
+            "flag": "-c <component> / --component <component>",
+            "description": "Trích scheme, user, password, host, port hoặc path"
+          },
+          {
+            "flag": "không có --component",
+            "description": "Chỉ xác nhận cú pháp qua mã thoát, không in gì"
+          },
+          {
+            "flag": "--",
+            "description": "Kết thúc tùy chọn trước URL đầu vào"
+          },
+          {
+            "flag": "<url>...",
+            "description": "Kiểm tra nhiều URL theo thứ tự; component thiếu được trả thành dòng trống"
+          }
+        ],
+        "warning": "Hợp lệ về cú pháp không đồng nghĩa Git hỗ trợ scheme, URL tồn tại hay an toàn. Trích password có thể làm lộ bí mật; ví dụ không dùng URL chứa credential."
+      }
+    ]
+  }
+]

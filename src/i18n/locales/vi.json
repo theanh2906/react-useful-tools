@@ -51,7 +51,8 @@
     "liveShare": "Chia sẻ",
     "adminAi": "Trợ lý AI Admin",
     "mealCheckIn": "Check-in ăn uống",
-    "periodTracker": "Theo dõi kinh nguyệt"
+    "periodTracker": "Theo dõi kinh nguyệt",
+    "cheatsheets": "Cheatsheets"
   },
   "categories": {
     "main": "Chính",
@@ -438,5 +439,72 @@
     "error": "Lỗi khi xử lý yêu cầu",
     "suggestedPrompts": "Gợi ý yêu cầu",
     "processingLogs": "Nhật ký xử lý"
+  },
+  "cheatsheets": {
+    "eyebrow": "Sổ tay dòng lệnh",
+    "subtitle": "Từ thao tác hằng ngày đến lệnh nâng cao. Tra cứu đầy đủ theo tài liệu, kèm ví dụ và tham số quan trọng.",
+    "toolsCount": "{{count}} công cụ",
+    "examplesCount": "{{count}} mục tra cứu",
+    "readOnly": "Chỉ để tra cứu",
+    "terminalNote": "bớt một điều cần ghi nhớ",
+    "ready": "Tìm nhanh. Hiểu rõ. Dùng đúng.",
+    "selectTool": "Chọn cheatsheet CLI",
+    "commands": "lệnh",
+    "searchPlaceholder": "Tìm lệnh, tham số, chủ đề…",
+    "searchLabel": "Tìm lệnh {{tool}}",
+    "clearSearch": "Xóa tìm kiếm",
+    "categories": "Lọc theo chủ đề",
+    "allTopics": "Tất cả chủ đề",
+    "showing": "{{count}} / {{total}} lệnh",
+    "exampleHint": "Ví dụ & tra cứu tham số · Bấm sao chép",
+    "resetFilters": "Xóa bộ lọc",
+    "noResults": "Chưa tìm thấy lệnh phù hợp",
+    "noResultsHint": "Thử từ khóa khác hoặc xóa bộ lọc cho {{tool}}.",
+    "example": "Ví dụ",
+    "copyCommand": "Sao chép ví dụ: {{title}}",
+    "copyError": "Không thể sao chép. Hãy chọn ví dụ và sao chép thủ công.",
+    "docs": "Tài liệu",
+    "commandDocs": "Tài liệu chính thức: {{title}} (mở trong thẻ mới)",
+    "risk": {
+      "write": "Đổi dữ liệu",
+      "destructive": "Cẩn trọng"
+    },
+    "referenceNote": "Các ví dụ chỉ dùng để tham khảo, không được thực thi tại đây. Thay tên và ID mẫu trước khi chạy. Đọc kỹ các lệnh được đánh dấu “Đổi dữ liệu” hoặc “Cẩn trọng”.",
+    "sources": "Nguồn & phiên bản",
+    "searching": "Đang tìm trong toàn bộ danh mục…",
+    "showingRange": "{{start}}–{{end}} / {{count}} kết quả · tổng {{total}} mục",
+    "overviewSummary": "Tối đa {{limit}} mục mỗi chủ đề · {{topics}} chủ đề · tổng {{total}} mục",
+    "showMore": "Xem thêm (+{{count}})",
+    "showTopic": "Xem tất cả {{count}} mục trong {{title}}",
+    "commandResults": "Kết quả tra cứu lệnh",
+    "resultPages": "Phân trang danh sách lệnh",
+    "previousPage": "Trang lệnh trước",
+    "nextPage": "Trang lệnh tiếp theo",
+    "pageNumber": "Trang {{page}} / {{pages}}",
+    "fullSearchHint": "Tìm kiếm bao gồm toàn bộ {{count}} mục, kể cả lệnh ở các trang khác.",
+    "showAll": "Xem tất cả {{count}}",
+    "usePages": "Chia theo trang",
+    "coverageLabel": "{{covered}} / {{total}} lệnh trong tài liệu",
+    "outsideScope": "Phạm vi và ngoại lệ",
+    "inventorySource": "Danh mục lệnh chính thức",
+    "importantOptions": "Tham số quan trọng ({{count}})",
+    "level": {
+      "core": "Lệnh hằng ngày",
+      "advanced": "Lệnh nâng cao",
+      "plumbing": "Plumbing · thao tác Git cấp thấp"
+    },
+    "commandStatus": {
+      "preview": "Thử nghiệm / preview",
+      "deprecated": "Đã ngừng khuyến nghị"
+    },
+    "moreTopics": "Chủ đề khác ({{count}})",
+    "fewerTopics": "Thu gọn chủ đề",
+    "chooseTopic": "Chọn trong {{count}} chủ đề",
+    "discoveryExample": "Tra cứu input/schema; chưa xác minh ví dụ thao tác",
+    "coverageDiscovery": "{{count}} mục hiện chỉ có ví dụ tra cứu input",
+    "inputHelp": "Tra cứu input/schema",
+    "copyInputHelp": "Sao chép lệnh tra cứu input/schema: {{title}}",
+    "coverageTemplates": "{{count}} mẫu cần điền ID hoặc schema thực tế",
+    "templateExample": "Mẫu lệnh: cần điền ID/schema trước khi chạy"
   }
 }

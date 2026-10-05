@@ -1,0 +1,402 @@
+[
+  {
+    "id": "alias",
+    "title": "Alias lệnh",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-alias-set",
+        "canonicalCommand": "gh alias set",
+        "title": "Tạo alias",
+        "command": "gh alias set <alias> <expansion> [flags]",
+        "description": "Định nghĩa tên rút gọn cho một lệnh gh hoặc biểu thức shell.",
+        "example": "gh alias set my-issues \"issue list --assignee @me\"",
+        "risk": "write",
+        "tags": [
+          "alias",
+          "set"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_alias_set",
+        "options": [
+          {
+            "flag": "--clobber",
+            "description": "Ghi đè alias trùng tên."
+          },
+          {
+            "flag": "--shell",
+            "description": "Đánh giá expansion bằng shell sh khi gọi alias."
+          }
+        ],
+        "warning": "Thay đổi cấu hình cục bộ. Alias dùng --shell hoặc bắt đầu bằng ! có thể thực thi nhiều lệnh; chỉ lưu nội dung đã kiểm tra."
+      }
+    ]
+  },
+  {
+    "id": "config",
+    "title": "Cấu hình CLI",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-config-clear-cache",
+        "canonicalCommand": "gh config clear-cache",
+        "title": "Xóa cache cục bộ của gh",
+        "command": "gh config clear-cache",
+        "description": "Dọn bộ nhớ đệm CLI trên máy; khác cache của GitHub Actions.",
+        "example": "gh config clear-cache",
+        "risk": "write",
+        "tags": [
+          "config",
+          "clear-cache"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_config_clear-cache",
+        "warning": "Thay đổi file hoặc cấu hình trên máy. Đọc lệnh và sao lưu dữ liệu liên quan trước khi chạy."
+      },
+      {
+        "id": "gh-config-get",
+        "canonicalCommand": "gh config get",
+        "title": "Đọc một cấu hình",
+        "command": "gh config get <key> [flags]",
+        "description": "In giá trị của khóa cấu hình gh.",
+        "example": "gh config get git_protocol --host github.com",
+        "risk": "read",
+        "tags": [
+          "config",
+          "get"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_config_get",
+        "options": [
+          {
+            "flag": "--host",
+            "description": "Áp dụng cấu hình cho một host cụ thể."
+          }
+        ]
+      },
+      {
+        "id": "gh-config-list",
+        "canonicalCommand": "gh config list",
+        "title": "Liệt kê cấu hình",
+        "command": "gh config list [flags]",
+        "description": "In các khóa và giá trị cấu hình đang có.",
+        "example": "gh config list --host github.com",
+        "risk": "read",
+        "tags": [
+          "config",
+          "list"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_config_list",
+        "options": [
+          {
+            "flag": "--host",
+            "description": "Áp dụng cấu hình cho một host cụ thể."
+          }
+        ]
+      },
+      {
+        "id": "gh-config-set",
+        "canonicalCommand": "gh config set",
+        "title": "Đổi cấu hình gh",
+        "command": "gh config set <key> <value> [flags]",
+        "description": "Gán giá trị cho một khóa cấu hình toàn cục hoặc theo host.",
+        "example": "gh config set editor \"code --wait\"",
+        "risk": "write",
+        "tags": [
+          "config",
+          "set"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_config_set",
+        "options": [
+          {
+            "flag": "--host",
+            "description": "Áp dụng cấu hình cho một host cụ thể."
+          }
+        ],
+        "warning": "Thay đổi file hoặc cấu hình trên máy. Đọc lệnh và sao lưu dữ liệu liên quan trước khi chạy. Giá trị editor, pager hoặc browser có thể được thực thi về sau; chỉ đặt chương trình tin cậy."
+      }
+    ]
+  },
+  {
+    "id": "ssh-key",
+    "title": "Khóa SSH",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-ssh-key-add",
+        "canonicalCommand": "gh ssh-key add",
+        "title": "Thêm khóa SSH công khai",
+        "command": "gh ssh-key add [<key-file>] [flags]",
+        "description": "Đăng public key SSH cho xác thực hoặc ký commit.",
+        "example": "gh ssh-key add ./id_ed25519.pub --title \"Laptop cá nhân\" --type authentication",
+        "risk": "write",
+        "tags": [
+          "ssh-key",
+          "add"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_ssh-key_add",
+        "options": [
+          {
+            "flag": "--title",
+            "description": "Chỉ định tiêu đề."
+          },
+          {
+            "flag": "--type",
+            "description": "Chọn authentication hoặc signing."
+          }
+        ],
+        "warning": "Thay đổi xác thực hoặc quyền truy cập. Tự kiểm tra chủ sở hữu, quyền yêu cầu và tài khoản trước khi chấp thuận; không chia sẻ token hay khóa riêng. Dùng file .pub; tuyệt đối không tải private key."
+      },
+      {
+        "id": "gh-ssh-key-delete",
+        "canonicalCommand": "gh ssh-key delete",
+        "title": "Xóa khóa SSH khỏi GitHub",
+        "command": "gh ssh-key delete <id> [flags]",
+        "description": "Gỡ một khóa SSH theo ID của tài khoản.",
+        "example": "gh ssh-key delete SSH_KEY_ID",
+        "risk": "destructive",
+        "tags": [
+          "ssh-key",
+          "delete"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_ssh-key_delete",
+        "options": [
+          {
+            "flag": "--yes",
+            "description": "Bỏ qua bước xác nhận; không dùng trước khi kiểm tra mục tiêu."
+          }
+        ],
+        "warning": "Thay đổi xác thực hoặc quyền truy cập. Tự kiểm tra chủ sở hữu, quyền yêu cầu và tài khoản trước khi chấp thuận; không chia sẻ token hay khóa riêng. Có thể làm máy/dịch vụ dùng khóa này mất quyền truy cập GitHub."
+      },
+      {
+        "id": "gh-ssh-key-list",
+        "canonicalCommand": "gh ssh-key list",
+        "title": "Liệt kê khóa SSH",
+        "command": "gh ssh-key list",
+        "description": "Xem các SSH public key đã đăng ký với tài khoản.",
+        "example": "gh ssh-key list",
+        "risk": "read",
+        "tags": [
+          "ssh-key",
+          "list"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_ssh-key_list"
+      }
+    ]
+  },
+  {
+    "id": "gpg-key",
+    "title": "Khóa GPG",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-gpg-key-add",
+        "canonicalCommand": "gh gpg-key add",
+        "title": "Thêm khóa GPG công khai",
+        "command": "gh gpg-key add [<key-file>] [flags]",
+        "description": "Đăng khóa GPG công khai để GitHub nhận diện chữ ký commit/tag.",
+        "example": "gh gpg-key add ./public-key.asc --title \"Khóa ký công việc\"",
+        "risk": "write",
+        "tags": [
+          "gpg-key",
+          "add"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_gpg-key_add",
+        "options": [
+          {
+            "flag": "--title",
+            "description": "Chỉ định tiêu đề."
+          }
+        ],
+        "warning": "Thay đổi xác thực hoặc quyền truy cập. Tự kiểm tra chủ sở hữu, quyền yêu cầu và tài khoản trước khi chấp thuận; không chia sẻ token hay khóa riêng. Chỉ cung cấp khóa công khai, không gửi private key."
+      },
+      {
+        "id": "gh-gpg-key-delete",
+        "canonicalCommand": "gh gpg-key delete",
+        "title": "Xóa khóa GPG khỏi GitHub",
+        "command": "gh gpg-key delete <key-id> [flags]",
+        "description": "Gỡ đăng ký một khóa GPG của tài khoản.",
+        "example": "gh gpg-key delete GPG_KEY_ID",
+        "risk": "destructive",
+        "tags": [
+          "gpg-key",
+          "delete"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_gpg-key_delete",
+        "options": [
+          {
+            "flag": "--yes",
+            "description": "Bỏ qua bước xác nhận; không dùng trước khi kiểm tra mục tiêu."
+          }
+        ],
+        "warning": "Thay đổi xác thực hoặc quyền truy cập. Tự kiểm tra chủ sở hữu, quyền yêu cầu và tài khoản trước khi chấp thuận; không chia sẻ token hay khóa riêng. Xác minh ID khóa và ảnh hưởng đến việc xác minh chữ ký."
+      },
+      {
+        "id": "gh-gpg-key-list",
+        "canonicalCommand": "gh gpg-key list",
+        "title": "Liệt kê khóa GPG",
+        "command": "gh gpg-key list",
+        "description": "Xem khóa GPG công khai đã đăng ký trong tài khoản.",
+        "example": "gh gpg-key list",
+        "risk": "read",
+        "tags": [
+          "gpg-key",
+          "list"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_gpg-key_list"
+      }
+    ]
+  },
+  {
+    "id": "org",
+    "title": "Tổ chức",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-org-list",
+        "canonicalCommand": "gh org list",
+        "title": "Liệt kê tổ chức",
+        "command": "gh org list [flags]",
+        "description": "Xem những tổ chức trả về cho tài khoản đang xác thực.",
+        "example": "gh org list --limit 50",
+        "risk": "read",
+        "tags": [
+          "org",
+          "list"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_org_list",
+        "options": [
+          {
+            "flag": "--limit",
+            "description": "Giới hạn số kết quả lấy về."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "help",
+    "title": "Trợ giúp & tham chiếu",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-help",
+        "canonicalCommand": "gh help",
+        "title": "Mở trợ giúp lệnh",
+        "command": "gh help [command]",
+        "description": "Đọc đầy đủ cách dùng và cờ của lệnh gh có trên máy.",
+        "example": "gh help pr merge",
+        "risk": "read",
+        "tags": [
+          "help"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_help"
+      },
+      {
+        "id": "gh-help-environment",
+        "canonicalCommand": "gh help environment",
+        "title": "Tra cứu biến môi trường",
+        "command": "gh help environment",
+        "description": "Xem các biến GH_TOKEN, GH_HOST, GH_REPO, GH_EDITOR và tùy chọn terminal; GH_TOKEN có ưu tiên hơn đăng nhập đã lưu.",
+        "example": "gh help environment",
+        "risk": "read",
+        "tags": [
+          "help",
+          "environment"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_help_environment",
+        "warning": "Token trong biến môi trường là bí mật. DEBUG đã deprecated; dùng GH_DEBUG cho chẩn đoán và tránh chia sẻ log API chưa che thông tin nhạy cảm."
+      },
+      {
+        "id": "gh-help-exit-codes",
+        "canonicalCommand": "gh help exit-codes",
+        "title": "Tra cứu mã thoát",
+        "command": "gh help exit-codes",
+        "description": "Xem quy ước 0 thành công, 1 lỗi, 2 bị hủy và 4 cần xác thực; một số lệnh có mã bổ sung.",
+        "example": "gh help exit-codes",
+        "risk": "read",
+        "tags": [
+          "help",
+          "exit-codes"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_help_exit-codes"
+      },
+      {
+        "id": "gh-help-formatting",
+        "canonicalCommand": "gh help formatting",
+        "title": "Tra cứu JSON, jq và template",
+        "command": "gh help formatting",
+        "description": "Xem cách chọn trường --json, lọc bằng --jq và định dạng Go template cho các lệnh hỗ trợ.",
+        "example": "gh help formatting",
+        "risk": "read",
+        "tags": [
+          "help",
+          "formatting"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_help_formatting"
+      },
+      {
+        "id": "gh-help-mintty",
+        "canonicalCommand": "gh help mintty",
+        "title": "Xử lý terminal MinTTY",
+        "command": "gh help mintty",
+        "description": "Đọc cách khắc phục prompt trong Git for Windows/MinTTY và các lựa chọn terminal.",
+        "example": "gh help mintty",
+        "risk": "read",
+        "tags": [
+          "help",
+          "mintty"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_help_mintty"
+      },
+      {
+        "id": "gh-help-reference",
+        "canonicalCommand": "gh help reference",
+        "title": "Xem toàn bộ tham chiếu CLI",
+        "command": "gh help reference",
+        "description": "Mở tham chiếu lệnh đầy đủ ứng với phiên bản gh đã cài trên máy.",
+        "example": "gh help reference",
+        "risk": "read",
+        "tags": [
+          "help",
+          "reference"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_help_reference"
+      },
+      {
+        "id": "gh-help-telemetry",
+        "canonicalCommand": "gh help telemetry",
+        "title": "Đọc hướng dẫn telemetry",
+        "command": "gh help telemetry",
+        "description": "Tra cứu dữ liệu sử dụng được thu thập và liên kết hướng dẫn tắt telemetry.",
+        "example": "gh help telemetry",
+        "risk": "read",
+        "tags": [
+          "help",
+          "telemetry"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_help_telemetry"
+      }
+    ]
+  },
+  {
+    "id": "preview",
+    "title": "Công cụ preview",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "gh-preview-prompter",
+        "canonicalCommand": "gh preview prompter",
+        "title": "Thử giao diện prompt",
+        "command": "gh preview prompter [prompt type]",
+        "description": "Chạy minh họa prompt của gh để kiểm tra khả năng nhập liệu và accessibility.",
+        "example": "gh preview prompter select",
+        "risk": "read",
+        "tags": [
+          "preview",
+          "prompter"
+        ],
+        "sourceUrl": "https://cli.github.com/manual/gh_preview_prompter",
+        "warning": "Lệnh thử nghiệm, không phải quy trình xác thực thật. Không nhập mật khẩu hoặc token thật vào ví dụ kiểm thử.",
+        "status": "preview"
+      }
+    ]
+  }
+]

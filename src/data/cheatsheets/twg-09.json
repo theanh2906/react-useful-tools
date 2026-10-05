@@ -1,0 +1,1123 @@
+[
+  {
+    "id": "utility",
+    "title": "CLI · Thiết lập, trợ giúp & bảo trì",
+    "level": "core",
+    "commands": [
+      {
+        "id": "twg-env",
+        "canonicalCommand": "twg env",
+        "title": "Kiểm tra môi trường",
+        "command": "twg env",
+        "description": "Kiểm tra môi trường.",
+        "example": "twg env",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "env"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--export",
+            "description": "Chế độ xuất; đầu ra xác thực có thể chứa bí mật, chỉ dùng trong terminal riêng tư",
+            "example": "--export"
+          },
+          {
+            "flag": "--list",
+            "description": "Tham số list",
+            "example": "--list"
+          },
+          {
+            "flag": "-a, --all",
+            "description": "Tham số all",
+            "example": "--all"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-env-auth",
+        "canonicalCommand": "twg env auth",
+        "title": "Xem xác thực của môi trường",
+        "command": "twg env auth",
+        "description": "Xem xác thực của môi trường.",
+        "example": "twg env auth --no-snapshot",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "env",
+          "auth"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--type <type>",
+            "description": "Loại tài nguyên hoặc nội dung theo lệnh; nhận: oauth, api",
+            "example": "--type oauth"
+          },
+          {
+            "flag": "--enforce",
+            "description": "Tham số enforce",
+            "example": "--enforce"
+          },
+          {
+            "flag": "--export",
+            "description": "Chế độ xuất; đầu ra xác thực có thể chứa bí mật, chỉ dùng trong terminal riêng tư",
+            "example": "--export"
+          },
+          {
+            "flag": "--no-snapshot",
+            "description": "Không ghi snapshot xác thực ra tệp",
+            "example": "--no-snapshot"
+          }
+        ],
+        "warning": "Kiểm tra trạng thái xác thực mà không ghi snapshot. --export có thể xuất bí mật; không chạy hoặc chia sẻ đầu ra đó trong chat."
+      },
+      {
+        "id": "twg-feedback",
+        "canonicalCommand": "twg feedback",
+        "title": "Mở biểu mẫu phản hồi",
+        "command": "twg feedback",
+        "description": "Mở biểu mẫu phản hồi.",
+        "example": "twg feedback --last-error",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "feedback"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--summary <text>",
+            "description": "Nội dung tóm tắt",
+            "example": "--summary 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--last-error",
+            "description": "Tham số last-error",
+            "example": "--last-error"
+          },
+          {
+            "flag": "-d, --description <text>",
+            "description": "Mô tả",
+            "example": "--description 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--error-code <code>",
+            "description": "Tham số error-code",
+            "example": "--error-code ERROR_CODE"
+          },
+          {
+            "flag": "--trace-id <id>",
+            "description": "ID trace",
+            "example": "--trace-id 12345"
+          },
+          {
+            "flag": "--request-id <id>",
+            "description": "ID yêu cầu",
+            "example": "--request-id 12345"
+          },
+          {
+            "flag": "--failed-command <command>",
+            "description": "Tham số failed-command",
+            "example": "--failed-command FAILED_COMMAND"
+          },
+          {
+            "flag": "-t, --type <type>",
+            "description": "Loại tài nguyên hoặc nội dung theo lệnh; nhận: bug, suggestion, comment, question",
+            "example": "--type bug"
+          },
+          {
+            "flag": "--can-contact",
+            "description": "Tham số can-contact; không dùng cùng --no-contact",
+            "example": "--can-contact"
+          },
+          {
+            "flag": "--no-contact",
+            "description": "Tắt contact; không dùng cùng --can-contact",
+            "example": "--no-contact"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa."
+      },
+      {
+        "id": "twg-help",
+        "canonicalCommand": "twg help",
+        "title": "Tìm trợ giúp lệnh",
+        "command": "twg help [terms...]",
+        "description": "Tìm trợ giúp lệnh.",
+        "example": "twg help pull request",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "help"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--limit <count>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh",
+            "example": "--limit 10"
+          },
+          {
+            "flag": "--namespace <path>",
+            "description": "Tham số namespace",
+            "example": "--namespace NAMESPACE"
+          },
+          {
+            "flag": "--refresh-cache",
+            "description": "Tham số refresh-cache",
+            "example": "--refresh-cache"
+          },
+          {
+            "flag": "--brief",
+            "description": "Tham số brief",
+            "example": "--brief"
+          }
+        ]
+      },
+      {
+        "id": "twg-help-describe",
+        "canonicalCommand": "twg help describe",
+        "title": "Mô tả trợ giúp",
+        "command": "twg help describe <target...>",
+        "description": "Mô tả trợ giúp.",
+        "example": "twg help describe jira workitem get --include-globals",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "help",
+          "describe"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--depth <levels>",
+            "description": "Số cấp quan hệ cần mở rộng",
+            "example": "--depth 1"
+          },
+          {
+            "flag": "--include-globals",
+            "description": "Kèm globals",
+            "example": "--include-globals"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-help-discover-skills",
+        "canonicalCommand": "twg help discover-skills",
+        "title": "Tìm hướng dẫn agent trợ giúp",
+        "command": "twg help discover-skills <intent...>",
+        "description": "Tìm hướng dẫn agent trợ giúp.",
+        "example": "twg help discover-skills \"snapshot token editing\" --limit 3",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "help",
+          "discover-skills"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--limit <count>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh",
+            "example": "--limit 10"
+          },
+          {
+            "flag": "--skill <name>",
+            "description": "Tham số skill",
+            "example": "--skill SKILL"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-login",
+        "canonicalCommand": "twg login",
+        "title": "Đăng nhập Atlassian",
+        "command": "twg login",
+        "description": "Đăng nhập Atlassian.",
+        "example": "twg login",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "login"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--no-verify",
+            "description": "Bỏ qua bước kiểm tra được lệnh chỉ định; chỉ dùng khi hiểu rõ tác động",
+            "example": "--no-verify"
+          },
+          {
+            "flag": "-f, --force",
+            "description": "Ép thực hiện theo quy tắc của lệnh; đọc tài liệu trước khi dùng",
+            "example": "--force"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường. Có liên quan đến thông tin xác thực; chỉ thao tác trong terminal riêng tư, không chia sẻ đầu ra bí mật."
+      },
+      {
+        "id": "twg-logout",
+        "canonicalCommand": "twg logout",
+        "title": "Đăng xuất Atlassian",
+        "command": "twg logout",
+        "description": "Đăng xuất Atlassian.",
+        "example": "twg logout",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "logout"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--keep-keychain",
+            "description": "Tham số keep-keychain",
+            "example": "--keep-keychain"
+          },
+          {
+            "flag": "--keep-file",
+            "description": "Tệp cho keep",
+            "example": "--keep-file"
+          },
+          {
+            "flag": "--bitbucket",
+            "description": "Bitbucket",
+            "example": "--bitbucket"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-setup",
+        "canonicalCommand": "twg setup",
+        "title": "Thiết lập CLI",
+        "command": "twg setup",
+        "description": "Thiết lập CLI.",
+        "example": "twg setup",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "setup"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-f, --force",
+            "description": "Ép thực hiện theo quy tắc của lệnh; đọc tài liệu trước khi dùng",
+            "example": "--force"
+          },
+          {
+            "flag": "--force-auth",
+            "description": "Bắt đầu lại quy trình xác thực",
+            "example": "--force-auth"
+          },
+          {
+            "flag": "--no-verify",
+            "description": "Bỏ qua bước kiểm tra được lệnh chỉ định; chỉ dùng khi hiểu rõ tác động",
+            "example": "--no-verify"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Có liên quan đến thông tin xác thực; chỉ thao tác trong terminal riêng tư, không chia sẻ đầu ra bí mật."
+      },
+      {
+        "id": "twg-setup-bitbucket",
+        "canonicalCommand": "twg setup bitbucket",
+        "title": "Xem Bitbucket của setup",
+        "command": "twg setup bitbucket",
+        "description": "Xem Bitbucket của setup.",
+        "example": "twg setup bitbucket",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "setup",
+          "bitbucket"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-f, --force",
+            "description": "Ép thực hiện theo quy tắc của lệnh; đọc tài liệu trước khi dùng",
+            "example": "--force"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-setup-default-site",
+        "canonicalCommand": "twg setup default-site",
+        "title": "Xem site mặc định của setup",
+        "command": "twg setup default-site",
+        "description": "Xem site mặc định của setup.",
+        "example": "twg setup default-site",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "setup",
+          "default-site"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-skills-install",
+        "canonicalCommand": "twg skills install",
+        "title": "Cài bộ hướng dẫn agent",
+        "command": "twg skills install",
+        "description": "Cài bộ hướng dẫn agent.",
+        "example": "twg skills install --local",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "skills",
+          "install"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--agent <agent>",
+            "description": "Agent",
+            "example": "--agent AGENT"
+          },
+          {
+            "flag": "--all-agents",
+            "description": "Tham số all-agents",
+            "example": "--all-agents"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          },
+          {
+            "flag": "--name <skill-name>",
+            "description": "Tên",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--no-prune",
+            "description": "Tắt prune",
+            "example": "--no-prune"
+          },
+          {
+            "flag": "-l, --local",
+            "description": "Chỉ cài bộ hướng dẫn trong dự án hiện tại",
+            "example": "--local"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-skills-uninstall",
+        "canonicalCommand": "twg skills uninstall",
+        "title": "Gỡ cài bộ hướng dẫn agent",
+        "command": "twg skills uninstall",
+        "description": "Gỡ cài bộ hướng dẫn agent.",
+        "example": "twg skills uninstall --name test-twg",
+        "exampleKind": "usage",
+        "risk": "destructive",
+        "tags": [
+          "skills",
+          "uninstall"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--agent <agent>",
+            "description": "Agent",
+            "example": "--agent AGENT"
+          },
+          {
+            "flag": "--name <skill-name>",
+            "description": "Tên",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--all-agents",
+            "description": "Tham số all-agents",
+            "example": "--all-agents"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể xóa dữ liệu, thu hồi quyền hoặc gỡ cấu hình. Đọc lại đối tượng và khả năng khôi phục; ưu tiên --dry-run nếu lệnh hỗ trợ. Không thêm --yes khi chưa kiểm tra. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-uninstall",
+        "canonicalCommand": "twg uninstall",
+        "title": "Gỡ cài CLI",
+        "command": "twg uninstall",
+        "description": "Gỡ cài CLI.",
+        "example": "twg uninstall --dry-run",
+        "exampleKind": "usage",
+        "risk": "destructive",
+        "tags": [
+          "uninstall"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--dry-run",
+            "description": "Chỉ kiểm tra hoặc xem trước thay đổi, theo hợp đồng của lệnh",
+            "example": "--dry-run"
+          },
+          {
+            "flag": "--all",
+            "description": "Tham số all",
+            "example": "--all"
+          },
+          {
+            "flag": "--direct",
+            "description": "Tham số direct",
+            "example": "--direct"
+          },
+          {
+            "flag": "--pkg",
+            "description": "Tham số pkg",
+            "example": "--pkg"
+          },
+          {
+            "flag": "--user-data",
+            "description": "Xóa cấu hình TWG của người dùng, giữ binary do MSI cài",
+            "example": "--user-data"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          }
+        ],
+        "warning": "Có thể xóa dữ liệu, thu hồi quyền hoặc gỡ cấu hình. Đọc lại đối tượng và khả năng khôi phục; ưu tiên --dry-run nếu lệnh hỗ trợ. Không thêm --yes khi chưa kiểm tra."
+      },
+      {
+        "id": "twg-upgrade",
+        "canonicalCommand": "twg upgrade",
+        "title": "Nâng cấp CLI",
+        "command": "twg upgrade",
+        "description": "Nâng cấp CLI.",
+        "example": "twg upgrade --check",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "upgrade"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--check",
+            "description": "Tham số check",
+            "example": "--check"
+          },
+          {
+            "flag": "--version <version>",
+            "description": "Phiên bản",
+            "example": "--version VERSION"
+          },
+          {
+            "flag": "--channel <channel>",
+            "description": "Kênh",
+            "example": "--channel CHANNEL"
+          },
+          {
+            "flag": "-y, --yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          },
+          {
+            "flag": "--refresh-skills",
+            "description": "Tham số refresh-skills",
+            "example": "--refresh-skills"
+          }
+        ],
+        "warning": "Ví dụ chỉ kiểm tra nâng cấp. Bỏ --check có thể thay binary và skills. Tài liệu cũ có thể còn ghi update; đây là hợp đồng của stable 1.3.3."
+      },
+      {
+        "id": "twg-upkeep-disable",
+        "canonicalCommand": "twg upkeep disable",
+        "title": "Tắt upkeep",
+        "command": "twg upkeep disable",
+        "description": "Tắt upkeep.",
+        "example": "twg upkeep disable",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "upkeep",
+          "disable"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-upkeep-enable",
+        "canonicalCommand": "twg upkeep enable",
+        "title": "Bật upkeep",
+        "command": "twg upkeep enable",
+        "description": "Bật upkeep.",
+        "example": "twg upkeep enable",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "upkeep",
+          "enable"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-upkeep-run",
+        "canonicalCommand": "twg upkeep run",
+        "title": "Chạy upkeep",
+        "command": "twg upkeep run",
+        "description": "Chạy upkeep.",
+        "example": "twg upkeep run",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "upkeep",
+          "run"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-upkeep-status",
+        "canonicalCommand": "twg upkeep status",
+        "title": "Xem trạng thái của upkeep",
+        "command": "twg upkeep status",
+        "description": "Xem trạng thái của upkeep.",
+        "example": "twg upkeep status",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "upkeep",
+          "status"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-whoami",
+        "canonicalCommand": "twg whoami",
+        "title": "Xem tài khoản hiện tại",
+        "command": "twg whoami",
+        "description": "Xem tài khoản hiện tại.",
+        "example": "twg whoami",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "whoami"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      }
+    ]
+  },
+  {
+    "id": "admin-auth",
+    "title": "quản trị · xác thực",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "twg-admin-auth-login",
+        "canonicalCommand": "twg admin auth login",
+        "title": "Đăng nhập xác thực của quản trị",
+        "command": "twg admin auth login --email <email>",
+        "description": "Đăng nhập xác thực của quản trị.",
+        "example": "twg admin auth login --email person@example.com",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "admin",
+          "auth",
+          "login"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--email <email>",
+            "description": "Email; bắt buộc",
+            "example": "--email person@example.com"
+          },
+          {
+            "flag": "--org <id-or-name>",
+            "description": "ID tổ chức; mặc định có thể là tổ chức admin đang chọn",
+            "example": "--org ORG"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường. Có liên quan đến thông tin xác thực; chỉ thao tác trong terminal riêng tư, không chia sẻ đầu ra bí mật."
+      },
+      {
+        "id": "twg-admin-auth-logout",
+        "canonicalCommand": "twg admin auth logout",
+        "title": "Đăng xuất xác thực của quản trị",
+        "command": "twg admin auth logout",
+        "description": "Đăng xuất xác thực của quản trị.",
+        "example": "twg admin auth logout",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "admin",
+          "auth",
+          "logout"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường. Có liên quan đến thông tin xác thực; chỉ thao tác trong terminal riêng tư, không chia sẻ đầu ra bí mật."
+      },
+      {
+        "id": "twg-admin-auth-status",
+        "canonicalCommand": "twg admin auth status",
+        "title": "Xem trạng thái của xác thực của quản trị",
+        "command": "twg admin auth status",
+        "description": "Xem trạng thái của xác thực của quản trị.",
+        "example": "twg admin auth status",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "admin",
+          "auth",
+          "status"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường. Có liên quan đến thông tin xác thực; chỉ thao tác trong terminal riêng tư, không chia sẻ đầu ra bí mật."
+      },
+      {
+        "id": "twg-admin-auth-switch",
+        "canonicalCommand": "twg admin auth switch",
+        "title": "Chuyển xác thực của quản trị",
+        "command": "twg admin auth switch --org <id-or-name>",
+        "description": "Chuyển xác thực của quản trị.",
+        "example": "twg admin auth switch --org example-org",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "admin",
+          "auth",
+          "switch"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "--org <id-or-name>",
+            "description": "ID tổ chức; mặc định có thể là tổ chức admin đang chọn; bắt buộc",
+            "example": "--org ORG"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường. Có liên quan đến thông tin xác thực; chỉ thao tác trong terminal riêng tư, không chia sẻ đầu ra bí mật."
+      }
+    ]
+  },
+  {
+    "id": "admin-directory",
+    "title": "quản trị · directory",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "twg-admin-directory-list",
+        "canonicalCommand": "twg admin directory list",
+        "title": "Liệt kê directory của quản trị",
+        "command": "twg admin directory list",
+        "description": "Liệt kê directory của quản trị.",
+        "example": "twg admin directory list",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "admin",
+          "directory",
+          "list"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--org <id-or-name>",
+            "description": "ID tổ chức; mặc định có thể là tổ chức admin đang chọn",
+            "example": "--org ORG"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      }
+    ]
+  },
+  {
+    "id": "admin-group",
+    "title": "quản trị · nhóm",
+    "level": "advanced",
+    "commands": [
+      {
+        "id": "twg-admin-group-access-grant",
+        "canonicalCommand": "twg admin group access grant",
+        "title": "Cấp quyền quyền truy cập của nhóm của quản trị",
+        "command": "twg admin group access grant --group-id <id> --resource-id <ari> --role-id <id> --directory-id <id>",
+        "description": "Cấp quyền quyền truy cập của nhóm của quản trị.",
+        "example": "twg admin group access grant --group-id 12345 --resource-id RESOURCE_ARI --role-id 12345 --directory-id 12345 --dry-run",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "admin",
+          "group",
+          "access",
+          "grant"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--group-id <id>",
+            "description": "ID nhóm; bắt buộc",
+            "example": "--group-id 12345"
+          },
+          {
+            "flag": "--resource-id <ari>",
+            "description": "ID tài nguyên; bắt buộc",
+            "example": "--resource-id RESOURCE_ARI"
+          },
+          {
+            "flag": "--role-id <id>",
+            "description": "Id vai trò; bắt buộc",
+            "example": "--role-id 12345"
+          },
+          {
+            "flag": "--directory-id <id>",
+            "description": "ID directory trong tổ chức; bắt buộc",
+            "example": "--directory-id 12345"
+          },
+          {
+            "flag": "--org <id>",
+            "description": "ID tổ chức; mặc định có thể là tổ chức admin đang chọn",
+            "example": "--org ORG"
+          },
+          {
+            "flag": "--yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          },
+          {
+            "flag": "--dry-run",
+            "description": "Chỉ kiểm tra hoặc xem trước thay đổi, theo hợp đồng của lệnh",
+            "example": "--dry-run"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-admin-group-access-revoke",
+        "canonicalCommand": "twg admin group access revoke",
+        "title": "Thu hồi quyền quyền truy cập của nhóm của quản trị",
+        "command": "twg admin group access revoke --group-id <id> --resource-id <ari> --role-id <id> --directory-id <id>",
+        "description": "Thu hồi quyền quyền truy cập của nhóm của quản trị.",
+        "example": "twg admin group access revoke --group-id 12345 --resource-id RESOURCE_ARI --role-id 12345 --directory-id 12345 --dry-run",
+        "exampleKind": "usage",
+        "risk": "destructive",
+        "tags": [
+          "admin",
+          "group",
+          "access",
+          "revoke"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--group-id <id>",
+            "description": "ID nhóm; bắt buộc",
+            "example": "--group-id 12345"
+          },
+          {
+            "flag": "--resource-id <ari>",
+            "description": "ID tài nguyên; bắt buộc",
+            "example": "--resource-id RESOURCE_ARI"
+          },
+          {
+            "flag": "--role-id <id>",
+            "description": "Id vai trò; bắt buộc",
+            "example": "--role-id 12345"
+          },
+          {
+            "flag": "--directory-id <id>",
+            "description": "ID directory trong tổ chức; bắt buộc",
+            "example": "--directory-id 12345"
+          },
+          {
+            "flag": "--org <id>",
+            "description": "ID tổ chức; mặc định có thể là tổ chức admin đang chọn",
+            "example": "--org ORG"
+          },
+          {
+            "flag": "--yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          },
+          {
+            "flag": "--dry-run",
+            "description": "Chỉ kiểm tra hoặc xem trước thay đổi, theo hợp đồng của lệnh",
+            "example": "--dry-run"
+          }
+        ],
+        "warning": "Có thể xóa dữ liệu, thu hồi quyền hoặc gỡ cấu hình. Đọc lại đối tượng và khả năng khôi phục; ưu tiên --dry-run nếu lệnh hỗ trợ. Không thêm --yes khi chưa kiểm tra. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-admin-group-count",
+        "canonicalCommand": "twg admin group count",
+        "title": "Xem số lượng của nhóm của quản trị",
+        "command": "twg admin group count",
+        "description": "Xem số lượng của nhóm của quản trị.",
+        "example": "twg admin group count",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "admin",
+          "group",
+          "count"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--org <id-or-name>",
+            "description": "ID tổ chức; mặc định có thể là tổ chức admin đang chọn",
+            "example": "--org ORG"
+          },
+          {
+            "flag": "--directory-id <id>",
+            "description": "ID directory trong tổ chức; mặc định: \"-\"",
+            "example": "--directory-id 12345"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-admin-group-create",
+        "canonicalCommand": "twg admin group create",
+        "title": "Tạo nhóm của quản trị",
+        "command": "twg admin group create --name <name> --directory-id <id>",
+        "description": "Tạo nhóm của quản trị.",
+        "example": "twg admin group create --name 'Ví dụ trong môi trường thử nghiệm' --directory-id 12345 --dry-run",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "admin",
+          "group",
+          "create"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--name <name>",
+            "description": "Tên; bắt buộc",
+            "example": "--name 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--description <description>",
+            "description": "Mô tả",
+            "example": "--description 'Ví dụ trong môi trường thử nghiệm'"
+          },
+          {
+            "flag": "--directory-id <id>",
+            "description": "ID directory trong tổ chức; bắt buộc",
+            "example": "--directory-id 12345"
+          },
+          {
+            "flag": "--org <id>",
+            "description": "ID tổ chức; mặc định có thể là tổ chức admin đang chọn",
+            "example": "--org ORG"
+          },
+          {
+            "flag": "--yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          },
+          {
+            "flag": "--dry-run",
+            "description": "Chỉ kiểm tra hoặc xem trước thay đổi, theo hợp đồng của lệnh",
+            "example": "--dry-run"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-admin-group-get",
+        "canonicalCommand": "twg admin group get",
+        "title": "Đọc nhóm của quản trị",
+        "command": "twg admin group get --group-id <id> --directory-id <id>",
+        "description": "Đọc nhóm của quản trị.",
+        "example": "twg admin group get --group-id 12345 --directory-id 12345",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "admin",
+          "group",
+          "get"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--group-id <id>",
+            "description": "ID nhóm; bắt buộc",
+            "example": "--group-id 12345"
+          },
+          {
+            "flag": "--directory-id <id>",
+            "description": "ID directory trong tổ chức; bắt buộc",
+            "example": "--directory-id 12345"
+          },
+          {
+            "flag": "--org <id-or-name>",
+            "description": "ID tổ chức; mặc định có thể là tổ chức admin đang chọn",
+            "example": "--org ORG"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-admin-group-list",
+        "canonicalCommand": "twg admin group list",
+        "title": "Liệt kê nhóm của quản trị",
+        "command": "twg admin group list",
+        "description": "Liệt kê nhóm của quản trị.",
+        "example": "twg admin group list",
+        "exampleKind": "usage",
+        "risk": "read",
+        "tags": [
+          "admin",
+          "group",
+          "list"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--org <id-or-name>",
+            "description": "ID tổ chức; mặc định có thể là tổ chức admin đang chọn",
+            "example": "--org ORG"
+          },
+          {
+            "flag": "--directory-id <id>",
+            "description": "ID directory trong tổ chức; mặc định: \"-\"",
+            "example": "--directory-id 12345"
+          },
+          {
+            "flag": "--limit <count>",
+            "description": "Số kết quả tối đa hoặc kích thước trang theo lệnh",
+            "example": "--limit 10"
+          },
+          {
+            "flag": "--cursor <cursor>",
+            "description": "Con trỏ lấy từ trang kết quả trước",
+            "example": "--cursor CURSOR"
+          },
+          {
+            "flag": "--search-term <term>",
+            "description": "Từ khóa tìm kiếm",
+            "example": "--search-term onboarding"
+          }
+        ],
+        "warning": "Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      },
+      {
+        "id": "twg-admin-group-member-add",
+        "canonicalCommand": "twg admin group member add",
+        "title": "Thêm thành viên của nhóm của quản trị",
+        "command": "twg admin group member add --group-id <id> --account-id <id> --directory-id <id>",
+        "description": "Thêm thành viên của nhóm của quản trị.",
+        "example": "twg admin group member add --group-id 12345 --account-id ACCOUNT_ID --directory-id 12345 --dry-run",
+        "exampleKind": "usage",
+        "risk": "write",
+        "tags": [
+          "admin",
+          "group",
+          "member",
+          "add"
+        ],
+        "sourceUrl": "https://atlassian.github.io/twg-cli/commands/commands-catalog/",
+        "options": [
+          {
+            "flag": "-o, --output <format>",
+            "description": "Định dạng đầu ra; nhận: text, json, jsonl; mặc định: \"text\"",
+            "example": "--output text"
+          },
+          {
+            "flag": "--group-id <id>",
+            "description": "ID nhóm; bắt buộc",
+            "example": "--group-id 12345"
+          },
+          {
+            "flag": "--account-id <id>",
+            "description": "ID tài khoản Atlassian hoặc ARI được hỗ trợ; bắt buộc",
+            "example": "--account-id ACCOUNT_ID"
+          },
+          {
+            "flag": "--directory-id <id>",
+            "description": "ID directory trong tổ chức; bắt buộc",
+            "example": "--directory-id 12345"
+          },
+          {
+            "flag": "--org <id>",
+            "description": "ID tổ chức; mặc định có thể là tổ chức admin đang chọn",
+            "example": "--org ORG"
+          },
+          {
+            "flag": "--yes",
+            "description": "Xác nhận thao tác, thường bỏ qua câu hỏi tương tác; kiểm tra mục tiêu trước khi dùng",
+            "example": "--yes"
+          },
+          {
+            "flag": "--dry-run",
+            "description": "Chỉ kiểm tra hoặc xem trước thay đổi, theo hợp đồng của lệnh",
+            "example": "--dry-run"
+          }
+        ],
+        "warning": "Có thể thay đổi dữ liệu hoặc cấu hình. Xác nhận site, đối tượng và quyền trước khi chạy; ví dụ dùng dữ liệu minh họa. Mẫu cú pháp dựng từ đối số/cờ chính thức, chưa chạy với tenant. Thay ID, ARI, site và nội dung minh họa; metadata phía server có thể yêu cầu thêm trường."
+      }
+    ]
+  }
+]
