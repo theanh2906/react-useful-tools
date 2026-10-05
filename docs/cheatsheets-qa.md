@@ -35,3 +35,14 @@ The original category text/tint contrast audit passed WCAG AA (4.80–5.80:1); t
 - TWG's 29 templates require actual IDs or runtime schema. Compatibility checks are based on official source contracts, not on the user's installed CLI versions or tenant permissions.
 
 Publication continues only on the dedicated feature branch and its Vercel preview. No main-branch merge or production promotion is part of this work.
+
+## Row layout refinement — 2026-10-05
+
+- All topics renders every topic with up to four entries and a Show more button where additional entries exist
+- Show more selects the corresponding topic, resets pagination and Show all, then focuses and scrolls the results region
+- Groups and commands use row-based layouts; command information and examples sit side by side on desktop and stack below 768px
+- Full-inventory search, topic pagination/Show all, reference content, theme colors, safety notices, and clipboard behavior are preserved
+- `npm run test:cheatsheets`: 9/9 tests, including new preview and hidden-entry search coverage
+- TypeScript, scoped Next.js ESLint, whitespace checks, and production build passed
+- A temporary JSDOM harness exercised the actual components for all three tools: every topic/count, four-entry limits, Show more target and accessible name, page/Show all resets, focus and scroll requests, hidden-entry search, broad search pagination, whitespace queries, reset focus, copy text, option disclosure, and Vietnamese labels
+- Original screenshot inspected as design reference. New browser geometry, real clipboard behavior, and visual appearance remain unverified; prior environment browser restrictions were not bypassed

@@ -32,8 +32,12 @@ async function loadTypeScript(relativePath) {
   );
 }
 const { cheatsheets } = await loadTypeScript('../src/data/cheatsheets.ts');
-const { filterCheatsheetGroups, normalizeCheatsheetQuery } =
-  await loadTypeScript('../src/lib/cheatsheets.ts');
+const {
+  CHEATSHEET_PREVIEW_SIZE,
+  filterCheatsheetGroups,
+  normalizeCheatsheetQuery,
+  previewCheatsheetGroups,
+} = await loadTypeScript('../src/lib/cheatsheets.ts');
 
 test('all three references have unique groups, commands, examples, and official sources', () => {
   assert.deepEqual(cheatsheets.map((sheet) => sheet.id).sort(), [
@@ -152,6 +156,45 @@ test('TWG enriched commands disclose billing implications', () => {
       .flatMap((group) => group.commands)
       .some((command) => command.billingNote)
   );
+});
+
+test('overview includes every topic with at most four entries and preserves source data', () => {
+  assert.equal(CHEATSHEET_PREVIEW_SIZE, 4);
+  for (const sheet of cheatsheets) {
+    const before = JSON.stringify(sheet);
+    const previews = previewCheatsheetGroups(sheet.groups);
+    assert.deepEqual(
+      previews.map((group) => group.id),
+      sheet.groups.map((group) => group.id)
+    );
+    previews.forEach((preview, index) => {
+      const original = sheet.groups[index];
+      assert.equal(
+        preview.commands.length,
+        Math.min(CHEATSHEET_PREVIEW_SIZE, original.commands.length)
+      );
+      assert.deepEqual(preview.commands, original.commands.slice(0, 4));
+      assert.equal(preview.level, original.level);
+      assert.notEqual(preview.commands, original.commands);
+    });
+    assert.equal(JSON.stringify(sheet), before);
+  }
+  assert.deepEqual(previewCheatsheetGroups([]), []);
+});
+
+test('opening a preview topic and searching reveal commands outside the preview', () => {
+  for (const sheet of cheatsheets) {
+    const group = sheet.groups.find((item) => item.commands.length > 4);
+    assert.ok(group, `${sheet.id}: fixture needs a nontrivial topic`);
+    const hidden = group.commands.at(-1);
+    const previews = previewCheatsheetGroups(sheet.groups);
+    assert.ok(!previews.flatMap((item) => item.commands).includes(hidden));
+    const selected = filterCheatsheetGroups(sheet.groups, '', group.id);
+    assert.equal(selected.length, 1);
+    assert.deepEqual(selected[0].commands, group.commands);
+    const search = filterCheatsheetGroups(sheet.groups, hidden.command);
+    assert.ok(search.flatMap((item) => item.commands).includes(hidden));
+  }
 });
 
 test('pagination preserves grouping and searches still cover off-page entries', async () => {

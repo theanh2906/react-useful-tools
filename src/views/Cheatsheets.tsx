@@ -21,8 +21,11 @@ import { useTranslation } from 'react-i18next';
 import { cheatsheets } from '@/data/cheatsheets';
 import {
   CHEATSHEET_PAGE_SIZE,
+  CHEATSHEET_PREVIEW_SIZE,
   filterCheatsheetGroups,
+  normalizeCheatsheetQuery,
   paginateCheatsheetGroups,
+  previewCheatsheetGroups,
 } from '@/lib/cheatsheets';
 import CommandGroup from '@/components/cheatsheets/CommandGroup';
 import { ShellCommand } from '@/components/cheatsheets/CommandExample';
@@ -67,12 +70,16 @@ export default function Cheatsheets() {
   );
   const pageCount = Math.max(1, Math.ceil(count / CHEATSHEET_PAGE_SIZE));
   const currentPage = Math.min(page, pageCount);
+  const isOverview =
+    category === 'all' && normalizeCheatsheetQuery(deferredQuery) === '';
   const visibleGroups = useMemo(
     () =>
-      showAll
-        ? filteredGroups
-        : paginateCheatsheetGroups(filteredGroups, currentPage),
-    [filteredGroups, currentPage, showAll]
+      isOverview
+        ? previewCheatsheetGroups(filteredGroups)
+        : showAll
+          ? filteredGroups
+          : paginateCheatsheetGroups(filteredGroups, currentPage),
+    [filteredGroups, currentPage, showAll, isOverview]
   );
   const visibleCount = visibleGroups.reduce(
     (total, group) => total + group.commands.length,
@@ -126,6 +133,13 @@ export default function Cheatsheets() {
   const selectCategory = (value: string) => {
     setCategory(value);
     resetPage();
+  };
+  const openCategory = (value: string) => {
+    selectCategory(value);
+    requestAnimationFrame(() => {
+      boardRef.current?.focus({ preventScroll: true });
+      boardRef.current?.scrollIntoView({ block: 'start' });
+    });
   };
   const changePage = (value: number) => {
     setPage(value);
@@ -446,12 +460,18 @@ export default function Cheatsheets() {
             <span role="status" aria-live="polite">
               {searchPending
                 ? t('cheatsheets.searching')
-                : t('cheatsheets.showingRange', {
-                    start: rangeStart,
-                    end: rangeEnd,
-                    count,
-                    total: totalCount,
-                  })}
+                : isOverview
+                  ? t('cheatsheets.overviewSummary', {
+                      limit: CHEATSHEET_PREVIEW_SIZE,
+                      topics: filteredGroups.length,
+                      total: totalCount,
+                    })
+                  : t('cheatsheets.showingRange', {
+                      start: rangeStart,
+                      end: rangeEnd,
+                      count,
+                      total: totalCount,
+                    })}
             </span>
             {query || category !== 'all' ? (
               <button type="button" onClick={clearFilters}>
@@ -478,6 +498,7 @@ export default function Cheatsheets() {
                     key={`${activeTool}-${group.id}`}
                     group={group}
                     tool={activeTool}
+                    onShowMore={isOverview ? openCategory : undefined}
                     totalCommands={
                       filteredGroups.find((item) => item.id === group.id)
                         ?.commands.length ?? group.commands.length
@@ -504,7 +525,7 @@ export default function Cheatsheets() {
               </div>
             )}
           </div>
-          {count > CHEATSHEET_PAGE_SIZE && (
+          {!isOverview && count > CHEATSHEET_PAGE_SIZE && (
             <nav
               className={styles.pagination}
               aria-label={t('cheatsheets.resultPages')}

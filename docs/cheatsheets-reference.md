@@ -14,7 +14,7 @@ The dataset contains **1,159 reference entries**:
 
 The shared field `canonicalCommand` identifies an inventory entry point. For TWG it retains each published alias spelling so coverage can compare exactly with all 691 public paths. Aliases are explicitly mapped to their underlying command in the TWG source manifest.
 
-The interface distinguishes command coverage from recipe counts. Search checks the entire selected tool, including key-option definitions. Rendering is paginated at 48 entries, with a Show all option; pagination never limits the searchable inventory.
+The interface distinguishes command coverage from recipe counts. All topics shows every group with up to four representative entries; Show more opens that topic's complete inventory and resets pagination. Groups and their command entries use full-width rows, with command details and examples side by side on desktop and stacked on mobile. Search checks the entire selected tool, including entries outside the overview and key-option definitions. Category and search results are paginated at 48 entries, with a Show all option; previews and pagination never limit the searchable inventory.
 
 ## Coverage artifacts
 

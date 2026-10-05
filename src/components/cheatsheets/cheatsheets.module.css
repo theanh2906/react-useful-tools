@@ -417,18 +417,19 @@
   color: #3468a7;
 }
 .board {
-  columns: 3;
-  column-gap: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 .group {
   --group-color: #3563a6;
   --group-tint: #eff5ff;
-  break-inside: avoid;
+  min-width: 0;
   border: 1px solid rgb(var(--color-border));
   border-radius: 9px;
   overflow: hidden;
   background: rgb(var(--color-elevated));
-  margin: 0 0 16px;
+  margin: 0;
 }
 .page [data-color='0'] {
   --group-color: #3563a6;
@@ -489,10 +490,49 @@
   padding: 0 14px;
 }
 .command {
-  padding: 16px 0 12px;
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  align-items: start;
+  gap: 12px 24px;
+  padding: 18px 0;
+}
+.commandInfo,
+.commandDetails {
+  min-width: 0;
+}
+.commandDetails > :first-child {
+  margin-top: 0;
 }
 .command + .command {
   border-top: 1px dashed rgb(var(--color-border));
+}
+.groupFooter {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 14px;
+  border-top: 1px solid rgb(var(--color-border));
+  background: rgb(var(--color-surface));
+}
+.groupFooter button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 36px;
+  padding: 7px 10px;
+  border: 1px solid color-mix(in srgb, var(--group-color) 25%, transparent);
+  border-radius: 5px;
+  background: rgb(var(--color-elevated));
+  color: var(--group-color);
+  font-size: 11px;
+  font-weight: 600;
+}
+.groupFooter button:hover {
+  background: var(--group-tint);
+}
+.groupFooter button:focus-visible {
+  outline: 2px solid var(--group-color);
+  outline-offset: 3px;
 }
 .commandTitle {
   display: flex;
@@ -854,9 +894,6 @@
   }
 }
 @media (max-width: 1250px) {
-  .board {
-    columns: 2;
-  }
   .terminal {
     width: 290px;
   }
@@ -969,6 +1006,8 @@
     padding: 0 15px;
   }
   .command {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
     padding: 16px 0 12px;
   }
   .commandTitle h4 {
@@ -1000,9 +1039,6 @@
   }
 }
 @media (max-width: 560px) {
-  .board {
-    columns: 1;
-  }
   .heroMeta {
     gap: 10px;
     font-size: 9px;
@@ -1048,13 +1084,11 @@
   .commandDocs,
   .breadcrumb,
   .toolTabs,
-  .sources {
+  .sources,
+  .groupFooter {
     display: none;
   }
-  .board {
-    columns: 2;
-  }
-  .group {
+  .command {
     break-inside: avoid;
   }
   .example {

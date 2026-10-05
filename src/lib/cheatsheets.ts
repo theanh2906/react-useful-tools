@@ -55,6 +55,17 @@ export function filterCheatsheetGroups(
 }
 
 export const CHEATSHEET_PAGE_SIZE = 48;
+export const CHEATSHEET_PREVIEW_SIZE = 4;
+
+/** Keep every topic discoverable without filling the overview with its inventory. */
+export function previewCheatsheetGroups(
+  groups: CheatsheetGroup[]
+): CheatsheetGroup[] {
+  return groups.map((group) => ({
+    ...group,
+    commands: group.commands.slice(0, CHEATSHEET_PREVIEW_SIZE),
+  }));
+}
 
 /** Page through matches without restricting the underlying searchable inventory. */
 export function paginateCheatsheetGroups(
