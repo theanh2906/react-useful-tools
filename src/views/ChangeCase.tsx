@@ -255,7 +255,7 @@ export default function ChangeCase() {
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               placeholder="Enter or paste your text here..."
-              className="h-64 w-full resize-none rounded-lg border border-line bg-elevated p-4 text-foreground placeholder:text-muted transition-colors focus:border-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-100"
+              className="h-64 w-full resize-none rounded-lg border border-line bg-inset p-4 text-foreground placeholder:text-muted transition-colors focus:border-accent-500 focus:outline-none focus:ring-2 focus:ring-accent-100"
             />
 
             <div className="flex gap-2 mt-4">
@@ -318,7 +318,7 @@ export default function ChangeCase() {
               </Button>
             </div>
 
-            <div className="h-64 w-full overflow-auto whitespace-pre-wrap break-words rounded-lg border border-line bg-surface p-4 text-foreground">
+            <div className="h-64 w-full overflow-auto whitespace-pre-wrap break-words rounded-lg border border-line bg-surface p-4 text-foreground dark:bg-inset">
               {outputText || (
                 <span className="text-muted">
                   Transformed text will appear here...

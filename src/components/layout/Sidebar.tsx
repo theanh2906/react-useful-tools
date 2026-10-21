@@ -66,7 +66,7 @@ export function Sidebar() {
         initial={false}
         animate={{ x: isOpen ? 0 : '-100%' }}
         transition={{ type: 'spring', stiffness: 320, damping: 34 }}
-        className="fixed inset-y-0 left-0 z-50 flex w-[252px] flex-col border-r border-line bg-elevated"
+        className="fixed inset-y-0 left-0 z-50 flex w-[252px] flex-col border-r border-line bg-chrome"
       >
         <div className="flex h-[72px] items-center justify-between border-b border-line px-5">
           <Link href="/" className="flex min-w-0 items-center gap-3" onClick={() => isMobile && close()}>

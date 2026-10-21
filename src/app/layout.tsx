@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Be_Vietnam_Pro, JetBrains_Mono } from 'next/font/google';
 import { Providers } from '@/components/providers/Providers';
 import { AppInitializer } from '@/components/providers/AppInitializer';
+import { THEME_BOOTSTRAP_SCRIPT } from '@/config/themes';
 import './globals.css';
 
 const beVietnamPro = Be_Vietnam_Pro({
@@ -55,6 +56,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="vi" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP_SCRIPT }} />
+      </head>
       <body
         className={`${beVietnamPro.variable} ${jetBrainsMono.variable} font-sans antialiased`}
       >

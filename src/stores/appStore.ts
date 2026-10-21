@@ -16,6 +16,7 @@ import {
   TRIMESTER_RANGES,
 } from '@/config/constants';
 import { listenProfile, saveProfile } from '@/services/profileService';
+import { applyTheme, isThemePreference } from '@/config/themes';
 
 /** Application-wide state shape and actions. */
 interface AppState {
@@ -61,8 +62,9 @@ export const useAppStore = create<AppState>()(
       // Theme
       theme: 'light',
       setTheme: (theme) => {
+        if (!isThemePreference(theme)) return;
+        if (typeof window !== 'undefined') applyTheme(theme);
         set({ theme });
-        document.documentElement.classList.toggle('dark', theme === 'dark');
       },
 
       // Language
@@ -167,6 +169,10 @@ export const useAppStore = create<AppState>()(
       migrate: (persistedState, version) => {
         const state = persistedState as Partial<AppState>;
         return version < 2 ? { ...state, theme: 'light' } : state;
+      },
+      merge: (persistedState, currentState) => {
+        const saved = persistedState as Partial<AppState> | undefined;
+        return { ...currentState, ...saved, theme: isThemePreference(saved?.theme) ? saved.theme : 'light' };
       },
       partialize: (state) => ({
         theme: state.theme,

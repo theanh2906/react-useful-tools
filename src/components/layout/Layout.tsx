@@ -4,7 +4,6 @@
  */
 'use client';
 
-import { useEffect } from 'react';
 import { Header } from './Header';
 import { Sidebar } from './Sidebar';
 import { useIsMobile } from '@/hooks';
@@ -12,14 +11,8 @@ import { cn } from '@/lib/utils';
 import { useAppStore } from '@/stores/appStore';
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const { sidebarOpen, theme } = useAppStore();
+  const { sidebarOpen } = useAppStore();
   const isMobile = useIsMobile();
-
-  useEffect(() => {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const useDark = theme === 'dark' || (theme === 'system' && prefersDark);
-    document.documentElement.classList.toggle('dark', useDark);
-  }, [theme]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">

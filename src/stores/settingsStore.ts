@@ -3,6 +3,7 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import { listenSettings, saveSettings, UserSettings, DashboardLayoutItem } from '@/services/settingsService';
 import { useAppStore } from './appStore';
 import i18n from '@/i18n';
+import { isThemePreference } from '@/config/themes';
 
 export const DEFAULT_DASHBOARD_LAYOUT: DashboardLayoutItem[] = [
   { id: 'quick-setup', visible: true, order: 0 },
@@ -30,20 +31,29 @@ export const useSettingsStore = create<SettingsState>()(
       isLoading: false,
 
       updateSettings: async (newSettings) => {
+        if (newSettings.theme !== undefined && !isThemePreference(newSettings.theme)) {
+          throw new Error('Invalid theme preference');
+        }
         const currentSettings = get().settings;
-        const updatedSettings = { ...currentSettings, ...newSettings };
-        set({ settings: updatedSettings });
-        await saveSettings(updatedSettings);
+        const updatedSettings = {
+          ...currentSettings,
+          ...newSettings,
+          // Other tabs can update app-storage before settings-storage is refreshed.
+          theme: newSettings.theme ?? useAppStore.getState().theme,
+        };
 
         // Sync with appStore if theme or language changed
         if (newSettings.theme) {
           useAppStore.getState().setTheme(newSettings.theme);
         }
+        set({ settings: updatedSettings });
         if (newSettings.language) {
           useAppStore.getState().setLanguage(newSettings.language);
           await i18n.changeLanguage(newSettings.language);
           document.documentElement.lang = newSettings.language;
         }
+        // Local appearance updates must not wait for a network round trip.
+        await saveSettings(updatedSettings);
       },
 
       initSettingsListener: async () => {
@@ -70,7 +80,7 @@ export const useSettingsStore = create<SettingsState>()(
             set({ settings: updatedSettings, isLoading: false });
 
             // Sync with appStore
-            if (dbSettings.theme) {
+            if (isThemePreference(dbSettings.theme)) {
               useAppStore.getState().setTheme(dbSettings.theme);
             }
             if (dbSettings.language) {

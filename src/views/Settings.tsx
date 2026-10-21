@@ -6,8 +6,6 @@ import {
   Palette,
   LayoutDashboard,
   Database,
-  Moon,
-  Sun,
   Globe,
   Download,
   Upload,
@@ -22,6 +20,7 @@ import { useAppStore } from '@/stores/appStore';
 import { useAuthStore } from '@/stores/authStore';
 import { toast } from '@/components/ui/Toast';
 import { cn } from '@/lib/utils';
+import { ThemeOptions } from '@/components/theme/ThemeOptions';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -39,13 +38,9 @@ const itemVariants = {
 export function Settings() {
   const { t } = useTranslation();
   const { settings, updateSettings, importSettings } = useSettingsStore();
-  const { theme, language } = useAppStore();
+  const { language } = useAppStore();
   const { user } = useAuthStore();
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleThemeChange = (newTheme: 'light' | 'dark') => {
-    updateSettings({ theme: newTheme });
-  };
 
   const handleLanguageChange = (newLanguage: 'en' | 'vi') => {
     updateSettings({ language: newLanguage });
@@ -69,7 +64,7 @@ export function Settings() {
 
   const handleExport = () => {
     try {
-      const dataStr = JSON.stringify(settings, null, 2);
+      const dataStr = JSON.stringify({ ...settings, theme: useAppStore.getState().theme }, null, 2);
       const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
       const exportFileDefaultName = `user-settings_${user?.id || 'guest'}_${new Date().toISOString().split('T')[0].replace(/-/g, '')}.json`;
 
@@ -156,33 +151,9 @@ export function Settings() {
           <div className="space-y-6">
             {/* Theme */}
             <div>
-              <p className="mb-3 text-sm font-medium text-foreground">{t('settings.theme', 'Theme')}</p>
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  onClick={() => handleThemeChange('light')}
-                  className={cn(
-                    "flex min-h-11 items-center justify-center gap-2 rounded-md border px-4 py-3 font-medium transition-colors",
-                    theme === 'light'
-                      ? "border-accent-300 bg-accent-50 text-accent-700"
-                      : "border-line bg-elevated text-muted hover:bg-surface hover:text-foreground"
-                  )}
-                >
-                  <Sun className="w-4 h-4" />
-                  {t('settings.light', 'Light')}
-                </button>
-                <button
-                  onClick={() => handleThemeChange('dark')}
-                  className={cn(
-                    "flex min-h-11 items-center justify-center gap-2 rounded-md border px-4 py-3 font-medium transition-colors",
-                    theme === 'dark'
-                      ? "border-accent-300 bg-accent-50 text-accent-700"
-                      : "border-line bg-elevated text-muted hover:bg-surface hover:text-foreground"
-                  )}
-                >
-                  <Moon className="w-4 h-4" />
-                  {t('settings.dark', 'Dark')}
-                </button>
-              </div>
+              <p id="settings-theme-label" className="mb-1 text-sm font-medium text-foreground">{t('settings.theme', 'Theme')}</p>
+              <p className="mb-3 text-sm text-muted">{t('settings.themeHint')}</p>
+              <ThemeOptions labelledBy="settings-theme-label" />
             </div>
 
             {/* Language */}

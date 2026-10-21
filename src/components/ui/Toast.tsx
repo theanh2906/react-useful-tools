@@ -3,19 +3,23 @@
  * @description Toast notification provider and utility helpers built on top of `sonner`.
  */
 import { Toaster, toast as sonnerToast } from 'sonner';
+import { useAppStore } from '@/stores/appStore';
+import { APP_THEMES, resolveThemeId } from '@/config/themes';
 
 /**
  * Toast provider component — renders the `<Toaster />` container.
  * Place this once at the application root.
  */
 export function ToastProvider() {
+  const theme = useAppStore((state) => state.theme);
+  const mode = theme === 'system' ? 'system' : APP_THEMES.find((option) => option.id === resolveThemeId(theme))!.mode;
   return (
     <Toaster
       position="top-right"
       expand={false}
       richColors
       closeButton
-      theme="light"
+      theme={mode}
       toastOptions={{
         style: {
           background: 'rgb(var(--color-elevated))',

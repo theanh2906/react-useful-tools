@@ -48,7 +48,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             id={inputId}
             className={cn(
-              'w-full rounded-md border border-line bg-elevated px-4 py-3 text-foreground placeholder:text-muted',
+              'w-full rounded-md border border-line bg-inset px-4 py-3 text-foreground placeholder:text-muted',
               'focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-100',
               'transition-all duration-200',
               leftIcon && 'pl-12',
@@ -106,7 +106,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
           ref={ref}
           id={inputId}
           className={cn(
-            'min-h-[120px] w-full resize-none rounded-md border border-line bg-elevated px-4 py-3 text-foreground placeholder:text-muted',
+            'min-h-[120px] w-full resize-none rounded-md border border-line bg-inset px-4 py-3 text-foreground placeholder:text-muted',
             'focus:outline-none focus:border-accent-500 focus:ring-2 focus:ring-accent-100',
             'transition-colors duration-200',
             error &&

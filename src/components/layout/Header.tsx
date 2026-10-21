@@ -5,6 +5,7 @@
 'use client';
 
 import Link from 'next/link';
+import { ThemePicker } from '@/components/theme/ThemePicker';
 import { useRouter } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
@@ -12,10 +13,8 @@ import {
   ChevronDown,
   LogOut,
   Menu,
-  Moon,
   Search,
   Settings,
-  Sun,
   User,
 } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -26,7 +25,6 @@ import { useIsMobile } from '@/hooks';
 import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
 import { useAppStore } from '@/stores/appStore';
 import { useAuthStore } from '@/stores/authStore';
-import { useSettingsStore } from '@/stores/settingsStore';
 
 const NAVIGATION_ITEMS = [...NAV_ITEMS, SPREADSHEET_NAV_ITEM];
 
@@ -34,8 +32,7 @@ export function Header() {
   const { t } = useTranslation();
   const router = useRouter();
   const isMobile = useIsMobile();
-  const { sidebarOpen, setSidebarOpen, setMobileMenuOpen, theme } = useAppStore();
-  const updateSettings = useSettingsStore((state) => state.updateSettings);
+  const { sidebarOpen, setSidebarOpen, setMobileMenuOpen } = useAppStore();
   const { user, isAuthenticated, logout } = useAuthStore();
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [query, setQuery] = useState('');
@@ -87,7 +84,7 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-30 flex h-[72px] w-full items-center justify-between border-b border-line bg-elevated/95 px-4 backdrop-blur-sm sm:px-6">
+    <header className="sticky top-0 z-30 flex h-[72px] w-full items-center justify-between border-b border-line bg-chrome/95 px-4 backdrop-blur-sm sm:px-6">
       <div className="flex min-w-0 flex-1 items-center gap-4">
         <button type="button" onClick={toggleNavigation} className="btn-icon shrink-0" aria-label="Toggle navigation">
           <Menu className="size-5" />
@@ -129,14 +126,7 @@ export function Header() {
 
       <div className="flex items-center gap-1 sm:gap-2">
         <LanguageSwitcher />
-        <button
-          type="button"
-          onClick={() => void updateSettings({ theme: theme === 'dark' ? 'light' : 'dark' })}
-          className="btn-icon"
-          aria-label={theme === 'dark' ? 'Use light theme' : 'Use dark theme'}
-        >
-          {theme === 'dark' ? <Sun className="size-5" /> : <Moon className="size-5" />}
-        </button>
+        <ThemePicker />
         <button type="button" className="btn-icon relative" aria-label="Notifications">
           <Bell className="size-5" />
           <span className="absolute right-2 top-2 size-2 rounded-full bg-primary-500 ring-2 ring-elevated" />

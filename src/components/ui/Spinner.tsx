@@ -3,7 +3,7 @@
  * @description Loading spinner and skeleton placeholder components.
  */
 import { cn } from '@/lib/utils';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 /**
  * Props for the {@link Spinner} component.
@@ -66,43 +66,40 @@ export function GlobalLoading({
   isLoading,
   message = 'Loading...',
 }: GlobalLoadingProps) {
+  // Remove the blocking overlay immediately; interrupted exit animations can retain it.
+  if (!isLoading) return null;
+
   return (
-    <AnimatePresence>
-      {isLoading && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/30 backdrop-blur-[2px]"
-        >
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/30 backdrop-blur-[2px]"
+    >
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        className="flex flex-col items-center gap-4 rounded-lg border border-line bg-elevated p-8 shadow-xl"
+      >
+        <div className="relative">
           <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            className="flex flex-col items-center gap-4 rounded-lg border border-line bg-elevated p-8 shadow-xl"
-          >
-            <div className="relative">
-              <motion.div
-                className="w-16 h-16 rounded-full border-4 border-primary-500/20"
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-              <motion.div
-                className="absolute inset-0 rounded-full border-4 border-transparent border-t-primary-500"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-              />
-              <motion.div
-                className="absolute inset-2 rounded-full border-4 border-transparent border-t-accent-500"
-                animate={{ rotate: -360 }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
-              />
-            </div>
-            <p className="font-medium text-foreground">{message}</p>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+            className="w-16 h-16 rounded-full border-4 border-primary-500/20"
+            animate={{ scale: [1, 1.1, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          />
+          <motion.div
+            className="absolute inset-0 rounded-full border-4 border-transparent border-t-primary-500"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+          />
+          <motion.div
+            className="absolute inset-2 rounded-full border-4 border-transparent border-t-accent-500"
+            animate={{ rotate: -360 }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
+          />
+        </div>
+        <p className="font-medium text-foreground">{message}</p>
+      </motion.div>
+    </motion.div>
   );
 }
 

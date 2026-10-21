@@ -1,0 +1,134 @@
+/* Shared semantic and brand tokens for all appearance choices. */
+:root, :root[data-theme="cloud-blue"] {
+  color-scheme: light;
+  --color-background: 255 255 255;
+  --color-surface: 244 248 255;
+  --color-elevated: 255 255 255;
+  --color-foreground: 23 32 51;
+  --color-muted: 102 112 133;
+  --color-border: 220 230 242;
+  --color-primary-50: 255 244 242;
+  --color-primary-100: 255 228 225;
+  --color-primary-200: 255 201 196;
+  --color-primary-300: 255 159 150;
+  --color-primary-400: 255 116 105;
+  --color-primary-500: 255 90 82;
+  --color-primary-600: 236 63 56;
+  --color-primary-700: 198 46 41;
+  --color-primary-800: 163 42 39;
+  --color-primary-900: 135 42 40;
+  --color-primary-950: 74 17 16;
+  --color-accent-50: 239 246 255;
+  --color-accent-100: 219 234 254;
+  --color-accent-200: 191 219 254;
+  --color-accent-300: 147 197 253;
+  --color-accent-400: 96 165 250;
+  --color-accent-500: 23 104 229;
+  --color-accent-600: 20 87 196;
+  --color-accent-700: 21 73 160;
+  --color-accent-800: 23 63 131;
+  --color-accent-900: 24 56 109;
+  --color-accent-950: 16 35 72;
+}
+
+:root[data-theme="midnight-indigo"] {
+  color-scheme: dark;
+  --color-background: 16 18 24;
+  --color-surface: 21 24 32;
+  --color-elevated: 27 30 39;
+  --color-chrome: 21 24 32;
+  --color-overlay: 32 35 45;
+  --color-inset: 20 23 30;
+  --color-foreground: 231 233 239;
+  --color-muted: 160 166 179;
+  --color-border: 45 49 61;
+  --color-primary-50: 32 34 47;
+  --color-primary-100: 40 43 61;
+  --color-primary-200: 57 62 89;
+  --color-primary-300: 88 95 133;
+  --color-primary-400: 147 152 222;
+  --color-primary-500: 99 102 223;
+  --color-primary-600: 85 88 201;
+  --color-primary-700: 184 190 204;
+  --color-primary-800: 206 210 222;
+  --color-primary-900: 225 228 236;
+  --color-primary-950: 242 243 247;
+  --color-accent-50: 36 38 56;
+  --color-accent-100: 43 46 67;
+  --color-accent-200: 65 70 102;
+  --color-accent-300: 101 108 160;
+  --color-accent-400: 146 152 217;
+  --color-accent-500: 98 104 205;
+  --color-accent-600: 181 185 247;
+  --color-accent-700: 212 215 225;
+  --color-accent-800: 224 227 236;
+  --color-accent-900: 236 238 245;
+  --color-accent-950: 247 248 250;
+}
+
+:root[data-theme="graphite-teal"] {
+  color-scheme: dark;
+  --color-background: 19 22 22;
+  --color-surface: 24 28 28;
+  --color-elevated: 32 37 37;
+  --color-chrome: 24 28 28;
+  --color-overlay: 36 42 42;
+  --color-inset: 23 27 27;
+  --color-foreground: 230 233 232;
+  --color-muted: 159 169 166;
+  --color-border: 50 57 57;
+  --color-primary-50: 28 41 39;
+  --color-primary-100: 36 59 54;
+  --color-primary-200: 49 84 76;
+  --color-primary-300: 70 121 110;
+  --color-primary-400: 107 168 155;
+  --color-primary-500: 37 123 112;
+  --color-primary-600: 32 107 98;
+  --color-primary-700: 184 196 192;
+  --color-primary-800: 205 216 212;
+  --color-primary-900: 226 234 231;
+  --color-primary-950: 242 247 245;
+  --color-accent-50: 32 49 46;
+  --color-accent-100: 41 65 59;
+  --color-accent-200: 59 93 84;
+  --color-accent-300: 86 134 121;
+  --color-accent-400: 122 182 168;
+  --color-accent-500: 37 123 112;
+  --color-accent-600: 143 202 189;
+  --color-accent-700: 213 222 219;
+  --color-accent-800: 226 233 230;
+  --color-accent-900: 238 243 241;
+  --color-accent-950: 247 250 248;
+}
+
+:root[data-theme="warm-sand"] {
+  color-scheme: light;
+  --color-background: 250 247 242;
+  --color-surface: 242 234 224;
+  --color-elevated: 255 253 249;
+  --color-foreground: 51 43 37;
+  --color-muted: 120 104 89;
+  --color-border: 228 216 200;
+  --color-primary-50: 255 247 237;
+  --color-primary-100: 255 237 213;
+  --color-primary-200: 254 215 170;
+  --color-primary-300: 253 186 116;
+  --color-primary-400: 214 139 67;
+  --color-primary-500: 180 83 9;
+  --color-primary-600: 146 64 14;
+  --color-primary-700: 120 53 15;
+  --color-primary-800: 101 48 22;
+  --color-primary-900: 82 44 26;
+  --color-primary-950: 54 24 13;
+  --color-accent-50: 250 241 227;
+  --color-accent-100: 245 228 204;
+  --color-accent-200: 234 203 163;
+  --color-accent-300: 220 177 126;
+  --color-accent-400: 190 138 81;
+  --color-accent-500: 154 91 39;
+  --color-accent-600: 130 71 30;
+  --color-accent-700: 109 60 30;
+  --color-accent-800: 88 50 28;
+  --color-accent-900: 72 44 28;
+  --color-accent-950: 46 26 16;
+}

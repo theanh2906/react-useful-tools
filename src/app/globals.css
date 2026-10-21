@@ -1,28 +1,10 @@
+@import './themes.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  :root {
-    color-scheme: light;
-    --color-background: 255 255 255;
-    --color-surface: 244 248 255;
-    --color-elevated: 255 255 255;
-    --color-foreground: 23 32 51;
-    --color-muted: 102 112 133;
-    --color-border: 220 230 242;
-  }
-
-  .dark {
-    color-scheme: dark;
-    --color-background: 17 24 39;
-    --color-surface: 27 36 51;
-    --color-elevated: 35 46 64;
-    --color-foreground: 248 250 252;
-    --color-muted: 166 176 194;
-    --color-border: 55 68 88;
-  }
-
   * {
     border-color: rgb(var(--color-border));
   }
@@ -92,7 +74,7 @@
   }
 
   .input-field {
-    @apply w-full rounded-md border border-line bg-elevated px-4 py-3 text-foreground placeholder:text-muted transition-colors focus:border-accent-500 focus:ring-2 focus:ring-accent-100;
+    @apply w-full rounded-md border border-line bg-inset px-4 py-3 text-foreground placeholder:text-muted transition-colors focus:border-accent-500 focus:ring-2 focus:ring-accent-100;
   }
 
   .stat-card {
@@ -160,6 +142,10 @@
 }
 
 @layer utilities {
+  /* Brand fills keep white button labels; brand text needs a lighter dark-mode tone. */
+  .dark .text-primary-500,
+  .dark .text-primary-600 { color: rgb(var(--color-primary-700)); }
+  .dark .text-accent-500 { color: rgb(var(--color-accent-600)); }
   .text-balance { text-wrap: balance; }
   .animate-delay-100 { animation-delay: 100ms; }
   .animate-delay-200 { animation-delay: 200ms; }

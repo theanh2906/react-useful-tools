@@ -17,6 +17,7 @@ export function AppInitializer({ children }: { children: React.ReactNode }) {
   const { initProfileListener, isGlobalLoading } = useAppStore();
   const { initSettingsListener } = useSettingsStore();
   const userId = useAuthStore((state) => state.user?.id);
+  const authInitialized = useAuthStore((state) => state.isInitialized);
 
   useEffect(() => {
     Promise.all([
@@ -43,23 +44,27 @@ export function AppInitializer({ children }: { children: React.ReactNode }) {
   }, [initAuthListener, storesHydrated]);
 
   useEffect(() => {
-    if (!storesHydrated) return;
+    if (!storesHydrated || !authInitialized) return;
     let unsubscribeProfile: (() => void) | null = null;
     let unsubscribeSettings: (() => void) | null = null;
+    let disposed = false;
 
     initProfileListener().then((unsub) => {
-      unsubscribeProfile = unsub;
+      if (disposed) unsub();
+      else unsubscribeProfile = unsub;
     });
 
     initSettingsListener().then((unsub) => {
-      unsubscribeSettings = unsub;
+      if (disposed) unsub();
+      else unsubscribeSettings = unsub;
     });
 
     return () => {
+      disposed = true;
       if (unsubscribeProfile) unsubscribeProfile();
       if (unsubscribeSettings) unsubscribeSettings();
     };
-  }, [initProfileListener, initSettingsListener, storesHydrated, userId]);
+  }, [initProfileListener, initSettingsListener, storesHydrated, authInitialized, userId]);
 
   return (
     <>

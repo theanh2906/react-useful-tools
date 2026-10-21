@@ -510,7 +510,7 @@ export interface ApiResponse<T> {
 }
 
 /** Theme mode options for the application. */
-export type ThemeMode = 'light' | 'dark' | 'system';
+export type ThemeMode = import('@/config/themes').ThemePreference;
 
 // ─── Period Tracker Types ────────────────────────────────────────────────────
 
